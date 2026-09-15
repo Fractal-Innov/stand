@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 620" width="300" height="620" aria-hidden="true">
+  <!-- Trou central transparent : calage vidéo = .hero-mockup__screen (voir DemoLoopDashboard.html). Remplaçable par phone-frame.png. -->
+  <path fill="rgba(18,20,32,0.94)" fill-rule="evenodd" stroke="rgba(255,255,255,0.12)" stroke-width="1"
+    d="M8 8h284v604H8z M20 56h260v508H20z"/>
+</svg>

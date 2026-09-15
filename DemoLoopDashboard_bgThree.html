@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="fr">
+<!--
+Premier projet web local de la série Tuyl_DS
+
+Fond WebGL Three.js extrait de DemoLoopDashboard.html (même logique d’ancrage par section).
+
+  Réintégration dans DemoLoopDashboard (ou une page avec les mêmes sélecteurs) :
+  1. Copier le bloc <style> ci-dessous (#bg-three + empilement du contenu).
+  2. Copier l’<script type="importmap">.
+  3. Copier le script BG_THREE_CONFIG puis le <script type="module"> jusqu’à la fin.
+  4. Le document doit exposer les sections : .hero, #defi, #modele, #conditions, #options, #faq
+     (voir le squelette <body> ci-dessous pour un test isolé).
+-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fond 3D — extrait OpenDemo (Three.js)</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: #0a0b14;
+      color: #a0a5bf;
+      font-family: system-ui, sans-serif;
+      line-height: 1.6;
+    }
+
+    #bg-three {
+      z-index: 0 !important;
+    }
+
+    body > *:not(#bg-three) {
+      position: relative;
+      z-index: 2;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .hero { background: rgba(59, 104, 255, 0.06); }
+    #defi { background: rgba(139, 92, 246, 0.05); }
+    #modele { background: rgba(196, 165, 116, 0.05); }
+    #conditions { background: rgba(59, 104, 255, 0.04); }
+    #options { background: rgba(196, 165, 116, 0.04); }
+    #faq { background: rgba(160, 165, 191, 0.05); }
+    h2 { font-weight: 400; font-size: 1.1rem; letter-spacing: 0.05em; text-transform: uppercase; }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <section class="hero"><h2>Hero</h2></section>
+  <section id="defi"><h2>Défi</h2></section>
+  <section id="modele"><h2>Modèle</h2></section>
+  <section id="conditions"><h2>Conditions</h2></section>
+  <section id="options"><h2>Options</h2></section>
+  <section id="faq"><h2>FAQ</h2></section>
+
+  <!--
+    PERSONNALISATION FOND 3D (objets derrière le texte, desktop / tablette uniquement)
+    ---------------------------------------------------------------------------
+    1) Fenêtre d’édition : définir window.BG_THREE_CONFIG **avant** le script module
+       (bloc <script> juste en dessous), ou modifier les valeurs par défaut dans ce bloc.
+
+    2) Fichiers GLB : placer vos .glb dans le dossier (ex. OpenDemo/assets/models/)
+       puis renseigner les chemins relatifs à la page, ex. :
+       glb: { hero: 'assets/models/hero.glb', defi: null, ... }
+       null = garder la géométrie de secours (icosaèdre, tore, etc.).
+
+    3) Décalage vertical d’ancrage (px écran, relatif au centre vertical de la section) :
+       anchorOffsetY: { hero: -80 }  → 80px plus haut que le milieu de la section
+       anchorOffsetY: { hero: 120 }   → 120px plus bas
+
+    4) Côtés de l’écran : screenAnchorX — tableau de 6 ratios [0–1], distance depuis le bord GAUCHE
+       (ex. 0.86 = vers la droite, 0.14 = vers la gauche). Recalculé à chaque frame = même vitesse que le HTML.
+
+    5) Largeur max sans 3D (mobile + tablette) : maxWidthMobile (px). Au-delà : affichage 3D.
+
+    6) Lissage des positions : positionSmoothHz (réactivité en Hz, ex. 12). 0 = pas de lissage (collage direct à la cible).
+
+    Positionnement : coordonnées écran → intersection avec le plan z=0 (pas de scrollScale) = pas de dérive.
+  -->
+  <script>
+    window.BG_THREE_CONFIG = Object.assign({
+      maxWidthMobile: 1024,
+      screenAnchorX: [0.86, 0.14, 0.84, 0.16, 0.85, 0.15],
+      anchorOffsetY: { hero: 0, defi: 0, modele: 0, conditions: 0, options: 0, faq: 0 },
+      glb: { hero: null, defi: null, modele: null, conditions: null, options: null, faq: null },
+      glbScale: 1,
+      sphereArcPx: { rx: 72, ry: 48 },
+      positionSmoothHz: 12
+    }, window.BG_THREE_CONFIG || {});
+  </script>
+  <script type="module">
+  import * as THREE from 'three';
+  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+  const SECTION_KEYS = ['hero', 'defi', 'modele', 'conditions', 'options', 'faq'];
+  const SEC_SELECTORS = ['.hero', '#defi', '#modele', '#conditions', '#options', '#faq'];
+  const CFG = window.BG_THREE_CONFIG;
+
+  function isDesktop3d() {
+    return window.innerWidth > (CFG.maxWidthMobile ?? 1024);
+  }
+
+  function clamp(v, lo, hi) {
+    return Math.max(lo, Math.min(hi, v));
+  }
+
+  function glassMat(THREE, hex, opacity, wire) {
+    return new THREE.MeshStandardMaterial({
+      color: hex,
+      metalness: 0.4,
+      roughness: 0.15,
+      transparent: true,
+      opacity: opacity === undefined ? 0.7 : opacity,
+      wireframe: !!wire
+    });
+  }
+
+  function disposeObject3D(root) {
+    root.traverse((o) => {
+      if (o.geometry) o.geometry.dispose();
+      if (o.material) {
+        const m = o.material;
+        if (Array.isArray(m)) m.forEach((x) => x.dispose());
+        else m.dispose();
+      }
+    });
+  }
+
+  async function main() {
+    if (!isDesktop3d()) return;
+    if (document.getElementById('bg-three')) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.id = 'bg-three';
+    canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none';
+    document.body.insertBefore(canvas, document.body.firstChild);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.z = 7;
+
+    const scrollGroup = new THREE.Group();
+    scene.add(scrollGroup);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+    const dLight = new THREE.DirectionalLight(0x7b9cff, 2.2);
+    dLight.position.set(4, 6, 4);
+    scene.add(dLight);
+    const fLight = new THREE.DirectionalLight(0xd946ef, 1.0);
+    fLight.position.set(-4, -3, 2);
+    scene.add(fLight);
+
+    const SCREEN_ANCHOR_X = CFG.screenAnchorX || [0.86, 0.14, 0.84, 0.16, 0.85, 0.15];
+    const BASE_OPACITY = [0.9, 0.65, 0.75, 0.7, 0.7, 0.8];
+    const PHASES = [0, 1.2, 2.4, 3.7, 5.0, 6.3];
+    const loader = new GLTFLoader();
+    const glbScale = CFG.glbScale ?? 1;
+    const sphereArcPx = CFG.sphereArcPx || { rx: 72, ry: 48 };
+    const positionSmoothHz = CFG.positionSmoothHz ?? 12;
+
+    const raycaster = new THREE.Raycaster();
+    const planeZ0 = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+    const _hit = new THREE.Vector3();
+
+    function screenToWorldOnPlaneZ0(screenX, screenY) {
+      const ndc = new THREE.Vector2(
+        (screenX / window.innerWidth) * 2 - 1,
+        -(screenY / window.innerHeight) * 2 + 1
+      );
+      raycaster.setFromCamera(ndc, camera);
+      if (!raycaster.ray.intersectPlane(planeZ0, _hit)) {
+        _hit.set(0, 0, 0);
+      }
+      return _hit.clone();
+    }
+
+    const _posTarget = new THREE.Vector3();
+    let lastFrameT = performance.now();
+
+    function resetPositionSmoothing() {
+      secObjects.forEach((o) => {
+        if (o) o.userData._posSmoothInit = false;
+      });
+      sphereMeshes.forEach((s) => {
+        s.userData._posSmoothInit = false;
+      });
+    }
+
+    function applySmoothedWorldPosition(obj, tx, ty, tz, smoothK) {
+      _posTarget.set(tx, ty, tz);
+      if (smoothK >= 1 || !obj.userData._posSmoothInit) {
+        obj.position.copy(_posTarget);
+        obj.userData._posSmoothInit = true;
+      } else {
+        obj.position.lerp(_posTarget, smoothK);
+      }
+    }
+
+    let sphereMeshes = [];
+    const secObjects = [];
+    const primitivesForDispose = [];
+
+    async function addGlbOrPrimitive(key, i) {
+      const url = CFG.glb && CFG.glb[key];
+      if (url) {
+        const gltf = await loader.loadAsync(url);
+        const root = gltf.scene;
+        root.scale.setScalar(glbScale);
+        root.position.set(0, 0, 0);
+        scrollGroup.add(root);
+        secObjects[i] = root;
+        return;
+      }
+      if (key === 'hero') {
+        const m = new THREE.Mesh(
+          new THREE.IcosahedronGeometry(1.05, 1),
+          glassMat(THREE, 0x7b9cff, 0.9, true)
+        );
+        m.position.set(0, 0, 0);
+        scrollGroup.add(m);
+        secObjects[0] = m;
+        primitivesForDispose.push(m);
+        return;
+      }
+      if (key === 'defi') {
+        const m = new THREE.Mesh(
+          new THREE.TorusKnotGeometry(0.65, 0.2, 90, 14),
+          glassMat(THREE, 0x8b5cf6, 0.65)
+        );
+        m.position.set(0, 0, 0);
+        scrollGroup.add(m);
+        secObjects[1] = m;
+        primitivesForDispose.push(m);
+        return;
+      }
+      if (key === 'modele') {
+        const cols = [0x7b9cff, 0x8b5cf6, 0xc4a574, 0xd9c4a0];
+        sphereMeshes = cols.map((col, j) => {
+          const mm = new THREE.Mesh(new THREE.SphereGeometry(0.2, 22, 22), glassMat(THREE, col, 0.75));
+          mm.position.set(0, 0, 0);
+          scrollGroup.add(mm);
+          primitivesForDispose.push(mm);
+          return mm;
+        });
+        secObjects[2] = null;
+        return;
+      }
+      if (key === 'conditions') {
+        const m = new THREE.Mesh(
+          new THREE.TorusGeometry(0.7, 0.2, 22, 60),
+          glassMat(THREE, 0x3b68ff, 0.7)
+        );
+        m.position.set(0, 0, 0);
+        scrollGroup.add(m);
+        secObjects[3] = m;
+        primitivesForDispose.push(m);
+        return;
+      }
+      if (key === 'options') {
+        const m = new THREE.Mesh(
+          new THREE.BoxGeometry(1.0, 1.0, 1.0, 2, 2, 2),
+          glassMat(THREE, 0xc4a574, 0.7)
+        );
+        m.position.set(0, 0, 0);
+        scrollGroup.add(m);
+        secObjects[4] = m;
+        primitivesForDispose.push(m);
+        return;
+      }
+      if (key === 'faq') {
+        const N = 140;
+        const pos = new Float32Array(N * 3);
+        for (let k = 0; k < N; k++) {
+          const r = 0.9 + Math.random() * 0.7;
+          const theta = Math.random() * Math.PI * 2;
+          const phi = Math.acos(2 * Math.random() - 1);
+          pos[k * 3] = r * Math.sin(phi) * Math.cos(theta);
+          pos[k * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+          pos[k * 3 + 2] = r * Math.cos(phi);
+        }
+        const pGeo = new THREE.BufferGeometry();
+        pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+        const pMesh = new THREE.Points(
+          pGeo,
+          new THREE.PointsMaterial({ color: 0xa0a5bf, size: 0.055, transparent: true, opacity: 0.8 })
+        );
+        pMesh.position.set(0, 0, 0);
+        scrollGroup.add(pMesh);
+        secObjects[5] = pMesh;
+        primitivesForDispose.push(pMesh);
+      }
+    }
+
+    for (let i = 0; i < SECTION_KEYS.length; i++) {
+      await addGlbOrPrimitive(SECTION_KEYS[i], i);
+    }
+
+    const sectionEls = SEC_SELECTORS.map((s) => document.querySelector(s)).filter(Boolean);
+    let sectionTops = [];
+
+    const anchorOff = CFG.anchorOffsetY || {};
+
+    function computeSectionTops() {
+      sectionTops = sectionEls.map((el) => el.getBoundingClientRect().top + window.scrollY);
+    }
+
+    computeSectionTops();
+
+    window.addEventListener(
+      'load',
+      () => {
+        computeSectionTops();
+      },
+      { passive: true }
+    );
+
+    window.addEventListener(
+      'resize',
+      () => {
+        if (!isDesktop3d()) {
+          canvas.style.display = 'none';
+          return;
+        }
+        canvas.style.display = 'block';
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        computeSectionTops();
+        resetPositionSmoothing();
+      },
+      { passive: true }
+    );
+
+    let running = true;
+
+    function tick() {
+      if (!running) return;
+      requestAnimationFrame(tick);
+
+      if (!isDesktop3d()) {
+        canvas.style.display = 'none';
+        lastFrameT = performance.now();
+        return;
+      }
+      canvas.style.display = 'block';
+
+      const nowT = performance.now();
+      const dt = Math.min((nowT - lastFrameT) / 1000, 0.05);
+      lastFrameT = nowT;
+      const smoothK =
+        positionSmoothHz > 0 ? 1 - Math.exp(-positionSmoothHz * dt) : 1;
+
+      const sy = window.scrollY;
+      const t = nowT * 0.001;
+
+      /* Ancrage écran → monde : même mouvement que le HTML (getBoundingClientRect à chaque frame) */
+      secObjects.forEach((obj, i) => {
+        if (!obj) return;
+        const el = sectionEls[i];
+        if (!el) return;
+        const phase = PHASES[i];
+        const secTop = sectionTops[i] || 0;
+        const localP = (sy - secTop) / window.innerHeight;
+        const r = el.getBoundingClientRect();
+        const key = SECTION_KEYS[i];
+        const screenY = r.top + r.height * 0.5 + (anchorOff[key] || 0);
+        const ratioX = SCREEN_ANCHOR_X[i] != null ? SCREEN_ANCHOR_X[i] : (i % 2 === 0 ? 0.86 : 0.14);
+        const screenX = ratioX * window.innerWidth;
+        const base = screenToWorldOnPlaneZ0(screenX, screenY);
+        applySmoothedWorldPosition(
+          obj,
+          base.x + Math.sin(t * 0.38 + phase + 0.5) * 0.09,
+          base.y + Math.sin(t * 0.62 + phase) * 0.13,
+          base.z,
+          smoothK
+        );
+        obj.rotation.x += 0.004 * (1 + 0.3 * Math.sin(phase));
+        obj.rotation.y += 0.006 * (1 + 0.2 * Math.cos(phase));
+        obj.rotation.z = Math.sin(t * 0.28 + phase + 1.2) * 0.07;
+        const vis = 1 - clamp((Math.abs(localP) - 0.9) / 0.65, 0, 1);
+        const baseOp = BASE_OPACITY[i];
+        if (obj.isMesh && obj.material && !Array.isArray(obj.material)) {
+          obj.material.opacity = baseOp * vis;
+        } else if (obj.isPoints && obj.material) {
+          obj.material.opacity = baseOp * vis;
+        } else {
+          obj.traverse((o) => {
+            if (!o.isMesh || !o.material) return;
+            const mats = Array.isArray(o.material) ? o.material : [o.material];
+            mats.forEach((mat) => {
+              if (mat.opacity === undefined) return;
+              if (mat.userData.baseOpacity === undefined) mat.userData.baseOpacity = mat.opacity;
+              mat.transparent = true;
+              mat.opacity = mat.userData.baseOpacity * vis * baseOp;
+            });
+          });
+        }
+      });
+
+      const secTopModele = sectionTops[2] || 0;
+      const localPMod = (sy - secTopModele) / window.innerHeight;
+      const visMod = 1 - clamp((Math.abs(localPMod) - 0.9) / 0.65, 0, 1);
+      const elM = sectionEls[2];
+      if (elM && sphereMeshes.length) {
+        const rm = elM.getBoundingClientRect();
+        const modeleY = rm.top + rm.height * 0.5 + (anchorOff['modele'] || 0);
+        const cx = (SCREEN_ANCHOR_X[2] != null ? SCREEN_ANCHOR_X[2] : 0.84) * window.innerWidth;
+        sphereMeshes.forEach((s, i) => {
+          const phase = PHASES[2] + i * 0.9;
+          const angle = (i / 3) * Math.PI * 0.9 - Math.PI * 0.45;
+          const sx = cx + Math.cos(angle) * sphereArcPx.rx;
+          const syp = modeleY + Math.sin(angle) * sphereArcPx.ry;
+          const base = screenToWorldOnPlaneZ0(sx, syp);
+          applySmoothedWorldPosition(
+            s,
+            base.x + Math.sin(t * 0.38 + phase) * 0.07,
+            base.y + Math.sin(t * 0.62 + phase) * 0.11,
+            base.z,
+            smoothK
+          );
+          s.rotation.y += 0.009;
+          if (s.material) s.material.opacity = 0.75 * visMod;
+        });
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    tick();
+
+    window.addEventListener('beforeunload', () => {
+      running = false;
+      primitivesForDispose.forEach((m) => {
+        if (m.geometry) m.geometry.dispose();
+        if (m.material) {
+          const mat = m.material;
+          if (Array.isArray(mat)) mat.forEach((x) => x.dispose());
+          else mat.dispose();
+        }
+      });
+      secObjects.forEach((o, idx) => {
+        if (o && CFG.glb && CFG.glb[SECTION_KEYS[idx]]) disposeObject3D(o);
+      });
+      renderer.dispose();
+    });
+  }
+
+  main().catch((e) => console.warn('[bg-three]', e));
+  window.addEventListener('resize', () => {
+    main().catch((e) => console.warn('[bg-three]', e));
+  });
+  </script>
+
+</body>
+</html>

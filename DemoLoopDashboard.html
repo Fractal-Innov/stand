@@ -1,0 +1,4517 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programme OpenInnov TFTP</title>
+  <meta name="description" content="OpenInnov × Team for the Planet — démonstrateur WebXR et série publique co-orientée par votre communauté.">
+  <!-- Aperçu partage (OG) — URL absolue requise ; adapter si votre GitHub Pages n’est pas à la racine ScriptsCk -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Programme OpenInnov TFTP">
+  <meta property="og:title" content="Programme OpenInnov TFTP">
+  <meta property="og:description" content="OpenInnov × Team for the Planet — démonstrateur WebXR et série publique co-orientée par votre communauté.">
+  <meta property="og:url" content="https://albrice-montfort.github.io/ScriptsCk/LocalDevServer/Tuyl_DS/OpenInnov/DemoLoopDashboard.html">
+  <meta property="og:image" content="https://albrice-montfort.github.io/ScriptsCk/LocalDevServer/Tuyl_DS/OpenInnov/assets/og-preview-openinnov.webp">
+  <meta property="og:image:width" content="1024">
+  <meta property="og:image:height" content="824">
+  <meta property="og:image:type" content="image/webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Programme OpenInnov TFTP">
+  <meta name="twitter:description" content="OpenInnov × Team for the Planet — démonstrateur WebXR et série publique co-orientée par votre communauté.">
+  <meta name="twitter:image" content="https://albrice-montfort.github.io/ScriptsCk/LocalDevServer/Tuyl_DS/OpenDemo/assets/og-preview-openinnov.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0a0b14;
+      --text-main: #f0f2f8;
+      --text-muted: #a0a5bf;
+      --accent-blue: #3b68ff;
+      --accent-blue-light: #7b9cff;
+      --accent-purple: #8b5cf6;
+      --accent-pink: #d946ef;
+
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-bg-hover: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-border-highlight: rgba(255, 255, 255, 0.2);
+
+      --gold: #f5d061;
+      --gold-bg: rgba(245, 208, 97, 0.1);
+      /* Doré pastel (complémentaire du bleu étape 2) */
+      --gold-pastel: #d9c4a0;
+      --gold-pastel-mid: #c4a574;
+      --gold-pastel-deep: #3d3428;
+      --green: #4ade80;
+      --green-bg: rgba(74, 222, 128, 0.1);
+
+      /* Team for the Planet — palette proche du logo (vert profond + menthe / émeraude) */
+      --tftp-green-950: #022c1f;
+      --tftp-green-800: #064e3b;
+      --tftp-green-600: #059669;
+      --tftp-green-400: #34d399;
+      --tftp-mint-100: #d1fae5;
+      --tftp-mint-50: #ecfdf5;
+      --tftp-banner-gradient: linear-gradient(
+        102deg,
+        var(--tftp-green-950) 0%,
+        var(--tftp-green-800) 42%,
+        #047857 78%,
+        var(--tftp-green-600) 100%
+      );
+      /* Bandeau « verre » : verts semi-transparents pour laisser voir le hero sombre → meilleur contraste du logo teal */
+      --tftp-banner-gradient-glass: linear-gradient(
+        102deg,
+        rgba(2, 44, 31, 0.52) 0%,
+        rgba(6, 78, 59, 0.45) 42%,
+        rgba(4, 120, 87, 0.4) 78%,
+        rgba(5, 150, 105, 0.36) 100%
+      );
+      /* Chevauchement du fond hero sous la nav (réf. maquette : ~hauteur pill + marge respi sous la nav) */
+      --masthead-row-overlap: clamp(4.5rem, 11vw, 6rem);
+      /* Mockup hero : même rayon que le desktop (plafond précédent clamp) sur toutes les résolutions */
+      --phone-screen-r: 48px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    html {
+      scroll-padding-top: 7.75rem;
+    }
+
+    @media (min-width: 951px) {
+      html {
+        scroll-padding-top: 8.25rem;
+      }
+    }
+
+    /* Téléphone étroit : offset réduit (barre moins haute en px) */
+    @media (max-width: 640px) {
+      html {
+        scroll-padding-top: 6.75rem;
+      }
+    }
+
+    /* Tablette : offset plus grand pour que #defi / la carte showcase ne passent pas sous le sticky */
+    @media (min-width: 641px) and (max-width: 1024px) {
+      html {
+        scroll-padding-top: 9rem;
+      }
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      font-size: 16px;
+      overflow-x: hidden;
+    }
+
+    /* ─── HERO — image → hero-fade → canvas → overlay → contenu (ordre DOM + z-index : fade sous tout le bloc .hero) ─── */
+    .hero-bg-image {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-color: var(--bg-base);
+      background-image: url('assets/hero-bg-atmosphere.webp');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-wrapper {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      background-color: var(--bg-base);
+      /* Monte le bloc sous le masthead pour que image / canvas / overlay passent derrière la nav */
+      margin-top: calc(-1 * var(--masthead-row-overlap));
+      padding-top: var(--masthead-row-overlap);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 0%, rgba(59, 104, 255, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 10% 80%, rgba(139, 92, 246, 0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 90% 70%, rgba(217, 70, 239, 0.07) 0%, transparent 60%);
+    }
+
+    /* Un seul calque de fusion hero → page (≥ 33vh), sans second bloc « pont » qui créait des traits */
+    .hero-fade {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      min-height: 33vh;
+      height: max(33vh, clamp(280px, 46vh, 680px));
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 6%,
+        rgba(10, 11, 20, 0.03) 12%,
+        rgba(10, 11, 20, 0.08) 22%,
+        rgba(10, 11, 20, 0.16) 34%,
+        rgba(10, 11, 20, 0.28) 46%,
+        rgba(10, 11, 20, 0.42) 58%,
+        rgba(10, 11, 20, 0.58) 70%,
+        rgba(10, 11, 20, 0.75) 82%,
+        rgba(10, 11, 20, 0.9) 92%,
+        var(--bg-base) 100%
+      );
+    }
+
+    /* Contenu sous le hero : dégradés diffus animés (le hero / .hero-wrapper inchangés)
+       --page-rest-glow-mix : 0 → 1 au scroll (JS) pour fondre le halo sans couture */
+    .page-rest {
+      --page-rest-glow-mix: 1;
+      position: relative;
+      background-color: var(--bg-base);
+      isolation: isolate;
+    }
+
+    .page-rest::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      /* Plancher plus haut : le halo reste lisible même quand mix ≈ 0 (bas du hero encore visible) */
+      opacity: calc(0.55 + 0.45 * var(--page-rest-glow-mix));
+      /* Le halo n’apparaît pas d’un coup en haut du main : évite la 3ᵉ ligne (base vs base+halo) */
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.35) 12vh,
+        #000 32vh,
+        #000 100%
+      );
+      mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.35) 12vh,
+        #000 32vh,
+        #000 100%
+      );
+      background:
+        radial-gradient(ellipse 85% 50% at 12% 8%, rgba(59, 104, 255, 0.15) 0%, transparent 55%),
+        radial-gradient(ellipse 75% 48% at 88% 22%, rgba(139, 92, 246, 0.12) 0%, transparent 52%),
+        radial-gradient(ellipse 70% 55% at 50% 95%, rgba(217, 70, 239, 0.09) 0%, transparent 54%),
+        radial-gradient(ellipse 50% 40% at 72% 55%, rgba(123, 156, 255, 0.08) 0%, transparent 48%),
+        radial-gradient(ellipse 45% 42% at 28% 62%, rgba(59, 104, 255, 0.07) 0%, transparent 46%);
+      background-size: 135% 125%, 125% 130%, 140% 120%, 150% 150%, 145% 135%;
+      background-position:
+        0% 5%,
+        100% 30%,
+        50% 100%,
+        70% 45%,
+        20% 75%;
+      animation: pageRestGlow 36s ease-in-out infinite alternate;
+    }
+
+    .page-rest > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes pageRestGlow {
+      0% {
+        background-position:
+          5% 0%,
+          95% 25%,
+          48% 98%,
+          75% 40%,
+          15% 70%;
+      }
+
+      50% {
+        background-position:
+          25% 15%,
+          75% 50%,
+          55% 85%,
+          45% 60%,
+          40% 35%;
+      }
+
+      100% {
+        background-position:
+          95% 30%,
+          8% 70%,
+          45% 5%,
+          85% 75%,
+          65% 90%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .page-rest::before {
+        animation: none;
+        opacity: 1;
+        background-position:
+          20% 10%,
+          80% 40%,
+          50% 90%,
+          60% 50%,
+          30% 60%;
+      }
+
+      .page-rest {
+        --page-rest-glow-mix: 1;
+      }
+    }
+
+    /* Perf mobile / tablette : halo global statique (animation background-position = coûteux au scroll) */
+    @media (max-width: 1024px) {
+      .page-rest::before {
+        animation: none;
+        background-position:
+          20% 10%,
+          80% 40%,
+          50% 90%,
+          60% 50%,
+          30% 60%;
+      }
+    }
+
+    /* Perf : retirer les flous « glass » sur petits écrans (moins de surcoût composite) */
+    @media (max-width: 1024px) {
+
+      .friction-card,
+      .episodes,
+      .level-card,
+      .counter-block,
+      .faq-item {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+    }
+
+    /* Mobile : header sans flou (sample fixe, très léger) */
+    @media (max-width: 767px) {
+      .masthead-bg {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(10, 11, 20, 0.96);
+      }
+
+      .burger {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+    }
+
+    /* Tablette : flou header réduit */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .masthead-bg {
+        backdrop-filter: blur(8px) saturate(130%);
+        -webkit-backdrop-filter: blur(8px) saturate(130%);
+      }
+
+      .exclusive-banner {
+        backdrop-filter: blur(14px) saturate(135%);
+        -webkit-backdrop-filter: blur(14px) saturate(135%);
+      }
+    }
+
+    /* TOP BANNER */
+    .site-top {
+      position: sticky;
+      top: 0;
+      z-index: 102;
+    }
+
+    .exclusive-banner {
+      background: var(--tftp-banner-gradient-glass);
+      border-bottom: 1px solid rgba(110, 231, 183, 0.28);
+      padding: .6rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .75rem;
+      backdrop-filter: blur(18px) saturate(145%);
+      -webkit-backdrop-filter: blur(18px) saturate(145%);
+      position: relative;
+      z-index: 1;
+      max-height: 5rem;
+      overflow: hidden;
+      transition:
+        max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.32s ease,
+        padding 0.42s cubic-bezier(0.4, 0, 0.2, 1),
+        border-bottom-width 0.32s ease;
+    }
+
+    /* Desktop/tablette : supprime la fine ligne noire sous le bandeau
+       (couture sous-pixel entre calques translucides) sans changer l'espace perçu */
+    @media (min-width: 768px) {
+      .exclusive-banner {
+        margin-bottom: -1px;
+      }
+
+      .masthead {
+        padding-top: calc(1rem + 1px);
+      }
+    }
+
+    .site-top--banner-collapsed .exclusive-banner {
+      max-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      opacity: 0;
+      border-bottom-width: 0;
+      pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .exclusive-banner {
+        transition: none;
+      }
+    }
+
+    .exclusive-banner p {
+      font-size: .85rem;
+      color: var(--tftp-mint-50);
+      font-weight: 600;
+      letter-spacing: .06em;
+      margin: 0;
+    }
+
+    .exclusive-banner-star {
+      color: var(--tftp-green-400);
+      margin-right: 0.35em;
+      text-shadow: 0 0 12px rgba(52, 211, 153, 0.45);
+    }
+
+    .exclusive-banner-logo {
+      height: 1em;
+      width: auto;
+      display: inline-block;
+      vertical-align: -0.14em;
+      margin-left: 0.4em;
+    }
+
+    /* HEADER — au-dessus du .hero-wrapper (z-index .site-top > .hero-wrapper) */
+    .masthead {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* Haut = gouttières latérales (1rem), comme en ≤950px ; bas inchangé */
+      padding: 1rem 1rem 0.65rem;
+      background: transparent;
+      border: none;
+    }
+
+    .masthead-inner {
+      /* Hauteur bandeau = tablette : même --masthead-pad-trb partout (951px+) */
+      --masthead-burger-size: 42px;
+      /* Taille unique pour liens, CTA et réf. logo (image) */
+      --masthead-text-size: 0.95rem;
+      /* Même écart haut / droite / bas autour du burger ; R_bandeau = R_burger + cet écart (courbes parallèles) */
+      --masthead-pad-trb: 0.5rem;
+      /* + léger surplus : la courbe gauche du pilule réduit l’espace visible vs haut/bas */
+      --masthead-pad-x-start: calc(var(--masthead-pad-trb) + 0.15rem);
+      --masthead-icon-squircle: 0.35;
+      --masthead-burger-radius: calc(var(--masthead-burger-size) * var(--masthead-icon-squircle));
+      --masthead-shell-radius: calc(var(--masthead-burger-radius) + var(--masthead-pad-trb));
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: clamp(0.75rem, 2vw, 1.75rem);
+      /* Aligné sur .section (max-width 900px) : pleine largeur jusqu’à cette limite */
+      width: 100%;
+      max-width: min(900px, calc(100vw - 2rem));
+      padding: var(--masthead-pad-trb) var(--masthead-pad-trb) var(--masthead-pad-trb) var(--masthead-pad-x-start);
+      border-radius: var(--masthead-shell-radius);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      /* pas overflow:hidden : rognerait le menu mobile position:fixed */
+      isolation: isolate;
+      box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .masthead-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      background: rgba(10, 11, 20, 0.58);
+      backdrop-filter: blur(14px) saturate(150%);
+      -webkit-backdrop-filter: blur(14px) saturate(150%);
+    }
+
+    .masthead-brand {
+      display: flex;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .masthead-brand:hover {
+      opacity: 0.92;
+    }
+
+    .masthead-brand:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 4px;
+      border-radius: 8px;
+    }
+
+    .masthead-logo-img {
+      display: block;
+      width: auto;
+      height: auto;
+      /* Wordmark PNG : hauteur calée pour se rapprocher visuellement de --masthead-text-size */
+      max-height: min(var(--masthead-burger-size), calc(var(--masthead-text-size) * 2.65));
+      max-width: min(280px, 52vw);
+      object-fit: contain;
+      object-position: left center;
+      flex-shrink: 0;
+    }
+
+    /* Main Navigation — desktop : liens centrés sur la hauteur du bandeau */
+    .main-nav {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: clamp(1rem, 2vw, 1.75rem);
+    }
+
+    .main-nav .nav-link {
+      display: inline-flex;
+      align-items: center;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: var(--masthead-text-size);
+      font-weight: 500;
+      line-height: 1.2;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .main-nav .nav-link:hover,
+    .main-nav .nav-link.active-link {
+      color: var(--text-main);
+    }
+
+    .main-nav .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-blue-light), var(--accent-pink));
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .main-nav .nav-link:hover::after,
+    .main-nav .nav-link.active-link::after {
+      width: 100%;
+    }
+
+    /* CTA desktop : même hauteur + rayon que le burger (gradient inchangé) */
+    .masthead-cta {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-sizing: border-box;
+      min-height: var(--masthead-burger-size);
+      height: var(--masthead-burger-size);
+      padding: 0 clamp(0.65rem, 1.15vw, 0.95rem);
+      font-size: var(--masthead-text-size);
+      font-weight: 600;
+      line-height: 1.2;
+      text-transform: none;
+      letter-spacing: 0.04em;
+      color: #fff;
+      text-decoration: none;
+      white-space: nowrap;
+      border-radius: var(--masthead-burger-radius);
+      border: none;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      box-shadow: 0 3px 14px rgba(59, 104, 255, 0.38);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+
+    .masthead-cta:hover {
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 20px rgba(59, 104, 255, 0.5);
+    }
+
+    .masthead-cta:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 3px;
+    }
+
+    /* Burger Menu Button — carré + squircle (même logique de rayon que l’icône logo) */
+    .burger {
+      display: none;
+      position: relative;
+      width: var(--masthead-burger-size);
+      height: var(--masthead-burger-size);
+      aspect-ratio: 1;
+      padding: 0;
+      flex-shrink: 0;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--masthead-burger-radius);
+      backdrop-filter: blur(16px) saturate(160%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
+      cursor: pointer;
+      z-index: 200;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .burger:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .burger span {
+      position: absolute;
+      left: 10px;
+      width: 22px;
+      height: 2px;
+      background-color: var(--text-main);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease, top 0.3s ease;
+      transform-origin: center;
+    }
+
+    .burger span:nth-child(1) {
+      top: 12px;
+    }
+
+    .burger span:nth-child(2) {
+      top: 20px;
+    }
+
+    .burger span:nth-child(3) {
+      top: 28px;
+    }
+
+    /* Croix centrée (même axe vertical que le centre du bouton 42px) */
+    .burger.active span:nth-child(1) {
+      top: 20px;
+      transform: rotate(45deg);
+    }
+
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger.active span:nth-child(3) {
+      top: 20px;
+      transform: rotate(-45deg);
+    }
+
+    /* SCROLL REVEAL : entrée / sortie symétriques (bas ↔ visible ↔ haut) */
+    .reveal {
+      opacity: 0;
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Masqué « en dessous » (prochaine entrée en descendant la page) */
+    .reveal:not(.active):not(.reveal--from-top) {
+      transform: translateY(30px);
+    }
+
+    /* Masqué « au-dessus » (prochaine entrée en remontant) — sortie par le haut quand on descend */
+    .reveal:not(.active).reveal--from-top {
+      transform: translateY(-30px);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-100 {
+      transition-delay: 0.1s;
+    }
+
+    .delay-150 {
+      transition-delay: 0.15s;
+    }
+
+    .delay-200 {
+      transition-delay: 0.2s;
+    }
+
+    .delay-300 {
+      transition-delay: 0.3s;
+    }
+
+    .delay-400 {
+      transition-delay: 0.4s;
+    }
+
+    /* HERO — grille copy / mockup + métriques pleine largeur sous la grille
+       Rythme vertical : --hero-space-* pour équilibre eyebrow → titre → lead → meta → logos */
+    .hero {
+      --hero-space-xs: 0.45rem;
+      --hero-space-sm: 0.65rem;
+      --hero-space-md: 0.85rem;
+      --hero-space-lg: 1.1rem;
+      --hero-fs-h1: clamp(1.9rem, 5.4vw, 2.4rem);
+      --hero-fs-lead: 1.05rem;
+      --hero-fs-meta-label: 0.6875rem;
+      --hero-fs-meta-value: clamp(1.28rem, 3.6vw, 1.45rem);
+      --hero-lh-lead: 1.62;
+      --hero-fs-eyebrow: 0.75rem;
+      /* Même largeur max que .masthead-inner : le bloc hero ne dépasse pas le header */
+      padding: 2.5rem 1rem 4.25rem;
+      max-width: min(900px, calc(100vw - 2rem));
+      margin: 0 auto;
+      position: relative;
+      text-align: left;
+      z-index: 5;
+      isolation: isolate;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto auto;
+      gap: 1.05rem;
+      align-items: start;
+    }
+
+    /* Smartphone : copy → CTA → mockup → meta → logos */
+    @media (max-width: 767px) {
+      .hero-inner {
+        gap: 0;
+      }
+
+      .hero-mockup {
+        margin-top: clamp(2.65rem, 8.5vw, 4.35rem);
+        max-width: min(290px, 88vw);
+        /* Rayons un peu plus larges que le desktop : masque les coins noirs de la vidéo (cover) */
+        --phone-screen-r: clamp(52px, 12vw, 60px);
+      }
+    }
+
+    .hero-copy {
+      grid-column: 1;
+      grid-row: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      z-index: 2;
+      padding-right: 0;
+    }
+
+    .hero-meta {
+      grid-column: 1;
+      grid-row: 4;
+    }
+
+    .hero-cta {
+      grid-column: 1;
+      grid-row: 2;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .hero-cta__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 1.35rem;
+      font-size: clamp(0.95rem, 2.8vw, 1.05rem);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: #fff;
+      text-decoration: none;
+      white-space: nowrap;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      box-shadow: 0 3px 14px rgba(59, 104, 255, 0.38);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hero-cta__btn:hover {
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 20px rgba(59, 104, 255, 0.5);
+    }
+
+    .hero-cta__btn:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 3px;
+    }
+
+    .hero-trusted {
+      grid-column: 1;
+      grid-row: 5;
+      width: 100%;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-trusted__label {
+      font-size: var(--hero-fs-meta-label);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .hero-trusted__logos {
+      list-style: none;
+      margin: 0;
+      margin-top: 0.35rem; /* un peu plus d'air au-dessus des logos */
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      column-gap: clamp(0.7rem, 2.1vw, 1.1rem);
+      row-gap: 0.8rem;
+    }
+
+    .hero-trusted__logos li {
+      width: clamp(98px, 14vw, 132px); /* slots plus compacts */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Même hauteur visuelle pour les deux logos ; largeurs libres (Midipile plus large). */
+    .hero-trusted__logos img {
+      display: block;
+      height: clamp(26px, 4.2vw, 34px);
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      object-position: center center;
+    }
+
+    @media (max-width: 767px) {
+      .hero-trusted__logos {
+        flex-wrap: nowrap; /* tenir sur une seule ligne en mobile */
+        column-gap: clamp(0.5rem, 2.8vw, 0.8rem);
+      }
+
+      .hero-trusted__logos li {
+        width: clamp(88px, 28vw, 112px);
+      }
+
+      .hero-trusted__logos img {
+        height: clamp(22px, 6.4vw, 28px);
+      }
+    }
+
+    @media (min-width: 768px) {
+      /* Desktop : copy → CTA → meta → logos ; mockup à droite (4 rangées). Espacement vertical = --hero-band-gap (pas de row-gap en plus). */
+      .hero-inner {
+        grid-template-columns: minmax(0, 1.38fr) minmax(200px, 0.62fr);
+        grid-template-rows: auto auto auto auto;
+        column-gap: clamp(1.5rem, 3.5vw, 2.75rem);
+        row-gap: 0;
+        align-items: start;
+      }
+
+      .hero-copy {
+        grid-column: 1;
+        grid-row: 1;
+        padding-right: clamp(0.25rem, 1.5vw, 1.25rem);
+      }
+
+      .hero-mockup {
+        grid-column: 2;
+        grid-row: 1 / span 4;
+        align-self: center;
+        justify-self: end;
+        max-width: min(300px, 36vw);
+      }
+
+      .hero-cta {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      .hero-meta {
+        grid-column: 1;
+        grid-row: 3;
+      }
+
+      .hero-trusted {
+        grid-column: 1;
+        grid-row: 4;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .hero-copy {
+        align-items: center;
+        width: 100%;
+        /* Largeur max = colonne hero (gouttières sur .hero uniquement) */
+        max-width: 100%;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Empêche la règle « générale » d’écraser le placement 2 colonnes ≥768px */
+      .hero-mockup {
+        grid-column: 1;
+        grid-row: 3;
+        justify-self: center;
+      }
+    }
+
+    /* Empreinte type téléphone 498×1024 — placement grille uniquement dans les @media */
+    .hero-mockup {
+      width: 100%;
+      max-width: min(300px, 88vw);
+      aspect-ratio: 498 / 1024;
+      position: relative;
+      z-index: 0;
+      min-width: 0;
+      background: transparent;
+    }
+
+    /* Rayon : var(--phone-screen-r) dans :root (identique toutes résolutions, réf. desktop). */
+    .hero-mockup__screen {
+      position: absolute;
+      inset: 0;
+      border-radius: var(--phone-screen-r);
+      overflow: hidden;
+      background: transparent;
+      pointer-events: none;
+      isolation: isolate;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      clip-path: inset(0 round var(--phone-screen-r));
+    }
+
+    .hero-mockup__video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      border-radius: var(--phone-screen-r);
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+    }
+
+    .hero-eyebrow {
+      font-size: var(--hero-fs-eyebrow);
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--accent-blue-light);
+      margin-bottom: var(--hero-space-lg);
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      background: rgba(59, 104, 255, 0.15);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      border: 1px solid rgba(59, 104, 255, 0.3);
+    }
+
+    .hero h1 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: var(--hero-fs-h1);
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      color: var(--text-main);
+      margin-bottom: var(--hero-space-md);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+
+    @media (max-width: 767px) {
+      .hero {
+        text-align: center;
+      }
+
+      .hero h1 {
+        align-items: center;
+        /* +30 % vs précédent : espace titre → lead */
+        margin-bottom: clamp(0.72rem, 2.86vw, 1.1rem);
+        line-height: 1.18;
+        gap: 0.52rem;
+      }
+
+      .hero-eyebrow {
+        /* +30 % : espace eyebrow → titre */
+        margin-bottom: clamp(0.72rem, 3.1vw, 1.05rem);
+      }
+
+      .hero-title-sub {
+        margin-bottom: clamp(0.59rem, 2.35vw, 0.85rem);
+      }
+    }
+
+    /* Pas de nowrap : le titre reste dans la colonne texte sans empiéter sur le mockup */
+    .hero-title-main {
+      display: block;
+      max-width: 100%;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(to right, var(--accent-blue-light), var(--accent-pink));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Sous-ligne : un peu plus petit que le titre principal, mais bien lisible */
+    .hero-title-sub {
+      display: block;
+      font-weight: 500;
+      font-size: clamp(1.45rem, 3.4vw, 2.65rem);
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+      color: var(--accent-blue-light);
+      margin-bottom: var(--hero-space-sm);
+    }
+
+    /* Tablette : largeur confortable ; desktop : une seule ligne (voir ≥951px) */
+    @media (min-width: 768px) and (max-width: 950px) {
+      .hero-title-sub {
+        max-width: min(42rem, 92vw);
+      }
+    }
+
+    @media (min-width: 951px) {
+      .hero-title-sub {
+        white-space: nowrap;
+        max-width: none;
+      }
+    }
+
+    /* Rythme type Notion : [Entrée] = nouveau bloc (marge sous le <p>) ; [Maj+Entrée] = saut de ligne dans le même bloc (interligne seulement, pas de marge de bloc). */
+    .hero-lead {
+      font-size: var(--hero-fs-lead);
+      color: var(--text-muted);
+      max-width: 38rem;
+      margin: 0 0 var(--hero-space-sm);
+      line-height: var(--hero-lh-lead);
+    }
+
+    @media (max-width: 767px) {
+      .hero-lead {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+        padding: 0;
+        text-align: left;
+        /* +30 % entre paragraphes lead */
+        margin-bottom: clamp(0.52rem, 2vw, 0.72rem);
+      }
+    }
+
+    .hero-lead:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .hero-pillars {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(0.45rem, 1vw, 0.75rem);
+      margin-top: clamp(0.9rem, 2vh, 1.25rem);
+    }
+
+    .hero-pillar {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: start;
+      column-gap: 0.6rem;
+      padding: 0.35rem 0.2rem 0.45rem;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      min-width: 0;
+      position: relative;
+    }
+
+    .hero-pillar__icon {
+      flex: 0 0 auto;
+      width: 20px;
+      height: 20px;
+      padding: 2px; /* plus d'espace autour du picto */
+      box-sizing: content-box;
+      color: var(--accent-blue-light);
+      margin-top: 0.08rem;
+      display: block;
+    }
+
+    /* Couleur des pictos selon progression du dégradé actif (0% / 50% / 100%) */
+    .hero-pillar:nth-child(1) .hero-pillar__icon {
+      color: var(--accent-blue-light); /* 0% */
+    }
+
+    .hero-pillar:nth-child(2) .hero-pillar__icon {
+      color: color-mix(in srgb, var(--accent-blue-light) 50%, var(--accent-pink)); /* 50% */
+    }
+
+    .hero-pillar:nth-child(3) .hero-pillar__icon {
+      color: var(--accent-pink); /* 100% */
+    }
+
+    .hero-pillar__text {
+      font-size: clamp(0.78rem, 1.25vw, 0.88rem);
+      line-height: 1.35;
+      color: rgba(255, 255, 255, 0.9);
+      text-align: left;
+    }
+
+    .hero-pillar__text strong {
+      display: block;
+      color: #fff;
+      font-weight: 600;
+      margin-bottom: 0.12rem;
+    }
+
+    @media (max-width: 767px) {
+      .hero-pillars {
+        grid-template-columns: 1fr;
+        gap: 0.55rem;
+        margin-top: 0.9rem;
+        max-width: min(520px, 100%);
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-pillar {
+        padding: 0.35rem 0.15rem 0.6rem;
+        width: 100%;
+        max-width: min(520px, 100%);
+        margin-left: auto;
+        margin-right: auto;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .hero-pillar:last-child {
+        border-bottom: 0;
+      }
+
+      .hero-pillar__icon {
+        width: 24px;
+        height: 24px;
+        align-self: center;
+        margin-top: 0;
+        transform: none;
+      }
+
+      .hero-pillar__text {
+        font-size: 0.96rem;
+        line-height: 1.42;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .hero-pillar {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        gap: 0.45rem;
+        padding: 0.2rem clamp(0.4rem, 1vw, 0.75rem) 0.35rem;
+      }
+
+      /* Séparateurs verticaux subtils comme les metas */
+      .hero-pillar:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 15%;
+        bottom: 15%;
+        width: 1px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .hero-pillar__icon {
+        width: 28px;
+        height: 28px;
+        margin-top: 0;
+      }
+    }
+
+    .hero-meta {
+      margin-top: 0;
+      padding-top: 0.75rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      /* Desktop (≥768px) : stretch pour hauteur commune ; items avec justify flex-start */
+      align-items: stretch;
+      gap: 0;
+      flex-wrap: nowrap;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      /* .hero est en text-align:left : sans ça, les lignes héritent et restent visuellement à gauche */
+      text-align: center;
+    }
+
+    @media (max-width: 767px) {
+      .hero {
+        /* Espace meta → logos partenaires */
+        --hero-band-gap: clamp(1.5rem, 5vw, 2.5rem);
+        --hero-trusted-gap-top: clamp(0.7rem, 2.3vw, 1.05rem);
+        --hero-trusted-gap-bottom: clamp(1.15rem, 3.8vw, 1.7rem);
+      }
+
+      .hero-meta {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.1rem;
+        /* Sous la vidéo : même écart de référence que meta → logos */
+        padding-top: 0;
+        margin-top: var(--hero-band-gap);
+        border-top: none;
+        max-width: min(520px, 100%);
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-meta-item {
+        padding: 0 clamp(0.35rem, 3vw, 0.75rem) 1.25rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .hero-meta-item:last-child {
+        padding-left: clamp(0.5rem, 4vw, 1rem);
+        padding-right: clamp(0.5rem, 4vw, 1rem);
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .hero-cta {
+        /* Même espace que titre principal -> lead */
+        justify-content: center;
+        margin-top: calc(var(--hero-space-md) + 0.45rem);
+        margin-bottom: 0;
+      }
+
+      .hero-trusted {
+        margin-top: var(--hero-trusted-gap-top);
+        padding-top: var(--hero-trusted-gap-bottom);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        max-width: min(520px, 100%);
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        --hero-trusted-gap-top: clamp(0.9rem, 1.6vh, 1.25rem);
+        --hero-trusted-gap-bottom: clamp(1.35rem, 2.35vh, 1.9rem);
+      }
+
+      .hero-meta {
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        row-gap: 1.25rem;
+        max-width: 100%;
+        align-items: stretch;
+      }
+
+      .hero-meta-item {
+        flex: 1 1 0;
+        min-width: min(148px, 26%);
+        padding: 0 clamp(0.45rem, 1.25vw, 1.05rem);
+        position: relative;
+        justify-content: flex-start;
+      }
+
+      /* Colonne la plus longue : marge latérale pour ne pas toucher les filets */
+      .hero-meta-item:last-child {
+        padding-left: clamp(0.65rem, 1.6vw, 1.35rem);
+        padding-right: clamp(0.65rem, 1.6vw, 1.35rem);
+      }
+
+      /* Valeurs courtes sur une ligne ; dernière colonne peut passer sur 2 lignes centrées */
+      .hero-meta-item:not(:last-child) .hero-meta-value {
+        white-space: nowrap;
+      }
+
+      .hero-meta-item:last-child .hero-meta-value {
+        white-space: normal;
+      }
+
+      /* « Résultat » : le letter-spacing laisse un vide après la dernière lettre ; léger padding-gauche pour l’axe optique des deux lignes */
+      .hero-meta-item:last-child .hero-meta-label {
+        padding-inline: 0;
+        padding-left: 0.12em;
+      }
+
+      .hero-meta-item:not(:first-child)::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 2.25rem;
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      /* Libellé → valeur : espace plus généreux (avant ~0,25rem, trop serré) */
+      gap: clamp(0.5rem, 1.15vh, 0.8rem);
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+    }
+
+    .hero-meta-label {
+      font-size: var(--hero-fs-meta-label);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      text-align: center;
+      /* Le tracking décale visuellement le bloc : léger équilibre pour l’alignement avec les valeurs */
+      padding-inline: 0.12em;
+      box-sizing: border-box;
+    }
+
+    .hero-meta-value {
+      font-weight: 600;
+      font-size: var(--hero-fs-meta-value);
+      color: var(--text-main);
+      line-height: 1.2;
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      text-align: center;
+    }
+
+    /* 4ᵉ métrique : pile centrée (évite l’effet « escalier » br + inline-block sur desktop) */
+    .hero-meta-value--stacked {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.02em;
+      text-align: center;
+    }
+
+    .hero-meta-value__line {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* 4ᵉ métrique : 2ᵉ ligne un peu plus petite pour « + Audience qualifiée » sur une seule ligne */
+    .hero-meta-value__sub {
+      display: inline-block;
+      font-size: 0.86em;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      white-space: nowrap;
+      max-width: 100%;
+      text-align: center;
+      vertical-align: top;
+    }
+
+    .hero-meta-value--stacked .hero-meta-value__sub {
+      display: block;
+    }
+
+    @media (max-width: 400px) {
+      .hero-meta-value__sub {
+        font-size: 0.8em;
+        letter-spacing: -0.03em;
+      }
+    }
+
+    /* Desktop / tablette : eyebrow→titre / titre→lead ; lead↔meta↔trusted via marges dédiées */
+    @media (min-width: 768px) {
+      .hero {
+        --hero-space-xs: 0.35rem;
+        --hero-space-sm: 0.55rem;
+        --hero-space-md: clamp(1.65rem, 2.9vh, 2.2rem);
+        --hero-space-lg: clamp(1.05rem, 1.65vh, 1.35rem);
+        --hero-fs-h1: clamp(2.45rem, 3.55vw, 3.95rem);
+        --hero-fs-lead: clamp(1.02rem, 1.08vw, 1.0625rem);
+        --hero-fs-meta-label: 0.6875rem;
+        --hero-fs-meta-value: clamp(1.42rem, 1.85vw, 1.625rem);
+        --hero-lh-lead: 1.68;
+        --hero-fs-eyebrow: 0.75rem;
+        /* Espace meta → logos partenaires */
+        --hero-band-gap: clamp(1.75rem, 4.5vh, 3.25rem);
+        /* Nav / bandeau → eyebrow (rétabli : proche du rythme d’avant la réduction « −50 % ») */
+        padding: clamp(2.1rem, 3.85vh, 2.75rem) 1rem clamp(0.85rem, 1.75vh, 1.35rem);
+      }
+
+      .hero-eyebrow {
+        margin-bottom: var(--hero-space-lg);
+      }
+
+      .hero h1 {
+        margin-bottom: var(--hero-space-md);
+        line-height: 1.12;
+      }
+
+      .hero-lead {
+        margin: 0 0 var(--hero-space-xs);
+      }
+
+      .hero-cta {
+        /* Même espace que titre principal -> lead */
+        margin-top: var(--hero-space-md);
+        margin-bottom: 0;
+      }
+
+      .hero-meta {
+        margin-top: var(--hero-band-gap);
+        padding-top: clamp(0.85rem, 1.35vh, 1.35rem);
+      }
+
+      .hero-trusted {
+        margin-top: var(--hero-trusted-gap-top);
+        padding-top: var(--hero-trusted-gap-bottom);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .hero-mockup {
+        max-width: min(268px, 34vw);
+      }
+    }
+
+    /* Tablette (768–1024) : même grille 2 colonnes que le desktop, avec proportions adaptées à la largeur */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .hero {
+        max-width: min(980px, calc(100vw - 2rem));
+      }
+
+      .hero-inner {
+        grid-template-columns: minmax(0, 1.25fr) minmax(168px, 0.58fr);
+        column-gap: clamp(1rem, 2.6vw, 1.85rem);
+      }
+
+      .hero-copy {
+        padding-right: clamp(0.2rem, 1.2vw, 0.85rem);
+      }
+
+      .hero-mockup {
+        max-width: min(248px, 36vw);
+      }
+
+      .hero-meta-item {
+        min-width: 0;
+        flex: 1 1 min(0, 124px);
+        padding: 0 clamp(0.35rem, 1vw, 0.85rem);
+      }
+
+      .hero-meta-item:last-child {
+        padding-left: clamp(0.5rem, 1.35vw, 1.1rem);
+        padding-right: clamp(0.5rem, 1.35vw, 1.1rem);
+      }
+    }
+
+    @media (min-width: 951px) {
+      .hero {
+        max-width: min(1120px, calc(85vw - 2rem));
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+    }
+
+    /* SECTIONS — pas de background-image sur toute la section : avec background-size 100%,
+       un radial-gradient remplissait le rectangle (effet « encadré ») et masquait le halo .page-rest.
+       Halos locaux optionnels : class .section--ambient + variables (--amb-*) sur la section ou #id. */
+    .section {
+      padding: 5rem 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Filet supprimé : les ::before 1px lisaient des lignes de démarcation entre sections */
+    .section::before {
+      content: none;
+    }
+
+    /* Halo local discret (opt-in) : ne couvre pas toute la boîte comme un panneau */
+    .section--ambient {
+      --amb-x: 45%;
+      --amb-y: -5%;
+      --amb-r: min(75vw, 720px);
+      --amb-h: 235;
+      --amb-s: 65%;
+      --amb-l: 52%;
+      --amb-a: 0.09;
+    }
+
+    .section--ambient::after {
+      content: '';
+      position: absolute;
+      left: var(--amb-x);
+      top: var(--amb-y);
+      width: var(--amb-r);
+      height: var(--amb-r);
+      transform: translate(-50%, -35%);
+      z-index: 0;
+      pointer-events: none;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle closest-side,
+        hsl(var(--amb-h) var(--amb-s) var(--amb-l) / var(--amb-a)),
+        transparent 100%
+      );
+    }
+
+    .section--ambient > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-number {
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent-blue-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .section h2 {
+      font-weight: 600;
+      font-size: 2.2rem;
+      line-height: 1.2;
+      color: var(--text-main);
+      margin-bottom: 1.25rem;
+      letter-spacing: -.01em;
+    }
+
+    .section p {
+      color: var(--text-muted);
+      margin-bottom: 0.675rem;
+      max-width: 680px;
+      font-size: 1.05rem;
+    }
+
+    /* Texte d'intro (conditions) : largeur alignée sur la grille des cartes juste en dessous */
+    #conditions .conditions-intro {
+      max-width: none;
+      width: 100%;
+    }
+
+    /* Texte d'intro (options) : largeur alignée sur la section wide (3 colonnes) */
+    #options .conditions-intro {
+      max-width: none;
+      width: 100%;
+    }
+
+    /* Note (options) juste après les cartes */
+    #options .options-bottom-note {
+      margin-top: 1.15rem;
+      font-style: italic;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* Texte intro (smartphone) : réduction légère */
+    @media (max-width: 767px) {
+      #options h2.reveal {
+        font-size: 2.05rem;
+        line-height: 1.15;
+      }
+
+      #options .conditions-intro {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      #options .options-bottom-note {
+        font-size: 0.88rem;
+        line-height: 1.7;
+      }
+
+      #conditions h2.reveal {
+        font-size: 2.05rem;
+        line-height: 1.15;
+      }
+
+      #conditions .conditions-intro {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+    }
+
+    /* Accent blanc sur fond sombre — .section p est en --text-muted ; réutilisable partout */
+    .text-white {
+      color: #ffffff;
+    }
+
+    .text-white--block {
+      display: block;
+      margin-top: 0.35em;
+    }
+
+    .text-bold {
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    /* SHOWCASE MIDIPILE — pas de backdrop-filter (perf + évite scintillement sur fond animé) */
+    .showcase-block {
+      margin-top: 3rem;
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.045);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .showcase-visual {
+      background: #1a1c29;
+      /* Plus moderne / smartphone-like : 5:4 (plus haut que le 16:9) */
+      aspect-ratio: 5/4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--glass-border);
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Embed Needle : pleine largeur, ratio 3:2 (tablette + desktop) */
+    .showcase-visual.embedded {
+      width: 100%;
+      max-width: 100%;
+      aspect-ratio: 3 / 2;
+    }
+
+    /* Téléphone étroit : carré 1:1 */
+    @media (max-width: 640px) {
+      .showcase-visual.embedded {
+        aspect-ratio: 1 / 1;
+      }
+    }
+
+    @media (min-width: 641px) and (max-width: 1024px) {
+      #defi .pullquote {
+        margin: 2.5rem 0 1.25rem;
+      }
+
+      .showcase-footer {
+        padding: 1.1rem 1.25rem;
+        gap: 1rem;
+      }
+    }
+
+    .showcase-visual::after {
+      content: 'Espace Démonstrateur WebXR';
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+    }
+
+    /* Embed Midipile (Needle) */
+    .showcase-visual.embedded::after {
+      content: '';
+    }
+
+    .showcase-visual iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: transparent;
+    }
+
+    .showcase-footer {
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.2);
+      gap: 1rem 1.5rem;
+    }
+
+    .showcase-info {
+      flex: 1 1 auto;
+      min-width: min(100%, 12rem);
+    }
+
+    .showcase-footer .showcase-link {
+      flex-shrink: 0;
+    }
+
+    .showcase-info h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.3rem;
+    }
+
+    .showcase-info p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .showcase-link {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      padding: 0.8rem 1.8rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(59, 104, 255, 0.3);
+    }
+
+    .showcase-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(59, 104, 255, 0.5);
+    }
+
+    /* FRICTION CARDS */
+    .friction-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .friction-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+      backdrop-filter: blur(10px);
+    }
+
+    .friction-card:hover {
+      background: var(--glass-bg-hover);
+      border-color: var(--glass-border-highlight);
+      transform: translateY(-5px);
+    }
+
+    .friction-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--accent-pink);
+      box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1);
+    }
+
+    /* Dégradé actif sur les pictos des 3 frictions : 0% / 50% / 100% */
+    .friction-card:nth-child(1) .friction-icon {
+      color: var(--accent-blue-light);
+      box-shadow: inset 0 0 20px rgba(123, 156, 255, 0.14);
+    }
+
+    .friction-card:nth-child(2) .friction-icon {
+      color: color-mix(in srgb, var(--accent-blue-light) 50%, var(--accent-pink));
+      box-shadow: inset 0 0 20px rgba(168, 113, 247, 0.14);
+    }
+
+    .friction-card:nth-child(3) .friction-icon {
+      color: var(--accent-pink);
+      box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.14);
+    }
+
+    .friction-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: .8rem;
+      line-height: 1.4;
+    }
+
+    .friction-card p {
+      font-size: .95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .friction-card p + p {
+      margin-top: 0.4em;
+    }
+
+    .friction-card p.text-white {
+      color: #ffffff;
+    }
+
+    /* EPISODES */
+    .episodes {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .episodes::before {
+      content: '';
+      position: absolute;
+      left: 44px;
+      top: 3rem;
+      bottom: 3rem;
+      width: 2px;
+      background: var(--glass-border);
+    }
+
+    /* Ligne verticale : desktop uniquement (souvent mal alignée sur tablette / mobile) */
+    @media (max-width: 1024px) {
+      .episodes::before {
+        display: none;
+      }
+    }
+
+    .episode {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      padding: 1.5rem 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ep-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--bg-base);
+      border: 2px solid var(--glass-border-highlight);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: .9rem;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      box-shadow: 0 0 0 6px var(--bg-base);
+    }
+
+    .ep-num.active {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: #fff;
+      box-shadow: 0 0 0 6px var(--bg-base), 0 0 20px var(--accent-blue);
+    }
+
+    .ep-num.live {
+      /* Étape 4 : tons Team for the Planet (alignés bandeau + carte étape 4) */
+      background: linear-gradient(155deg, var(--tftp-green-800) 0%, var(--tftp-green-600) 55%, #0d9488 100%);
+      border-color: rgba(110, 231, 183, 0.65);
+      color: var(--tftp-mint-50);
+      box-shadow:
+        0 0 0 6px var(--bg-base),
+        0 0 22px rgba(52, 211, 153, 0.45),
+        0 0 40px rgba(5, 150, 105, 0.2);
+    }
+
+    .ep-content h4 {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text-main);
+      margin-bottom: .4rem;
+    }
+
+    .ep-content p {
+      font-size: .95rem;
+      color: var(--text-muted);
+      margin: 0;
+      max-width: none;
+    }
+
+    .ep-vote {
+      display: inline-block;
+      margin-top: .8rem;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent-pink);
+      background: rgba(217, 70, 239, 0.1);
+      border: 1px solid rgba(217, 70, 239, 0.2);
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    .ep-engagement-list {
+      list-style: none;
+      margin: 1.1rem 0 0;
+      padding: 0;
+      max-width: 38rem;
+    }
+
+    .ep-engagement-list li {
+      position: relative;
+      padding-left: 1.1rem;
+      font-size: .9rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: .55rem;
+    }
+
+    .ep-engagement-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .ep-engagement-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.62em;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--tftp-green-400), var(--tftp-green-600));
+      opacity: 0.95;
+    }
+
+    .ep-engagement-list strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    /* LEVELS & COUNTERPARTS */
+    .levels {
+      display: grid;
+      /* 3 colonnes alignées pour comparer les niveaux */
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    /* Options : tunnel mobile horizontal (scroll vertical -> translateX) */
+    #options .options-scroll {
+      position: relative;
+    }
+
+    #options .options-sticky {
+      width: 100%;
+    }
+
+    #options .options-track {
+      will-change: transform;
+    }
+
+    @media (max-width: 767px) {
+      #options {
+        --options-card-w: clamp(320px, 86vw, 360px);
+        /* L'ancrage (#options) ne doit pas laisser le sticky trop bas */
+        scroll-margin-top: 6.25rem;
+      }
+
+      #options .options-scroll {
+        height: 200vh; /* tunnel vertical ~200vh */
+      }
+
+      #options .options-sticky {
+        position: sticky;
+        /* Un peu moins bas pour garder la carte complète visible */
+        top: 6.25rem;
+        /* Masque horizontal uniquement (évite de "couper" la carte en bas) */
+        overflow-x: hidden;
+        overflow-y: visible;
+        padding-bottom: 0;
+      }
+
+      @media (max-width: 640px) {
+        #options .options-sticky {
+          top: 5.75rem;
+        }
+        #options {
+          scroll-margin-top: 5.75rem;
+        }
+      }
+
+      /* Track horizontal (3 cartes côte à côte) */
+      #options .levels {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 1.1rem;
+        margin-top: 0.85rem;
+        width: max-content;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+
+      #options .level-card {
+        flex: 0 0 var(--options-card-w);
+        padding: 1.6rem;
+        border-radius: 14px;
+      }
+
+      #options .level-bullets {
+        font-size: 0.88rem;
+      }
+
+      #options .level-bullets li {
+        margin-bottom: 0.32rem;
+      }
+
+      #options .level-tags {
+        margin-top: 1.1rem;
+        gap: 6px;
+      }
+
+      #options .level-price--bottom {
+        margin-top: 1rem;
+      }
+    }
+
+    @media (max-width: 1000px) {
+      .levels {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .levels {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .level-card {
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 2rem;
+      background: var(--glass-bg);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s, border-color 0.3s;
+      /* Alignement vertical des blocs (tags et prix) sur les 3 colonnes */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .level-card:hover {
+      border-color: var(--glass-border-highlight);
+      transform: translateY(-5px);
+    }
+
+    .level-card.featured {
+      border-color: rgba(59, 104, 255, 0.5);
+      background: linear-gradient(180deg, rgba(59, 104, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+      box-shadow: 0 10px 30px rgba(59, 104, 255, 0.1);
+    }
+
+    .level-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .level-badge {
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
+    .badge-green {
+      background: var(--green-bg);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      color: var(--green);
+    }
+
+    .badge-blue {
+      background: rgba(59, 104, 255, 0.15);
+      border: 1px solid rgba(59, 104, 255, 0.3);
+      color: var(--accent-blue-light);
+    }
+
+    .badge-purple {
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      color: #c4a8ff;
+    }
+
+    .level-price {
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--text-main);
+    }
+
+    .level-price span {
+      font-size: .9rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .level-price--bottom {
+      display: block;
+      text-align: center;
+      margin-top: 1.6rem;
+    }
+
+    /* La zone de contenu (liste ou paragraphe) doit occuper l'espace restant
+       pour aligner tags + prix sur les 3 cartes (comparaison). */
+    .level-bullets {
+      flex: 1 1 auto;
+    }
+
+    .level-card > p {
+      flex: 1 1 auto;
+    }
+
+    .level-card h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: .6rem;
+    }
+
+    .level-card p {
+      font-size: .9rem;
+      color: var(--text-muted);
+      margin: 0;
+      max-width: none;
+      line-height: 1.6;
+    }
+
+    .level-bullets {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: .9rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .level-bullets li {
+      position: relative;
+      padding-left: 1.75rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .level-bullets li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Encoche « validé » : cadre + coche verte */
+    .level-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.32em;
+      /* Sans le carré arrondi derrière : on ne garde que le symbole ✓ (::after) */
+      width: 0;
+      height: 0;
+      border-radius: 4px;
+      background: transparent;
+      border: 0;
+      box-sizing: border-box;
+    }
+
+    .level-bullets li::after {
+      content: '\2713';
+      position: absolute;
+      left: 0.2rem;
+      /* Centrage vertical : aligné avec la hauteur réelle de la ligne */
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.62rem;
+      line-height: 1;
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .level-tags {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .level-tag {
+      font-size: .75rem;
+      color: var(--text-muted);
+      border: 1px solid var(--glass-border);
+      border-radius: 100px;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .counterparts {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .counter-block {
+      padding: 1.8rem;
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s;
+    }
+
+    .counter-block:hover {
+      transform: translateY(-5px);
+      background: var(--glass-bg-hover);
+    }
+
+    .counter-label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    /* Couleurs des "titres" (counter-label) calées sur le dégradé du header (bleu→pink) */
+    .c1 .counter-label {
+      /* 0% */
+      color: var(--accent-blue-light);
+    }
+
+    .c2 .counter-label {
+      /* 50% */
+      color: color-mix(in srgb, var(--accent-blue-light) 50%, var(--accent-pink));
+    }
+
+    .c3 .counter-label {
+      /* 100% */
+      color: var(--accent-pink);
+    }
+
+    .counter-block h4 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: .8rem;
+    }
+
+    .counter-block ul {
+      padding-left: 1.2rem;
+    }
+
+    .counter-block li {
+      font-size: .9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 0.4rem;
+    }
+
+    /* QUOTE */
+    .pullquote {
+      margin: 4rem 0 2rem;
+      padding: 2.5rem 3rem;
+      border-left: 4px solid var(--accent-blue);
+      background: linear-gradient(90deg, rgba(59, 104, 255, 0.1) 0%, transparent 100%);
+      border-radius: 0 16px 16px 0;
+    }
+
+    .pullquote p {
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--text-main);
+      max-width: 650px;
+      line-height: 1.6;
+      margin: 0;
+      font-weight: 300;
+    }
+
+    .pullquote cite {
+      display: block;
+      margin-top: 1.2rem;
+      font-size: .9rem;
+      font-style: normal;
+      color: var(--accent-blue-light);
+      font-weight: 500;
+    }
+
+    /* FAQ */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+      margin-top: 2rem;
+    }
+
+    .faq-item {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 1.05rem 0.95rem;
+      /* Notion-like : indent réponse = icône + gap */
+      --faq-icon-size: 22px;
+      --faq-icon-gap: 0.75rem;
+      --faq-indent: calc(var(--faq-icon-size) + var(--faq-icon-gap));
+      transition: background 0.35s ease, padding 0.35s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .faq-item:hover {
+      background: var(--glass-bg-hover);
+      /* Pas de décalage au hover : évite l'effet "slide" lors du passage souris */
+      transform: none;
+    }
+
+    .faq-item.open:hover {
+      /* Evite le décalage pendant l’agrandissement accordéon */
+      transform: none;
+    }
+
+    .faq-head {
+      display: flex;
+      align-items: center;
+      gap: var(--faq-icon-gap);
+      padding-bottom: 0.25rem; /* remplace le margin-bottom du h4 (flex) */
+    }
+
+    .faq-icon {
+      width: var(--faq-icon-size);
+      height: var(--faq-icon-size);
+      flex: 0 0 var(--faq-icon-size);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-blue-light);
+    }
+
+    .faq-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Ajuste micro-calage vertical : le titre doit être aligné avec le picto */
+    .faq-head h4 {
+      margin: 0;
+      transform: none;
+      line-height: 1.25;
+    }
+
+    /* FAQ repliées : réduction (y compris en desktop) */
+    .faq-item:not(.open) {
+      padding: 1.05rem 0.95rem;
+    }
+
+    .faq-item:not(.open) h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+
+    .faq-item h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0;
+      transition: margin-bottom 0.35s ease;
+    }
+
+    .faq-item p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin: 0;
+      max-width: none;
+      line-height: 1.6;
+      padding-left: var(--faq-indent);
+
+      /* Accordéon : réponse cachée par défaut — mêmes durées pour éviter l'à-coup */
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      /* En replié, pas de translation : évite des différences de rendu haut/bas */
+      transform: translateY(0);
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .faq-item.open h4 {
+      margin-bottom: 0;
+    }
+
+    .faq-item.open p {
+      /* Valeur suffisamment grande pour contenir la réponse */
+      max-height: 9999px;
+      opacity: 1;
+      transform: translateY(0);
+      overflow: visible;
+    }
+
+    /* Léger espace entre paragraphes consécutifs dans une FAQ ouverte */
+    .faq-item.open p + p {
+      margin-top: 0.35em;
+    }
+
+    /* Listes dans la FAQ : même style que les paragraphes + masquées tant que la FAQ est repliée */
+    .faq-item ul {
+      margin: 0;
+      /* Décale les puces d'un cran vers la droite vs paragraphes */
+      padding-left: calc(var(--faq-indent) + 0.7rem);
+      list-style: disc;
+      color: var(--text-muted);
+
+      /* Accordéon : contenu caché */
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      /* En replié, pas de translation : évite des différences de rendu haut/bas */
+      transform: translateY(0);
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .faq-item ul li {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .faq-item ul li::marker {
+      color: var(--text-muted);
+    }
+
+    /* Desktop : texte un peu plus grand (sans toucher au mobile) */
+    @media (min-width: 768px) {
+      .faq-item:not(.open) h4 {
+        font-size: 1.05rem;
+      }
+
+      .faq-item h4 {
+        font-size: 1.05rem;
+      }
+
+      .faq-item p {
+        font-size: 1.02rem;
+      }
+
+      .faq-item ul li {
+        font-size: 1.02rem;
+      }
+    }
+
+    .faq-item.open ul {
+      /* Valeur suffisamment grande pour contenir la liste */
+      max-height: 9999px;
+      opacity: 1;
+      transform: translateY(0);
+      overflow: visible;
+      /* Espace entre la liste et le paragraphe qui suit */
+      margin-bottom: 0.35em;
+    }
+
+    /* FAQ repliées : réduire la hauteur sur smartphone */
+    @media (max-width: 767px) {
+      .faq-item {
+        --faq-icon-size: 20px;
+        --faq-icon-gap: 0.6rem;
+      }
+
+      .faq-grid {
+        gap: 0.85rem;
+        margin-top: 2rem;
+      }
+
+      .faq-item {
+        padding: 1.05rem 0.95rem;
+        border-radius: 10px;
+      }
+
+      .faq-item h4 {
+        font-size: 0.95rem;
+        margin-bottom: 0;
+      }
+
+      .faq-item.open h4 {
+        margin-bottom: 0;
+      }
+    }
+
+    /* CTA & FOOTER */
+    /* FAQ : section pleine largeur (le .section seul est max-width 900px — sinon le fond = « bloc noir » au centre) */
+    #faq {
+      position: relative;
+      z-index: 1;
+      max-width: none;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      padding-bottom: clamp(6rem, 14vw, 10rem);
+      box-sizing: border-box;
+      background: transparent;
+    }
+
+    /* Fondu bas pleine largeur vers la zone contact (aligné sur .contact-section-wrap::after) */
+    #faq::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: clamp(12rem, 32vw, 24rem);
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 26%,
+        rgba(10, 11, 20, 0.2) 40%,
+        rgba(10, 11, 20, 0.52) 58%,
+        rgba(10, 11, 20, 0.82) 78%,
+        var(--bg-base) 100%
+      );
+    }
+
+    #faq > .section {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Fond global (carte uniquement) : même image hero que le hero — au-dessus du FAQ en zone de chevauchement */
+    .contact-section-wrap {
+      position: relative;
+      z-index: 2;
+      /* Chevauchement un peu plus large pour fondre la jointure DOM */
+      margin-top: calc(-1 * clamp(2.4rem, 5.8vw, 4.1rem));
+      padding: calc(clamp(2.4rem, 7.4vw, 4.8rem) + clamp(2.4rem, 5.8vw, 4.1rem)) 0 clamp(2.8rem, 8.2vw, 5.2rem);
+      overflow: hidden;
+      isolation: isolate;
+      border-radius: 0;
+    }
+
+    /* Image pleine surface : pas de mask (évite le « saut » clair/sombre au premier pixel visible) */
+    .contact-section-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-color: var(--bg-base);
+      background-image: url('assets/hero-bg-atmosphere.webp');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+
+    /*
+      Voile : fondu long en haut (même teinte que FAQ / page) → image lisible au centre ;
+      pas d’assombrissement en bas (retiré sur demande).
+    */
+    .contact-section-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      /* 0 % = même --bg-base que la fin du fondu FAQ, puis ouverture vers l’image */
+      background: linear-gradient(
+        to bottom,
+        var(--bg-base) 0%,
+        rgba(10, 11, 20, 0.88) 9%,
+        rgba(10, 11, 20, 0.55) 20%,
+        rgba(10, 11, 20, 0.22) 34%,
+        rgba(10, 11, 20, 0.07) 52%,
+        rgba(10, 11, 20, 0.06) 100%
+      );
+    }
+
+    /* Bandeau contact : aspect d’origine (carte dégradée + halo léger) */
+    .cta-section {
+      margin: 0 3rem 0;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(59, 104, 255, 0.2), rgba(217, 70, 239, 0.2));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 5rem 3rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 0.6fr 1.3fr;
+      align-items: center; /* centre vertical gauche */
+      column-gap: 1.9rem;
+    }
+
+    .cta-photo-wrap {
+      display: flex;
+      align-items: center; /* centre vertical */
+      justify-content: center;
+      justify-self: center;
+    }
+
+    .cta-photo {
+      width: clamp(130px, 18.5vw, 210px);
+      height: auto;
+      border-radius: 999px; /* portrait rond */
+      display: block;
+      box-shadow: 0 3px 14px rgba(59, 104, 255, 0.38), 0 0 24px rgba(139, 92, 246, 0.2);
+    }
+
+    .cta-content {
+      text-align: left; /* texte colonne droite aligné à gauche */
+      justify-self: start;
+      --cta-stack-gap: 1.1rem; /* gap uniforme eyebrow -> texte -> boutons */
+    }
+
+    .cta-content .cta-lead {
+      margin: 0 0 var(--cta-stack-gap) !important;
+    }
+
+    .cta-content .cta-eyebrow {
+      margin: 0 0 var(--cta-stack-gap) !important;
+    }
+
+    .cta-content .cta-social {
+      justify-content: flex-start;
+    }
+
+    .bullets {
+      list-style: none;
+      margin: 0 0 var(--cta-stack-gap);
+      padding: 0;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .bullets li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      line-height: 1.45;
+    }
+
+    .bullets li svg {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+      color: var(--accent-blue-light);
+    }
+
+    @media (max-width: 767px) {
+      .masthead-inner {
+        --masthead-text-size: 0.9rem; /* header légèrement plus petit sur smartphone */
+      }
+
+      .cta-grid {
+        grid-template-columns: 1fr;
+        row-gap: 1.75rem;
+      }
+
+      .cta-photo-wrap {
+        order: 1;
+      }
+
+      .cta-content {
+        order: 2;
+      }
+
+      .cta-content .cta-lead {
+        margin: 0 0 var(--cta-stack-gap);
+      }
+
+      .cta-content .cta-eyebrow {
+        margin: 0 0 var(--cta-stack-gap);
+      }
+
+      .cta-content .cta-social {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 0.75rem 1rem;
+      }
+
+      .cta-content .cta-social a {
+        order: 2;
+      }
+
+      .cta-content .cta-social a.cta-social__btn--calendar {
+        order: 1;
+        justify-self: start;
+      }
+
+      .cta-section h2 {
+        font-size: 2.05rem;
+        line-height: 1.08;
+        margin-bottom: 0.95rem;
+      }
+    }
+
+    /* Mobile étroit : CTA sur la première ligne, 3 icônes en dessous */
+    @media (max-width: 540px) {
+      .cta-content .cta-social {
+        display: grid;
+        grid-template-columns: repeat(3, 48px);
+        grid-auto-rows: 48px;
+      }
+
+      .cta-content .cta-social a.cta-social__btn--calendar {
+        grid-column: 1 / -1;
+      }
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      z-index: 0;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .cta-section > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-section h2 {
+      font-weight: 700;
+      font-size: 2.4rem;
+      color: #fff;
+      margin-bottom: 1.2rem;
+      letter-spacing: -.02em;
+    }
+
+    .cta-section .cta-lead {
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 540px;
+      margin: 0 auto 1rem;
+      font-size: 1.1rem;
+    }
+
+    .cta-eyebrow {
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(230, 236, 255, 0.92);
+      margin: 0 auto 2.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .cta-social {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem 1.25rem;
+    }
+
+    .cta-social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      color: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      text-decoration: none;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+    }
+
+    .cta-social a:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.28);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .cta-social a svg {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .cta-social a.cta-social__btn--calendar {
+      width: auto;
+      min-width: max-content;
+      padding: 0 clamp(0.65rem, 1.15vw, 0.95rem);
+      gap: 0.5rem;
+      border-radius: 12px;
+      font-size: var(--masthead-text-size, 0.95rem);
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      box-shadow: 0 3px 14px rgba(59, 104, 255, 0.38);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+
+    .cta-social a.cta-social__btn--calendar:hover {
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 20px rgba(59, 104, 255, 0.5);
+    }
+
+    .cta-social a.cta-social__btn--calendar svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .footer {
+      position: relative;
+      z-index: 2;
+      padding: 3rem;
+      margin-top: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      background: var(--bg-base);
+    }
+
+    .footer p {
+      font-size: .85rem;
+      color: var(--text-muted);
+      margin: 0;
+      max-width: none;
+    }
+
+    /* RESPONSIVE & MOBILE MENU */
+    @media (max-width: 950px) {
+      /* Même gouttière qu’au bandeau (masthead-inner ≈ 100vw − 2rem → 1rem de chaque côté) */
+      .masthead {
+        padding: 1rem 1rem 0.5rem;
+      }
+
+      /* overlap ≥ hauteur réelle du masthead : sinon bande --bg-base entre bandeau et dégradé hero */
+      .hero-wrapper {
+        --masthead-row-overlap: clamp(5.85rem, 17vw, 7.35rem);
+      }
+
+      .masthead-inner {
+        width: 100%;
+        max-width: min(900px, calc(100vw - 2rem));
+        --masthead-pad-trb: 0.5rem;
+        --masthead-pad-x-start: calc(var(--masthead-pad-trb) + 0.15rem);
+        --masthead-shell-radius: calc(var(--masthead-burger-radius) + var(--masthead-pad-trb));
+        padding: var(--masthead-pad-trb) var(--masthead-pad-trb) var(--masthead-pad-trb) var(--masthead-pad-x-start);
+      }
+
+      /* CTA uniquement dans le panneau menu (plus dans la barre) — reprend style plein écran, pas le carré desktop */
+      .main-nav .masthead-cta {
+        height: auto;
+        min-height: unset;
+        letter-spacing: 0.06em;
+        padding: 0.9rem 1.75rem;
+        margin-top: 0.25rem;
+        border-radius: 12px;
+      }
+
+      .burger {
+        display: flex;
+      }
+
+      .main-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        margin: 0;
+        padding: 2rem 1.5rem;
+        box-sizing: border-box;
+        background: transparent;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+        transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1), visibility 0.4s step-end;
+        z-index: 150;
+        isolation: isolate;
+        visibility: hidden;
+      }
+
+      /* Menu mobile : flou modéré (56px = très coûteux sur GPU mobile) */
+      .main-nav::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background: rgba(10, 11, 20, 0.88);
+        backdrop-filter: blur(22px) saturate(150%);
+        -webkit-backdrop-filter: blur(22px) saturate(150%);
+        transform: translateZ(0);
+      }
+
+      .main-nav.menu-open {
+        right: 0;
+        visibility: visible;
+        transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1), visibility 0s;
+      }
+
+      /* Même taille et interligne que le CTA (référence) pour tout le panneau */
+      .main-nav .nav-link,
+      .main-nav .masthead-cta {
+        font-size: 1.05rem;
+        line-height: 1.25;
+      }
+
+      .main-nav .nav-link {
+        position: relative;
+        z-index: 1;
+        font-weight: 600;
+      }
+
+      .main-nav .masthead-cta {
+        position: relative;
+        z-index: 1;
+      }
+
+      .main-nav .nav-link::after,
+      .main-nav .masthead-cta::after {
+        display: none;
+      }
+
+      /* Enlever la ligne de soulignement sur mobile */
+
+      /* Liens du menu plein écran : même arbre qu’avant le wrapper (display:contents) */
+      .main-nav-links {
+        display: contents;
+      }
+    }
+
+    /* Desktop : liens centrés dans l’espace entre logo et CTA — pill plus large (~85 %) + padding vertical généreux (réf. maquette) */
+    @media (min-width: 951px) {
+      .hero {
+        /* Compensation : on augmente l'overlap du hero-wrapper ci-dessous,
+           puis on restitue la même distance visuelle header -> eyebrow */
+        padding-top: calc(clamp(2.1rem, 3.85vh, 2.75rem) - 1rem);
+        --hero-fs-h1: clamp(2.2rem, 3.05vw, 3.25rem);
+      }
+
+      .masthead {
+        padding: 1.1rem 1.25rem 0.75rem;
+      }
+
+      .masthead-inner {
+        display: grid;
+        /* Logo | liens centrés | CTA (le burger est display:none) */
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: clamp(0.75rem, 2vw, 1.75rem);
+        max-width: min(1120px, calc(85vw - 2rem));
+        --masthead-burger-size: 46px;
+        --masthead-text-size: 0.98rem;
+        --masthead-pad-trb: 0.72rem;
+        --masthead-pad-x-start: calc(var(--masthead-pad-trb) + 0.2rem);
+        --masthead-shell-radius: calc(var(--masthead-burger-radius) + var(--masthead-pad-trb));
+        padding: var(--masthead-pad-trb) var(--masthead-pad-trb) var(--masthead-pad-trb) var(--masthead-pad-x-start);
+      }
+
+      /* Chevauchement hero sous le bandeau + nav sticky (hauteur augmente avec la pill) */
+      .hero-wrapper {
+        --masthead-row-overlap: calc(clamp(6rem, 12.5vh, 7.5rem) + 0.9rem);
+      }
+
+      .masthead-brand {
+        grid-column: 1;
+      }
+
+      .main-nav {
+        display: contents;
+      }
+
+      .main-nav-links {
+        grid-column: 2;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: clamp(1rem, 2vw, 1.75rem);
+        min-width: 0;
+        /* Au-dessus de .masthead-bg (dernier dans le DOM, plein cadre z-index:0) */
+        position: relative;
+        z-index: 2;
+      }
+
+      .main-nav .masthead-cta {
+        grid-column: 3;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .hero {
+        --hero-fs-h1: clamp(1.95rem, 6vw, 2.35rem);
+        --hero-fs-lead: 1.05rem;
+        --hero-fs-meta-value: clamp(1.26rem, 4vw, 1.42rem);
+        --hero-lh-lead: 1.65;
+        /* Nav / bandeau → eyebrow ; gouttières minimales pour header / lead / meta / logos */
+        padding: clamp(2.2rem, 5.5vw, 2.75rem) clamp(0.5rem, 2.5vw, 0.75rem) clamp(3rem, 8vw, 3.75rem);
+      }
+
+      .section {
+        padding: 4rem 1.5rem;
+      }
+
+      /* Titres (toutes sections) : réduction légère sur smartphone */
+      .section-number {
+        font-size: 0.74rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .section h2 {
+        font-size: 2.0rem;
+        margin-bottom: 1.05rem;
+      }
+
+      .contact-section-wrap {
+        margin-top: calc(-1 * clamp(1.6rem, 4.8vw, 2.8rem));
+        padding: calc(2.1rem + clamp(1.6rem, 4.8vw, 2.8rem)) 0 1rem;
+      }
+
+      #faq {
+        padding-bottom: 4.5rem;
+      }
+
+      .cta-section {
+        padding: 3.25rem 1.5rem 4rem; /* moins d'espace au-dessus de la photo */
+        margin: 0 1rem 0;
+        border-radius: 16px;
+      }
+
+      .footer {
+        padding: 2rem 1.5rem;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .exclusive-banner {
+        padding: .6rem 1.5rem;
+        text-align: center;
+      }
+
+      /* Footer showcase : une ligne texte + bouton (colonne seulement très étroit) */
+      .showcase-footer {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .hero-title-sub {
+        font-size: clamp(1.25rem, 4.2vw, 1.85rem);
+        font-weight: 500;
+        max-width: 100%;
+        padding: 0 0.25rem;
+      }
+
+      .episode {
+        gap: 1rem;
+      }
+
+      .ep-num {
+        width: 24px;
+        height: 24px;
+        font-size: .8rem;
+      }
+    }
+
+    /* Initial Load Animations for Hero */
+    @keyframes fadeUpInit {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1,
+    .hero-lead,
+    .hero-mockup,
+    .hero-meta,
+    .hero-cta,
+    .hero-trusted {
+      animation: fadeUpInit .8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .hero-lead {
+      animation-delay: .15s;
+    }
+
+    .hero-cta {
+      animation-delay: .19s;
+    }
+
+    .hero-mockup {
+      animation-delay: .24s;
+    }
+
+    .hero-meta {
+      animation-delay: .3s;
+    }
+
+    .hero-trusted {
+      animation-delay: .36s;
+    }
+
+    /* ── STICKY STEPS (#modele) ──────────────────────────────────── */
+    .section--wide {
+      max-width: 1100px;
+    }
+
+    #modele {
+      /* Défilement ancre (#modele) : aligné sur scroll-padding-top de `html` */
+      --sticky-nav-offset: 7.75rem;
+      scroll-margin-top: var(--sticky-nav-offset);
+    }
+
+    @media (min-width: 951px) {
+      #modele {
+        --sticky-nav-offset: 8.25rem;
+        scroll-margin-top: var(--sticky-nav-offset);
+      }
+    }
+
+    @media (max-width: 640px) {
+      #modele {
+        --sticky-nav-offset: 6.75rem;
+        scroll-margin-top: var(--sticky-nav-offset);
+      }
+    }
+
+    @media (min-width: 641px) and (max-width: 1024px) {
+      #modele {
+        --sticky-nav-offset: 9rem;
+        scroll-margin-top: var(--sticky-nav-offset);
+      }
+    }
+
+    .sticky-steps {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 4.5rem;
+      align-items: start;
+      margin-top: 3rem;
+    }
+
+    /* Colonne gauche : hauteur = zone utile du viewport, texte centré verticalement pendant tout le défilement des étapes */
+    .sticky-steps__left {
+      position: sticky;
+      align-self: start;
+      top: var(--sticky-nav-offset);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: calc(100vh - var(--sticky-nav-offset));
+      max-height: calc(100vh - var(--sticky-nav-offset));
+      box-sizing: border-box;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    @supports (height: 100svh) {
+      .sticky-steps__left {
+        min-height: calc(100svh - var(--sticky-nav-offset));
+        max-height: calc(100svh - var(--sticky-nav-offset));
+      }
+    }
+
+    /* Même langage que .hero-eyebrow, placé après le texte descriptif */
+    .sticky-steps__webxr-label {
+      margin-top: 1.25rem;
+      margin-bottom: 0;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-blue-light);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(59, 104, 255, 0.15);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      border: 1px solid rgba(59, 104, 255, 0.3);
+    }
+
+    .sticky-steps__desc {
+      margin-top: 0;
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .sticky-steps__desc.text-white {
+      color: #ffffff;
+    }
+
+    .sticky-steps__right {
+      display: flex;
+      flex-direction: column;
+      padding-top: 0.1rem;
+    }
+
+    /* ── Step card ── */
+    .step-card {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 1.5rem;
+      padding: 2rem 0 2rem 1.25rem;
+      border-top: 1px solid var(--glass-border);
+      position: relative;
+      transition: border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .step-card:last-child {
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    /* Barre de progression latérale */
+    .step-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: transparent;
+      transition: background 0.5s ease;
+      border-radius: 2px;
+    }
+
+    .step-card.is-active::before {
+      background: linear-gradient(180deg, var(--accent-blue-light), var(--accent-purple));
+    }
+
+    .step-card[data-step="4"].is-active::before {
+      background: linear-gradient(180deg, var(--tftp-green-400), var(--tftp-green-800));
+    }
+
+    /* Bulle numérotée */
+    .step-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      opacity: 0.4;
+      transition:
+        opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .step-card.is-active .step-num {
+      opacity: 1;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      border-color: transparent;
+      color: #fff;
+      box-shadow: 0 0 22px rgba(59, 104, 255, 0.35);
+    }
+
+    .step-card[data-step="4"].is-active .step-num {
+      background: linear-gradient(155deg, var(--tftp-green-800) 0%, var(--tftp-green-600) 55%, #0d9488 100%);
+      border-color: rgba(110, 231, 183, 0.65);
+      color: var(--tftp-mint-50);
+      box-shadow:
+        0 0 22px rgba(52, 211, 153, 0.42),
+        0 0 40px rgba(5, 150, 105, 0.22);
+    }
+
+    /* Corps de l'étape — atténuation globale hors active (transition type lerp) */
+    .step-body {
+      padding-top: 0.1rem;
+      opacity: 0.38;
+      transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .step-card.is-active .step-body {
+      opacity: 1;
+    }
+
+    .step-body h4 {
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.45rem;
+      line-height: 1.4;
+      transition: color 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .step-card.is-active .step-body h4 {
+      color: var(--text-main);
+    }
+
+    .step-body > p {
+      font-size: 0.93rem;
+      color: var(--text-muted);
+      margin: 0;
+      max-width: none;
+      line-height: 1.62;
+      transition: color 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Léger espace entre les 2 paragraphes de description dans les cartes "puces numérotées" */
+    .step-body > p + p {
+      margin-top: 0.28em;
+    }
+
+    .step-card.is-active .step-body > p {
+      color: rgba(220, 224, 248, 0.85);
+    }
+
+    /* Badge « vote » */
+    .step-badge {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent-pink);
+      background: rgba(217, 70, 239, 0.1);
+      border: 1px solid rgba(217, 70, 239, 0.22);
+      padding: 4px 12px;
+      border-radius: 100px;
+      opacity: 0;
+      transform: translateY(5px);
+      transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.06s,
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.06s;
+    }
+
+    .step-card.is-active .step-badge {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Liste engagement étape 4 */
+    .step-engagement {
+      list-style: none;
+      margin: 0.9rem 0 0;
+      padding: 0;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.08s,
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.08s;
+    }
+
+    .step-card.is-active .step-engagement {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .step-engagement li {
+      font-size: .88rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: .5rem;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .step-engagement li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.62em;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--tftp-green-400), var(--tftp-green-600));
+    }
+
+    .step-card[data-step="4"]:not(.is-active) .step-engagement li::before {
+      background: var(--gold-pastel-mid);
+      opacity: 0.5;
+    }
+
+    .step-engagement li:last-child { margin-bottom: 0; }
+    .step-engagement strong { color: var(--text-main); font-weight: 600; }
+
+    /* ── Responsive sticky steps ── */
+    @media (max-width: 900px) {
+      .sticky-steps {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .sticky-steps__left {
+        position: static;
+        min-height: 0;
+        max-height: none;
+        height: auto;
+        padding-top: 0;
+        justify-content: flex-start;
+        overflow: visible;
+      }
+
+      .step-card {
+        grid-template-columns: 40px 1fr;
+        gap: 1.2rem;
+        padding-left: 1rem;
+      }
+
+      .step-num {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        font-size: 0.72rem;
+      }
+    }
+  </style>
+
+</head>
+
+<body id="top">
+
+  <div class="site-top">
+  <div class="exclusive-banner">
+    <p><span class="exclusive-banner-star" aria-hidden="true">★</span> Offre exclusive Team for the Planet <img class="exclusive-banner-logo" src="assets/team-for-the-planet-logo.svg" alt="" /></p>
+  </div>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a href="#top" class="masthead-brand" aria-label="Fractalinnov — Retour en haut de la page">
+        <img src="assets/fractalinnov-logo.webp" alt="Fractalinnov" class="masthead-logo-img" loading="eager" decoding="async" />
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navigation principale">
+        <div class="main-nav-links">
+          <a href="#defi" class="nav-link">Le Défi</a>
+          <a href="#modele" class="nav-link">OpenInnov</a>
+          <a href="#conditions" class="nav-link">Conditions</a>
+          <a href="#options" class="nav-link">Options</a>
+          <a href="#faq" class="nav-link">FAQ</a>
+        </div>
+        <a href="#contact" class="masthead-cta">Contacter</a>
+      </nav>
+
+      <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="masthead-bg" aria-hidden="true"></div>
+    </div>
+  </header>
+  </div>
+
+  <div class="hero-wrapper">
+    <div class="hero-bg-image" aria-hidden="true"></div>
+    <!-- Dégradé bas du hero : avant canvas / overlay / contenu pour rester derrière (z-index 1) -->
+    <div class="hero-fade" aria-hidden="true"></div>
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <div class="hero-eyebrow">Programme Openinnov</div>
+          <h1>
+            <span class="hero-title-main">Ouvrez votre innovation<em>&nbsp;<br>à ceux qui veulent la comprendre</em></span>
+          </h1>
+          <p class="hero-lead">Votre rupture technologique mérite d'être comprise rapidement.</p>
+          <div class="hero-pillars" aria-label="Bénéfices du programme">
+            <div class="hero-pillar">
+              <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+              <div class="hero-pillar__text"><strong>Démonstrateur WebXR</strong>Création rapide et publique</div>
+            </div>
+
+            <div class="hero-pillar">
+              <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="7.5" r="2.3"></circle>
+                <path d="M7.8 16c.7-1.9 2.2-3.1 4.2-3.1s3.5 1.2 4.2 3.1"></path>
+                <circle cx="6.2" cy="9.2" r="1.6"></circle>
+                <circle cx="17.8" cy="9.2" r="1.6"></circle>
+                <path d="M3.8 16c.4-1.3 1.4-2.1 2.7-2.1"></path>
+                <path d="M20.2 16c-.4-1.3-1.4-2.1-2.7-2.1"></path>
+              </svg>
+              <div class="hero-pillar__text"><strong>Série publique co-orientée</strong>Évolution par votre communauté</div>
+            </div>
+
+            <div class="hero-pillar">
+              <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 12h8"></path>
+                <path d="M12 8v8"></path>
+              </svg>
+              <div class="hero-pillar__text"><strong>Compréhension facilitée</strong>Comprise en 30 secondes</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-cta">
+          <a href="#cta" class="hero-cta__btn">Participer à OpenInnov</a>
+        </div>
+
+        <!-- Vidéo plein cadre (object-fit: cover), centrée verticalement dans la grille comme la référence -->
+        <div class="hero-mockup" aria-hidden="true">
+          <div class="hero-mockup__screen">
+            <video class="hero-mockup__video" id="heroMockupVideo" muted playsinline loop preload="auto" autoplay poster="assets/hero-bg-atmosphere.webp">
+              <source src="assets/0329-opt.mp4" type="video/mp4">
+              <source src="assets/0329-opt.webm" type="video/webm">
+            </video>
+          </div>
+        </div>
+
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Budget requis</span>
+            <span class="hero-meta-value">0 €</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Création</span>
+            <span class="hero-meta-value">4 épisodes</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Temps équipe</span>
+            <span class="hero-meta-value">~5 min/ép.</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Résultat</span>
+            <span class="hero-meta-value hero-meta-value--stacked">
+              <span class="hero-meta-value__line">Démo live</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="hero-trusted">
+          <ul class="hero-trusted__logos" role="list">
+            <li>
+              <img src="assets/logo-valeo.webp" alt="Valeo" loading="lazy" decoding="async">
+            </li>
+            <li>
+              <img src="assets/logo-grdf.webp" alt="GRDF" loading="lazy" decoding="async">
+            </li>
+            <li>
+              <img src="assets/logo-midipile.webp" alt="Midipile" loading="lazy" decoding="async">
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <main class="page-rest">
+  <section id="defi" class="section">
+    <div class="section-number reveal">01 — Le défi</div>
+    <h2 class="reveal delay-100">Ce que vivent vos équipes terrain aujourd'hui</h2>
+    <p class="reveal delay-200">Vos équipements sont innovants. Mais dès que vos commerciaux quittent l'atelier, l'innovation devient invisible.&nbsp;<span class="text-white text-white--block">Et votre communauté ne sait pas encore qu'elle vous cherche.</span></p>
+
+    <div class="friction-grid">
+      <div class="friction-card reveal delay-100">
+        <div class="friction-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        <h3>L'innovation cachée sous la carrosserie</h3>
+        <p>Ce qui fait votre valeur (thermodynamique, mécanique interne, flux) est littéralement invisible en RDV ou en salon.</p>
+        <p class="text-white">Votre interlocuteur voit une boite, pas une rupture technologique.</p>
+      </div>
+      <div class="friction-card reveal delay-200">
+        <div class="friction-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <!-- Icône usine / bâtiment -->
+            <path d="M3 21h18"></path>
+            <path d="M6 21V10l6-4 6 4v11"></path>
+            <path d="M9 21v-7h6v7"></path>
+          </svg>
+        </div>
+        <h3>Le doute d'intégration qui bloque la décision</h3>
+        <p>Votre client veut savoir si l'équipement passe les portes, si les raccordements sont faisables.</p>
+        <p class="text-white">Sans réponse visuelle immédiate, il reporte. Le cycle s'allonge.</p>
+      </div>
+      <div class="friction-card reveal delay-300">
+        <div class="friction-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <!-- Icône véhicule logistique (camion) -->
+            <path d="M3 7h13v14H3z"></path>
+            <path d="M16 12h4l1 1v8h-5z"></path>
+            <circle cx="7.5" cy="20.5" r="2"></circle>
+            <circle cx="18.5" cy="20.5" r="2"></circle>
+          </svg>
+        </div>
+        <h3>Le gouffre logistique qui freine la croissance</h3>
+        <p>Chaque déplacement d'équipement pour une démonstration coûte de l'argent et du CO₂, deux ressources rares pour une startup en croissance.</p>
+        <p class="text-white">Et ça ne passe pas à l'échelle.</p>
+      </div>
+    </div>
+
+    <div class="pullquote reveal delay-100">
+      <p>"Ce qu'on ne comprends pas, on ne l'achète pas.&nbsp;<div>J<span style="font-size: 1.25rem; background-color: initial;">e transforme vos fichiers CAO en démonstrateurs WebXR interactifs, accessibles depuis n'importe quel smartphone, sans application à télécharger."</span></div></p>
+      <cite>Corentin Duboc • Ingénieur Icam • Expert 3D/WebXR</cite>
+    </div>
+
+    <div class="showcase-block reveal delay-200">
+      <div class="showcase-visual embedded">
+        <iframe
+          src="https://3d.midipile.eu/"
+          title="Midipile Mobility — WebXR"
+          loading="lazy"
+          allow="autoplay; fullscreen; xr-spatial-tracking; gamepad; microphone; camera"
+        ></iframe>
+      </div>
+      <div class="showcase-footer">
+        <div class="showcase-info">
+          <h4>Midipile Mobility | Démonstrateur WebXR</h4>
+          <p>Réalisé pour Team for the Planet · Sans application</p>
+        </div>
+        <a href="https://3d.midipile.eu" target="_blank" class="showcase-link">Ouvrir la démo live</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="modele" class="section section--wide">
+    <div class="sticky-steps">
+
+      <div class="sticky-steps__left">
+        <div class="section-number reveal">02 — Le modèle</div>
+        <h2 class="reveal delay-100">Comment fonctionne OpenInnov</h2>
+        <p class="sticky-steps__desc reveal delay-200">Une série LinkedIn en 4 épisodes où votre communauté vote pour orienter la création de votre démonstrateur.</p>
+        <p class="sticky-steps__desc reveal delay-200">Chaque vote est un signal : qui s'intéresse à votre innovation, depuis quel secteur, avec quelles préoccupations.</p>
+        <p class="sticky-steps__desc reveal delay-200 text-white">À la fin des 4 épisodes, vous n'avez pas seulement un démonstrateur, vous avez une cartographie de votre audience réelle.</p>
+      </div>
+
+      <div class="sticky-steps__right">
+        <div class="step-card" data-step="1">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <h4><span style="font-weight: normal;">Optimisation CAO | </span>Les coulisses de la pipeline</h4>
+            <p>Transformation de vos fichiers STEP en mesh 3D optimisé pour le web. Première publication LinkedIn avec les coulisses
+              du processus.</p>
+            <p><i>La Propriété Intellectuelle est validée avec vous avant tout partage public.</i></p>
+          </div>
+        </div>
+
+        <div class="step-card" data-step="2">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <h4><span style="font-weight: normal;">Vote communauté | </span>Quelle fonctionnalité en priorité ?</h4>
+            <p>Votre réseau choisit la prochaine étape : vue Rayons X, modularité interactive, ou audit spatial AR 1:1.</p>
+            <p><i>Chaque commentaire révèle qui s'intéresse à votre technologie et pourquoi, les premiers commentaires orientent davantage.</i></p>
+            <span class="step-badge">Vote pondéré</span>
+          </div>
+        </div>
+
+        <div class="step-card" data-step="3">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <h4><span style="font-weight: normal;">Création du choix |&nbsp; </span>Animation et interactions</h4>
+            <p>La fonctionnalité choisie par le vote est produite et intégrée.&nbsp;</p>
+            <p><i>Deuxième publication avec démonstration en conditions réelles.</i></p>
+          </div>
+        </div>
+
+        <div class="step-card" data-step="4">
+          <div class="step-num">04</div>
+          <div class="step-body">
+            <h4><span style="font-weight: normal;">Lancement live | </span>Votre démonstrateur est en ligne</h4>
+            <p>Publication du lien final accessible depuis n'importe quel smartphone. Votre équipement dans la poche de tous vos commerciaux.&nbsp;</p>
+            <p><i>La mise à jour est instantannée pour tous dès que votre produit évolue.</i></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="conditions" class="section">
+    <div class="section-number reveal">03 — Les conditions</div>
+    <h2 class="reveal delay-100">Ce qu'on construit ensemble</h2>
+    <p class="reveal delay-200 conditions-intro">OpenDemo repose sur un échange simple : je crée votre démonstrateur, vous mobilisez
+      votre communauté.</p>
+    <p class="reveal delay-200 conditions-intro">Pas de budget, pas de contrat lourd. </br>Une aventure commune construite sur la visibilité mutuelle.</p>
+
+    <div class="counterparts">
+      <div class="counter-block c1 reveal delay-100">
+        <div class="counter-label">Preuves sociales</div>
+        <h4>Ce que vous témoignez</h4>
+        <ul>
+          <li>Témoignage écrit du fondateur (5 à 8 lignes)</li>
+          <li>Recommandation LinkedIn officielle</li>
+          <li>Autorisation d'usage dans mon portfolio</li>
+        </ul>
+      </div>
+      <div class="counter-block c2 reveal delay-200">
+        <div class="counter-label">Mobilisation équipe</div>
+        <h4>L'action de vos équipes</h4>
+        <ul>
+          <li>10 collaborateurs votent à chaque épisode (~5 min)</li>
+          <li>Republication des posts avec commentaire</li>
+          <li>Tag Fractal Innov dans vos publications</li>
+        </ul>
+      </div>
+      <div class="counter-block c3 reveal delay-300">
+        <div class="counter-label">Contenu vidéo</div>
+        <h4>Ce qu'on co-produit</h4>
+        <ul>
+          <li>Interview fondateur 3 à 5 minutes</li>
+          <li>Publication conjointe LinkedIn</li>
+          <li>Autorisation de présentation en conférence (Laval Virtual, salons industrie)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="options" class="section section--wide">
+    <div class="options-scroll">
+      <div class="options-sticky">
+        <div class="section-number reveal">04 — Les options</div>
+        <h2 class="reveal delay-100">Choisissez votre niveau d'engagement</h2>
+        <p class="reveal delay-200 conditions-intro"><b>OpenInnov Public</b> donne accès au même démonstrateur que les niveaux supérieurs. <br>Les options payantes existent uniquement pour les entreprises qui ont une contrainte de temps ou de confidentialité.</p>
+
+        <div class="levels options-track">
+      <div class="level-card featured reveal delay-100">
+        <div class="level-header">
+          <span class="level-badge badge-green">Démo live</span>
+        </div>
+        <h3>OpenInnov Public</h3>
+        <ul class="level-bullets">
+          <li>Création publique en 4 épisodes</li>
+          <li>File d'attente libre</li>
+          <li>Résultat identique aux niveaux payants</li>
+          <li>Cartographie de votre audience&nbsp;</li>
+        </ul>
+        <div class="level-tags">
+          <span class="level-tag">Exclusif TFTP</span>
+          <span class="level-tag">Vote réseau</span>
+        </div>
+        <div class="level-price level-price--bottom">0 €<span> HT</span></div>
+      </div>
+
+      <div class="level-card reveal delay-200">
+        <div class="level-header">
+          <span class="level-badge badge-blue">Prioritaire</span>
+        </div>
+        <h3>File Prioritaire</h3>
+        <ul class="level-bullets">
+          <li>Démarage garanti sous 3 semaines</li>
+          <li>Format public identique</li>
+          <li>Créneau réservé même si un projet privé démarre en même temps</li>
+        </ul>
+        <div class="level-tags">
+          <span class="level-tag">Créneau réservé</span>
+          <span class="level-tag">Salon imminent</span>
+
+        </div>
+        <div class="level-price level-price--bottom">390 €<span> HT</span></div>
+      </div>
+
+      <div class="level-card reveal delay-300">
+        <div class="level-header">
+          <span class="level-badge badge-purple">Privé</span>
+        </div>
+        <h3>OpenDemo Privé</h3>
+        <ul class="level-bullets">
+          <li>Vote interne uniquement</li>
+          <li>Sans exposition publique pendant la création</li>
+          <li>Démarrage sous 2 semaines</li>
+        </ul>
+        <div class="level-tags">
+          <span class="level-tag">Confidentiel</span>
+          <span class="level-tag">Équipes internes</span>
+        </div>
+        <div class="level-price level-price--bottom">1 200 €<span> HT</span></div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="reveal delay-200 conditions-intro options-bottom-note"><em>Une contrainte de délai critique ? Salon imminent, levée de fonds, RDV décisif ?
+    <br>Un niveau Urgence est disponible avec livraison rapide. Contactez-moi directement.</em></p>
+
+  </section>
+
+  <section id="faq" aria-labelledby="faq-heading">
+    <div class="section">
+      <div class="section-number reveal">05 — FAQ</div>
+      <h2 id="faq-heading" class="reveal delay-100">Les questions qu'on se pose</h2>
+
+      <div class="faq-grid">
+        <div class="faq-item reveal delay-100">
+          <div class="faq-head">
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path
+                  d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                </path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+            </span>
+            <h4>Mes fichiers CAO sont-ils compatibles ?</h4>
+          </div>
+          <p>Oui. Je travaille à partir de la majorité des formats d'ingénierie standards (STEP, IGES, SolidWorks, Fusion 350).</p>
+          <p>Le format natif est converti et optimisé pour le web lors de la première étape.</p>
+        </div>
+        <div class="faq-item reveal delay-200">
+          <div class="faq-head">
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+            </span>
+            <h4>Comment ma Propriété Intellectuelle est-elle protégée ?</h4>
+          </div>
+          <p>C'est la première question que je tranche avec chaque fondateur, avant de toucher à quoi que ce soit.</p>
+          <p>Trois mécanismes concrets :</p>
+            <ul>
+              <li>Les pièces non nécessaires à la compréhension sont absentes de la scène, ce qui n'est pas visible ne peut pas être
+              exploité.</li>
+              <li>Les pièces sensibles visibles font l'objet d'une modification géométrique d'apparence : la forme est simplifiée ou
+              ajustée pour préserver la lisibilité pédagogique sans exposer la conception réelle. <br>Le résultat est visuellement
+              cohérent mais inexploitable pour la rétro-ingénierie.</li>
+              <li>La scène 3D complète est soumise à votre validation avant toute publication, avec un échange écrit de ce qui est
+              validé. <br>Vous avez un droit de regard et de veto sur chaque élément visible.</li>
+            </ul>
+            <p>Par construction, le processus d'optimisation CAO efface toutes les données techniques sensibles à l'import :
+            tolérances, nomenclatures, cotes de fabrication, références fournisseurs. <br>Ce qui reste est une enveloppe visuelle, fidèle à l'apparence, inutilisable pour copier votre produit.</p>
+        </div>
+        <div class="faq-item reveal delay-300">
+          <div class="faq-head">
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M10 2h4"></path>
+                <circle cx="12" cy="14" r="8"></circle>
+                <path d="M12 12v4l3 3"></path>
+              </svg>
+            </span>
+            <h4>Combien de temps ça prend à mon équipe ?</h4>
+          </div>
+          <p>Comptez en moyenne :</p>
+          <ul>
+            <li>30 minutes au démarrage pour l'échange initial et la validation PI</li>
+            <li>Environ 5 minutes par épisode pour relayer les publications LinkedIn</li>
+          </ul>
+          <p>L'essentiel du travail est de mon côté.</p>
+        </div>
+        <div class="faq-item reveal delay-300">
+          <div class="faq-head">
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <!-- drapeau -->
+                <path d="M5 22V2"></path>
+                <path d="M5 3h14l-2 4 2 4H5"></path>
+              </svg>
+            </span>
+            <h4>Que se passe-t-il si un projet urgent démarre pendant notre série ?</h4>
+          </div>
+          <p>Chaque épisode se termine toujours à la fin d'une itération complète — jamais suspendu en cours de boucle. Si un projet
+          privé urgent démarre entretemps, votre série est mise en pause à la fin de l'épisode en cours et reprend dès la
+          livraison.</p>
+          <p>Le délai vous est communiqué dès que possible.</p>
+        </div>
+        <div class="faq-item reveal delay-300">
+          <div class="faq-head">
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 5v14"></path>
+                <path d="M5 12h14"></path>
+              </svg>
+            </span>
+            <h4>Et après le lancement, que devient le démonstrateur ?</h4>
+          </div>
+          <p>Il reste en ligne et accessible par lien permanent. Chaque mise à jour produit que vous souhaitez intégrer est déployée
+          instantanément pour tous ceux qui y accèdent, sans nouvelle version à installer, sans fichier à redistribuer. </p>
+          <p> L'outil évolue en continu avec votre innovation.</p>
+        </div>
+        <div class="faq-item reveal delay-300">
+          <div class="faq-head">
+            <span class="faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <!-- éclair -->
+                <path d="M13 2L3 14h9l-1 8 10-12h-9z"></path>
+              </svg>
+            </span>
+            <h4>Et si j'ai un délai vraiment court : salon dans 3 semaines, levée de fonds imminente ?</h4>
+          </div>
+          <p>C'est prévu. Un niveau Urgence existe en dehors du format OpenInnov, avec une livraison rapide. </p>
+          <p>Contactez-moi directement pour qu'on évalue ensemble la faisabilité.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="contact-section-wrap" id="contact">
+  <div class="cta-section reveal" id="cta">
+      <div class="cta-grid">
+      <div class="cta-photo-wrap">
+        <img class="cta-photo" src="assets/cta-photo.webp" alt="Photo de Corentin Duboc">
+      </div>
+
+      <div class="cta-content">
+        <h2>Prêt à ouvrir votre innovation ?</h2>
+        <ul class="bullets">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 7l8-4 8 4-8 4-8-4z"></path>
+              <path d="M4 12l8 4 8-4"></path>
+              <path d="M4 17l8 4 8-4"></path>
+            </svg>
+            Fichiers CAO évalués en direct
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="13" r="8"></circle>
+              <path d="M12 13V9"></path>
+              <path d="M12 13l3 2"></path>
+              <path d="M9 2h6"></path>
+            </svg>
+            30 min pour un plan d'action clair
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="7.5" r="2.2"></circle>
+              <circle cx="6.3" cy="9.5" r="1.6"></circle>
+              <circle cx="17.7" cy="9.5" r="1.6"></circle>
+              <path d="M8 16c.7-1.8 2.2-3 4-3s3.3 1.2 4 3"></path>
+              <path d="M3.7 16c.35-1.2 1.2-2 2.5-2"></path>
+              <path d="M20.3 16c-.35-1.2-1.2-2-2.5-2"></path>
+            </svg>
+            Co-définition de ce qui sera montré
+          </li>
+        </ul>
+        <div class="cta-social">
+          <a class="cta-social__btn--calendar" href="https://calendar.app.google/uqh2fPdGw6NXuDVe7" target="_blank"
+            rel="noopener noreferrer" aria-label="Plannifier mon appel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            <span>Plannifier mon appel</span>
+          </a>
+          <a href="mailto:corentin.duboc@fractal-innov.fr" aria-label="Envoyer un e-mail">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <path d="m22 6-10 7L2 6" />
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/corentin-duboc/" target="_blank" rel="noopener noreferrer"
+            aria-label="LinkedIn Corentin Duboc">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/fractalinnov/" target="_blank" rel="noopener noreferrer"
+            aria-label="Instagram Fractal Innov">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <footer class="footer">
+    <p><b>Fractalinnov • Corentin Duboc <br></b>corentin.duboc@fractal-innov.fr</p>
+    <p><b>Offre exclusive Team for the Planet<br></b><i>Toute autre entreprise : acompte requis pour accès au programme OpenInnov</i></p>
+  </footer>
+
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      /* Hero mockup : lecture après chargement (Safari + autoplay) */
+      const heroMockupVideo = document.getElementById('heroMockupVideo');
+      if (heroMockupVideo && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        heroMockupVideo.muted = true;
+        heroMockupVideo.defaultMuted = true;
+        const tryPlayHero = () => heroMockupVideo.play().catch(() => {});
+        if (heroMockupVideo.readyState >= 2) tryPlayHero();
+        else {
+          heroMockupVideo.addEventListener('loadeddata', tryPlayHero, { once: true });
+          heroMockupVideo.addEventListener('canplay', tryPlayHero, { once: true });
+        }
+      }
+
+      /* 0. HERO CANVAS — particules + liens (DemoLoopDashboard_v2, sans dépendance) */
+      const canvas = document.getElementById('hero-canvas');
+      const ctx = canvas ? canvas.getContext('2d') : null;
+      if (ctx) {
+        const COLORS = [
+          { r: 59, g: 104, b: 255 },
+          { r: 123, g: 156, b: 255 },
+          { r: 139, g: 92, b: 246 },
+          { r: 217, g: 70, b: 239 },
+        ];
+
+        let W;
+        let H;
+        let dpr = 1;
+        let particles = [];
+        let rafId = 0;
+        let N_PARTICLES = 55;
+        let MAX_DIST = 140;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function particleTier() {
+          const w = window.innerWidth;
+          if (w < 768) return { n: 26, maxD: 95, dprCap: 1.25 };
+          if (w <= 1024) return { n: 38, maxD: 120, dprCap: 1.5 };
+          return { n: 55, maxD: 140, dprCap: 2 };
+        }
+
+        function resize() {
+          const wrapper = canvas.parentElement;
+          const tier = particleTier();
+          N_PARTICLES = tier.n;
+          MAX_DIST = tier.maxD;
+          dpr = Math.min(window.devicePixelRatio || 1, tier.dprCap);
+          const cssW = wrapper.offsetWidth;
+          const cssH = wrapper.offsetHeight;
+          W = cssW;
+          H = cssH;
+          canvas.width = Math.max(1, Math.floor(cssW * dpr));
+          canvas.height = Math.max(1, Math.floor(cssH * dpr));
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        function randomColor() {
+          return COLORS[Math.floor(Math.random() * COLORS.length)];
+        }
+
+        function createParticle() {
+          const c = randomColor();
+          return {
+            x: Math.random() * W,
+            y: Math.random() * H,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            r: Math.random() * 1.8 + 0.8,
+            c,
+            opacity: Math.random() * 0.5 + 0.2,
+          };
+        }
+
+        function initParticles() {
+          particles = [];
+          for (let i = 0; i < N_PARTICLES; i++) particles.push(createParticle());
+        }
+
+        function drawFrame(moveParticles) {
+          ctx.clearRect(0, 0, W, H);
+
+          if (moveParticles) {
+            particles.forEach((p) => {
+              p.x += p.vx;
+              p.y += p.vy;
+              if (p.x < -10) p.x = W + 10;
+              if (p.x > W + 10) p.x = -10;
+              if (p.y < -10) p.y = H + 10;
+              if (p.y > H + 10) p.y = -10;
+            });
+          }
+
+          for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+              const dx = particles[i].x - particles[j].x;
+              const dy = particles[i].y - particles[j].y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < MAX_DIST) {
+                const alpha = (1 - dist / MAX_DIST) * 0.12;
+                const ci = particles[i].c;
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(${ci.r},${ci.g},${ci.b},${alpha})`;
+                ctx.lineWidth = 1;
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.stroke();
+              }
+            }
+          }
+
+          particles.forEach((p) => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${p.c.r},${p.c.g},${p.c.b},${p.opacity})`;
+            ctx.fill();
+          });
+        }
+
+        function loop() {
+          if (reduceMotion) return;
+          drawFrame(true);
+          rafId = requestAnimationFrame(loop);
+        }
+
+        function startCanvas() {
+          cancelAnimationFrame(rafId);
+          resize();
+          initParticles();
+          if (reduceMotion) {
+            drawFrame(false);
+            return;
+          }
+          loop();
+        }
+
+        startCanvas();
+
+        let resizeT;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeT);
+          resizeT = setTimeout(() => {
+            startCanvas();
+          }, 120);
+        });
+
+        document.addEventListener('visibilitychange', () => {
+          if (reduceMotion) return;
+          if (document.hidden) {
+            cancelAnimationFrame(rafId);
+          } else {
+            rafId = requestAnimationFrame(loop);
+          }
+        });
+      }
+
+      /* 0b. Hero → page-rest : opacité du halo global (évite la ligne nette au scroll) */
+      const reduceMotionBg = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduceMotionBg) {
+        const heroEl = document.querySelector('.hero-wrapper');
+        const pageRestEl = document.querySelector('.page-rest');
+        let glowRaf = 0;
+        let lastGlowMix = -1;
+        function applyPageRestGlowMix() {
+          glowRaf = 0;
+          if (!heroEl || !pageRestEl) return;
+          const b = heroEl.getBoundingClientRect().bottom;
+          const vh = window.innerHeight;
+          const span = Math.min(420, Math.max(240, vh * 0.42));
+          const mix = Math.min(1, Math.max(0, (vh - b) / span));
+          if (lastGlowMix >= 0 && Math.abs(mix - lastGlowMix) < 0.025 && mix > 0.04 && mix < 0.96) return;
+          lastGlowMix = mix;
+          pageRestEl.style.setProperty('--page-rest-glow-mix', mix.toFixed(3));
+        }
+        function scheduleGlowMix() {
+          if (glowRaf) return;
+          glowRaf = requestAnimationFrame(applyPageRestGlowMix);
+        }
+        window.addEventListener('scroll', scheduleGlowMix, { passive: true });
+        window.addEventListener('resize', () => {
+          lastGlowMix = -1;
+          applyPageRestGlowMix();
+        });
+        applyPageRestGlowMix();
+      }
+
+      /* 0c. Bandeau offre : masqué au scroll bas, réaffiché au scroll haut + nav active selon la section */
+      const siteTopEl = document.querySelector('.site-top');
+      const navLinksAll = document.querySelectorAll('#mainNav .nav-link');
+      const sectionIdsNav = ['defi', 'modele', 'conditions', 'options', 'faq'];
+      let lastScrollYForBanner = window.scrollY;
+      let headerScrollRaf = 0;
+      const reduceMotionBanner = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function updateNavActiveFromScroll() {
+        if (!navLinksAll.length) return;
+        const headerH = siteTopEl ? siteTopEl.getBoundingClientRect().height : 96;
+        const trigger = window.scrollY + headerH + 28;
+        let activeId = null;
+
+        const firstSec = document.getElementById('defi');
+        if (firstSec) {
+          const firstTop = firstSec.getBoundingClientRect().top + window.scrollY;
+          if (trigger >= firstTop) {
+            for (let i = 0; i < sectionIdsNav.length; i++) {
+              const el = document.getElementById(sectionIdsNav[i]);
+              if (!el) continue;
+              const top = el.getBoundingClientRect().top + window.scrollY;
+              const next = document.getElementById(sectionIdsNav[i + 1]);
+              const nextTop = next ? next.getBoundingClientRect().top + window.scrollY : Infinity;
+              if (trigger >= top && trigger < nextTop) {
+                activeId = sectionIdsNav[i];
+                break;
+              }
+            }
+          }
+        }
+
+        navLinksAll.forEach((a) => {
+          const href = a.getAttribute('href') || '';
+          const id = href.startsWith('#') ? href.slice(1) : '';
+          a.classList.toggle('active-link', id === activeId);
+        });
+      }
+
+      function applyHeaderScroll() {
+        headerScrollRaf = 0;
+        const y = window.scrollY;
+        const dy = y - lastScrollYForBanner;
+
+        if (siteTopEl && !reduceMotionBanner) {
+          if (y < 20) {
+            siteTopEl.classList.remove('site-top--banner-collapsed');
+          } else if (dy > 8) {
+            siteTopEl.classList.add('site-top--banner-collapsed');
+          } else if (dy < -8) {
+            siteTopEl.classList.remove('site-top--banner-collapsed');
+          }
+        }
+
+        lastScrollYForBanner = y;
+        updateNavActiveFromScroll();
+      }
+
+      function scheduleHeaderScroll() {
+        if (headerScrollRaf) return;
+        headerScrollRaf = requestAnimationFrame(applyHeaderScroll);
+      }
+
+      window.addEventListener('scroll', scheduleHeaderScroll, { passive: true });
+      window.addEventListener('resize', () => {
+        lastScrollYForBanner = window.scrollY;
+        updateNavActiveFromScroll();
+      });
+      applyHeaderScroll();
+
+      /* 1. ANIMATIONS AU DÉFILEMENT (SCROLL REVEAL)
+         - Visible : fade + translate vers 0.
+         - Disparition en descendant la page : sortie par le haut → translateY(-30px).
+         - Disparition en remontant : sortie par le bas → translateY(+30px). */
+      const reveals = document.querySelectorAll('.reveal');
+
+      function applyRevealState(entry) {
+        const el = entry.target;
+        const rect = entry.boundingClientRect;
+        const vh = window.innerHeight;
+
+        if (entry.isIntersecting) {
+          el.classList.remove('reveal--from-top');
+          el.classList.add('active');
+          return;
+        }
+
+        el.classList.remove('active');
+        if (rect.bottom <= 0) {
+          el.classList.add('reveal--from-top');
+        } else if (rect.top >= vh) {
+          el.classList.remove('reveal--from-top');
+        } else {
+          /* À cheval sur un bord (rootMargin, blocs hauts) : comparer ce qui dépasse en haut vs en bas */
+          const outTop = Math.max(0, -rect.top);
+          const outBottom = Math.max(0, rect.bottom - vh);
+          el.classList.toggle('reveal--from-top', outTop > outBottom);
+        }
+      }
+
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(applyRevealState);
+      }, {
+        root: null,
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      reveals.forEach((reveal) => {
+        revealObserver.observe(reveal);
+      });
+
+      /* 2. MENU BURGER MOBILE & NAVIGATION GESTION */
+      const burgerBtn = document.getElementById('burgerBtn');
+      const mainNav = document.getElementById('mainNav');
+      const navLinks = document.querySelectorAll('.nav-link, .masthead-cta');
+
+      // Ouverture/Fermeture du menu au clic sur le burger
+      burgerBtn.addEventListener('click', () => {
+        burgerBtn.classList.toggle('active');
+        mainNav.classList.toggle('menu-open');
+        document.body.style.overflow = mainNav.classList.contains('menu-open') ? 'hidden' : '';
+      });
+
+      // Fermeture du menu au clic sur un lien (pour mobile)
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          if (mainNav.classList.contains('menu-open')) {
+            burgerBtn.classList.remove('active');
+            mainNav.classList.remove('menu-open');
+            document.body.style.overflow = '';
+          }
+        });
+      });
+
+      /* 3. ACCORDÉON FAQ
+         - Par défaut : seule la question est visible (réponse cachée)
+         - Au clic : affiche la réponse (fade + agrandissement)
+         - Permet plusieurs réponses ouvertes simultanément */
+      const faqItems = document.querySelectorAll('.faq-item');
+      if (faqItems.length) {
+        faqItems.forEach(item => {
+          // Garantit l'état initial (pas de réponse visible au chargement)
+          item.classList.remove('open');
+          item.setAttribute('aria-expanded', 'false');
+
+          item.setAttribute('role', 'button');
+          item.setAttribute('tabindex', '0');
+
+          const toggle = () => {
+            const isOpen = item.classList.contains('open');
+            item.classList.toggle('open', !isOpen);
+            item.setAttribute('aria-expanded', String(!isOpen));
+          };
+
+          item.addEventListener('click', toggle);
+          item.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              toggle();
+            }
+          });
+        });
+      }
+
+      /* 4. STICKY STEPS — activation au scroll
+         Stratégie : l'étape dont le centre est le plus proche du tiers supérieur
+         du viewport (zone 20 %–72 %) est rendue active.
+         En dehors de la zone : on garde la première ou la dernière selon la position. */
+      const stepCards = document.querySelectorAll('.step-card');
+      if (stepCards.length) {
+        function setActiveStep() {
+          const vh = window.innerHeight;
+          const zoneTop = vh * 0.22;
+          const zoneBot = vh * 0.72;
+          let best = null;
+          let bestDist = Infinity;
+
+          stepCards.forEach((card) => {
+            const rect = card.getBoundingClientRect();
+            const centerY = rect.top + rect.height / 2;
+            const dist = Math.abs(centerY - vh * 0.42); // ancre vers le tiers sup.
+
+            if (centerY >= zoneTop && centerY <= zoneBot && dist < bestDist) {
+              bestDist = dist;
+              best = card;
+            }
+          });
+
+          /* Hors zone : forcer la première ou la dernière */
+          if (!best) {
+            const firstRect = stepCards[0].getBoundingClientRect();
+            best = firstRect.top > zoneBot ? stepCards[0] : stepCards[stepCards.length - 1];
+          }
+
+          stepCards.forEach((c) => c.classList.toggle('is-active', c === best));
+        }
+
+        window.addEventListener('scroll', setActiveStep, { passive: true });
+        setActiveStep(); /* état initial */
+      }
+
+      /* 5. OPTIONS — tunnel horizontal mobile (scroll vertical -> translateX)
+         Objectif : garder les 3 cartes côte à côte sous mobile (< tablette), tout en pilotant le défilement X
+         via un défilement Y sur une zone (~200vh) "sticky", puis poursuivre jusqu'à la FAQ. */
+      const optionsScrollEl = document.querySelector('#options .options-scroll');
+      const optionsTrackEl = document.querySelector('#options .options-track');
+      const optionsStickyEl = document.querySelector('#options .options-sticky');
+      const mqOptions = window.matchMedia('(max-width: 767px)');
+      const reduceMotionOptions = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (optionsScrollEl && optionsTrackEl && optionsStickyEl && mqOptions.matches && !reduceMotionOptions) {
+        let start = 0;
+        let end = 0;
+        let maxTranslate = 0;
+        let rafId = 0;
+
+        function recalcOptionsTunnel() {
+          const startRect = optionsScrollEl.getBoundingClientRect();
+          start = startRect.top + window.scrollY;
+          end = start + optionsScrollEl.offsetHeight - window.innerHeight;
+
+          const visibleW = optionsStickyEl.clientWidth;
+          const trackW = optionsTrackEl.scrollWidth;
+          maxTranslate = Math.max(0, trackW - visibleW);
+        }
+
+        function applyOptionsTunnel() {
+          if (!mqOptions.matches) return;
+          if (end <= start) return;
+
+          const y = window.scrollY;
+          const progress = (y - start) / (end - start);
+          const p = Math.min(1, Math.max(0, progress));
+          const x = -maxTranslate * p;
+          optionsTrackEl.style.transform = `translate3d(${x}px, 0, 0)`;
+        }
+
+        function scheduleApply() {
+          if (rafId) return;
+          rafId = requestAnimationFrame(() => {
+            rafId = 0;
+            applyOptionsTunnel();
+          });
+        }
+
+        recalcOptionsTunnel();
+        applyOptionsTunnel();
+        window.addEventListener('scroll', scheduleApply, { passive: true });
+        window.addEventListener('resize', () => {
+          recalcOptionsTunnel();
+          applyOptionsTunnel();
+        });
+
+        // Si le breakpoint change, on remet le track à zéro.
+        if (typeof mqOptions.addEventListener === 'function') {
+          mqOptions.addEventListener('change', (e) => {
+            if (!e.matches) optionsTrackEl.style.transform = 'translate3d(0, 0, 0)';
+          });
+        } else if (typeof mqOptions.addListener === 'function') {
+          mqOptions.addListener((e) => {
+            if (!e.matches) optionsTrackEl.style.transform = 'translate3d(0, 0, 0)';
+          });
+        }
+      } else if (optionsTrackEl) {
+        optionsTrackEl.style.transform = 'translate3d(0, 0, 0)';
+      }
+    });
+  </script>
+
+  <!-- Fond WebGL Three.js (sections + ancres écran) : voir DemoLoopDashboard_bgThree.html pour réintégrer. -->
+
+</body>
+
+</html>
