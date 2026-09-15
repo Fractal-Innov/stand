@@ -1618,10 +1618,13 @@
       aspect-ratio: 3 / 2;
     }
 
-    /* Téléphone étroit : carré 1:1 */
+    /* Téléphone étroit : le carré 1:1 coupait le bas de la démo (bouton inaccessible) → box bien plus haute */
     @media (max-width: 640px) {
       .showcase-visual.embedded {
-        aspect-ratio: 1 / 1;
+        aspect-ratio: auto;
+        height: 85vh;
+        height: 85dvh;
+        min-height: 600px;
       }
     }
 
