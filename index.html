@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>STAND — le kiosque d'exposition interactif | Fractal Innov</title>
+  <title>STAND - le kiosque d'exposition interactif | Fractal Innov</title>
   <meta name="description"
-    content="STAND transforme votre stand en expérience interactive qui attire, explique et aide vos commerciaux à vendre — même si votre produit est trop grand, trop complexe ou pas encore fini pour y monter.">
+    content="STAND transforme votre stand en expérience interactive qui attire, explique et aide vos commerciaux à vendre - même si votre produit est trop grand, trop complexe ou pas encore fini pour y monter.">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="STAND — Fractal Innov">
-  <meta property="og:title" content="STAND — le kiosque d'exposition interactif">
+  <meta property="og:site_name" content="STAND - Fractal Innov">
+  <meta property="og:title" content="STAND - le kiosque d'exposition interactif">
   <meta property="og:description"
-    content="STAND transforme votre stand en expérience interactive qui attire, explique et aide vos commerciaux à vendre — même si votre produit est trop grand, trop complexe ou pas encore fini pour y monter.">
+    content="STAND transforme votre stand en expérience interactive qui attire, explique et aide vos commerciaux à vendre - même si votre produit est trop grand, trop complexe ou pas encore fini pour y monter.">
   <meta property="og:image" content="assets/fi-logo-512.webp">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="STAND — le kiosque d'exposition interactif">
+  <meta name="twitter:title" content="STAND - le kiosque d'exposition interactif">
   <meta name="twitter:description"
-    content="STAND transforme votre stand en expérience interactive qui attire, explique et aide vos commerciaux à vendre — même si votre produit est trop grand, trop complexe ou pas encore fini pour y monter.">
+    content="STAND transforme votre stand en expérience interactive qui attire, explique et aide vos commerciaux à vendre - même si votre produit est trop grand, trop complexe ou pas encore fini pour y monter.">
   <link rel="icon" type="image/webp" href="assets/fi-logo-192.webp">
   <link rel="apple-touch-icon" href="assets/fi-logo-252.webp">
   <style>
-    /* Outfit — self-hosted (GDPR : zéro requête tierce sur ce site vitrine français). Deux graisses seulement. */
+    /* Outfit - self-hosted (GDPR : zéro requête tierce sur ce site vitrine français). Deux graisses seulement. */
     @font-face {
       font-family: 'Outfit';
       src: url('assets/fonts/outfit-latin-400.woff2') format('woff2');
@@ -42,7 +42,7 @@
       --bg-base-2: #0f1220;
       --text-main: #f0f0f0;
       --text-muted: rgba(240, 240, 240, 0.55);
-      /* Jetons de marque STAND — valeurs exactes de la charte, ne pas approximer. */
+      /* Jetons de marque STAND - valeurs exactes de la charte, ne pas approximer. */
       --accent-blue: #6ea8ff;
       --accent-blue-light: #a8c8ff;
       --accent-purple: #8b5cf6;
@@ -52,7 +52,7 @@
       --accent-blue-muted: #486da6;
       --accent-purple-muted: #5a3ca0;
       --surface: rgba(255, 255, 255, 0.10);
-      /* Dégradé de marque — réservé au titre du hero, nulle part ailleurs. */
+      /* Dégradé de marque - réservé au titre du hero, nulle part ailleurs. */
       --brand-gradient: linear-gradient(100deg, var(--accent-blue) 0%, var(--accent-purple) 52%, var(--accent-pink) 100%);
 
       --glass-bg: rgba(255, 255, 255, 0.03);
@@ -115,7 +115,7 @@
       overflow-x: hidden;
     }
 
-    /* ─── HERO — image → hero-fade → canvas → overlay → contenu (ordre DOM + z-index : fade sous tout le bloc .hero) ─── */
+    /* ─── HERO - image → hero-fade → canvas → overlay → contenu (ordre DOM + z-index : fade sous tout le bloc .hero) ─── */
     .hero-bg-image {
       position: absolute;
       inset: 0;
@@ -406,7 +406,7 @@
       margin-left: 0.4em;
     }
 
-    /* HEADER — sticky en haut de page, au-dessus de tout le reste du contenu */
+    /* HEADER - sticky en haut de page, au-dessus de tout le reste du contenu */
     .masthead {
       position: sticky;
       top: 0;
@@ -493,7 +493,7 @@
       flex-shrink: 0;
     }
 
-    /* Main Navigation — desktop : liens centrés sur la hauteur du bandeau */
+    /* Main Navigation - desktop : liens centrés sur la hauteur du bandeau */
     .main-nav {
       position: relative;
       z-index: 2;
@@ -574,7 +574,7 @@
       outline-offset: 3px;
     }
 
-    /* Burger Menu Button — carré + squircle (même logique de rayon que l’icône logo) */
+    /* Burger Menu Button - carré + squircle (même logique de rayon que l’icône logo) */
     .burger {
       display: none;
       position: relative;
@@ -650,7 +650,7 @@
       transform: translateY(30px);
     }
 
-    /* Masqué « au-dessus » (prochaine entrée en remontant) — sortie par le haut quand on descend */
+    /* Masqué « au-dessus » (prochaine entrée en remontant) - sortie par le haut quand on descend */
     .reveal:not(.active).reveal--from-top {
       transform: translateY(-30px);
     }
@@ -680,7 +680,7 @@
       transition-delay: 0.4s;
     }
 
-    /* HERO — grille copy / mockup + métriques pleine largeur sous la grille
+    /* HERO - grille copy / mockup + métriques pleine largeur sous la grille
        Rythme vertical : --hero-space-* pour équilibre eyebrow → titre → lead → meta → logos */
     .hero {
       --hero-space-xs: 0.45rem;
@@ -892,7 +892,7 @@
       }
     }
 
-    /* Empreinte type téléphone 498×1024 — placement grille uniquement dans les @media */
+    /* Empreinte type téléphone 498×1024 - placement grille uniquement dans les @media */
     .hero-mockup {
       width: 100%;
       max-width: min(300px, 88vw);
@@ -1451,7 +1451,7 @@
       }
     }
 
-    /* SECTIONS — pas de background-image sur toute la section : avec background-size 100%,
+    /* SECTIONS - pas de background-image sur toute la section : avec background-size 100%,
        un radial-gradient remplissait le rectangle (effet « encadré ») et masquait le halo .page-rest.
        Halos locaux optionnels : class .section--ambient + variables (--amb-*) sur la section ou #id. */
     .section {
@@ -1572,7 +1572,7 @@
       }
     }
 
-    /* Accent blanc sur fond sombre — .section p est en --text-muted ; réutilisable partout */
+    /* Accent blanc sur fond sombre - .section p est en --text-muted ; réutilisable partout */
     .text-white {
       color: #ffffff;
     }
@@ -1587,7 +1587,7 @@
       letter-spacing: -0.03em;
     }
 
-    /* SHOWCASE DÉMO EMBARQUÉE — pas de backdrop-filter (perf + évite scintillement sur fond animé) */
+    /* SHOWCASE DÉMO EMBARQUÉE - pas de backdrop-filter (perf + évite scintillement sur fond animé) */
     .showcase-block {
       margin-top: 3rem;
       border-radius: 16px;
@@ -1715,7 +1715,7 @@
       outline-offset: 3px;
     }
 
-    /* DÉMO EN PLEIN ÉCRAN — overlay interne à la page, jamais de nouvel onglet */
+    /* DÉMO EN PLEIN ÉCRAN - overlay interne à la page, jamais de nouvel onglet */
     body.demo-fullscreen-open {
       overflow: hidden;
     }
@@ -2435,7 +2435,7 @@
       line-height: 1.6;
       padding-left: var(--faq-indent);
 
-      /* Accordéon : réponse cachée par défaut — mêmes durées pour éviter l'à-coup */
+      /* Accordéon : réponse cachée par défaut - mêmes durées pour éviter l'à-coup */
       max-height: 0;
       opacity: 0;
       overflow: hidden;
@@ -2548,7 +2548,7 @@
     }
 
     /* CTA & FOOTER */
-    /* FAQ : section pleine largeur (le .section seul est max-width 900px — sinon le fond = « bloc noir » au centre) */
+    /* FAQ : section pleine largeur (le .section seul est max-width 900px - sinon le fond = « bloc noir » au centre) */
     #faq {
       position: relative;
       z-index: 1;
@@ -2585,7 +2585,7 @@
       z-index: 1;
     }
 
-    /* Fond global (carte uniquement) : même image hero que le hero — au-dessus du FAQ en zone de chevauchement */
+    /* Fond global (carte uniquement) : même image hero que le hero - au-dessus du FAQ en zone de chevauchement */
     .contact-section-wrap {
       position: relative;
       z-index: 2;
@@ -2934,7 +2934,7 @@
         padding: var(--masthead-pad-trb) var(--masthead-pad-trb) var(--masthead-pad-trb) var(--masthead-pad-x-start);
       }
 
-      /* CTA uniquement dans le panneau menu (plus dans la barre) — reprend style plein écran, pas le carré desktop */
+      /* CTA uniquement dans le panneau menu (plus dans la barre) - reprend style plein écran, pas le carré desktop */
       .main-nav .masthead-cta {
         height: auto;
         min-height: unset;
@@ -3018,7 +3018,7 @@
       }
     }
 
-    /* Desktop : liens centrés dans l’espace entre logo et CTA — pill plus large (~85 %) + padding vertical généreux (réf. maquette) */
+    /* Desktop : liens centrés dans l’espace entre logo et CTA - pill plus large (~85 %) + padding vertical généreux (réf. maquette) */
     @media (min-width: 951px) {
       .hero {
         /* Compensation : on augmente l'overlap du hero-wrapper ci-dessous,
@@ -3355,7 +3355,7 @@
       box-shadow: 0 0 22px rgba(110, 168, 255, 0.35);
     }
 
-    /* Corps de l'étape — atténuation globale hors active (transition type lerp) */
+    /* Corps de l'étape - atténuation globale hors active (transition type lerp) */
     .step-body {
       padding-top: 0.1rem;
       opacity: 0.38;
@@ -3504,7 +3504,7 @@
 
   <header class="masthead">
     <div class="masthead-inner">
-      <a href="#top" class="masthead-brand" aria-label="Fractal Innov — Retour en haut de la page">
+      <a href="#top" class="masthead-brand" aria-label="Fractal Innov - Retour en haut de la page">
         <img src="assets/fractalinnov-logo.webp" alt="Fractal Innov" class="masthead-logo-img" loading="eager"
           decoding="async" />
       </a>
@@ -3543,7 +3543,7 @@
             <span class="hero-title-main">Votre produit reste chez vous.<br><em>Votre démo part en salon.</em></span>
           </h1>
           <p class="hero-lead">STAND transforme votre stand en expérience interactive qui attire, explique et aide vos
-            commerciaux à vendre — même si votre produit est trop grand, trop complexe ou pas encore fini pour y monter.
+            commerciaux à vendre - même si votre produit est trop grand, trop complexe ou pas encore fini pour y monter.
           </p>
           <div class="hero-pillars" aria-label="Ce que STAND change">
             <div class="hero-pillar">
@@ -3618,7 +3618,7 @@
             </svg>
           </div>
           <h3>Sans support commun, chaque échange est différent</h3>
-          <p>Le stand ne raconte rien tout seul tant qu'un commercial n'est pas disponible — et chacun explique le
+          <p>Le stand ne raconte rien tout seul tant qu'un commercial n'est pas disponible - et chacun explique le
             produit à sa façon.</p>
         </div>
         <div class="friction-card reveal delay-300">
@@ -3637,13 +3637,13 @@
 
       <div class="showcase-block reveal delay-300">
         <div class="showcase-visual embedded">
-          <iframe src="https://salon-demo-app.onrender.com/" title="STAND — démo en ligne" loading="lazy"
+          <iframe src="https://salon-demo-app.onrender.com/" title="STAND - démo en ligne" loading="lazy"
             allow="autoplay; fullscreen; xr-spatial-tracking; gamepad"></iframe>
         </div>
         <div class="showcase-footer">
           <div class="showcase-info">
             <h4>Une version web, sans marque, existe déjà</h4>
-            <p>Essayez-la avant d'en discuter — directement ici, ou en plein écran</p>
+            <p>Essayez-la avant d'en discuter - directement ici, ou en plein écran</p>
           </div>
           <button type="button" class="showcase-link"
             data-demo-fullscreen-src="https://salon-demo-app.onrender.com/">Ouvrir en plein écran</button>
@@ -3674,7 +3674,7 @@
             <div class="step-num">02</div>
             <div class="step-body">
               <h4>Expliquer</h4>
-              <p>Le visiteur comprend en un coup d'œil le problème, la solution et le fonctionnement — sans attendre
+              <p>Le visiteur comprend en un coup d'œil le problème, la solution et le fonctionnement - sans attendre
                 qu'un commercial se libère.</p>
             </div>
           </div>
@@ -3705,7 +3705,7 @@
       <div class="section-number reveal">Le jumeau 3D</div>
       <h2 class="reveal delay-100">Votre produit, en 3D, à explorer du bout du doigt</h2>
       <p class="reveal delay-200">Votre produit prend vie à l'écran, sous tous les angles, comme si vos visiteurs
-        l'avaient devant eux — même s'il est resté à l'atelier.</p>
+        l'avaient devant eux - même s'il est resté à l'atelier.</p>
       <p class="reveal delay-200">Un menu simple guide la visite&nbsp;: chaque sujet choisi amène la caméra exactement
         là où il faut, pour raconter une histoire claire plutôt que de laisser le visiteur se perdre. Des points
         cliquables sur le produit ouvrent vidéos, fiches ou explications, au moment où la question se pose.</p>
@@ -3743,7 +3743,7 @@
             </svg>
           </div>
           <h4>Piloté depuis un simple téléphone</h4>
-          <p>Le personnel scanne un QR code, entre un code PIN, et pilote le kiosque depuis son propre téléphone — sans
+          <p>Le personnel scanne un QR code, entre un code PIN, et pilote le kiosque depuis son propre téléphone - sans
             installer d'application. La connexion résiste même si l'écran se verrouille.</p>
         </div>
 
@@ -3762,7 +3762,7 @@
           </div>
           <h4>Fonctionne partout, même sans réseau sur place</h4>
           <p>Le kit embarque son propre routeur. Les statistiques de visite se synchronisent dès qu'une connexion
-            apparaît — ou en un clic.</p>
+            apparaît - ou en un clic.</p>
         </div>
 
         <div class="counter-block reveal delay-250">
@@ -3965,14 +3965,14 @@
       </svg>
       <span>Fermer</span>
     </button>
-    <iframe class="demo-fullscreen-overlay__iframe" id="demoFullscreenIframe" title="STAND — démo en ligne, plein écran"
+    <iframe class="demo-fullscreen-overlay__iframe" id="demoFullscreenIframe" title="STAND - démo en ligne, plein écran"
       allow="autoplay; fullscreen; xr-spatial-tracking; gamepad"></iframe>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-      /* 0. HERO CANVAS — particules + liens (DemoLoopDashboard_v2, sans dépendance) */
+      /* 0. HERO CANVAS - particules + liens (DemoLoopDashboard_v2, sans dépendance) */
       const canvas = document.getElementById('hero-canvas');
       const ctx = canvas ? canvas.getContext('2d') : null;
       if (ctx) {
@@ -4308,7 +4308,7 @@
         });
       }
 
-      /* 4. STICKY STEPS — activation au scroll
+      /* 4. STICKY STEPS - activation au scroll
          Stratégie : l'étape dont le centre est le plus proche du tiers supérieur
          du viewport (zone 20 %–72 %) est rendue active.
          En dehors de la zone : on garde la première ou la dernière selon la position. */
@@ -4345,13 +4345,13 @@
         setActiveStep(); /* état initial */
       }
 
-      /* 6. Pied de page — année courante */
+      /* 6. Pied de page - année courante */
       const footerCopyright = document.getElementById('footerCopyright');
       if (footerCopyright) {
         footerCopyright.textContent = `© ${new Date().getFullYear()} Fractal Innov`;
       }
 
-      /* 7. DÉMO EN PLEIN ÉCRAN — overlay interne, jamais de nouvel onglet.
+      /* 7. DÉMO EN PLEIN ÉCRAN - overlay interne, jamais de nouvel onglet.
          Le clic ouvre un calque plein écran par-dessus la page (pas de navigation),
          avec un bouton « Fermer » visible qui ramène exactement à la vue précédente. */
       const demoFullscreenOverlay = document.getElementById('demoFullscreenOverlay');
