@@ -127,16 +127,7 @@
         radial-gradient(ellipse 55% 45% at 82% 60%, rgba(244, 114, 182, 0.18) 0%, transparent 70%);
     }
 
-    #hero-canvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .hero-wrapper {
+.hero-wrapper {
       position: relative;
       z-index: 1;
       overflow: hidden;
@@ -646,16 +637,8 @@
     }
 
     /* Masqué « en dessous » (prochaine entrée en descendant la page) */
-    .reveal:not(.active):not(.reveal--from-top) {
-      transform: translateY(30px);
-    }
-
-    /* Masqué « au-dessus » (prochaine entrée en remontant) - sortie par le haut quand on descend */
-    .reveal:not(.active).reveal--from-top {
-      transform: translateY(-30px);
-    }
-
-    .reveal.active {
+/* Masqué « au-dessus » (prochaine entrée en remontant) - sortie par le haut quand on descend */
+.reveal.active {
       opacity: 1;
       transform: translateY(0);
     }
@@ -717,13 +700,7 @@
         gap: 0;
       }
 
-      .hero-mockup {
-        margin-top: clamp(2.65rem, 8.5vw, 4.35rem);
-        max-width: min(290px, 88vw);
-        /* Rayons un peu plus larges que le desktop : masque les coins noirs de la vidéo (cover) */
-        --phone-screen-r: clamp(52px, 12vw, 60px);
-      }
-    }
+}
 
     .hero-copy {
       grid-column: 1;
@@ -884,49 +861,7 @@
         margin-right: auto;
       }
 
-      /* Empêche la règle « générale » d’écraser le placement 2 colonnes ≥768px */
-      .hero-mockup {
-        grid-column: 1;
-        grid-row: 3;
-        justify-self: center;
-      }
-    }
-
-    /* Empreinte type téléphone 498×1024 - placement grille uniquement dans les @media */
-    .hero-mockup {
-      width: 100%;
-      max-width: min(300px, 88vw);
-      aspect-ratio: 498 / 1024;
-      position: relative;
-      z-index: 0;
-      min-width: 0;
-      background: transparent;
-    }
-
-    /* Rayon : var(--phone-screen-r) dans :root (identique toutes résolutions, réf. desktop). */
-    .hero-mockup__screen {
-      position: absolute;
-      inset: 0;
-      border-radius: var(--phone-screen-r);
-      overflow: hidden;
-      background: transparent;
-      pointer-events: none;
-      isolation: isolate;
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-      clip-path: inset(0 round var(--phone-screen-r));
-    }
-
-    .hero-mockup__video {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      border-radius: var(--phone-screen-r);
-      transform: translateZ(0);
-      -webkit-transform: translateZ(0);
-    }
+}
 
     .hero-eyebrow {
       font-size: var(--hero-fs-eyebrow);
@@ -1407,10 +1342,7 @@
         border-top: 1px solid rgba(255, 255, 255, 0.08);
       }
 
-      .hero-mockup {
-        max-width: min(268px, 34vw);
-      }
-    }
+}
 
     /* Tablette (768–1024) : même grille 2 colonnes que le desktop, avec proportions adaptées à la largeur */
     @media (min-width: 768px) and (max-width: 1024px) {
@@ -1427,11 +1359,7 @@
         padding-right: clamp(0.2rem, 1.2vw, 0.85rem);
       }
 
-      .hero-mockup {
-        max-width: min(248px, 36vw);
-      }
-
-      .hero-meta-item {
+.hero-meta-item {
         min-width: 0;
         flex: 1 1 min(0, 124px);
         padding: 0 clamp(0.35rem, 1vw, 0.85rem);
@@ -3279,7 +3207,7 @@
 
     .hero h1,
     .hero-lead,
-    .hero-mockup,
+    .hero-visual,
     .hero-meta,
     .hero-cta,
     .hero-trusted {
@@ -3294,11 +3222,11 @@
       animation-delay: .19s;
     }
 
-    .hero-mockup {
-      animation-delay: .24s;
+    .hero-visual {
+      animation-delay: .28s;
     }
 
-    .hero-meta {
+.hero-meta {
       animation-delay: .3s;
     }
 
@@ -3307,28 +3235,28 @@
     }
 
 
-    #modele {
-      /* Défilement ancre (#modele) : aligné sur scroll-padding-top de `html` */
+    #valeur {
+      /* Défilement ancre (#valeur) : aligné sur scroll-padding-top de `html` */
       --sticky-nav-offset: 7.75rem;
       scroll-margin-top: var(--sticky-nav-offset);
     }
 
     @media (min-width: 951px) {
-      #modele {
+      #valeur {
         --sticky-nav-offset: 8.25rem;
         scroll-margin-top: var(--sticky-nav-offset);
       }
     }
 
     @media (max-width: 640px) {
-      #modele {
+      #valeur {
         --sticky-nav-offset: 6.75rem;
         scroll-margin-top: var(--sticky-nav-offset);
       }
     }
 
     @media (min-width: 641px) and (max-width: 1024px) {
-      #modele {
+      #valeur {
         --sticky-nav-offset: 9rem;
         scroll-margin-top: var(--sticky-nav-offset);
       }
@@ -3605,6 +3533,1607 @@
         font-size: 0.72rem;
       }
     }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       LOT 1 : hero avec visuel, démo mise en scène (écran + téléphone),
+       lecture guidée du jumeau 3D, kit en section claire + schéma,
+       tableau des formules, FAQ avec chevrons, infobulles.
+       ═══════════════════════════════════════════════════════════════════════ */
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ── Masthead : nom du produit à côté du logo ── */
+    .masthead-product {
+      margin-left: 0.7rem;
+      padding-left: 0.7rem;
+      border-left: 1px solid rgba(255, 255, 255, 0.18);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      line-height: 1;
+      color: var(--accent-blue-light);
+    }
+
+    @media (max-width: 420px) {
+      .masthead-product {
+        display: none;
+      }
+    }
+
+    /* ── Hero : eyebrow court sur smartphone ── */
+    .hero-eyebrow__short {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      .hero-eyebrow__long {
+        display: none;
+      }
+
+      .hero-eyebrow__short {
+        display: inline;
+      }
+    }
+
+    /* ── Hero : grille. Smartphone : texte → CTA → visuel → piliers.
+       ≥768px : texte + CTA à gauche, visuel à droite, piliers en bandeau sous les deux colonnes. ── */
+    .hero-inner {
+      grid-template-rows: auto;
+    }
+
+    .hero-copy {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .hero-cta {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .hero-visual {
+      grid-column: 1;
+      grid-row: 3;
+    }
+
+    .hero-pillars {
+      grid-column: 1;
+      grid-row: 4;
+    }
+
+    @media (max-width: 767px) {
+      .hero-cta {
+        justify-content: center;
+        margin-top: 1.25rem;
+      }
+
+      .hero-visual {
+        margin-top: clamp(1.5rem, 5vw, 2.2rem);
+      }
+
+      .hero-pillars {
+        margin-top: 1.4rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        --hero-fs-h1: clamp(2.1rem, 2.65vw, 3rem);
+      }
+
+      .hero-inner {
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+        column-gap: clamp(1.5rem, 3.5vw, 3rem);
+        row-gap: 0;
+        align-items: center;
+      }
+
+      .hero-copy {
+        max-width: none;
+        padding-right: 0;
+      }
+
+      .hero-visual {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        align-self: center;
+      }
+
+      .hero-pillars {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        margin-top: clamp(1.6rem, 3.2vh, 2.4rem);
+        padding-top: clamp(1rem, 2vh, 1.4rem);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+    }
+
+    /* Titre : lignes équilibrées plutôt qu'un mot orphelin quand la colonne se resserre */
+    .hero h1 .hero-title-main {
+      text-wrap: balance;
+    }
+
+    /* ── Hero : CTA. Primaire plein (dégradé de marque), secondaire en contour. ── */
+    .hero-cta__btn--primary {
+      position: relative;
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--accent-blue-deep) 0%, var(--accent-purple-deep) 100%);
+      box-shadow: 0 10px 26px -10px rgba(40, 89, 255, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      overflow: hidden;
+    }
+
+    .hero-cta__btn--primary>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-cta__btn--primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 55%, var(--accent-pink) 100%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .hero-cta__btn--primary:hover {
+      color: #fff;
+      border-color: transparent;
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px -12px rgba(110, 168, 255, 0.75);
+    }
+
+    .hero-cta__btn--primary:hover::before {
+      opacity: 1;
+    }
+
+    .hero-cta__btn--primary:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .hero-cta__arrow {
+      width: 18px;
+      height: 18px;
+      animation: ctaArrow 1.5s cubic-bezier(0.22, 1, 0.36, 1) 1.1s 2;
+    }
+
+    @keyframes ctaArrow {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      40% {
+        transform: translateY(4px);
+      }
+    }
+
+    .hero-cta__btn--ghost {
+      color: #fff;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+    }
+
+    .hero-cta__btn--ghost:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: none;
+    }
+
+    /* ── Hero : visuel (poster de la démo aujourd'hui, vidéo ou scène Needle demain) ── */
+    .hero-visual {
+      display: block;
+      position: relative;
+      z-index: 2;
+      text-decoration: none;
+      color: inherit;
+      border-radius: 18px;
+    }
+
+    .hero-visual:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 4px;
+    }
+
+    .hero-visual__frame {
+      position: relative;
+      margin: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #0f1220;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow:
+        0 40px 70px -30px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(110, 168, 255, 0.06),
+        0 0 90px -20px rgba(110, 168, 255, 0.28);
+      transform: perspective(1400px) rotateY(-5deg) rotateX(1.5deg);
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.7s ease;
+    }
+
+    .hero-visual:hover .hero-visual__frame,
+    .hero-visual:focus-visible .hero-visual__frame {
+      transform: perspective(1400px) rotateY(0) rotateX(0) translateY(-4px);
+      box-shadow:
+        0 50px 80px -30px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(110, 168, 255, 0.18),
+        0 0 110px -16px rgba(110, 168, 255, 0.45);
+    }
+
+    .hero-visual__img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .hero-visual__caption {
+      position: absolute;
+      left: 0.85rem;
+      bottom: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 100px;
+      background: rgba(9, 11, 19, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      font-size: 0.78rem;
+      color: #fff;
+    }
+
+    .hero-visual__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: heroDot 2.2s ease-out infinite;
+    }
+
+    @keyframes heroDot {
+      0% {
+        box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.55);
+      }
+
+      70% {
+        box-shadow: 0 0 0 8px rgba(74, 222, 128, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+      }
+    }
+
+    .hero-visual__play {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(9, 11, 19, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #fff;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .hero-visual__play svg {
+      width: 28px;
+      height: 28px;
+      margin-left: 3px;
+    }
+
+    .hero-visual:hover .hero-visual__play,
+    .hero-visual:focus-visible .hero-visual__play {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    @media (hover: none) {
+      .hero-visual__frame {
+        transform: none;
+      }
+
+      .hero-visual__play {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* ── Démo : écran + téléphone ── */
+    .demo-stage {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (min-width: 768px) {
+      .demo-stage {
+        grid-template-columns: minmax(0, 1fr) 214px;
+        gap: clamp(1.5rem, 3vw, 2.5rem);
+      }
+    }
+
+    .demo-device-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-blue-light);
+    }
+
+    .demo-device-label svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .demo-screen__bezel {
+      position: relative;
+      border-radius: 14px;
+      padding: 10px;
+      background: linear-gradient(180deg, #23263a, #12141f);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .demo-screen__viewport {
+      position: relative;
+      overflow: hidden;
+      border-radius: 6px;
+      background: #0b0d16;
+      aspect-ratio: 16 / 9;
+    }
+
+    /* Téléphone : boîte haute, comme avant, pour que le menu bas de la démo reste accessible */
+    @media (max-width: 640px) {
+      .demo-screen__viewport {
+        aspect-ratio: auto;
+        height: 85vh;
+        height: 85dvh;
+        min-height: 560px;
+      }
+    }
+
+    .demo-screen__poster {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.5s ease, transform 0.9s ease;
+    }
+
+    .demo-screen__iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #0b0d16;
+    }
+
+    .demo-launch {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 1rem;
+      border: 0;
+      color: #fff;
+      cursor: pointer;
+      font-family: inherit;
+      background: linear-gradient(180deg, rgba(9, 11, 19, 0.12), rgba(9, 11, 19, 0.6));
+      transition: background 0.3s ease;
+    }
+
+    .demo-launch:hover {
+      background: linear-gradient(180deg, rgba(9, 11, 19, 0.02), rgba(9, 11, 19, 0.55));
+    }
+
+    .demo-launch:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: -4px;
+    }
+
+    .demo-launch__icon {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-purple-deep));
+      box-shadow: 0 0 0 8px rgba(110, 168, 255, 0.14), 0 20px 40px -12px rgba(40, 89, 255, 0.75);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+    }
+
+    .demo-launch:hover .demo-launch__icon {
+      transform: scale(1.07);
+      box-shadow: 0 0 0 14px rgba(110, 168, 255, 0.12), 0 24px 44px -10px rgba(40, 89, 255, 0.8);
+    }
+
+    .demo-launch__icon svg {
+      width: 34px;
+      height: 34px;
+      margin-left: 4px;
+    }
+
+    .demo-launch__text {
+      margin-top: 0.45rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .demo-launch__hint {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+      text-align: center;
+    }
+
+    .demo-screen__viewport.is-loading .demo-launch {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .demo-screen__viewport.is-loading .demo-screen__poster {
+      opacity: 0.35;
+      transform: scale(1.03);
+    }
+
+    .demo-screen__viewport.is-loading::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+      animation: demoLoad 1.4s ease-in-out infinite;
+    }
+
+    @keyframes demoLoad {
+      0% {
+        transform: scaleX(0);
+        transform-origin: left;
+      }
+
+      50% {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+
+      51% {
+        transform-origin: right;
+      }
+
+      100% {
+        transform: scaleX(0);
+        transform-origin: right;
+      }
+    }
+
+    .demo-screen__viewport.is-live .demo-launch,
+    .demo-screen__viewport.is-live .demo-screen__poster {
+      display: none;
+    }
+
+    .demo-screen__stand {
+      width: 34%;
+      height: 14px;
+      margin: 0 auto;
+      border-radius: 0 0 10px 10px;
+      background: linear-gradient(180deg, #1a1d2c, #0f1220);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 0;
+    }
+
+    .demo-hints {
+      list-style: none;
+      margin: 1.1rem 0 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1.4rem;
+    }
+
+    .demo-hints li {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .demo-hints svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      color: var(--accent-blue-light);
+    }
+
+    .demo-phone {
+      max-width: 214px;
+    }
+
+    @media (max-width: 767px) {
+      .demo-phone {
+        display: none;
+      }
+    }
+
+    .demo-phone__bezel {
+      position: relative;
+      border-radius: 34px;
+      padding: 12px;
+      background: linear-gradient(180deg, #23263a, #12141f);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .demo-phone__notch {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      z-index: 2;
+      width: 34%;
+      height: 18px;
+      border-radius: 12px;
+      background: #0b0d16;
+      transform: translateX(-50%);
+    }
+
+    .demo-phone__viewport {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      background: #0b0d16;
+      aspect-ratio: 9 / 18.5;
+    }
+
+    .demo-phone__iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .demo-phone__idle {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.9rem;
+      padding: 2.4rem 1.2rem 1.4rem;
+      text-align: center;
+    }
+
+    .demo-phone__idle svg {
+      width: 44px;
+      height: 44px;
+      color: var(--accent-blue-light);
+    }
+
+    .section .demo-phone__idle p {
+      margin: 0;
+      font-size: 0.84rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .demo-remote-launch {
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent-blue-muted);
+      border: 0;
+      border-radius: 100px;
+      padding: 0.65rem 1.2rem;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .demo-remote-launch:hover {
+      background: var(--accent-purple-muted);
+      transform: translateY(-1px);
+    }
+
+    .demo-phone__viewport.is-live .demo-phone__idle {
+      display: none;
+    }
+
+    .section .demo-phone__note {
+      margin: 0.8rem 0 0;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      color: var(--text-muted);
+    }
+
+    .demo-actions {
+      margin-top: 1.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1rem;
+    }
+
+    .demo-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font: inherit;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 100px;
+      padding: 0.7rem 1.3rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .demo-action-btn:hover {
+      background: rgba(255, 255, 255, 0.11);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .demo-action-btn:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 3px;
+    }
+
+    .demo-action-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .demo-action-btn--mobile-remote {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      .demo-action-btn--mobile-remote {
+        display: inline-flex;
+      }
+    }
+
+    .qr-wrap {
+      position: relative;
+    }
+
+    .qr-popover {
+      position: absolute;
+      top: calc(100% + 0.6rem);
+      left: 0;
+      z-index: 20;
+      width: 240px;
+      padding: 1rem;
+      border-radius: 14px;
+      background: #fff;
+      color: #12162a;
+      box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.7);
+      animation: qrIn 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes qrIn {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .qr-popover__code {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+
+    .section .qr-popover p {
+      margin: 0.7rem 0 0;
+      font-size: 0.82rem;
+      line-height: 1.4;
+      color: #4b5168;
+      text-align: center;
+    }
+
+    .qr-popover p span {
+      font-weight: 600;
+      color: #12162a;
+    }
+
+    @media (max-width: 480px) {
+      .qr-popover {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    /* ── Ce que vous gagnez : visuel sticky qui suit l'étape ── */
+    .sticky-visual {
+      position: relative;
+      margin-top: 1.6rem;
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      background: #0f1220;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+    }
+
+    .sticky-visual__img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.04);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .sticky-visual__img.is-active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .sticky-visual__caption {
+      position: absolute;
+      left: 0.8rem;
+      right: 0.8rem;
+      bottom: 0.8rem;
+      padding: 0.45rem 0.8rem;
+      border-radius: 10px;
+      background: rgba(9, 11, 19, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      font-size: 0.8rem;
+      color: #fff;
+    }
+
+    .step-card__img {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .sticky-visual {
+        display: none;
+      }
+
+      .step-card__img {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin-top: 1rem;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      /* Sans colonne sticky, chaque étape se lit seule : pas d'atténuation */
+      .step-card .step-body {
+        opacity: 1;
+      }
+
+      .step-card .step-body h4 {
+        color: var(--text-main);
+      }
+    }
+
+    /* ── Le jumeau 3D : lecture guidée du démonstrateur ── */
+    .tour {
+      margin-top: 2.2rem;
+      border-radius: 18px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      overflow: hidden;
+    }
+
+    .tour__tabs {
+      display: flex;
+      gap: 0.35rem;
+      padding: 0.6rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      border-bottom: 1px solid var(--glass-border);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .tour__tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .tour__tabs {
+        flex-wrap: wrap;
+        overflow: visible;
+      }
+    }
+
+    .tour__tab {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 100px;
+      padding: 0.55rem 1rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .tour__tab svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .tour__tab:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .tour__tab.is-active {
+      color: #fff;
+      background: rgba(59, 104, 255, 0.18);
+      border-color: rgba(110, 168, 255, 0.45);
+    }
+
+    .tour__tab:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 2px;
+    }
+
+    .tour__panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .tour__panel[hidden] {
+      display: none;
+    }
+
+    @media (min-width: 900px) {
+      .tour__panel {
+        grid-template-columns: minmax(0, 3fr) minmax(280px, 2fr);
+      }
+    }
+
+    .tour__media {
+      background: #0f1220;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    @media (min-width: 900px) {
+      .tour__media {
+        border-bottom: 0;
+        border-right: 1px solid var(--glass-border);
+      }
+    }
+
+    .tour__media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+      animation: tourIn 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes tourIn {
+      from {
+        opacity: 0;
+        transform: scale(1.02);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .tour__text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.9rem;
+      padding: clamp(1.4rem, 3vw, 2.2rem);
+    }
+
+    .tour__text h3 {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .tour__opt {
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-blue-light);
+      border: 1px solid rgba(110, 168, 255, 0.4);
+      border-radius: 100px;
+      padding: 0.15rem 0.55rem;
+    }
+
+    .section .tour__text p {
+      margin: 0;
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+
+    .tour__chips {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .tour__chips li {
+      font-size: 0.78rem;
+      color: var(--text-main);
+      border: 1px solid rgba(110, 168, 255, 0.35);
+      border-radius: 100px;
+      padding: 0.3rem 0.7rem;
+      background: rgba(59, 104, 255, 0.1);
+    }
+
+    .tour__go {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent-blue-muted);
+      border: 0;
+      border-radius: 100px;
+      padding: 0.65rem 1.25rem;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .tour__go:hover {
+      background: var(--accent-purple-muted);
+      transform: translateY(-1px);
+    }
+
+    .tour__go:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 3px;
+    }
+
+    /* ── Bande claire : ce qui est livré ── */
+    .band--light {
+      --lt-bg: #f4f5fa;
+      --lt-text: #12162a;
+      --lt-muted: #4b5168;
+      --lt-card: #ffffff;
+      --lt-line: rgba(18, 22, 42, 0.09);
+      --lt-accent: var(--accent-blue-deep);
+      position: relative;
+      margin: clamp(2rem, 5vw, 4rem) 0;
+      background: var(--lt-bg);
+      color: var(--lt-text);
+    }
+
+    .section--light .section-number {
+      color: var(--lt-accent);
+    }
+
+    .section--light h2 {
+      color: var(--lt-text);
+    }
+
+    .section--light p,
+    .section--light .section-note {
+      color: var(--lt-muted);
+    }
+
+    .kit-grid {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .kit-card {
+      background: var(--lt-card);
+      border: 1px solid var(--lt-line);
+      border-radius: 16px;
+      padding: 1.6rem;
+      box-shadow: 0 14px 34px -22px rgba(18, 22, 42, 0.35);
+    }
+
+    .kit-card__icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.1rem;
+      background: rgba(40, 89, 255, 0.08);
+      color: var(--lt-accent);
+    }
+
+    .kit-card__icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .kit-card h4 {
+      margin: 0 0 0.8rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--lt-text);
+    }
+
+    .kit-card ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .kit-card li {
+      position: relative;
+      padding-left: 1.3rem;
+      font-size: 0.94rem;
+      line-height: 1.5;
+      color: var(--lt-muted);
+    }
+
+    .kit-card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5em;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-purple-deep));
+    }
+
+    .section--light .kit-card__note {
+      margin: 1rem 0 0;
+      padding-top: 0.8rem;
+      border-top: 1px dashed var(--lt-line);
+      font-size: 0.86rem;
+      line-height: 1.5;
+      color: var(--lt-muted);
+    }
+
+    /* ── Infobulles : survol / clavier via CSS, tap via .is-open ── */
+    .tip {
+      position: relative;
+      color: inherit;
+      text-decoration: underline dotted;
+      text-decoration-color: var(--lt-accent, var(--accent-blue));
+      text-underline-offset: 3px;
+      cursor: help;
+    }
+
+    .tip:focus-visible {
+      outline: 2px solid var(--lt-accent, var(--accent-blue));
+      outline-offset: 2px;
+      border-radius: 3px;
+    }
+
+    .tip::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 0;
+      bottom: calc(100% + 8px);
+      z-index: 30;
+      width: max-content;
+      max-width: min(300px, 80vw);
+      padding: 0.7rem 0.85rem;
+      border-radius: 10px;
+      background: #12162a;
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 400;
+      line-height: 1.45;
+      letter-spacing: 0;
+      text-align: left;
+      white-space: normal;
+      box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transform: translateY(4px);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .tip::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      bottom: calc(100% + 2px);
+      border: 6px solid transparent;
+      border-top-color: #12162a;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .tip:hover::after,
+    .tip:focus-visible::after,
+    .tip.is-open::after,
+    .tip:hover::before,
+    .tip:focus-visible::before,
+    .tip.is-open::before {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Schéma de branchement ── */
+    .wiring {
+      margin: 2.5rem 0 0;
+      padding: clamp(1.2rem, 3vw, 2rem);
+      border-radius: 18px;
+      background: var(--lt-card);
+      border: 1px solid var(--lt-line);
+      box-shadow: 0 14px 34px -22px rgba(18, 22, 42, 0.35);
+    }
+
+    .wiring__caption {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .wiring__caption strong {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--lt-text);
+    }
+
+    .wiring__caption span {
+      font-size: 0.92rem;
+      color: var(--lt-muted);
+    }
+
+    .wiring__scroll {
+      overflow-x: auto;
+    }
+
+    .wiring__svg {
+      display: block;
+      width: 100%;
+      min-width: 640px;
+      height: auto;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .wiring__shell {
+      fill: #e9ebf3;
+      stroke: #b9bfd3;
+      stroke-width: 1.5;
+    }
+
+    .wiring__led {
+      fill: var(--green);
+    }
+
+    .wiring__vent {
+      stroke: #b9bfd3;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    .wiring__antenna {
+      stroke: #8d93ab;
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+
+    .wiring__hole {
+      fill: #8d93ab;
+    }
+
+    .wiring__phone-screen {
+      fill: #12162a;
+    }
+
+    .wiring__screen-text {
+      fill: #fff;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    .wiring__screen-sub {
+      fill: rgba(255, 255, 255, 0.85);
+      font-size: 13px;
+    }
+
+    .wiring__label {
+      fill: var(--lt-text);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .wiring__sublabel {
+      fill: var(--lt-muted);
+      font-size: 12px;
+    }
+
+    .wiring__cable {
+      fill: none;
+      stroke: var(--accent-blue-deep);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      transition: stroke-dashoffset 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .wiring__cable--2 {
+      transition-delay: 0.35s;
+    }
+
+    .wiring__cable--3 {
+      transition-delay: 0.7s;
+    }
+
+    .wiring__cable--4 {
+      transition-delay: 1.05s;
+    }
+
+    .wiring.is-drawn .wiring__cable {
+      stroke-dashoffset: 0;
+    }
+
+    .wiring__wave {
+      fill: none;
+      stroke: var(--accent-purple-deep);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-dasharray: 4 5;
+      opacity: 0;
+      transition: opacity 0.6s ease 1.6s;
+    }
+
+    .wiring.is-drawn .wiring__wave {
+      opacity: 1;
+      animation: wiringWave 1.8s ease-in-out 2.2s infinite;
+    }
+
+    @keyframes wiringWave {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.35;
+      }
+    }
+
+    .wiring__badge {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .wiring__badge circle {
+      fill: var(--accent-blue-deep);
+    }
+
+    .wiring__badge text {
+      fill: #fff;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .wiring__badge .wiring__cable-label {
+      fill: var(--lt-text);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .wiring.is-drawn .wiring__badge--1 {
+      opacity: 1;
+      transition-delay: 0.6s;
+    }
+
+    .wiring.is-drawn .wiring__badge--2 {
+      opacity: 1;
+      transition-delay: 0.95s;
+    }
+
+    .wiring.is-drawn .wiring__badge--3 {
+      opacity: 1;
+      transition-delay: 1.3s;
+    }
+
+    .wiring.is-drawn .wiring__badge--4 {
+      opacity: 1;
+      transition-delay: 1.65s;
+    }
+
+    /* ── Tarifs : tableau inclus / non inclus ── */
+    .offer-table-wrap {
+      margin-top: 2.5rem;
+      overflow-x: auto;
+      border-radius: 18px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+    }
+
+    .offer-table {
+      width: 100%;
+      min-width: 560px;
+      border-collapse: collapse;
+    }
+
+    .offer-table th,
+    .offer-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--glass-border);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .offer-table thead th {
+      padding: 1.4rem 1rem 1.1rem;
+      vertical-align: bottom;
+    }
+
+    .offer-table tbody tr:last-child th,
+    .offer-table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .offer-table tbody th {
+      width: 46%;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .offer-table td {
+      width: 27%;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .offer-table .is-featured {
+      background: rgba(59, 104, 255, 0.09);
+    }
+
+    .offer-table thead th.is-featured {
+      box-shadow: inset 0 3px 0 var(--accent-blue);
+    }
+
+    .offer-head {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      text-align: center;
+    }
+
+    .offer-head__name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-blue-light);
+    }
+
+    .offer-head__price {
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--text-main);
+    }
+
+    .offer-head__price small {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .offer-head__meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .offer-badge {
+      margin-bottom: 0.3rem;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-purple-deep));
+      border-radius: 100px;
+      padding: 0.25rem 0.6rem;
+    }
+
+    .offer-table .ok,
+    .offer-table .no {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+    }
+
+    .offer-table .ok {
+      background: rgba(74, 222, 128, 0.14);
+      color: var(--green);
+    }
+
+    .offer-table .ok::before {
+      content: '';
+      width: 6px;
+      height: 11px;
+      border-right: 2.5px solid currentColor;
+      border-bottom: 2.5px solid currentColor;
+      transform: rotate(45deg) translate(-1px, -2px);
+    }
+
+    .offer-table .no {
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .offer-table .no::before {
+      content: '';
+      width: 10px;
+      height: 2px;
+      border-radius: 2px;
+      background: currentColor;
+    }
+
+    .offer-table .alt {
+      font-size: 0.8rem;
+      line-height: 1.35;
+      color: var(--text-muted);
+    }
+
+    .section .offer-band {
+      max-width: none;
+      margin: 1.4rem 0 0;
+      padding: 0.9rem 1.2rem;
+      border-radius: 12px;
+      border: 1px dashed rgba(255, 255, 255, 0.18);
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    .offer-band strong {
+      margin-right: 0.35rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* ── FAQ : chevron ── */
+    .faq-chevron {
+      margin-left: auto;
+      width: 22px;
+      height: 22px;
+      flex: 0 0 22px;
+      color: var(--text-muted);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s ease;
+    }
+
+    .faq-chevron svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .faq-item:hover .faq-chevron {
+      color: #fff;
+    }
+
+    .faq-item.open .faq-chevron {
+      transform: rotate(180deg);
+      color: var(--accent-blue-light);
+    }
+
+    /* ── Mouvement réduit : tout reste lisible, rien ne bouge ── */
+    @media (prefers-reduced-motion: reduce) {
+
+      .hero-visual__frame,
+      .hero-visual__dot,
+      .hero-cta__arrow,
+      .sticky-visual__img,
+      .tour__media img,
+      .wiring__cable,
+      .wiring__wave,
+      .wiring__badge,
+      .demo-screen__viewport.is-loading::after,
+      .qr-popover {
+        animation: none;
+        transition: none;
+        transform: none;
+      }
+
+      .wiring__cable {
+        stroke-dashoffset: 0;
+      }
+
+      .wiring__wave,
+      .wiring__badge {
+        opacity: 1;
+      }
+    }
   </style>
 
 </head>
@@ -3613,15 +5142,16 @@
 
   <header class="masthead">
     <div class="masthead-inner">
-      <a href="#top" class="masthead-brand" aria-label="Fractal Innov - Retour en haut de la page">
+      <a href="#top" class="masthead-brand" aria-label="STAND par Fractal Innov - Retour en haut de la page">
         <img src="assets/fractalinnov-logo.webp" alt="Fractal Innov" class="masthead-logo-img" loading="eager"
           decoding="async" />
+        <span class="masthead-product" aria-hidden="true">STAND</span>
       </a>
 
       <nav class="main-nav" id="mainNav" aria-label="Navigation principale">
         <div class="main-nav-links">
           <a href="#demo" class="nav-link">Démo</a>
-          <a href="#probleme" class="nav-link">Le problème</a>
+          <a href="#probleme" class="nav-link">Le défi</a>
           <a href="#valeur" class="nav-link">Ce que vous gagnez</a>
           <a href="#livre" class="nav-link">Ce qui est livré</a>
           <a href="#tarifs" class="nav-link">Tarifs</a>
@@ -3639,55 +5169,79 @@
 
   <div class="hero-wrapper">
     <div class="hero-bg-image" aria-hidden="true"></div>
-    <!-- Dégradé bas du hero : avant canvas / overlay / contenu pour rester derrière (z-index 1) -->
+    <!-- Dégradé bas du hero : avant overlay / contenu pour rester derrière (z-index 1) -->
     <div class="hero-fade" aria-hidden="true"></div>
-    <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <section class="hero">
       <div class="hero-inner">
         <div class="hero-copy">
-          <div class="hero-eyebrow">Le kiosque d'exposition interactif</div>
+          <div class="hero-eyebrow">
+            <span class="hero-eyebrow__long">Le kiosque d'exposition interactif</span>
+            <span class="hero-eyebrow__short">Kiosque interactif</span>
+          </div>
           <h1>
             <span class="hero-title-main">Votre produit reste chez vous<br><em>Votre démo part en salon</em></span>
           </h1>
-          <p class="hero-lead">STAND met le jumeau 3D de votre produit sur un écran tactile, avec vos vidéos et vos
-            fiches. Le visiteur l'explore du doigt, votre commercial le pilote depuis son téléphone, et tout fonctionne
-            sans réseau. Après le salon, l'outil reste à vous.
-          </p>
-          <div class="hero-pillars" aria-label="Ce que STAND change">
-            <div class="hero-pillar">
-              <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
-              <div class="hero-pillar__text"><strong>Attirer</strong>Une expérience 3D plutôt qu'un panneau</div>
-            </div>
-
-            <div class="hero-pillar">
-              <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-              </svg>
-              <div class="hero-pillar__text"><strong>Expliquer sans vous</strong>Le visiteur comprend seul, sans
-                attendre</div>
-            </div>
-
-            <div class="hero-pillar">
-              <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="1 4 1 10 7 10"></polyline>
-                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-              </svg>
-              <div class="hero-pillar__text"><strong>Réutiliser</strong>Showroom, rendez-vous, salons suivants</div>
-            </div>
-          </div>
+          <p class="hero-lead">STAND met le jumeau 3D de votre produit sur l'écran tactile de votre stand. Le visiteur
+            l'explore du doigt, votre commercial le pilote depuis son téléphone, sans réseau.</p>
         </div>
 
         <div class="hero-cta">
-          <a href="#demo" class="hero-cta__btn">Tester la démo</a>
-          <a href="#contact" class="hero-cta__btn hero-cta__btn--secondary">Réserver 30 min</a>
+          <a href="#demo" class="hero-cta__btn hero-cta__btn--primary">
+            <span>Tester la démo</span>
+            <svg class="hero-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="12" y1="4" x2="12" y2="20"></line>
+              <polyline points="6 14 12 20 18 14"></polyline>
+            </svg>
+          </a>
+          <a href="#contact" class="hero-cta__btn hero-cta__btn--ghost">Réserver 30 min</a>
+        </div>
+
+        <!-- Visuel hero : poster de la démo aujourd'hui, boucle vidéo ou scène Needle demain (même emplacement) -->
+        <a href="#demo" class="hero-visual" aria-label="Voir la démo STAND">
+          <figure class="hero-visual__frame">
+            <img class="hero-visual__img" src="assets/demo/hero-poster.webp" width="1600" height="900"
+              alt="La scène 3D de la démo STAND : un stand de salon avec sa borne tactile, son écran de présentation et ses visiteurs"
+              fetchpriority="high" decoding="async">
+            <figcaption class="hero-visual__caption">
+              <span class="hero-visual__dot" aria-hidden="true"></span>
+              <span>Extrait de la démo, à tester ci-dessous</span>
+            </figcaption>
+            <span class="hero-visual__play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+            </span>
+          </figure>
+        </a>
+
+        <div class="hero-pillars" aria-label="Ce que STAND change">
+          <div class="hero-pillar">
+            <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <div class="hero-pillar__text"><strong>Attirer</strong>Une expérience 3D plutôt qu'un panneau</div>
+          </div>
+
+          <div class="hero-pillar">
+            <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <div class="hero-pillar__text"><strong>Expliquer sans vous</strong>Le visiteur comprend seul, sans
+              attendre</div>
+          </div>
+
+          <div class="hero-pillar">
+            <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+            <div class="hero-pillar__text"><strong>Réutiliser</strong>Showroom, rendez-vous, salons suivants</div>
+          </div>
         </div>
       </div>
     </section>
@@ -3697,50 +5251,156 @@
     <section id="demo" class="section">
       <div class="section-number reveal">La démo</div>
       <h2 class="reveal delay-100">Testez-la, c'est ce que vos visiteurs verront</h2>
-      <p class="reveal delay-200">Une version publique, sans marque, avec un produit fictif. Explorez-la ici, en plein
-        écran, ou sur votre téléphone.</p>
+      <p class="reveal delay-200">Une version publique, sans marque, avec un produit fictif&nbsp;: un stand de salon.
+        À gauche, l'écran tactile du stand, vous êtes le visiteur. À droite, la télécommande, vous êtes le
+        commercial.</p>
 
-      <div class="showcase-block reveal delay-300">
-        <div class="showcase-visual embedded">
-          <iframe src="https://salon-demo-app.onrender.com/" title="STAND - démo en ligne" loading="lazy"
-            allow="autoplay; fullscreen; xr-spatial-tracking; gamepad"></iframe>
-        </div>
-        <div class="showcase-footer">
-          <div class="showcase-info">
-            <h4>La même démo, sur votre téléphone</h4>
-            <p>Ouvrez salon-demo-app.onrender.com et manipulez le produit du bout du doigt.</p>
+      <div class="demo-stage reveal delay-300">
+        <div class="demo-screen">
+          <div class="demo-device-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+            L'écran tactile de votre stand
           </div>
-          <button type="button" class="showcase-link"
-            data-demo-fullscreen-src="https://salon-demo-app.onrender.com/">Ouvrir en plein écran</button>
+          <div class="demo-screen__bezel">
+            <div class="demo-screen__viewport" id="demoViewport">
+              <picture>
+                <source media="(max-width: 640px)" srcset="assets/demo/poster-portrait.webp">
+                <img class="demo-screen__poster" src="assets/demo/vue-ensemble.webp" width="1600" height="1064" alt=""
+                  loading="lazy" decoding="async">
+              </picture>
+              <button type="button" class="demo-launch" id="demoLaunch"
+                data-demo-src="https://salon-demo-app.onrender.com/">
+                <span class="demo-launch__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                </span>
+                <span class="demo-launch__text">Lancer la démo</span>
+                <span class="demo-launch__hint">La scène 3D se charge en une dizaine de secondes</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-screen__stand" aria-hidden="true"></div>
+          <ul class="demo-hints" aria-label="Comment manipuler la démo">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M9 11V5a1.5 1.5 0 0 1 3 0v6"></path>
+                <path d="M12 10a1.5 1.5 0 0 1 3 0v3"></path>
+                <path d="M15 12a1.5 1.5 0 0 1 3 0v4a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7L4 15a1.6 1.6 0 0 1 2.6-1.9L9 15"></path>
+              </svg>
+              Glissez pour tourner autour du stand
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"></circle>
+                <circle cx="12" cy="12" r="9" stroke-dasharray="3 4"></circle>
+              </svg>
+              Touchez un point pour ouvrir un sujet
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="14" width="18" height="6" rx="3"></rect>
+                <line x1="8" y1="17" x2="8.01" y2="17"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                <line x1="16" y1="17" x2="16.01" y2="17"></line>
+              </svg>
+              Le menu en bas guide la visite
+            </li>
+          </ul>
         </div>
+
+        <div class="demo-phone">
+          <div class="demo-device-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+            La télécommande
+          </div>
+          <div class="demo-phone__bezel">
+            <div class="demo-phone__notch" aria-hidden="true"></div>
+            <div class="demo-phone__viewport" id="remoteViewport">
+              <div class="demo-phone__idle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                  stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="13" height="10" rx="1.5"></rect>
+                  <line x1="7" y1="18" x2="12" y2="18"></line>
+                  <line x1="9.5" y1="14" x2="9.5" y2="18"></line>
+                  <rect x="17" y="9" width="5" height="9" rx="1.2"></rect>
+                  <path d="M16 6.5c1.2 0 2.3.4 3.2 1.2"></path>
+                </svg>
+                <p>Depuis son téléphone, votre commercial choisit ce que l'écran affiche. Sans application&nbsp;: un QR
+                  code et un code PIN.</p>
+                <button type="button" class="demo-remote-launch" id="remoteLaunch"
+                  data-remote-src="https://salon-demo-app.onrender.com/remote">Prendre la télécommande</button>
+              </div>
+            </div>
+          </div>
+          <p class="demo-phone__note">Démo partagée&nbsp;: si quelqu'un d'autre pilote en même temps, vous le verrez
+            bouger à l'écran.</p>
+        </div>
+      </div>
+
+      <div class="demo-actions reveal delay-300">
+        <button type="button" class="showcase-link"
+          data-demo-fullscreen-src="https://salon-demo-app.onrender.com/">Ouvrir en plein écran</button>
+        <div class="qr-wrap">
+          <button type="button" class="demo-action-btn" id="qrToggle" aria-expanded="false" aria-controls="qrPopover">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+              <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+              <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+              <path d="M14 14h3v3h-3zM20 14h1v1h-1zM14 20h1v1h-1zM18 18h3v3h-3z"></path>
+            </svg>
+            Sur votre téléphone
+          </button>
+          <div class="qr-popover" id="qrPopover" hidden>
+            <svg class="qr-popover__code" viewBox="0 0 37 37" shape-rendering="crispEdges" role="img"
+              aria-label="QR code vers salon-demo-app.onrender.com">
+              <path fill="#ffffff" d="M0 0h37v37H0z"/>
+              <path stroke="#0b0d16" d="M4 4.5h7m5 0h3m1 0h5m1 0h7M4 5.5h1m5 0h1m1 0h1m1 0h2m2 0h3m1 0h2m2 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m4 0h5m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m3 0h2m1 0h2m3 0h3m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h6m2 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m2 0h1m3 0h1m1 0h2m1 0h2m2 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M15 11.5h1m1 0h7M4 12.5h1m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m1 0h4m6 0h1m2 0h1M4 13.5h1m1 0h2m6 0h1m3 0h1m1 0h1m3 0h3m2 0h1m2 0h1M4 14.5h1m1 0h3m1 0h1m2 0h1m2 0h2m3 0h1m3 0h1m1 0h1m2 0h3M5 15.5h1m1 0h3m1 0h3m6 0h2m1 0h1m1 0h2m1 0h1m2 0h1M4 16.5h2m1 0h2m1 0h2m1 0h4m2 0h3m2 0h1m1 0h1m2 0h1m1 0h2M4 17.5h1m1 0h1m1 0h1m5 0h4m2 0h3m1 0h3m2 0h1m2 0h1M5 18.5h4m1 0h5m3 0h1m2 0h2m2 0h1m2 0h2m1 0h2M4 19.5h1m2 0h1m3 0h2m4 0h2m2 0h1m1 0h2m3 0h2m1 0h1M4 20.5h1m1 0h2m2 0h3m3 0h1m1 0h1m1 0h2m1 0h4m2 0h1m1 0h2M5 21.5h2m1 0h1m2 0h3m2 0h1m1 0h1m1 0h2m3 0h2m2 0h2m1 0h1M4 22.5h1m2 0h1m2 0h4m2 0h2m2 0h1m4 0h4m2 0h2M5 23.5h3m3 0h3m1 0h1m4 0h3m1 0h2m1 0h1m1 0h1m1 0h1M4 24.5h1m2 0h1m1 0h5m1 0h2m2 0h3m1 0h6M12 25.5h1m4 0h1m5 0h2m3 0h1m1 0h3M4 26.5h7m7 0h1m1 0h2m1 0h2m1 0h1m1 0h2m1 0h2M4 27.5h1m5 0h1m6 0h2m2 0h1m2 0h1m3 0h2m1 0h1M4 28.5h1m1 0h3m1 0h1m1 0h3m3 0h1m2 0h1m2 0h5m2 0h2M4 29.5h1m1 0h3m1 0h1m2 0h1m2 0h3m1 0h2m5 0h2m1 0h3M4 30.5h1m1 0h3m1 0h1m1 0h1m2 0h2m6 0h1m3 0h3m2 0h1M4 31.5h1m5 0h1m3 0h8m1 0h2m3 0h1m2 0h1M4 32.5h7m1 0h1m1 0h1m1 0h1m3 0h2m1 0h4m1 0h2m1 0h2"/>
+            </svg>
+            <p>Scannez pour ouvrir la même démo sur votre téléphone<br><span>salon-demo-app.onrender.com</span></p>
+          </div>
+        </div>
+        <a class="demo-action-btn demo-action-btn--mobile-remote" href="https://salon-demo-app.onrender.com/remote"
+          target="_blank" rel="noopener noreferrer">Ouvrir la télécommande</a>
       </div>
     </section>
 
     <section id="probleme" class="section">
-      <div class="section-number reveal">Le problème</div>
+      <div class="section-number reveal">Le défi</div>
       <h2 class="reveal delay-100">Sur un salon, vous avez trois minutes pour vous faire comprendre</h2>
       <p class="reveal delay-200">Et souvent, votre produit n'est même pas là.&nbsp;<span
           class="text-white text-white--block">STAND le remplace par son jumeau 3D, et laisse à vos commerciaux le soin
           de conclure.</span></p>
 
-      <div class="friction-grid">
-        <div class="friction-card reveal delay-100">
+      <div class="friction-grid reveal delay-200">
+        <div class="friction-card">
           <div class="friction-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7"></path>
-              <path d="M16 3l-4 4-4-4"></path>
-              <line x1="12" y1="7" x2="12" y2="15"></line>
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 9l9-6 9 6v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"></path>
+              <path d="M9 21V12h6v9"></path>
+              <line x1="4" y1="4" x2="20" y2="20" stroke-dasharray="2 3"></line>
             </svg>
           </div>
           <h3>Le produit est absent</h3>
           <p>Trop grand, trop fragile, trop cher à déplacer, ou pas encore fini&nbsp;: il reste à l'atelier, et le
             visiteur ne le voit jamais.</p>
         </div>
-        <div class="friction-card reveal delay-200">
+        <div class="friction-card">
           <div class="friction-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
           </div>
@@ -3748,10 +5408,10 @@
           <p>Tant qu'un commercial n'est pas libre, le visiteur attend ou repart. Et quand il est pris en charge, chacun
             explique le produit à sa façon.</p>
         </div>
-        <div class="friction-card reveal delay-300">
+        <div class="friction-card">
           <div class="friction-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="12" cy="12" r="10"></circle>
               <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
@@ -3768,50 +5428,71 @@
       </div>
     </section>
 
-    <section id="valeur" class="section section--wide">
+    <section id="valeur" class="section">
       <div class="sticky-steps">
 
         <div class="sticky-steps__left">
           <div class="section-number reveal">Ce que vous gagnez</div>
           <h2 class="reveal delay-100">Pas un stand pour un salon, un outil de vente que vous gardez</h2>
-          <p class="sticky-steps__desc reveal delay-200">Le mini PC, le routeur, l'écran tactile&nbsp;: ce sont les moyens.
-            Ce que vous gagnez, c'est un support de vente qui continue à travailler pour vous après le salon.</p>
+          <p class="sticky-steps__desc reveal delay-200">Le mini PC, le routeur, l'écran tactile&nbsp;: ce sont les
+            moyens. Ce que vous gagnez, c'est un support de vente qui continue à travailler pour vous après le salon.</p>
+
+          <div class="sticky-visual" id="stickyVisual" aria-hidden="true">
+            <img class="sticky-visual__img is-active" data-step="1" src="assets/demo/step-attirer.webp" width="1600"
+              height="900" alt="" loading="lazy" decoding="async">
+            <img class="sticky-visual__img" data-step="2" src="assets/demo/step-expliquer.webp" width="1600"
+              height="760" alt="" loading="lazy" decoding="async">
+            <img class="sticky-visual__img" data-step="3" src="assets/demo/step-vendre.webp" width="1600" height="900"
+              alt="" loading="lazy" decoding="async">
+            <img class="sticky-visual__img" data-step="4" src="assets/demo/step-reutiliser.webp" width="1600"
+              height="900" alt="" loading="lazy" decoding="async">
+            <div class="sticky-visual__caption" id="stickyCaption">Le visiteur s'arrête devant la borne</div>
+          </div>
         </div>
 
         <div class="sticky-steps__right">
-          <div class="step-card" data-step="1">
+          <div class="step-card" data-step="1" data-caption="Le visiteur s'arrête devant la borne">
             <div class="step-num">01</div>
             <div class="step-body">
               <h4>Attirer</h4>
               <p>Un produit qui bouge en 3D sur un grand écran arrête plus de monde qu'un panneau. Le visiteur touche,
                 il reste. En option, un écran de veille 3D animé attire le regard depuis l'allée.</p>
+              <img class="step-card__img" src="assets/demo/step-attirer.webp" width="1600" height="900" alt=""
+                loading="lazy" decoding="async">
             </div>
           </div>
 
-          <div class="step-card" data-step="2">
+          <div class="step-card" data-step="2" data-caption="La bonne vidéo, au bon moment du parcours">
             <div class="step-num">02</div>
             <div class="step-body">
               <h4>Expliquer</h4>
               <p>Le jumeau 3D, un parcours guidé et la bonne vidéo au bon moment&nbsp;: le visiteur comprend le
                 problème, la solution et le fonctionnement, sans attendre qu'un commercial se libère.</p>
+              <img class="step-card__img" src="assets/demo/step-expliquer.webp" width="1600" height="760" alt=""
+                loading="lazy" decoding="async">
             </div>
           </div>
 
-          <div class="step-card" data-step="3">
+          <div class="step-card" data-step="3" data-caption="Le commercial pilote l'écran depuis sa tablette">
             <div class="step-num">03</div>
             <div class="step-body">
               <h4>Faire vendre</h4>
               <p>Le commercial pilote la scène depuis son téléphone (QR code et code PIN, sans application) et s'appuie
                 sur le même récit à chaque conversation.</p>
+              <img class="step-card__img" src="assets/demo/step-vendre.webp" width="1600" height="900" alt=""
+                loading="lazy" decoding="async">
             </div>
           </div>
 
-          <div class="step-card" data-step="4">
+          <div class="step-card" data-step="4" data-caption="Le même récit, en rendez-vous et en showroom">
             <div class="step-num">04</div>
             <div class="step-body">
               <h4>Réutiliser</h4>
               <p>Le même contenu ressert sur vos prochains salons, en showroom et en rendez-vous commercial. Vos équipes
-                le modifient elles-mêmes, sans développeur.</p>
+                le modifient elles-mêmes, sans développeur. En option, le visiteur repart avec la présentation sur son
+                téléphone, via un QR code.</p>
+              <img class="step-card__img" src="assets/demo/step-reutiliser.webp" width="1600" height="900" alt=""
+                loading="lazy" decoding="async">
             </div>
           </div>
         </div>
@@ -3822,135 +5503,474 @@
     <section id="jumeau-3d" class="section">
       <div class="section-number reveal">Le jumeau 3D</div>
       <h2 class="reveal delay-100">Votre produit, en 3D, à explorer du bout du doigt</h2>
-      <p class="reveal delay-200">Votre produit prend vie à l'écran, sous tous les angles, comme si vos visiteurs
-        l'avaient devant eux, même s'il est resté à l'atelier.</p>
-      <p class="reveal delay-200">Un menu simple guide la visite&nbsp;: chaque sujet choisi amène la caméra exactement
-        là où il faut, pour raconter une histoire claire plutôt que de laisser le visiteur se perdre. Des points
-        cliquables sur le produit ouvrent vidéos, fiches ou explications, au moment où la question se pose.</p>
-      <p class="reveal delay-200">Vous n'avez pas de fichiers 3D&nbsp;? Des photos et des plans suffisent souvent pour
-        démarrer. Nous regardons ensemble ce qui existe, lors de l'appel.</p>
-      <div class="level-tags reveal delay-300">
-        <span class="level-tag">Vue d'ensemble</span>
-        <span class="level-tag">Détail</span>
-        <span class="level-tag">Vue intérieure</span>
-        <span class="level-tag">Points cliquables</span>
-        <span class="level-tag">FR / EN</span>
-      </div>
-    </section>
+      <p class="reveal delay-200">Un menu simple guide la visite&nbsp;: chaque sujet amène la caméra exactement là où
+        il faut, et des points cliquables ouvrent vidéos, fiches ou explications au moment où la question se pose. Dans
+        la démo, le produit fictif est un stand de salon. Avec STAND, c'est votre machine, votre équipement, votre
+        système.</p>
 
-    <section id="livre" class="section section--wide">
-      <div class="section-number reveal">Ce qui est livré</div>
-      <h2 class="reveal delay-100">Quatre câbles, dix minutes, personne sur place</h2>
-      <p class="reveal delay-200">Le kit est conçu pour ne demander personne sur place. Voici ce que vous recevez, et ce
-        que vous fournissez.</p>
-
-      <div class="friction-grid">
-        <div class="counter-block reveal delay-100">
-          <div class="friction-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+      <div class="tour reveal delay-300">
+        <div class="tour__tabs" role="tablist" aria-label="Les entrées du menu de la démo">
+          <button type="button" role="tab" class="tour__tab is-active" id="tab-vue" aria-selected="true"
+            aria-controls="panel-vue" data-panel="vue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+              <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+              <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+              <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+            </svg>
+            Vue d'ensemble
+          </button>
+          <button type="button" role="tab" class="tour__tab" id="tab-attirer" aria-selected="false"
+            aria-controls="panel-attirer" data-panel="attirer" tabindex="-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"></path>
+              <path d="M15 9.5a4 4 0 0 1 0 5"></path>
+              <path d="M18 7a8 8 0 0 1 0 10"></path>
+            </svg>
+            Attirer depuis l'allée
+          </button>
+          <button type="button" role="tab" class="tour__tab" id="tab-presenter" aria-selected="false"
+            aria-controls="panel-presenter" data-panel="presenter" tabindex="-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="12" rx="2"></rect>
+              <line x1="12" y1="16" x2="12" y2="21"></line>
               <line x1="8" y1="21" x2="16" y2="21"></line>
-              <line x1="12" y1="17" x2="12" y2="21"></line>
             </svg>
-          </div>
-          <h4>L'expérience</h4>
-          <p>Le jumeau 3D de votre produit et le parcours guidé. Vos vidéos et vos fiches, en français et en anglais,
-            s'affichent simplement, au bon moment de la présentation. La régie d'administration protégée par code et la
-            télécommande sur téléphone. Une application autonome, qui tourne sans réseau. Les statistiques de visite
-            vous disent ce qui a retenu l'attention.</p>
-        </div>
-
-        <div class="counter-block reveal delay-150">
-          <div class="friction-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <rect x="4" y="4" width="16" height="16" rx="2"></rect>
-              <rect x="9" y="9" width="6" height="6"></rect>
-              <line x1="9" y1="1" x2="9" y2="4"></line>
-              <line x1="15" y1="1" x2="15" y2="4"></line>
-              <line x1="9" y1="20" x2="9" y2="23"></line>
-              <line x1="15" y1="20" x2="15" y2="23"></line>
-            </svg>
-          </div>
-          <h4>Le kit hors ligne</h4>
-          <p>Le matériel pour faire tourner l'expérience sur votre stand, hors ligne&nbsp;: mini PC préparé, routeur de
-            voyage (un réseau fermé, indépendant du wifi du lieu), câbles et alimentation. Vous branchez quatre câbles,
-            c'est prêt en dix minutes. Un guide d'une page accompagne le kit, et nous vous aidons à distance pour
-            l'installation, avant le salon. Flight case en option.</p>
-        </div>
-
-        <div class="counter-block reveal delay-200">
-          <div class="friction-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
+            Présenter à un client
+          </button>
+          <button type="button" role="tab" class="tour__tab" id="tab-emporter" aria-selected="false"
+            aria-controls="panel-emporter" data-panel="emporter" tabindex="-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
               <rect x="5" y="2" width="14" height="20" rx="2"></rect>
               <line x1="12" y1="18" x2="12.01" y2="18"></line>
             </svg>
+            Emporter sur son smartphone
+          </button>
+          <button type="button" role="tab" class="tour__tab" id="tab-logiciel" aria-selected="false"
+            aria-controls="panel-logiciel" data-panel="logiciel" tabindex="-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"></path>
+            </svg>
+            La vidéo
+          </button>
+          <button type="button" role="tab" class="tour__tab" id="tab-materiel" aria-selected="false"
+            aria-controls="panel-materiel" data-panel="materiel" tabindex="-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="8" y1="13" x2="16" y2="13"></line>
+              <line x1="8" y1="17" x2="13" y2="17"></line>
+            </svg>
+            La fiche
+          </button>
+        </div>
+
+        <div class="tour__panels">
+          <div role="tabpanel" id="panel-vue" class="tour__panel is-active" aria-labelledby="tab-vue">
+            <div class="tour__media"><img src="assets/demo/vue-ensemble.webp" width="1600" height="1064"
+                alt="Vue d'ensemble de la démo : le stand entier, avec ses trois sujets cliquables" loading="lazy"
+                decoding="async"></div>
+            <div class="tour__text">
+              <h3>Vue d'ensemble</h3>
+              <p>Le point de départ&nbsp;: le stand entier et ses trois sujets. Le visiteur touche celui qui
+                l'intéresse, la caméra s'y rend toute seule.</p>
+              <ul class="tour__chips">
+                <li>Trois sujets, visibles d'un coup</li>
+                <li>Un geste pour y aller</li>
+                <li>Retour au départ à tout moment</li>
+              </ul>
+              <button type="button" class="tour__go" data-poi="votre-stand">Voir dans la démo</button>
+            </div>
           </div>
-          <h4>Ce que vous fournissez</h4>
-          <p>L'écran tactile et le téléphone de pilotage. Vous les louez sur place auprès de votre loueur de salon, comme
-            vous le faites déjà. Nous vous donnons les prérequis à demander&nbsp;: un écran tactile avec entrée HDMI et
-            sortie USB, et un navigateur sur votre mobile ou votre tablette pour la télécommande.</p>
+
+          <div role="tabpanel" id="panel-attirer" class="tour__panel" aria-labelledby="tab-attirer" hidden>
+            <div class="tour__media"><img src="assets/demo/attirer.webp" width="1600" height="1064"
+                alt="Dans la démo, un visiteur s'arrête devant la borne tactile qui diffuse la scène 3D en boucle"
+                loading="lazy" decoding="async"></div>
+            <div class="tour__text">
+              <h3>Attirer depuis l'allée</h3>
+              <p>Le produit en 3D animée sur grand écran, visible de loin&nbsp;: le stand capte le regard avant le
+                premier mot.</p>
+              <ul class="tour__chips">
+                <li>Scène 3D en boucle</li>
+                <li>Lisible à dix mètres</li>
+                <li>Sans intervention</li>
+              </ul>
+              <button type="button" class="tour__go" data-poi="attirer">Voir dans la démo</button>
+            </div>
+          </div>
+
+          <div role="tabpanel" id="panel-presenter" class="tour__panel" aria-labelledby="tab-presenter" hidden>
+            <div class="tour__media"><img src="assets/demo/presenter.webp" width="1600" height="1064"
+                alt="Dans la démo, un commercial présente le produit à une cliente sur l'écran tactile, tablette en main"
+                loading="lazy" decoding="async"></div>
+            <div class="tour__text">
+              <h3>Présenter à un client</h3>
+              <p>Un support commun sur écran tactile, piloté depuis la tablette&nbsp;: vidéos, fiches et vues 3D au
+                rythme de la conversation.</p>
+              <ul class="tour__chips">
+                <li>Écran tactile partagé</li>
+                <li>Télécommande sur tablette</li>
+                <li>Vidéos, PDF, vues 3D</li>
+              </ul>
+              <button type="button" class="tour__go" data-poi="presenter">Voir dans la démo</button>
+            </div>
+          </div>
+
+          <div role="tabpanel" id="panel-emporter" class="tour__panel" aria-labelledby="tab-emporter" hidden>
+            <div class="tour__media"><img src="assets/demo/emporter.webp" width="1600" height="1064"
+                alt="Dans la démo, un visiteur scanne un QR code et repart avec la présentation sur son téléphone"
+                loading="lazy" decoding="async"></div>
+            <div class="tour__text">
+              <h3>Emporter sur son smartphone <span class="tour__opt">Option</span></h3>
+              <p>Le visiteur scanne un code et repart avec la présentation sur son téléphone&nbsp;: le stand continue
+                après le salon.</p>
+              <ul class="tour__chips">
+                <li>Un QR code, aucune application</li>
+                <li>La même expérience en poche</li>
+                <li>Un contact qui reste</li>
+              </ul>
+              <button type="button" class="tour__go" data-poi="emporter">Voir dans la démo</button>
+            </div>
+          </div>
+
+          <div role="tabpanel" id="panel-logiciel" class="tour__panel" aria-labelledby="tab-logiciel" hidden>
+            <div class="tour__media"><img src="assets/demo/logiciel.webp" width="1600" height="1064"
+                alt="Dans la démo, une vidéo s'ouvre par-dessus la scène 3D, sans quitter le parcours" loading="lazy"
+                decoding="async"></div>
+            <div class="tour__text">
+              <h3>La vidéo, au bon moment</h3>
+              <p>Une vidéo s'ouvre par-dessus la scène, sans quitter le parcours. C'est là que vos vidéos existantes
+                prennent place, telles quelles.</p>
+              <ul class="tour__chips">
+                <li>Vos vidéos, sans retouche</li>
+                <li>Plein écran d'un geste</li>
+                <li>Retour à la 3D en fermant</li>
+              </ul>
+              <button type="button" class="tour__go" data-poi="logiciel">Voir dans la démo</button>
+            </div>
+          </div>
+
+          <div role="tabpanel" id="panel-materiel" class="tour__panel" aria-labelledby="tab-materiel" hidden>
+            <div class="tour__media"><img src="assets/demo/materiel.webp" width="1600" height="1064"
+                alt="Dans la démo, une fiche PDF se feuillette à l'écran, page après page" loading="lazy"
+                decoding="async"></div>
+            <div class="tour__text">
+              <h3>La fiche, feuilletable</h3>
+              <p>Un PDF se lit à l'écran, page après page&nbsp;: fiches techniques, tarifs, références. Le visiteur y
+                accède seul, au moment où la question se pose.</p>
+              <ul class="tour__chips">
+                <li>Vos PDF, sans retouche</li>
+                <li>Lecture page à page</li>
+                <li>En français et en anglais</li>
+              </ul>
+              <button type="button" class="tour__go" data-poi="materiel">Voir dans la démo</button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <p class="section-note reveal delay-200">En option, sur devis&nbsp;: modélisation 3D de votre produit, mobilier et
-        présentoir sur mesure, flight case, écran de veille 3D animé.</p>
+      <p class="section-note reveal delay-200">Vous n'avez pas de fichiers 3D&nbsp;? Des photos et des plans suffisent
+        souvent pour démarrer. Nous regardons ensemble ce qui existe, lors de l'appel.</p>
     </section>
 
-    <section id="tarifs" class="section section--wide">
+    <div class="band band--light">
+      <section id="livre" class="section section--light">
+        <div class="section-number reveal">Ce qui est livré</div>
+        <h2 class="reveal delay-100">Quatre câbles, dix minutes, personne sur place</h2>
+        <p class="reveal delay-200">Le kit est conçu pour ne demander personne sur place. Voici ce que vous recevez, ce
+          que vous louez, et ce qui reste à vous.</p>
+
+        <div class="kit-grid reveal delay-200">
+          <article class="kit-card">
+            <div class="kit-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 8l-9-5-9 5 9 5 9-5z"></path>
+                <path d="M3 8v8l9 5 9-5V8"></path>
+                <line x1="12" y1="13" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <h4>Dans le carton</h4>
+            <ul>
+              <li>Le mini PC préparé, l'expérience déjà installée</li>
+              <li>Le routeur de voyage configuré&nbsp;: <abbr class="tip" tabindex="0"
+                  data-tip="Un petit boîtier wifi qui crée un réseau privé sur votre stand, sans passer par Internet ni par le wifi du salon. Le téléphone du commercial s'y connecte pour piloter l'écran.">un
+                  réseau fermé</abbr>, à vous</li>
+              <li>Quatre câbles et l'alimentation</li>
+              <li>Le guide d'une page</li>
+            </ul>
+            <p class="kit-card__note">Flight case en option.</p>
+          </article>
+
+          <article class="kit-card">
+            <div class="kit-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 9l1.5-5h15L21 9"></path>
+                <path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"></path>
+                <path d="M5 12v9h14v-9"></path>
+                <rect x="9" y="15" width="6" height="6"></rect>
+              </svg>
+            </div>
+            <h4>Vous louez sur place</h4>
+            <ul>
+              <li>L'écran tactile, avec <abbr class="tip" tabindex="0"
+                  data-tip="HDMI : le câble qui envoie l'image du mini PC vers l'écran. USB : le câble qui renvoie le toucher de l'écran vers le mini PC. Tout écran tactile professionnel en est équipé.">entrée
+                  HDMI et sortie USB</abbr></li>
+              <li>Un téléphone ou une tablette pour la télécommande</li>
+              <li>Le mobilier du stand</li>
+            </ul>
+            <p class="kit-card__note">Comme vous le faites déjà, auprès de votre loueur de salon. Nous vous donnons les
+              prérequis à demander.</p>
+          </article>
+
+          <article class="kit-card">
+            <div class="kit-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2l8 4.5v11L12 22l-8-4.5v-11z"></path>
+                <path d="M12 22V11.5"></path>
+                <path d="M20 6.5l-8 5-8-5"></path>
+              </svg>
+            </div>
+            <h4>Reste à vous, après le salon</h4>
+            <ul>
+              <li>Une <abbr class="tip" tabindex="0"
+                  data-tip="Un programme installé sur le mini PC, qui tourne sans connexion Internet : la 3D, les vidéos et les fiches sont sur la machine, rien ne dépend du réseau du lieu.">application
+                  autonome</abbr>, sans réseau</li>
+              <li>Le jumeau 3D et le parcours guidé</li>
+              <li>Vos vidéos et vos fiches, en français et en anglais</li>
+              <li>La <abbr class="tip" tabindex="0"
+                  data-tip="L'écran de réglages, protégé par un code : vos équipes y changent les vidéos, les fiches et les textes elles-mêmes, sans développeur.">régie</abbr>
+                et la télécommande</li>
+              <li>Les statistiques de visite</li>
+            </ul>
+          </article>
+        </div>
+
+        <figure class="wiring reveal delay-200" id="wiring">
+          <figcaption class="wiring__caption">
+            <strong>Le branchement, en quatre câbles</strong>
+            <span>Vous branchez, c'est prêt en dix minutes. Nous vous aidons à distance, avant le salon.</span>
+          </figcaption>
+          <div class="wiring__scroll">
+            <svg class="wiring__svg" viewBox="0 0 960 400" role="img"
+              aria-label="Schéma de branchement : le mini PC est relié à l'écran tactile par un câble HDMI et un câble USB, à une prise par son alimentation, et au routeur de voyage par un câble réseau. Le téléphone du commercial se connecte au routeur en wifi.">
+              <defs>
+                <linearGradient id="wiringScreen" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#2859ff"></stop>
+                  <stop offset="0.55" stop-color="#7c3aed"></stop>
+                  <stop offset="1" stop-color="#f472b6"></stop>
+                </linearGradient>
+              </defs>
+
+              <!-- Écran tactile (loué sur place) -->
+              <g class="wiring__device">
+                <rect x="600" y="40" width="320" height="200" rx="12" class="wiring__shell"></rect>
+                <rect x="614" y="54" width="292" height="172" rx="6" fill="url(#wiringScreen)" opacity="0.9"></rect>
+                <text x="760" y="132" class="wiring__screen-text" text-anchor="middle">STAND</text>
+                <text x="760" y="156" class="wiring__screen-sub" text-anchor="middle">le jumeau 3D de votre produit</text>
+                <rect x="730" y="240" width="60" height="26" class="wiring__shell"></rect>
+                <rect x="690" y="266" width="140" height="10" rx="5" class="wiring__shell"></rect>
+                <text x="760" y="304" class="wiring__label" text-anchor="middle">Écran tactile</text>
+                <text x="760" y="324" class="wiring__sublabel" text-anchor="middle">loué sur place</text>
+              </g>
+
+              <!-- Mini PC (dans le carton) -->
+              <g class="wiring__device">
+                <rect x="300" y="150" width="150" height="72" rx="10" class="wiring__shell"></rect>
+                <circle cx="326" cy="186" r="5" class="wiring__led"></circle>
+                <line x1="345" y1="176" x2="430" y2="176" class="wiring__vent"></line>
+                <line x1="345" y1="188" x2="430" y2="188" class="wiring__vent"></line>
+                <line x1="345" y1="200" x2="430" y2="200" class="wiring__vent"></line>
+                <text x="375" y="118" class="wiring__label" text-anchor="middle">Mini PC</text>
+                <text x="375" y="136" class="wiring__sublabel" text-anchor="middle">dans le carton</text>
+              </g>
+
+              <!-- Routeur de voyage (dans le carton) -->
+              <g class="wiring__device">
+                <rect x="70" y="160" width="110" height="52" rx="10" class="wiring__shell"></rect>
+                <line x1="100" y1="160" x2="92" y2="128" class="wiring__antenna"></line>
+                <line x1="150" y1="160" x2="158" y2="128" class="wiring__antenna"></line>
+                <circle cx="100" cy="186" r="4" class="wiring__led"></circle>
+                <circle cx="118" cy="186" r="4" class="wiring__led"></circle>
+                <text x="125" y="96" class="wiring__label" text-anchor="middle">Routeur de voyage</text>
+                <text x="125" y="114" class="wiring__sublabel" text-anchor="middle">dans le carton</text>
+              </g>
+
+              <!-- Prise -->
+              <g class="wiring__device">
+                <rect x="470" y="330" width="60" height="44" rx="8" class="wiring__shell"></rect>
+                <circle cx="490" cy="352" r="4" class="wiring__hole"></circle>
+                <circle cx="510" cy="352" r="4" class="wiring__hole"></circle>
+                <text x="545" y="358" class="wiring__label">Prise du stand</text>
+              </g>
+
+              <!-- Téléphone du commercial (loué ou apporté) -->
+              <g class="wiring__device">
+                <rect x="96" y="300" width="58" height="92" rx="10" class="wiring__shell"></rect>
+                <rect x="104" y="312" width="42" height="64" rx="4" class="wiring__phone-screen"></rect>
+                <circle cx="125" cy="384" r="3" class="wiring__hole"></circle>
+                <text x="200" y="340" class="wiring__label">Téléphone du commercial</text>
+                <text x="200" y="360" class="wiring__sublabel">la télécommande, sans application</text>
+              </g>
+
+              <!-- Câbles : dessinés au scroll, dans l'ordre 1 → 4 -->
+              <path class="wiring__cable wiring__cable--1" d="M450 170 C 520 170, 540 118, 600 118"></path>
+              <path class="wiring__cable wiring__cable--2" d="M600 190 C 540 190, 520 206, 450 206"></path>
+              <path class="wiring__cable wiring__cable--3" d="M375 222 L 375 352 L 470 352"></path>
+              <path class="wiring__cable wiring__cable--4" d="M180 186 L 300 186"></path>
+
+              <!-- Wifi routeur → téléphone (réseau fermé) -->
+              <g class="wiring__wifi">
+                <path d="M85 236 A 40 40 0 0 0 165 236" class="wiring__wave"></path>
+                <path d="M99 236 A 26 26 0 0 0 151 236" class="wiring__wave"></path>
+                <path d="M113 236 A 12 12 0 0 0 137 236" class="wiring__wave"></path>
+              </g>
+
+              <!-- Badges numérotés -->
+              <g class="wiring__badge wiring__badge--1">
+                <circle cx="529" cy="144" r="14"></circle>
+                <text x="529" y="149" text-anchor="middle">1</text>
+                <text x="529" y="118" class="wiring__cable-label" text-anchor="middle">HDMI, l'image</text>
+              </g>
+              <g class="wiring__badge wiring__badge--2">
+                <circle cx="529" cy="198" r="14"></circle>
+                <text x="529" y="203" text-anchor="middle">2</text>
+                <text x="529" y="234" class="wiring__cable-label" text-anchor="middle">USB, le tactile</text>
+              </g>
+              <g class="wiring__badge wiring__badge--3">
+                <circle cx="375" cy="292" r="14"></circle>
+                <text x="375" y="297" text-anchor="middle">3</text>
+                <text x="400" y="297" class="wiring__cable-label">Alimentation</text>
+              </g>
+              <g class="wiring__badge wiring__badge--4">
+                <circle cx="240" cy="186" r="14"></circle>
+                <text x="240" y="191" text-anchor="middle">4</text>
+                <text x="240" y="160" class="wiring__cable-label" text-anchor="middle">Câble réseau</text>
+              </g>
+            </svg>
+          </div>
+        </figure>
+
+        <p class="section-note reveal delay-200">En option, sur devis&nbsp;: modélisation 3D de votre produit,
+          mobilier et présentoir sur mesure, flight case, écran de veille 3D animé.</p>
+      </section>
+    </div>
+
+    <section id="tarifs" class="section">
       <div class="section-number reveal">Tarifs</div>
       <h2 class="reveal delay-100">Deux formules, un prix clair</h2>
       <p class="reveal delay-200">Vous êtes propriétaire de l'outil. Le devis est établi après un appel de 30 minutes,
         une fois votre produit et votre prochain salon connus.</p>
 
-      <div class="friction-grid">
-        <div class="counter-block reveal delay-100">
-          <h4>Logiciel</h4>
-          <div class="offer-price">4&nbsp;900&nbsp;€ <small>HT</small></div>
-          <p>L'expérience STAND à vos couleurs, à partir de vos données 3D existantes. Livrée sous forme d'application
-            autonome pour votre PC (télécommande et régie comprises). Analyse de vos fichiers incluse.</p>
-          <span class="offer-tag">Livré en 4 semaines</span>
-        </div>
-
-        <div class="counter-block counter-block--featured reveal delay-150">
-          <h4>Kit complet</h4>
-          <div class="offer-price">6&nbsp;900&nbsp;€ <small>HT</small></div>
-          <p>Le logiciel, plus le mini PC et le routeur configurés, livrés prêts à brancher.</p>
-          <p>Vous préférez acheter le matériel vous-même&nbsp;? Nous vous donnons les références et nous l'installons, à
-            distance ou en atelier.</p>
-        </div>
-
-        <div class="counter-block reveal delay-200">
-          <h4>Sur devis</h4>
-          <div class="offer-price">Selon votre scénario</div>
-          <ul class="offer-list">
-            <li>Modélisation 3D, si vos fichiers ne sont pas exploitables tels quels</li>
-            <li>Mobilier et présentoir, avec nos partenaires</li>
-            <li>Flight case</li>
-            <li>Écran de veille 3D animé</li>
-          </ul>
-        </div>
+      <div class="offer-table-wrap reveal delay-200">
+        <table class="offer-table">
+          <thead>
+            <tr>
+              <th scope="col" class="offer-table__what"><span class="sr-only">Ce qui est inclus</span></th>
+              <th scope="col">
+                <div class="offer-head">
+                  <span class="offer-head__name">Logiciel</span>
+                  <strong class="offer-head__price">4&nbsp;900&nbsp;€ <small>HT</small></strong>
+                  <span class="offer-head__meta">Livré en 4 semaines</span>
+                </div>
+              </th>
+              <th scope="col" class="is-featured">
+                <div class="offer-head">
+                  <span class="offer-badge">Prêt à brancher</span>
+                  <span class="offer-head__name">Kit complet</span>
+                  <strong class="offer-head__price">6&nbsp;900&nbsp;€ <small>HT</small></strong>
+                  <span class="offer-head__meta">Logiciel + matériel configuré</span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">L'expérience STAND à vos couleurs, à partir de vos fichiers 3D</th>
+              <td><span class="ok"><span class="sr-only">Inclus</span></span></td>
+              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Jumeau 3D et parcours guidé</th>
+              <td><span class="ok"><span class="sr-only">Inclus</span></span></td>
+              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Vos vidéos et vos fiches, en français et en anglais</th>
+              <td><span class="ok"><span class="sr-only">Inclus</span></span></td>
+              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Régie protégée par code et télécommande sur téléphone</th>
+              <td><span class="ok"><span class="sr-only">Inclus</span></span></td>
+              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Application autonome, sans réseau, et statistiques de visite</th>
+              <td><span class="ok"><span class="sr-only">Inclus</span></span></td>
+              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Analyse de vos fichiers 3D</th>
+              <td><span class="ok"><span class="sr-only">Inclus</span></span></td>
+              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Mini PC préparé, l'expérience installée</th>
+              <td><span class="alt">Références fournies</span></td>
+              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Routeur de voyage configuré, câbles, alimentation</th>
+              <td><span class="alt">Références fournies</span></td>
+              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Installation à distance, avant le salon</th>
+              <td><span class="alt">Sur votre matériel, à distance ou en atelier</span></td>
+              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Guide d'une page, kit prêt à brancher</th>
+              <td><span class="no"><span class="sr-only">Non inclus</span></span></td>
+              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <p class="section-note reveal delay-200">Un premier acteur industriel nous fait déjà confiance. Nous ne pouvons
-        pas le citer, mais nous pouvons vous raconter comment nous l'avons accompagné.</p>
+      <p class="offer-band reveal delay-200"><strong>Sur devis, selon votre scénario&nbsp;:</strong> modélisation 3D si vos
+        fichiers ne sont pas exploitables tels quels, mobilier et présentoir avec nos partenaires, flight case, écran
+        de veille 3D animé.</p>
+
+      <p class="section-note reveal delay-200">Un premier industriel nous fait déjà confiance&nbsp;: trois salons
+        internationaux, en Europe, aux États-Unis et en Asie, avec le même kit. Nous ne pouvons pas le citer, mais nous
+        pouvons vous raconter comment nous l'avons accompagné.</p>
     </section>
 
-    <section id="deroule" class="section section--wide">
+    <section id="deroule" class="section">
       <div class="section-number reveal">Comment ça se passe</div>
       <h2 class="reveal delay-100">De l'appel au salon, en trois étapes</h2>
 
-      <div class="friction-grid">
-        <div class="counter-block reveal delay-100">
+      <div class="friction-grid reveal delay-200">
+        <div class="counter-block">
           <div class="step-index">Étape 01</div>
           <h4>Un appel de 30 minutes</h4>
           <p>Vous décrivez votre produit et votre prochain salon. Nous regardons vos fichiers 3D, photos et vidéos en
             direct, et nous définissons ensemble l'expérience. Le devis suit cet entretien.</p>
         </div>
 
-        <div class="counter-block reveal delay-150">
+        <div class="counter-block">
           <div class="step-index">Étape 02</div>
           <h4>La production</h4>
           <p>Nous construisons l'expérience à partir de vos fichiers&nbsp;: conversion et optimisation de la scène 3D,
@@ -3958,7 +5978,7 @@
             Logiciel.</p>
         </div>
 
-        <div class="counter-block reveal delay-200">
+        <div class="counter-block">
           <div class="step-index">Étape 03</div>
           <h4>La livraison, avant le salon</h4>
           <p>Le kit arrive prêt à brancher, avec son guide d'une page. Nous vous accompagnons à distance pour
@@ -3976,11 +5996,14 @@
           <div class="faq-head">
             <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"></path>
               </svg></span>
             <h4>Nous avons déjà des vidéos</h4>
+            <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg></span>
           </div>
           <p>Elles sont dedans, au bon moment du parcours, et c'est le visiteur qui les choisit.</p>
         </div>
@@ -3989,11 +6012,17 @@
           <div class="faq-head">
             <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                <line x1="3" y1="3" x2="21" y2="21"></line>
               </svg></span>
             <h4>Il n'y a pas de wifi sur le salon</h4>
+            <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg></span>
           </div>
           <p>Le kit embarque son propre réseau. C'est justement conçu pour ça.</p>
         </div>
@@ -4002,11 +6031,16 @@
           <div class="faq-head">
             <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
               </svg></span>
             <h4>Nos équipes ne sont pas techniques</h4>
+            <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg></span>
           </div>
           <p>La régie s'ouvre avec un code, les contenus se changent sans développeur, et l'installation tient en quatre
             câbles.</p>
@@ -4016,11 +6050,14 @@
           <div class="faq-head">
             <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
               </svg></span>
             <h4>C'est pour un seul salon&nbsp;?</h4>
+            <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg></span>
           </div>
           <p>Non, c'est même l'argument central&nbsp;: le même outil ressert en showroom, en rendez-vous et sur vos
             salons suivants.</p>
@@ -4030,11 +6067,15 @@
           <div class="faq-head">
             <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                <path d="M12 2l8 4.5v11L12 22l-8-4.5v-11z"></path>
+                <path d="M12 22V11.5"></path>
+                <path d="M20 6.5l-8 5-8-5"></path>
               </svg></span>
             <h4>Nous n'avons pas de fichiers 3D</h4>
+            <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg></span>
           </div>
           <p>Nous l'évaluons lors de l'appel. Des photos et des plans suffisent souvent pour démarrer, la modélisation
             est alors chiffrée sur devis.</p>
@@ -4044,11 +6085,14 @@
           <div class="faq-head">
             <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
               </svg></span>
             <h4>Qui est sur place pendant le salon&nbsp;?</h4>
+            <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg></span>
           </div>
           <p>Personne, et c'est voulu&nbsp;: le kit est conçu pour tourner seul. Nous vous accompagnons avant le salon,
             pour l'installation et les réglages.</p>
@@ -4113,8 +6157,8 @@
                 </svg>
                 <span>Planifier mon appel</span>
               </a>
-              <a class="cta-social__btn--card" href="https://s.blinq.me/wEhJoOeZIrvGvSIe46Yy?bs=icl" target="_blank"
-                rel="noopener noreferrer" aria-label="Ma carte de visite">
+              <a href="https://s.blinq.me/wEhJoOeZIrvGvSIe46Yy?bs=icl" target="_blank" rel="noopener noreferrer"
+                aria-label="Ma carte de visite" title="Ma carte de visite">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round" aria-hidden="true">
                   <rect x="2" y="5" width="20" height="14" rx="2" />
@@ -4122,9 +6166,8 @@
                   <line x1="13" y1="10" x2="18" y2="10" />
                   <line x1="13" y1="14" x2="18" y2="14" />
                 </svg>
-                <span>Ma carte de visite</span>
               </a>
-              <a href="mailto:corentin.duboc@fractal-innov.fr" aria-label="Envoyer un e-mail">
+              <a href="mailto:corentin.duboc@fractal-innov.fr" aria-label="Envoyer un e-mail" title="Envoyer un e-mail">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round" aria-hidden="true">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
@@ -4132,14 +6175,14 @@
                 </svg>
               </a>
               <a href="https://www.linkedin.com/in/corentin-duboc/" target="_blank" rel="noopener noreferrer"
-                aria-label="LinkedIn Corentin Duboc">
+                aria-label="LinkedIn Corentin Duboc" title="LinkedIn">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path
                     d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                 </svg>
               </a>
               <a href="https://www.instagram.com/fractalinnov/" target="_blank" rel="noopener noreferrer"
-                aria-label="Instagram Fractal Innov">
+                aria-label="Instagram Fractal Innov" title="Instagram">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round" aria-hidden="true">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -4177,151 +6220,17 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      /* 0. HERO CANVAS - particules + liens (DemoLoopDashboard_v2, sans dépendance) */
-      const canvas = document.getElementById('hero-canvas');
-      const ctx = canvas ? canvas.getContext('2d') : null;
-      if (ctx) {
-        const COLORS = [
-          { r: 59, g: 104, b: 255 },
-          { r: 123, g: 156, b: 255 },
-          { r: 139, g: 92, b: 246 },
-          { r: 217, g: 70, b: 239 },
-        ];
+      /* Démo : une seule origine, un seul point de réglage.
+         Contrat avec le démonstrateur (lot 2) : `?poi=<id>` à l'ouverture,
+         puis postMessage({ type: 'stand:goto', poi }) une fois chargé. */
+      const DEMO_ORIGIN = 'https://salon-demo-app.onrender.com';
+      const DEMO_URL = DEMO_ORIGIN + '/';
+      const REMOTE_URL = DEMO_ORIGIN + '/remote';
 
-        let W;
-        let H;
-        let dpr = 1;
-        let particles = [];
-        let rafId = 0;
-        let N_PARTICLES = 55;
-        let MAX_DIST = 140;
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        function particleTier() {
-          const w = window.innerWidth;
-          if (w < 768) return { n: 26, maxD: 95, dprCap: 1.25 };
-          if (w <= 1024) return { n: 38, maxD: 120, dprCap: 1.5 };
-          return { n: 55, maxD: 140, dprCap: 2 };
-        }
-
-        function resize() {
-          const wrapper = canvas.parentElement;
-          const tier = particleTier();
-          N_PARTICLES = tier.n;
-          MAX_DIST = tier.maxD;
-          dpr = Math.min(window.devicePixelRatio || 1, tier.dprCap);
-          const cssW = wrapper.offsetWidth;
-          const cssH = wrapper.offsetHeight;
-          W = cssW;
-          H = cssH;
-          canvas.width = Math.max(1, Math.floor(cssW * dpr));
-          canvas.height = Math.max(1, Math.floor(cssH * dpr));
-          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        }
-
-        function randomColor() {
-          return COLORS[Math.floor(Math.random() * COLORS.length)];
-        }
-
-        function createParticle() {
-          const c = randomColor();
-          return {
-            x: Math.random() * W,
-            y: Math.random() * H,
-            vx: (Math.random() - 0.5) * 0.35,
-            vy: (Math.random() - 0.5) * 0.35,
-            r: Math.random() * 1.8 + 0.8,
-            c,
-            opacity: Math.random() * 0.5 + 0.2,
-          };
-        }
-
-        function initParticles() {
-          particles = [];
-          for (let i = 0; i < N_PARTICLES; i++) particles.push(createParticle());
-        }
-
-        function drawFrame(moveParticles) {
-          ctx.clearRect(0, 0, W, H);
-
-          if (moveParticles) {
-            particles.forEach((p) => {
-              p.x += p.vx;
-              p.y += p.vy;
-              if (p.x < -10) p.x = W + 10;
-              if (p.x > W + 10) p.x = -10;
-              if (p.y < -10) p.y = H + 10;
-              if (p.y > H + 10) p.y = -10;
-            });
-          }
-
-          for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-              const dx = particles[i].x - particles[j].x;
-              const dy = particles[i].y - particles[j].y;
-              const dist = Math.sqrt(dx * dx + dy * dy);
-              if (dist < MAX_DIST) {
-                const alpha = (1 - dist / MAX_DIST) * 0.12;
-                const ci = particles[i].c;
-                ctx.beginPath();
-                ctx.strokeStyle = `rgba(${ci.r},${ci.g},${ci.b},${alpha})`;
-                ctx.lineWidth = 1;
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.stroke();
-              }
-            }
-          }
-
-          particles.forEach((p) => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${p.c.r},${p.c.g},${p.c.b},${p.opacity})`;
-            ctx.fill();
-          });
-        }
-
-        function loop() {
-          if (reduceMotion) return;
-          drawFrame(true);
-          rafId = requestAnimationFrame(loop);
-        }
-
-        function startCanvas() {
-          cancelAnimationFrame(rafId);
-          resize();
-          initParticles();
-          if (reduceMotion) {
-            drawFrame(false);
-            return;
-          }
-          loop();
-        }
-
-        startCanvas();
-
-        let resizeT;
-        window.addEventListener('resize', () => {
-          clearTimeout(resizeT);
-          resizeT = setTimeout(() => {
-            startCanvas();
-          }, 120);
-        });
-
-        document.addEventListener('visibilitychange', () => {
-          if (reduceMotion) return;
-          if (document.hidden) {
-            cancelAnimationFrame(rafId);
-          } else {
-            rafId = requestAnimationFrame(loop);
-          }
-        });
-      }
-
-      /* 0b. Hero → page-rest : opacité du halo global (évite la ligne nette au scroll) */
-      const reduceMotionBg = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!reduceMotionBg) {
+      /* 0. Hero → page-rest : opacité du halo global (évite la ligne nette au scroll) */
+      if (!reduceMotion) {
         const heroEl = document.querySelector('.hero-wrapper');
         const pageRestEl = document.querySelector('.page-rest');
         let glowRaf = 0;
@@ -4349,20 +6258,15 @@
         applyPageRestGlowMix();
       }
 
-      /* 0c. Bandeau offre : masqué au scroll bas, réaffiché au scroll haut + nav active selon la section */
-      const siteTopEl = document.querySelector('.site-top');
+      /* 0b. Nav active selon la section */
       const navLinksAll = document.querySelectorAll('#mainNav .nav-link');
       const sectionIdsNav = ['demo', 'probleme', 'valeur', 'jumeau-3d', 'livre', 'tarifs', 'deroule', 'questions'];
-      let lastScrollYForBanner = window.scrollY;
       let headerScrollRaf = 0;
-      const reduceMotionBanner = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
       function updateNavActiveFromScroll() {
         if (!navLinksAll.length) return;
-        const headerH = siteTopEl ? siteTopEl.getBoundingClientRect().height : 96;
+        const headerH = 96;
         const trigger = window.scrollY + headerH + 28;
         let activeId = null;
-
         const firstSec = document.getElementById(sectionIdsNav[0]);
         if (firstSec) {
           const firstTop = firstSec.getBoundingClientRect().top + window.scrollY;
@@ -4380,100 +6284,48 @@
             }
           }
         }
-
         navLinksAll.forEach((a) => {
           const href = a.getAttribute('href') || '';
           const id = href.startsWith('#') ? href.slice(1) : '';
           a.classList.toggle('active-link', id === activeId);
         });
       }
-
-      function applyHeaderScroll() {
-        headerScrollRaf = 0;
-        const y = window.scrollY;
-        const dy = y - lastScrollYForBanner;
-
-        if (siteTopEl && !reduceMotionBanner) {
-          if (y < 20) {
-            siteTopEl.classList.remove('site-top--banner-collapsed');
-          } else if (dy > 8) {
-            siteTopEl.classList.add('site-top--banner-collapsed');
-          } else if (dy < -8) {
-            siteTopEl.classList.remove('site-top--banner-collapsed');
-          }
-        }
-
-        lastScrollYForBanner = y;
-        updateNavActiveFromScroll();
-      }
-
       function scheduleHeaderScroll() {
         if (headerScrollRaf) return;
-        headerScrollRaf = requestAnimationFrame(applyHeaderScroll);
+        headerScrollRaf = requestAnimationFrame(() => {
+          headerScrollRaf = 0;
+          updateNavActiveFromScroll();
+        });
       }
-
       window.addEventListener('scroll', scheduleHeaderScroll, { passive: true });
-      window.addEventListener('resize', () => {
-        lastScrollYForBanner = window.scrollY;
-        updateNavActiveFromScroll();
-      });
-      applyHeaderScroll();
+      window.addEventListener('resize', updateNavActiveFromScroll);
+      updateNavActiveFromScroll();
 
-      /* 1. ANIMATIONS AU DÉFILEMENT (SCROLL REVEAL)
-         - Visible : fade + translate vers 0.
-         - Disparition en descendant la page : sortie par le haut → translateY(-30px).
-         - Disparition en remontant : sortie par le bas → translateY(+30px). */
+      /* 1. RÉVÉLATION AU DÉFILEMENT : une seule fois. Un bloc révélé le reste,
+         y compris quand on remonte relire (pas de re-masquage). */
       const reveals = document.querySelectorAll('.reveal');
-
-      function applyRevealState(entry) {
-        const el = entry.target;
-        const rect = entry.boundingClientRect;
-        const vh = window.innerHeight;
-
-        if (entry.isIntersecting) {
-          el.classList.remove('reveal--from-top');
-          el.classList.add('active');
-          return;
-        }
-
-        el.classList.remove('active');
-        if (rect.bottom <= 0) {
-          el.classList.add('reveal--from-top');
-        } else if (rect.top >= vh) {
-          el.classList.remove('reveal--from-top');
-        } else {
-          /* À cheval sur un bord (rootMargin, blocs hauts) : comparer ce qui dépasse en haut vs en bas */
-          const outTop = Math.max(0, -rect.top);
-          const outBottom = Math.max(0, rect.bottom - vh);
-          el.classList.toggle('reveal--from-top', outTop > outBottom);
-        }
+      if (reduceMotion) {
+        reveals.forEach((el) => el.classList.add('active'));
+      } else {
+        const revealObserver = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('active');
+            obs.unobserve(entry.target);
+          });
+        }, { root: null, threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach((el) => revealObserver.observe(el));
       }
 
-      const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(applyRevealState);
-      }, {
-        root: null,
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
-      });
-
-      reveals.forEach((reveal) => {
-        revealObserver.observe(reveal);
-      });
-
-      /* 2. MENU BURGER MOBILE & NAVIGATION GESTION */
+      /* 2. MENU BURGER MOBILE */
       const burgerBtn = document.getElementById('burgerBtn');
       const mainNav = document.getElementById('mainNav');
       const navLinks = document.querySelectorAll('.nav-link, .masthead-cta');
-
-      // Ouverture/Fermeture du menu au clic sur le burger
       burgerBtn.addEventListener('click', () => {
         burgerBtn.classList.toggle('active');
         mainNav.classList.toggle('menu-open');
         document.body.style.overflow = mainNav.classList.contains('menu-open') ? 'hidden' : '';
       });
-
-      // Fermeture du menu au clic sur un lien (pour mobile)
       navLinks.forEach(link => {
         link.addEventListener('click', () => {
           if (mainNav.classList.contains('menu-open')) {
@@ -4484,90 +6336,209 @@
         });
       });
 
-      /* 3. ACCORDÉON FAQ
-         - Par défaut : seule la question est visible (réponse cachée)
-         - Au clic : affiche la réponse (fade + agrandissement)
-         - Permet plusieurs réponses ouvertes simultanément */
+      /* 3. ACCORDÉON FAQ */
       const faqItems = document.querySelectorAll('.faq-item');
-      if (faqItems.length) {
-        faqItems.forEach(item => {
-          // Garantit l'état initial (pas de réponse visible au chargement)
-          item.classList.remove('open');
-          item.setAttribute('aria-expanded', 'false');
-
-          item.setAttribute('role', 'button');
-          item.setAttribute('tabindex', '0');
-
-          const toggle = () => {
-            const isOpen = item.classList.contains('open');
-            item.classList.toggle('open', !isOpen);
-            item.setAttribute('aria-expanded', String(!isOpen));
-          };
-
-          item.addEventListener('click', toggle);
-          item.addEventListener('keydown', e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              toggle();
-            }
-          });
+      faqItems.forEach(item => {
+        item.classList.remove('open');
+        item.setAttribute('aria-expanded', 'false');
+        item.setAttribute('role', 'button');
+        item.setAttribute('tabindex', '0');
+        const toggle = () => {
+          const isOpen = item.classList.contains('open');
+          item.classList.toggle('open', !isOpen);
+          item.setAttribute('aria-expanded', String(!isOpen));
+        };
+        item.addEventListener('click', toggle);
+        item.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggle();
+          }
         });
-      }
+      });
 
-      /* 4. STICKY STEPS - activation au scroll
-         Stratégie : l'étape dont le centre est le plus proche du tiers supérieur
-         du viewport (zone 20 %–72 %) est rendue active.
-         En dehors de la zone : on garde la première ou la dernière selon la position. */
+      /* 4. STICKY STEPS : l'étape dont le centre est le plus proche du tiers supérieur
+         du viewport est active ; le visuel sticky et sa légende suivent. */
       const stepCards = document.querySelectorAll('.step-card');
+      const stickyImgs = document.querySelectorAll('.sticky-visual__img');
+      const stickyCaption = document.getElementById('stickyCaption');
       if (stepCards.length) {
+        let activeStep = null;
         function setActiveStep() {
           const vh = window.innerHeight;
           const zoneTop = vh * 0.22;
           const zoneBot = vh * 0.72;
           let best = null;
           let bestDist = Infinity;
-
           stepCards.forEach((card) => {
             const rect = card.getBoundingClientRect();
             const centerY = rect.top + rect.height / 2;
-            const dist = Math.abs(centerY - vh * 0.42); // ancre vers le tiers sup.
-
+            const dist = Math.abs(centerY - vh * 0.42);
             if (centerY >= zoneTop && centerY <= zoneBot && dist < bestDist) {
               bestDist = dist;
               best = card;
             }
           });
-
-          /* Hors zone : forcer la première ou la dernière */
           if (!best) {
             const firstRect = stepCards[0].getBoundingClientRect();
             best = firstRect.top > zoneBot ? stepCards[0] : stepCards[stepCards.length - 1];
           }
-
+          if (best === activeStep) return;
+          activeStep = best;
+          const step = best.getAttribute('data-step');
           stepCards.forEach((c) => c.classList.toggle('is-active', c === best));
+          stickyImgs.forEach((img) => img.classList.toggle('is-active', img.getAttribute('data-step') === step));
+          if (stickyCaption) stickyCaption.textContent = best.getAttribute('data-caption') || '';
         }
-
         window.addEventListener('scroll', setActiveStep, { passive: true });
-        setActiveStep(); /* état initial */
+        window.addEventListener('resize', setActiveStep);
+        setActiveStep();
       }
 
-      /* 6. Pied de page - année courante */
+      /* 5. DÉMO : chargement au clic (masque le démarrage à froid du serveur),
+         puis pilotage par POI depuis la lecture guidée. */
+      const demoViewport = document.getElementById('demoViewport');
+      const demoLaunch = document.getElementById('demoLaunch');
+      let demoIframe = null;
+      function launchDemo(poi) {
+        if (!demoViewport) return;
+        if (demoIframe) {
+          if (poi && demoIframe.contentWindow) {
+            demoIframe.contentWindow.postMessage({ type: 'stand:goto', poi }, DEMO_ORIGIN);
+          }
+          return;
+        }
+        demoIframe = document.createElement('iframe');
+        demoIframe.className = 'demo-screen__iframe';
+        demoIframe.title = 'STAND - démo en ligne';
+        demoIframe.setAttribute('allow', 'autoplay; fullscreen; xr-spatial-tracking; gamepad');
+        demoIframe.src = poi ? DEMO_URL + '?poi=' + encodeURIComponent(poi) : DEMO_URL;
+        demoViewport.classList.add('is-loading');
+        demoIframe.addEventListener('load', () => {
+          demoViewport.classList.remove('is-loading');
+          demoViewport.classList.add('is-live');
+        });
+        demoViewport.appendChild(demoIframe);
+      }
+      if (demoLaunch) demoLaunch.addEventListener('click', () => launchDemo(null));
+
+      const remoteViewport = document.getElementById('remoteViewport');
+      const remoteLaunch = document.getElementById('remoteLaunch');
+      if (remoteViewport && remoteLaunch) {
+        remoteLaunch.addEventListener('click', () => {
+          const frame = document.createElement('iframe');
+          frame.className = 'demo-phone__iframe';
+          frame.title = 'STAND - télécommande de la démo';
+          frame.src = REMOTE_URL;
+          remoteViewport.appendChild(frame);
+          remoteViewport.classList.add('is-live');
+        });
+      }
+
+      /* QR code : popover, fermé au clic dehors ou à Échap */
+      const qrToggle = document.getElementById('qrToggle');
+      const qrPopover = document.getElementById('qrPopover');
+      if (qrToggle && qrPopover) {
+        const setQr = (open) => {
+          qrPopover.hidden = !open;
+          qrToggle.setAttribute('aria-expanded', String(open));
+        };
+        qrToggle.addEventListener('click', () => setQr(qrPopover.hidden));
+        document.addEventListener('click', (e) => {
+          if (qrPopover.hidden) return;
+          if (!qrPopover.contains(e.target) && e.target !== qrToggle && !qrToggle.contains(e.target)) setQr(false);
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && !qrPopover.hidden) setQr(false);
+        });
+      }
+
+      /* 6. LECTURE GUIDÉE (jumeau 3D) : onglets + « Voir dans la démo » */
+      const tourTabs = Array.from(document.querySelectorAll('.tour__tab'));
+      const tourPanels = Array.from(document.querySelectorAll('.tour__panel'));
+      function activateTab(tab) {
+        const key = tab.getAttribute('data-panel');
+        tourTabs.forEach((t) => {
+          const on = t === tab;
+          t.classList.toggle('is-active', on);
+          t.setAttribute('aria-selected', String(on));
+          t.setAttribute('tabindex', on ? '0' : '-1');
+        });
+        tourPanels.forEach((p) => {
+          const on = p.id === 'panel-' + key;
+          p.classList.toggle('is-active', on);
+          p.hidden = !on;
+        });
+        if (typeof tab.scrollIntoView === 'function') {
+          tab.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+        }
+      }
+      tourTabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => activateTab(tab));
+        tab.addEventListener('keydown', (e) => {
+          let next = null;
+          if (e.key === 'ArrowRight') next = tourTabs[(i + 1) % tourTabs.length];
+          if (e.key === 'ArrowLeft') next = tourTabs[(i - 1 + tourTabs.length) % tourTabs.length];
+          if (e.key === 'Home') next = tourTabs[0];
+          if (e.key === 'End') next = tourTabs[tourTabs.length - 1];
+          if (next) {
+            e.preventDefault();
+            activateTab(next);
+            next.focus();
+          }
+        });
+      });
+      document.querySelectorAll('.tour__go').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const poi = btn.getAttribute('data-poi');
+          const target = document.getElementById('demo');
+          if (target) target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+          launchDemo(poi);
+        });
+      });
+
+      /* 7. SCHÉMA DE BRANCHEMENT : les câbles se dessinent à l'entrée dans le viewport */
+      const wiring = document.getElementById('wiring');
+      if (wiring) {
+        if (reduceMotion) {
+          wiring.classList.add('is-drawn');
+        } else {
+          const wiringObserver = new IntersectionObserver((entries, obs) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              wiring.classList.add('is-drawn');
+              obs.disconnect();
+            });
+          }, { threshold: 0.35 });
+          wiringObserver.observe(wiring);
+        }
+      }
+
+      /* 8. INFOBULLES : survol au clavier / souris via CSS, tap sur mobile via .is-open */
+      const tips = document.querySelectorAll('.tip');
+      tips.forEach((tip) => {
+        tip.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const open = tip.classList.contains('is-open');
+          tips.forEach((t) => t.classList.remove('is-open'));
+          tip.classList.toggle('is-open', !open);
+        });
+      });
+      document.addEventListener('click', () => tips.forEach((t) => t.classList.remove('is-open')));
+
+      /* 9. Pied de page : année courante */
       const footerCopyright = document.getElementById('footerCopyright');
       if (footerCopyright) {
         footerCopyright.textContent = `© ${new Date().getFullYear()} Fractal Innov`;
       }
 
-      /* 7. DÉMO EN PLEIN ÉCRAN - overlay interne, jamais de nouvel onglet.
-         Le clic ouvre un calque plein écran par-dessus la page (pas de navigation),
-         avec un bouton « Fermer » visible qui ramène exactement à la vue précédente. */
+      /* 10. DÉMO EN PLEIN ÉCRAN : overlay interne, jamais de nouvel onglet */
       const demoFullscreenOverlay = document.getElementById('demoFullscreenOverlay');
       const demoFullscreenIframe = document.getElementById('demoFullscreenIframe');
       const demoFullscreenClose = document.getElementById('demoFullscreenClose');
       const demoFullscreenTriggers = document.querySelectorAll('[data-demo-fullscreen-src]');
-
       if (demoFullscreenOverlay && demoFullscreenIframe && demoFullscreenClose && demoFullscreenTriggers.length) {
         let lastFocusedEl = null;
-
         const openDemoFullscreen = (src) => {
           lastFocusedEl = document.activeElement;
           demoFullscreenIframe.src = src;
@@ -4575,7 +6546,6 @@
           document.body.classList.add('demo-fullscreen-open');
           demoFullscreenClose.focus();
         };
-
         const closeDemoFullscreen = () => {
           demoFullscreenOverlay.hidden = true;
           document.body.classList.remove('demo-fullscreen-open');
@@ -4584,15 +6554,12 @@
             lastFocusedEl.focus();
           }
         };
-
         demoFullscreenTriggers.forEach((trigger) => {
           trigger.addEventListener('click', () => {
             openDemoFullscreen(trigger.getAttribute('data-demo-fullscreen-src'));
           });
         });
-
         demoFullscreenClose.addEventListener('click', closeDemoFullscreen);
-
         document.addEventListener('keydown', (event) => {
           if (event.key === 'Escape' && !demoFullscreenOverlay.hidden) {
             closeDemoFullscreen();
@@ -4601,9 +6568,7 @@
       }
     });
   </script>
-
   <!-- Fond WebGL Three.js (sections + ancres écran) : voir DemoLoopDashboard_bgThree.html pour réintégrer. -->
-
 </body>
 
 </html>

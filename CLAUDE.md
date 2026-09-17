@@ -30,3 +30,10 @@ Tous les messages de commit suivent https://www.conventionalcommits.org/en/v1.0.
   - le support couvre l'installation avant le salon, pas le salon lui-même ;
   - pas de mode en ligne, pas de redémarrage ni de lancement automatique en standard ;
   - formules affichées : Logiciel 4 900 € HT (livré en 4 semaines) et Kit complet 6 900 € HT.
+
+## Démonstrateur et médias
+
+- `assets/demo/` : captures du démonstrateur (webp, 1600 px de large). `vue-ensemble`, `attirer`, `presenter`, `emporter`, `logiciel`, `materiel` servent la lecture guidée ; `hero-poster`, `poster-portrait` et `step-*` sont des recadrages sans l'interface.
+- L'iframe de la démo n'est créée qu'au clic (« Lancer la démo ») pour masquer le démarrage à froid du serveur Render. L'origine est définie une seule fois dans le script (`DEMO_ORIGIN`).
+- Contrat avec le démonstrateur (à implémenter côté Needle) : `?poi=<id>` à l'ouverture, puis `postMessage({ type: 'stand:goto', poi })` une fois chargé. Identifiants de POI : `votre-stand`, `attirer`, `presenter`, `emporter`, `logiciel`, `materiel`.
+- La télécommande est chargée depuis `REMOTE_URL` (`/remote` aujourd'hui, à basculer vers `/remote/public` quand elle existera).
