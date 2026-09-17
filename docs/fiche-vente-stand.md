@@ -67,18 +67,20 @@ faire ouvrir sur le téléphone du prospect pendant l'échange.
 - **L'expérience** : le jumeau 3D du produit, le parcours, les contenus FR / EN,
   la régie d'administration (accès par code), la télécommande téléphone.
 - **Le kit hors ligne** : mini PC préparé, routeur de voyage (réseau fermé,
-  indépendant du wifi du lieu), câbles, alimentation, flight case. Les
+  indépendant du wifi du lieu), câbles, alimentation. Les
   statistiques de visite se synchronisent quand une connexion apparaît.
-- **Options** : mobilier et présentoir sur mesure, coordonnés par Fractal Innov
-  avec ses partenaires ; écran de veille 3D animé.
+- **Options sur devis** : flight case ; mobilier et présentoir sur mesure,
+  coordonnés par Fractal Innov avec ses partenaires ; modélisation 3D si les
+  fichiers du client ne sont pas exploitables ; écran de veille 3D animé.
 - **Deux formules** : Logiciel seul, le client fournit et prépare son propre
   matériel ; Kit complet, Fractal Innov achète le matériel, le configure et le
   livre prêt à brancher (le client en est propriétaire). On ne communique pas
   nos références de matériel ni notre configuration en dehors du kit : c'est ce
   qui fait la valeur des 2 000 € d'écart.
-- **Support** : notice d'utilisation dans les deux formules, guide d'une page dans la caisse du kit, assistance à distance sur
-  créneaux convenus pendant le salon. Le client installe seul en dix minutes
-  (quatre câbles).
+- **Support** : notice d'utilisation dans les deux formules, guide d'une page
+  dans la caisse du kit, assistance à distance pour l'installation avant le
+  salon. Pendant le salon, le client est autonome : il installe seul en dix
+  minutes (quatre câbles).
 
 ## Ce qui n'est PAS dans l'offre (à dire clairement, ça rassure)
 
