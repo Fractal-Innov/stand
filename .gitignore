@@ -1,0 +1,3 @@
+# Sources vidéo brutes : on ne déploie que les encodages (hero-loop.*)
+assets/demo/HeroVideo.web.mp4
+.DS_Store
