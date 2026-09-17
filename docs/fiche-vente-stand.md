@@ -76,7 +76,7 @@ faire ouvrir sur le téléphone du prospect pendant l'échange.
   livre prêt à brancher (le client en est propriétaire). On ne communique pas
   nos références de matériel ni notre configuration en dehors du kit : c'est ce
   qui fait la valeur des 2 000 € d'écart.
-- **Support** : guide d'une page dans la caisse, assistance à distance sur
+- **Support** : notice d'utilisation dans les deux formules, guide d'une page dans la caisse du kit, assistance à distance sur
   créneaux convenus pendant le salon. Le client installe seul en dix minutes
   (quatre câbles).
 
