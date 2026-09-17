@@ -127,7 +127,7 @@
         radial-gradient(ellipse 55% 45% at 82% 60%, rgba(244, 114, 182, 0.18) 0%, transparent 70%);
     }
 
-.hero-wrapper {
+    .hero-wrapper {
       position: relative;
       z-index: 1;
       overflow: hidden;
@@ -637,8 +637,8 @@
     }
 
     /* Masqué « en dessous » (prochaine entrée en descendant la page) */
-/* Masqué « au-dessus » (prochaine entrée en remontant) - sortie par le haut quand on descend */
-.reveal.active {
+    /* Masqué « au-dessus » (prochaine entrée en remontant) - sortie par le haut quand on descend */
+    .reveal.active {
       opacity: 1;
       transform: translateY(0);
     }
@@ -700,7 +700,7 @@
         gap: 0;
       }
 
-}
+    }
 
     .hero-copy {
       grid-column: 1;
@@ -861,7 +861,7 @@
         margin-right: auto;
       }
 
-}
+    }
 
     .hero-eyebrow {
       font-size: var(--hero-fs-eyebrow);
@@ -1342,7 +1342,7 @@
         border-top: 1px solid rgba(255, 255, 255, 0.08);
       }
 
-}
+    }
 
     /* Tablette (768–1024) : même grille 2 colonnes que le desktop, avec proportions adaptées à la largeur */
     @media (min-width: 768px) and (max-width: 1024px) {
@@ -1359,7 +1359,7 @@
         padding-right: clamp(0.2rem, 1.2vw, 0.85rem);
       }
 
-.hero-meta-item {
+      .hero-meta-item {
         min-width: 0;
         flex: 1 1 min(0, 124px);
         padding: 0 clamp(0.35rem, 1vw, 0.85rem);
@@ -3226,7 +3226,7 @@
       animation-delay: .28s;
     }
 
-.hero-meta {
+    .hero-meta {
       animation-delay: .3s;
     }
 
@@ -3914,6 +3914,13 @@
       border-radius: 6px;
       background: #0b0d16;
       aspect-ratio: 3 / 2;
+      /* Cette boîte (~700-900px) tombe dans le point de rupture "tablette" du démonstrateur, qui
+         bascule alors sur une mise en page dégradée. Comme pour la télécommande plus bas, on rend
+         la démo à une largeur de bureau fixe (--kiosk-width) puis on la réduit à l'échelle réelle
+         de la boîte (--kiosk-scale, posé en JS) : vue desktop, taille de cadre inchangée.
+         Ajustez --kiosk-width si le point de rupture du démonstrateur diffère. */
+      --kiosk-width: 1200px;
+      --kiosk-scale: 1;
     }
 
     /* Téléphone : boîte haute, comme avant, pour que le menu bas de la démo reste accessible */
@@ -3922,7 +3929,7 @@
         aspect-ratio: auto;
         height: 85vh;
         height: 85dvh;
-        min-height: 560px;
+        min-height: 600px;
       }
     }
 
@@ -3937,11 +3944,24 @@
 
     .demo-screen__iframe {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      top: 0;
+      left: 0;
+      width: var(--kiosk-width);
+      height: calc(var(--kiosk-width) * 2 / 3);
+      transform: scale(var(--kiosk-scale));
+      transform-origin: 0 0;
       border: 0;
       background: #0b0d16;
+    }
+
+    /* Sur un vrai téléphone, la démo doit détecter du mobile : pas de mise à l'échelle ici.
+       Doit rester après la règle de base ci-dessus pour la primer (même spécificité). */
+    @media (max-width: 640px) {
+      .demo-screen__iframe {
+        width: 100%;
+        height: 100%;
+        transform: none;
+      }
     }
 
     .demo-launch {
@@ -5140,6 +5160,7 @@
         opacity: 1;
       }
     }
+
     /* ── En-tête : le CTA Contact reprend le primaire du hero (dégradé de marque),
        le burger reprend le contour du bouton secondaire. Tailles et rayons inchangés. ── */
     .masthead-cta {
@@ -5195,6 +5216,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       .masthead-cta,
       .masthead-cta::before,
       .burger {
@@ -5283,7 +5305,9 @@
               <span>Extrait de la démo, à tester ci-dessous</span>
             </figcaption>
             <span class="hero-visual__play" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"></path>
+              </svg>
             </span>
           </figure>
         </a>
@@ -5349,7 +5373,9 @@
               <button type="button" class="demo-launch" id="demoLaunch"
                 data-demo-src="https://salon-demo-app.onrender.com/">
                 <span class="demo-launch__icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"></path>
+                  </svg>
                 </span>
                 <span class="demo-launch__text">Lancer la démo</span>
                 <span class="demo-launch__hint">La scène 3D se charge en une dizaine de secondes</span>
@@ -5363,7 +5389,8 @@
                 stroke-linejoin="round" aria-hidden="true">
                 <path d="M9 11V5a1.5 1.5 0 0 1 3 0v6"></path>
                 <path d="M12 10a1.5 1.5 0 0 1 3 0v3"></path>
-                <path d="M15 12a1.5 1.5 0 0 1 3 0v4a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7L4 15a1.6 1.6 0 0 1 2.6-1.9L9 15"></path>
+                <path d="M15 12a1.5 1.5 0 0 1 3 0v4a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7L4 15a1.6 1.6 0 0 1 2.6-1.9L9 15">
+                </path>
               </svg>
               Glissez pour tourner autour du stand
             </li>
@@ -5412,7 +5439,8 @@
                 <p>Depuis son téléphone, votre commercial choisit ce que l'écran affiche. Sans application&nbsp;: un QR
                   code et un code PIN.</p>
                 <button type="button" class="demo-remote-launch" id="remoteLaunch"
-                  data-remote-src="https://salon-demo-app.onrender.com/remote">Prendre la télécommande</button>
+                  data-remote-src="https://salon-demo-app.onrender.com/remote">Prendre la
+                  télécommande</button>
               </div>
             </div>
           </div>
@@ -5437,15 +5465,17 @@
           </button>
           <div class="qr-popover" id="qrPopover" hidden>
             <svg class="qr-popover__code" viewBox="0 0 37 37" shape-rendering="crispEdges" role="img"
-              aria-label="QR code vers salon-demo-app.onrender.com">
-              <path fill="#ffffff" d="M0 0h37v37H0z"/>
-              <path stroke="#0b0d16" d="M4 4.5h7m5 0h3m1 0h5m1 0h7M4 5.5h1m5 0h1m1 0h1m1 0h2m2 0h3m1 0h2m2 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m4 0h5m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m3 0h2m1 0h2m3 0h3m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h6m2 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m2 0h1m3 0h1m1 0h2m1 0h2m2 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M15 11.5h1m1 0h7M4 12.5h1m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m1 0h4m6 0h1m2 0h1M4 13.5h1m1 0h2m6 0h1m3 0h1m1 0h1m3 0h3m2 0h1m2 0h1M4 14.5h1m1 0h3m1 0h1m2 0h1m2 0h2m3 0h1m3 0h1m1 0h1m2 0h3M5 15.5h1m1 0h3m1 0h3m6 0h2m1 0h1m1 0h2m1 0h1m2 0h1M4 16.5h2m1 0h2m1 0h2m1 0h4m2 0h3m2 0h1m1 0h1m2 0h1m1 0h2M4 17.5h1m1 0h1m1 0h1m5 0h4m2 0h3m1 0h3m2 0h1m2 0h1M5 18.5h4m1 0h5m3 0h1m2 0h2m2 0h1m2 0h2m1 0h2M4 19.5h1m2 0h1m3 0h2m4 0h2m2 0h1m1 0h2m3 0h2m1 0h1M4 20.5h1m1 0h2m2 0h3m3 0h1m1 0h1m1 0h2m1 0h4m2 0h1m1 0h2M5 21.5h2m1 0h1m2 0h3m2 0h1m1 0h1m1 0h2m3 0h2m2 0h2m1 0h1M4 22.5h1m2 0h1m2 0h4m2 0h2m2 0h1m4 0h4m2 0h2M5 23.5h3m3 0h3m1 0h1m4 0h3m1 0h2m1 0h1m1 0h1m1 0h1M4 24.5h1m2 0h1m1 0h5m1 0h2m2 0h3m1 0h6M12 25.5h1m4 0h1m5 0h2m3 0h1m1 0h3M4 26.5h7m7 0h1m1 0h2m1 0h2m1 0h1m1 0h2m1 0h2M4 27.5h1m5 0h1m6 0h2m2 0h1m2 0h1m3 0h2m1 0h1M4 28.5h1m1 0h3m1 0h1m1 0h3m3 0h1m2 0h1m2 0h5m2 0h2M4 29.5h1m1 0h3m1 0h1m2 0h1m2 0h3m1 0h2m5 0h2m1 0h3M4 30.5h1m1 0h3m1 0h1m1 0h1m2 0h2m6 0h1m3 0h3m2 0h1M4 31.5h1m5 0h1m3 0h8m1 0h2m3 0h1m2 0h1M4 32.5h7m1 0h1m1 0h1m1 0h1m3 0h2m1 0h4m1 0h2m1 0h2"/>
+              aria-label="QR code vers Render">
+              <path fill="#ffffff" d="M0 0h37v37H0z" />
+              <path stroke="#0b0d16"
+                d="M4 4.5h7m5 0h3m1 0h5m1 0h7M4 5.5h1m5 0h1m1 0h1m1 0h2m2 0h3m1 0h2m2 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m4 0h5m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m3 0h2m1 0h2m3 0h3m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h6m2 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m2 0h1m3 0h1m1 0h2m1 0h2m2 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M15 11.5h1m1 0h7M4 12.5h1m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m1 0h4m6 0h1m2 0h1M4 13.5h1m1 0h2m6 0h1m3 0h1m1 0h1m3 0h3m2 0h1m2 0h1M4 14.5h1m1 0h3m1 0h1m2 0h1m2 0h2m3 0h1m3 0h1m1 0h1m2 0h3M5 15.5h1m1 0h3m1 0h3m6 0h2m1 0h1m1 0h2m1 0h1m2 0h1M4 16.5h2m1 0h2m1 0h2m1 0h4m2 0h3m2 0h1m1 0h1m2 0h1m1 0h2M4 17.5h1m1 0h1m1 0h1m5 0h4m2 0h3m1 0h3m2 0h1m2 0h1M5 18.5h4m1 0h5m3 0h1m2 0h2m2 0h1m2 0h2m1 0h2M4 19.5h1m2 0h1m3 0h2m4 0h2m2 0h1m1 0h2m3 0h2m1 0h1M4 20.5h1m1 0h2m2 0h3m3 0h1m1 0h1m1 0h2m1 0h4m2 0h1m1 0h2M5 21.5h2m1 0h1m2 0h3m2 0h1m1 0h1m1 0h2m3 0h2m2 0h2m1 0h1M4 22.5h1m2 0h1m2 0h4m2 0h2m2 0h1m4 0h4m2 0h2M5 23.5h3m3 0h3m1 0h1m4 0h3m1 0h2m1 0h1m1 0h1m1 0h1M4 24.5h1m2 0h1m1 0h5m1 0h2m2 0h3m1 0h6M12 25.5h1m4 0h1m5 0h2m3 0h1m1 0h3M4 26.5h7m7 0h1m1 0h2m1 0h2m1 0h1m1 0h2m1 0h2M4 27.5h1m5 0h1m6 0h2m2 0h1m2 0h1m3 0h2m1 0h1M4 28.5h1m1 0h3m1 0h1m1 0h3m3 0h1m2 0h1m2 0h5m2 0h2M4 29.5h1m1 0h3m1 0h1m2 0h1m2 0h3m1 0h2m5 0h2m1 0h3M4 30.5h1m1 0h3m1 0h1m1 0h1m2 0h2m6 0h1m3 0h3m2 0h1M4 31.5h1m5 0h1m3 0h8m1 0h2m3 0h1m2 0h1M4 32.5h7m1 0h1m1 0h1m1 0h1m3 0h2m1 0h4m1 0h2m1 0h2" />
             </svg>
-            <p>Scannez pour ouvrir la même démo sur votre téléphone<br><span>salon-demo-app.onrender.com</span></p>
+            <p>Scannez pour ouvrir la même démo sur votre téléphone<br><span>Render</span></p>
           </div>
         </div>
         <a class="demo-action-btn demo-action-btn--mobile-remote" href="https://salon-demo-app.onrender.com/remote"
-          target="_blank" rel="noopener noreferrer">Ouvrir la télécommande</a>
+          target="_blank" rel="noopener noreferrer">Ouvrir
+          la télécommande</a>
       </div>
     </section>
 
@@ -5508,7 +5538,8 @@
           <div class="section-number reveal">Ce que vous gagnez</div>
           <h2 class="reveal delay-100">Pas un stand pour un salon, un outil de vente que vous gardez</h2>
           <p class="sticky-steps__desc reveal delay-200">Le mini PC, le routeur, l'écran tactile&nbsp;: ce sont les
-            moyens. Ce que vous gagnez, c'est un support de vente qui continue à travailler pour vous après le salon.</p>
+            moyens. Ce que vous gagnez, c'est un support de vente qui continue à travailler pour vous après le salon.
+          </p>
 
           <div class="sticky-visual" id="stickyVisual" aria-hidden="true">
             <img class="sticky-visual__img is-active" data-step="1" src="assets/demo/step-attirer.webp" width="1600"
@@ -5850,7 +5881,8 @@
                 <rect x="600" y="40" width="320" height="200" rx="12" class="wiring__shell"></rect>
                 <rect x="614" y="54" width="292" height="172" rx="6" fill="url(#wiringScreen)" opacity="0.9"></rect>
                 <text x="760" y="132" class="wiring__screen-text" text-anchor="middle">STAND</text>
-                <text x="760" y="156" class="wiring__screen-sub" text-anchor="middle">le jumeau 3D de votre produit</text>
+                <text x="760" y="156" class="wiring__screen-sub" text-anchor="middle">le jumeau 3D de votre
+                  produit</text>
                 <rect x="730" y="240" width="60" height="26" class="wiring__shell"></rect>
                 <rect x="690" y="266" width="140" height="10" rx="5" class="wiring__shell"></rect>
                 <text x="760" y="304" class="wiring__label" text-anchor="middle">Écran tactile</text>
@@ -6027,7 +6059,8 @@
         </table>
       </div>
 
-      <p class="offer-band reveal delay-200"><strong>Sur devis, selon votre scénario&nbsp;:</strong> modélisation 3D si vos
+      <p class="offer-band reveal delay-200"><strong>Sur devis, selon votre scénario&nbsp;:</strong> modélisation 3D si
+        vos
         fichiers ne sont pas exploitables tels quels, mobilier et présentoir avec nos partenaires, flight case, écran
         de veille 3D animé.</p>
 
@@ -6309,31 +6342,31 @@
          seule cette télécommande pilote cette borne (relais par salle côté serveur). */
       /* Hero : la boucle vidéo ne tourne que lorsqu'elle est visible, et reste sur
        le poster si le visiteur a demandé moins de mouvement ou économise ses données. */
-    (function () {
-      const video = document.getElementById('heroVideo');
-      if (!video) return;
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const saveData = navigator.connection && navigator.connection.saveData;
-      if (reduceMotion || saveData) {
-        video.removeAttribute('autoplay');
-        video.preload = 'none';
-        video.pause();
-        return;
-      }
-      if (!('IntersectionObserver' in window)) return;
-      new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const p = video.play();
-            if (p && p.catch) p.catch(() => {});
-          } else {
-            video.pause();
-          }
-        });
-      }, { threshold: 0.2 }).observe(video);
-    })();
+      (function () {
+        const video = document.getElementById('heroVideo');
+        if (!video) return;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const saveData = navigator.connection && navigator.connection.saveData;
+        if (reduceMotion || saveData) {
+          video.removeAttribute('autoplay');
+          video.preload = 'none';
+          video.pause();
+          return;
+        }
+        if (!('IntersectionObserver' in window)) return;
+        new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const p = video.play();
+              if (p && p.catch) p.catch(() => { });
+            } else {
+              video.pause();
+            }
+          });
+        }, { threshold: 0.2 }).observe(video);
+      })();
 
-    const DEMO_ORIGIN = 'https://salon-demo-app.onrender.com';
+      const DEMO_ORIGIN = 'https://salon-demo-app.onrender.com';
       const DEMO_URL = DEMO_ORIGIN + '/';
       const REMOTE_URL = DEMO_ORIGIN + '/remote/public';
       const SALLE_ID = Math.random().toString(36).slice(2, 10);
@@ -6517,6 +6550,17 @@
       const demoViewport = document.getElementById('demoViewport');
       const demoLaunch = document.getElementById('demoLaunch');
       let demoIframe = null;
+      /* Doit rester synchro avec --kiosk-width (CSS) : largeur "desktop" à laquelle la démo est rendue
+         avant d'être réduite à la taille réelle de sa boîte (évite le point de rupture "tablette"). */
+      const KIOSK_WIDTH = 1200;
+      if (demoViewport) {
+        const fitKiosk = () => {
+          demoViewport.style.setProperty('--kiosk-scale', (demoViewport.clientWidth / KIOSK_WIDTH).toFixed(4));
+        };
+        fitKiosk();
+        if (window.ResizeObserver) new ResizeObserver(fitKiosk).observe(demoViewport);
+        else window.addEventListener('resize', fitKiosk);
+      }
       function launchDemo(poi) {
         if (!demoViewport) return;
         if (demoIframe) {
