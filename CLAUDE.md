@@ -33,7 +33,8 @@ Tous les messages de commit suivent https://www.conventionalcommits.org/en/v1.0.
 
 ## Démonstrateur et médias
 
-- `assets/demo/` : captures du démonstrateur (webp, 1600 px de large). `vue-ensemble`, `attirer`, `presenter`, `emporter`, `logiciel`, `materiel` servent la lecture guidée ; `hero-poster`, `poster-portrait` et `step-*` sont des recadrages sans l'interface.
+- `assets/demo/` : captures du démonstrateur (webp, 1600 px de large). `vue-ensemble`, `attirer`, `presenter`, `emporter`, `logiciel`, `materiel` servent la lecture guidée ; `poster-portrait` et `step-*` sont des recadrages sans l'interface.
+- Hero : boucle vidéo `hero-loop.webm` / `hero-loop.mp4` (720p, sans son, ~1 Mo chacune, encodées depuis le rendu Needle), `hero-poster.webp` est sa première image. La vidéo ne joue que visible à l'écran et reste sur le poster si `prefers-reduced-motion` ou `saveData`.
 - L'iframe de la démo n'est créée qu'au clic (« Lancer la démo ») pour masquer le démarrage à froid du serveur Render. L'origine est définie une seule fois dans le script (`DEMO_ORIGIN`).
 - Contrat avec le démonstrateur (`useContratPoi.ts` côté borne) : `?poi=<id>` à l'ouverture, `postMessage({ type: 'stand:goto', poi })` une fois chargé (`poi` null = vue de départ), retour `{ type: 'stand:poi', poi }` à chaque changement d'item, ce qui synchronise l'onglet de la lecture guidée. Identifiants : `votre-stand`, `attirer`, `presenter`, `emporter`, `logiciel`, `materiel`.
 - La télécommande est chargée depuis `REMOTE_URL` (`/remote/public`, sans PIN). Les deux iframes reçoivent le même `?salle=<id>` généré à chaque chargement de page : une télécommande ne pilote que sa borne.

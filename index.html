@@ -3779,6 +3779,7 @@
       height: auto;
       aspect-ratio: 16 / 9;
       object-fit: cover;
+      background: #0f1220 url("assets/demo/hero-poster.webp") center / cover no-repeat;
     }
 
     .hero-visual__caption {
@@ -5213,9 +5214,15 @@
         <!-- Visuel hero : poster de la démo aujourd'hui, boucle vidéo ou scène Needle demain (même emplacement) -->
         <a href="#demo" class="hero-visual" aria-label="Voir la démo STAND">
           <figure class="hero-visual__frame">
-            <img class="hero-visual__img" src="assets/demo/hero-poster.webp" width="1600" height="900"
-              alt="La scène 3D de la démo STAND : un stand de salon avec sa borne tactile, son écran de présentation et ses visiteurs"
-              fetchpriority="high" decoding="async">
+            <video class="hero-visual__img" id="heroVideo" muted loop playsinline autoplay preload="metadata"
+              poster="assets/demo/hero-poster.webp" width="1280" height="720" disablepictureinpicture
+              aria-label="La scène 3D de la démo STAND : un stand de salon avec sa borne tactile, son écran de présentation et ses visiteurs">
+              <source src="assets/demo/hero-loop.webm" type="video/webm">
+              <source src="assets/demo/hero-loop.mp4" type="video/mp4">
+              <img class="hero-visual__img" src="assets/demo/hero-poster.webp" width="1280" height="720"
+                alt="La scène 3D de la démo STAND : un stand de salon avec sa borne tactile, son écran de présentation et ses visiteurs"
+                fetchpriority="high" decoding="async">
+            </video>
             <figcaption class="hero-visual__caption">
               <span class="hero-visual__dot" aria-hidden="true"></span>
               <span>Extrait de la démo, à tester ci-dessous</span>
@@ -6240,7 +6247,33 @@
          - retour { type: 'stand:poi', poi } à chaque changement d'item (null quand tout est fermé).
          Salle : un id par chargement de page, partagé par la borne et la télécommande, pour que
          seule cette télécommande pilote cette borne (relais par salle côté serveur). */
-      const DEMO_ORIGIN = 'https://salon-demo-app.onrender.com';
+      /* Hero : la boucle vidéo ne tourne que lorsqu'elle est visible, et reste sur
+       le poster si le visiteur a demandé moins de mouvement ou économise ses données. */
+    (function () {
+      const video = document.getElementById('heroVideo');
+      if (!video) return;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const saveData = navigator.connection && navigator.connection.saveData;
+      if (reduceMotion || saveData) {
+        video.removeAttribute('autoplay');
+        video.preload = 'none';
+        video.pause();
+        return;
+      }
+      if (!('IntersectionObserver' in window)) return;
+      new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const p = video.play();
+            if (p && p.catch) p.catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      }, { threshold: 0.2 }).observe(video);
+    })();
+
+    const DEMO_ORIGIN = 'https://salon-demo-app.onrender.com';
       const DEMO_URL = DEMO_ORIGIN + '/';
       const REMOTE_URL = DEMO_ORIGIN + '/remote/public';
       const SALLE_ID = Math.random().toString(36).slice(2, 10);
