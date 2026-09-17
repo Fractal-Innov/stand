@@ -3874,7 +3874,7 @@
 
     @media (min-width: 768px) {
       .demo-stage {
-        grid-template-columns: minmax(0, 1fr) 214px;
+        grid-template-columns: minmax(0, 1fr) 250px;
         gap: clamp(1.5rem, 3vw, 2.5rem);
       }
     }
@@ -3906,12 +3906,13 @@
       box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
+    /* 3:2 plutôt que 16:9 : le lobby du démonstrateur (logo, menu, « Démarrer ») a besoin de cette hauteur */
     .demo-screen__viewport {
       position: relative;
       overflow: hidden;
       border-radius: 6px;
       background: #0b0d16;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 3 / 2;
     }
 
     /* Téléphone : boîte haute, comme avant, pour que le menu bas de la démo reste accessible */
@@ -4090,7 +4091,7 @@
     }
 
     .demo-phone {
-      max-width: 214px;
+      max-width: 250px;
     }
 
     @media (max-width: 767px) {
@@ -4128,12 +4129,22 @@
       aspect-ratio: 9 / 18.5;
     }
 
+    /* La télécommande est conçue pour un téléphone de 375 px : rendue à cette largeur, puis réduite
+       à l'échelle du bezel (--phone-scale posé en JS d'après la largeur réelle du viewport) */
+    .demo-phone__viewport {
+      --phone-width: 375px;
+      --phone-scale: 0.5;
+    }
+
     .demo-phone__iframe {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      top: 0;
+      left: 0;
+      width: var(--phone-width);
+      height: calc(var(--phone-width) * 18.5 / 9);
       border: 0;
+      transform: scale(var(--phone-scale));
+      transform-origin: 0 0;
     }
 
     .demo-phone__idle {
@@ -6438,6 +6449,13 @@
       const remoteViewport = document.getElementById('remoteViewport');
       const remoteLaunch = document.getElementById('remoteLaunch');
       if (remoteViewport && remoteLaunch) {
+        const PHONE_WIDTH = 375;
+        const fitRemote = () => {
+          remoteViewport.style.setProperty('--phone-scale', (remoteViewport.clientWidth / PHONE_WIDTH).toFixed(4));
+        };
+        fitRemote();
+        if (window.ResizeObserver) new ResizeObserver(fitRemote).observe(remoteViewport);
+        else window.addEventListener('resize', fitRemote);
         remoteLaunch.addEventListener('click', () => {
           const frame = document.createElement('iframe');
           frame.className = 'demo-phone__iframe';
