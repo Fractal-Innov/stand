@@ -71,9 +71,11 @@ faire ouvrir sur le téléphone du prospect pendant l'échange.
   statistiques de visite se synchronisent quand une connexion apparaît.
 - **Options** : mobilier et présentoir sur mesure, coordonnés par Fractal Innov
   avec ses partenaires ; écran de veille 3D animé.
-- **Deux façons d'avoir le kit** : Fractal Innov l'achète, le configure et le
-  livre prêt à brancher (le client en est propriétaire), ou le client achète sur
-  nos références et nous installons à distance ou en atelier.
+- **Deux formules** : Logiciel seul, le client fournit et prépare son propre
+  matériel ; Kit complet, Fractal Innov achète le matériel, le configure et le
+  livre prêt à brancher (le client en est propriétaire). On ne communique pas
+  nos références de matériel ni notre configuration en dehors du kit : c'est ce
+  qui fait la valeur des 2 000 € d'écart.
 - **Support** : guide d'une page dans la caisse, assistance à distance sur
   créneaux convenus pendant le salon. Le client installe seul en dix minutes
   (quatre câbles).
