@@ -6223,11 +6223,24 @@
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       /* Démo : une seule origine, un seul point de réglage.
-         Contrat avec le démonstrateur (lot 2) : `?poi=<id>` à l'ouverture,
-         puis postMessage({ type: 'stand:goto', poi }) une fois chargé. */
+         Contrat avec le démonstrateur (useContratPoi.ts) :
+         - `?poi=<id>` à l'ouverture : l'item s'ouvre après « Démarrer » ;
+         - postMessage({ type: 'stand:goto', poi }) une fois chargé, poi null = vue de départ ;
+         - retour { type: 'stand:poi', poi } à chaque changement d'item (null quand tout est fermé).
+         Salle : un id par chargement de page, partagé par la borne et la télécommande, pour que
+         seule cette télécommande pilote cette borne (relais par salle côté serveur). */
       const DEMO_ORIGIN = 'https://salon-demo-app.onrender.com';
       const DEMO_URL = DEMO_ORIGIN + '/';
-      const REMOTE_URL = DEMO_ORIGIN + '/remote';
+      const REMOTE_URL = DEMO_ORIGIN + '/remote/public';
+      const SALLE_ID = Math.random().toString(36).slice(2, 10);
+      function demoHref(base, params) {
+        const url = new URL(base);
+        url.searchParams.set('salle', SALLE_ID);
+        Object.keys(params || {}).forEach((k) => {
+          if (params[k]) url.searchParams.set(k, params[k]);
+        });
+        return url.toString();
+      }
 
       /* 0. Hero → page-rest : opacité du halo global (évite la ligne nette au scroll) */
       if (!reduceMotion) {
@@ -6412,7 +6425,7 @@
         demoIframe.className = 'demo-screen__iframe';
         demoIframe.title = 'STAND - démo en ligne';
         demoIframe.setAttribute('allow', 'autoplay; fullscreen; xr-spatial-tracking; gamepad');
-        demoIframe.src = poi ? DEMO_URL + '?poi=' + encodeURIComponent(poi) : DEMO_URL;
+        demoIframe.src = demoHref(DEMO_URL, { poi });
         demoViewport.classList.add('is-loading');
         demoIframe.addEventListener('load', () => {
           demoViewport.classList.remove('is-loading');
@@ -6429,7 +6442,7 @@
           const frame = document.createElement('iframe');
           frame.className = 'demo-phone__iframe';
           frame.title = 'STAND - télécommande de la démo';
-          frame.src = REMOTE_URL;
+          frame.src = demoHref(REMOTE_URL);
           remoteViewport.appendChild(frame);
           remoteViewport.classList.add('is-live');
         });
@@ -6456,7 +6469,9 @@
       /* 6. LECTURE GUIDÉE (jumeau 3D) : onglets + « Voir dans la démo » */
       const tourTabs = Array.from(document.querySelectorAll('.tour__tab'));
       const tourPanels = Array.from(document.querySelectorAll('.tour__panel'));
-      function activateTab(tab) {
+      /* Correspondance POI de la borne → onglet (seul « votre-stand » diffère) */
+      const POI_TO_PANEL = { 'votre-stand': 'vue' };
+      function activateTab(tab, fromDemo) {
         const key = tab.getAttribute('data-panel');
         tourTabs.forEach((t) => {
           const on = t === tab;
@@ -6469,10 +6484,19 @@
           p.classList.toggle('is-active', on);
           p.hidden = !on;
         });
-        if (typeof tab.scrollIntoView === 'function') {
+        /* Synchronisation depuis la borne : pas de défilement, le visiteur regarde la démo */
+        if (!fromDemo && typeof tab.scrollIntoView === 'function') {
           tab.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
         }
       }
+      window.addEventListener('message', (e) => {
+        if (e.origin !== DEMO_ORIGIN || !e.data || e.data.type !== 'stand:poi') return;
+        const poi = e.data.poi;
+        if (!poi) return;
+        const key = POI_TO_PANEL[poi] || poi;
+        const tab = tourTabs.find((t) => t.getAttribute('data-panel') === key);
+        if (tab && !tab.classList.contains('is-active')) activateTab(tab, true);
+      });
       tourTabs.forEach((tab, i) => {
         tab.addEventListener('click', () => activateTab(tab));
         tab.addEventListener('keydown', (e) => {
@@ -6541,7 +6565,7 @@
         let lastFocusedEl = null;
         const openDemoFullscreen = (src) => {
           lastFocusedEl = document.activeElement;
-          demoFullscreenIframe.src = src;
+          demoFullscreenIframe.src = demoHref(src);
           demoFullscreenOverlay.hidden = false;
           document.body.classList.add('demo-fullscreen-open');
           demoFullscreenClose.focus();
