@@ -6,17 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>STAND - le kiosque d'exposition interactif | Fractal Innov</title>
   <meta name="description"
-    content="STAND transforme votre stand en expérience interactive qui attire, explique et aide vos commerciaux à vendre - même si votre produit est trop grand, trop complexe ou pas encore fini pour y monter.">
+    content="STAND met le jumeau 3D de votre produit sur un écran tactile, avec vos vidéos et vos fiches, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="STAND - Fractal Innov">
   <meta property="og:title" content="STAND - le kiosque d'exposition interactif">
   <meta property="og:description"
-    content="STAND transforme votre stand en expérience interactive qui attire, explique et aide vos commerciaux à vendre - même si votre produit est trop grand, trop complexe ou pas encore fini pour y monter.">
+    content="STAND met le jumeau 3D de votre produit sur un écran tactile, avec vos vidéos et vos fiches, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
   <meta property="og:image" content="assets/fi-logo-512.webp">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="STAND - le kiosque d'exposition interactif">
   <meta name="twitter:description"
-    content="STAND transforme votre stand en expérience interactive qui attire, explique et aide vos commerciaux à vendre - même si votre produit est trop grand, trop complexe ou pas encore fini pour y monter.">
+    content="STAND met le jumeau 3D de votre produit sur un écran tactile, avec vos vidéos et vos fiches, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
   <link rel="icon" type="image/webp" href="assets/fi-logo-192.webp">
   <link rel="apple-touch-icon" href="assets/fi-logo-252.webp">
   <style>
@@ -2349,6 +2349,106 @@
     }
 
     /* FAQ */
+    /* OFFRES / DÉROULÉ / NOTES DE SECTION */
+    .offer-price {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      margin: 0.2rem 0 1rem;
+      line-height: 1.2;
+    }
+
+    .offer-price small {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 0.3rem;
+      letter-spacing: 0;
+    }
+
+    .counter-block--featured {
+      border-color: var(--glass-border-highlight);
+      background: var(--glass-bg-hover);
+    }
+
+    .counter-block p+p {
+      margin-top: 0.6rem;
+    }
+
+    .step-index {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-blue-light);
+      margin-bottom: 0.8rem;
+    }
+
+    .offer-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent-blue-light);
+      border: 1px solid var(--glass-border);
+      border-radius: 100px;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .offer-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .offer-list li {
+      position: relative;
+      padding-left: 1.4rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .offer-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    }
+
+    .cta-social a.cta-social__btn--card {
+      width: auto;
+      padding: 0 0.95rem;
+      gap: 0.5rem;
+      font-size: var(--masthead-text-size, 0.95rem);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .cta-social a.cta-social__btn--card svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .section-note {
+      margin-top: 1.75rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 760px;
+    }
+
     .faq-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -2759,6 +2859,10 @@
         justify-self: start;
       }
 
+      .cta-content .cta-social a.cta-social__btn--card {
+        order: 1;
+      }
+
       .cta-section h2 {
         font-size: 2.05rem;
         line-height: 1.08;
@@ -2774,8 +2878,10 @@
         grid-auto-rows: 48px;
       }
 
-      .cta-content .cta-social a.cta-social__btn--calendar {
+      .cta-content .cta-social a.cta-social__btn--calendar,
+      .cta-content .cta-social a.cta-social__btn--card {
         grid-column: 1 / -1;
+        justify-self: start;
       }
     }
 
@@ -3514,11 +3620,11 @@
 
       <nav class="main-nav" id="mainNav" aria-label="Navigation principale">
         <div class="main-nav-links">
-          <a href="#probleme" class="nav-link">Problème</a>
-          <a href="#jumeau-3d" class="nav-link">Jumeau 3D</a>
-          <a href="#fonctionnalites" class="nav-link">Fonctionnalités</a>
-          <a href="#kit" class="nav-link">Le kit</a>
           <a href="#demo" class="nav-link">Démo</a>
+          <a href="#probleme" class="nav-link">Le problème</a>
+          <a href="#valeur" class="nav-link">Ce que vous gagnez</a>
+          <a href="#livre" class="nav-link">Ce qui est livré</a>
+          <a href="#tarifs" class="nav-link">Tarifs</a>
         </div>
         <a href="#contact" class="masthead-cta">Contact</a>
       </nav>
@@ -3541,89 +3647,84 @@
     <section class="hero">
       <div class="hero-inner">
         <div class="hero-copy">
-          <div class="hero-eyebrow">Un stand d'exposition immersif</div>
+          <div class="hero-eyebrow">Le kiosque d'exposition interactif</div>
           <h1>
             <span class="hero-title-main">Votre produit reste chez vous.<br><em>Votre démo part en salon.</em></span>
           </h1>
-          <p class="hero-lead">STAND transforme votre stand en expérience interactive qui attire, explique et aide vos
-            commerciaux à vendre - même si votre produit est trop grand, trop complexe ou pas encore fini pour y monter.
+          <p class="hero-lead">STAND met le jumeau 3D de votre produit sur un écran tactile, avec vos vidéos et vos
+            fiches. Le visiteur l'explore du doigt, votre commercial le pilote depuis son téléphone, et tout fonctionne
+            sans réseau. Après le salon, l'outil reste à vous.
           </p>
           <div class="hero-pillars" aria-label="Ce que STAND change">
             <div class="hero-pillar">
               <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
-                <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
-                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
-                <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
               </svg>
-              <div class="hero-pillar__text"><strong>Fonctionne sans wifi</strong>Le kit embarque son propre réseau
-              </div>
+              <div class="hero-pillar__text"><strong>Attirer</strong>Une expérience 3D plutôt qu'un panneau</div>
             </div>
 
             <div class="hero-pillar">
               <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="5" cy="12" r="2.2"></circle>
-                <circle cx="19" cy="6" r="2.2"></circle>
-                <circle cx="19" cy="18" r="2.2"></circle>
-                <path d="M7 10.8l10-4.4"></path>
-                <path d="M7 13.2l10 4.4"></path>
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
               </svg>
-              <div class="hero-pillar__text"><strong>Bilingue FR / EN</strong>Contenus gérés par votre équipe</div>
+              <div class="hero-pillar__text"><strong>Expliquer sans vous</strong>Le visiteur comprend seul, sans
+                attendre</div>
             </div>
 
             <div class="hero-pillar">
               <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                <polyline points="9 12 11 14 15 10"></polyline>
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
               </svg>
-              <div class="hero-pillar__text"><strong>Toujours prêt</strong>Revient seul au point de départ</div>
+              <div class="hero-pillar__text"><strong>Réutiliser</strong>Showroom, rendez-vous, salons suivants</div>
             </div>
           </div>
         </div>
 
         <div class="hero-cta">
-          <a href="#demo" class="hero-cta__btn">Essayer la démo</a>
-          <a href="#contact" class="hero-cta__btn hero-cta__btn--secondary">Demander un devis</a>
+          <a href="#demo" class="hero-cta__btn">Tester la démo</a>
+          <a href="#contact" class="hero-cta__btn hero-cta__btn--secondary">Réserver 30 min</a>
         </div>
       </div>
     </section>
   </div>
 
   <main class="page-rest">
+    <section id="demo" class="section">
+      <div class="section-number reveal">La démo</div>
+      <h2 class="reveal delay-100">Testez-la, c'est ce que vos visiteurs verront</h2>
+      <p class="reveal delay-200">Une version publique, sans marque, avec un produit fictif. Explorez-la ici, en plein
+        écran, ou sur votre téléphone.</p>
+
+      <div class="showcase-block reveal delay-300">
+        <div class="showcase-visual embedded">
+          <iframe src="https://salon-demo-app.onrender.com/" title="STAND - démo en ligne" loading="lazy"
+            allow="autoplay; fullscreen; xr-spatial-tracking; gamepad"></iframe>
+        </div>
+        <div class="showcase-footer">
+          <div class="showcase-info">
+            <h4>La même démo, sur votre téléphone</h4>
+            <p>Ouvrez salon-demo-app.onrender.com et manipulez le produit du bout du doigt.</p>
+          </div>
+          <button type="button" class="showcase-link"
+            data-demo-fullscreen-src="https://salon-demo-app.onrender.com/">Ouvrir en plein écran</button>
+        </div>
+      </div>
+    </section>
+
     <section id="probleme" class="section">
       <div class="section-number reveal">Le problème</div>
-      <h2 class="reveal delay-100">Sur un salon, vous avez trois minutes pour vous faire comprendre.</h2>
-      <p class="reveal delay-200">Certains produits ne tiennent pas sur un stand.&nbsp;<span
-          class="text-white text-white--block">STAND règle ce problème, sans jamais montrer votre produit à votre
-          place.</span></p>
+      <h2 class="reveal delay-100">Sur un salon, vous avez trois minutes pour vous faire comprendre</h2>
+      <p class="reveal delay-200">Et souvent, votre produit n'est même pas là.&nbsp;<span
+          class="text-white text-white--block">STAND le remplace par son jumeau 3D, et laisse à vos commerciaux le soin
+          de conclure.</span></p>
 
       <div class="friction-grid">
         <div class="friction-card reveal delay-100">
-          <div class="friction-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-          </div>
-          <h3>Trois minutes ne suffisent pas</h3>
-          <p>Un produit complexe ne s'explique pas en un coup d'œil, et vos visiteurs ne s'arrêtent pas longtemps.</p>
-        </div>
-        <div class="friction-card reveal delay-200">
-          <div class="friction-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-            </svg>
-          </div>
-          <h3>Sans support commun, chaque échange est différent</h3>
-          <p>Le stand ne raconte rien tout seul tant qu'un commercial n'est pas disponible - et chacun explique le
-            produit à sa façon.</p>
-        </div>
-        <div class="friction-card reveal delay-300">
           <div class="friction-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
@@ -3632,24 +3733,38 @@
               <line x1="12" y1="7" x2="12" y2="15"></line>
             </svg>
           </div>
-          <h3>Le produit est trop grand, trop fragile, ou pas fini</h3>
-          <p>Impossible à transporter, trop coûteux à déplacer, ou pas encore prêt pour être montré tel quel.</p>
+          <h3>Le produit est absent</h3>
+          <p>Trop grand, trop fragile, trop cher à déplacer, ou pas encore fini&nbsp;: il reste à l'atelier, et le
+            visiteur ne le voit jamais.</p>
+        </div>
+        <div class="friction-card reveal delay-200">
+          <div class="friction-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </div>
+          <h3>Le stand ne raconte rien tout seul</h3>
+          <p>Tant qu'un commercial n'est pas libre, le visiteur attend ou repart. Et quand il est pris en charge, chacun
+            explique le produit à sa façon.</p>
+        </div>
+        <div class="friction-card reveal delay-300">
+          <div class="friction-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <h3>Trois minutes ne suffisent pas</h3>
+          <p>Un produit complexe ne s'explique pas d'un coup d'œil, et vos visiteurs ne restent pas plus longtemps.</p>
         </div>
       </div>
 
-      <div class="showcase-block reveal delay-300" id="demo">
-        <div class="showcase-visual embedded">
-          <iframe src="https://salon-demo-app.onrender.com/" title="STAND - démo en ligne" loading="lazy"
-            allow="autoplay; fullscreen; xr-spatial-tracking; gamepad"></iframe>
-        </div>
-        <div class="showcase-footer">
-          <div class="showcase-info">
-            <h4>Une version web, sans marque, existe déjà</h4>
-            <p>Essayez-la avant d'en discuter - directement ici, ou en plein écran</p>
-          </div>
-          <button type="button" class="showcase-link"
-            data-demo-fullscreen-src="https://salon-demo-app.onrender.com/">Ouvrir en plein écran</button>
-        </div>
+      <div class="pullquote reveal delay-200">
+        <p>STAND s'adresse aux industriels et fabricants dont le produit ne monte pas sur un stand&nbsp;: machines,
+          équipements lourds, systèmes intégrés, produits en cours de développement. Et à ceux qui font plusieurs salons
+          par an ou disposent d'un showroom&nbsp;: c'est là que l'investissement se rentabilise.</p>
       </div>
     </section>
 
@@ -3657,10 +3772,10 @@
       <div class="sticky-steps">
 
         <div class="sticky-steps__left">
-          <div class="section-number reveal">Ce que vous achetez vraiment</div>
-          <h2 class="reveal delay-100">Pas un stand pour un salon. Un outil de vente que vous gardez.</h2>
-          <p class="sticky-steps__desc reveal delay-200">Le kiosque, l'écran, le mini PC&nbsp;: ce sont les moyens. Ce
-            que vous gagnez, c'est un support qui continue à travailler pour vous bien après la fin du salon.</p>
+          <div class="section-number reveal">Ce que vous gagnez</div>
+          <h2 class="reveal delay-100">Pas un stand pour un salon, un outil de vente que vous gardez</h2>
+          <p class="sticky-steps__desc reveal delay-200">Le mini PC, le routeur, l'écran tactile&nbsp;: ce sont les moyens.
+            Ce que vous gagnez, c'est un support de vente qui continue à travailler pour vous après le salon.</p>
         </div>
 
         <div class="sticky-steps__right">
@@ -3668,7 +3783,8 @@
             <div class="step-num">01</div>
             <div class="step-body">
               <h4>Attirer</h4>
-              <p>Une expérience interactive retient l'attention mieux qu'une brochure ou un simple panneau.</p>
+              <p>Un produit qui bouge en 3D sur un grand écran arrête plus de monde qu'un panneau. Le visiteur touche,
+                il reste. En option, un écran de veille 3D animé attire le regard depuis l'allée.</p>
             </div>
           </div>
 
@@ -3676,8 +3792,8 @@
             <div class="step-num">02</div>
             <div class="step-body">
               <h4>Expliquer</h4>
-              <p>Le visiteur comprend en un coup d'œil le problème, la solution et le fonctionnement - sans attendre
-                qu'un commercial se libère.</p>
+              <p>Le jumeau 3D, un parcours guidé et la bonne vidéo au bon moment&nbsp;: le visiteur comprend le
+                problème, la solution et le fonctionnement, sans attendre qu'un commercial se libère.</p>
             </div>
           </div>
 
@@ -3685,8 +3801,8 @@
             <div class="step-num">03</div>
             <div class="step-body">
               <h4>Faire vendre</h4>
-              <p>Vos commerciaux ne partent pas de zéro&nbsp;: ils s'appuient sur la même expérience, à chaque
-                conversation.</p>
+              <p>Le commercial pilote la scène depuis son téléphone (QR code et code PIN, sans application) et s'appuie
+                sur le même récit à chaque conversation.</p>
             </div>
           </div>
 
@@ -3694,8 +3810,8 @@
             <div class="step-num">04</div>
             <div class="step-body">
               <h4>Réutiliser</h4>
-              <p>Le même contenu ressert sur vos prochains salons, en showroom, en rendez-vous commercial, ou en ligne.
-              </p>
+              <p>Le même contenu ressert sur vos prochains salons, en showroom et en rendez-vous commercial. Vos équipes
+                le modifient elles-mêmes, sans développeur.</p>
             </div>
           </div>
         </div>
@@ -3707,20 +3823,26 @@
       <div class="section-number reveal">Le jumeau 3D</div>
       <h2 class="reveal delay-100">Votre produit, en 3D, à explorer du bout du doigt</h2>
       <p class="reveal delay-200">Votre produit prend vie à l'écran, sous tous les angles, comme si vos visiteurs
-        l'avaient devant eux - même s'il est resté à l'atelier.</p>
+        l'avaient devant eux, même s'il est resté à l'atelier.</p>
       <p class="reveal delay-200">Un menu simple guide la visite&nbsp;: chaque sujet choisi amène la caméra exactement
         là où il faut, pour raconter une histoire claire plutôt que de laisser le visiteur se perdre. Des points
         cliquables sur le produit ouvrent vidéos, fiches ou explications, au moment où la question se pose.</p>
+      <p class="reveal delay-200">Vous n'avez pas de fichiers 3D&nbsp;? Des photos et des plans suffisent souvent pour
+        démarrer. Nous regardons ensemble ce qui existe, lors de l'appel.</p>
       <div class="level-tags reveal delay-300">
         <span class="level-tag">Vue d'ensemble</span>
         <span class="level-tag">Détail</span>
         <span class="level-tag">Vue intérieure</span>
+        <span class="level-tag">Points cliquables</span>
+        <span class="level-tag">FR / EN</span>
       </div>
     </section>
 
-    <section id="fonctionnalites" class="section section--wide">
-      <div class="section-number reveal">Fonctionnalités</div>
-      <h2 class="reveal delay-100">De quoi attirer, expliquer et vendre.</h2>
+    <section id="livre" class="section section--wide">
+      <div class="section-number reveal">Ce qui est livré</div>
+      <h2 class="reveal delay-100">Quatre câbles, dix minutes, personne sur place</h2>
+      <p class="reveal delay-200">Le kit est conçu pour ne demander personne sur place. Voici ce que vous recevez, et ce
+        que vous fournissez.</p>
 
       <div class="friction-grid">
         <div class="counter-block reveal delay-100">
@@ -3732,91 +3854,14 @@
               <line x1="12" y1="17" x2="12" y2="21"></line>
             </svg>
           </div>
-          <h4>Vos contenus, en un geste</h4>
-          <p>Vidéos et fiches techniques s'ouvrent en un geste, organisées par thème, pensées pour un écran tactile.</p>
+          <h4>L'expérience</h4>
+          <p>Le jumeau 3D de votre produit et le parcours guidé. Vos vidéos et vos fiches, en français et en anglais,
+            s'affichent simplement, au bon moment de la présentation. La régie d'administration protégée par code et la
+            télécommande sur téléphone. Une application autonome, qui tourne sans réseau. Les statistiques de visite
+            vous disent ce qui a retenu l'attention.</p>
         </div>
 
         <div class="counter-block reveal delay-150">
-          <div class="friction-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <rect x="5" y="2" width="14" height="20" rx="2"></rect>
-              <line x1="12" y1="18" x2="12.01" y2="18"></line>
-            </svg>
-          </div>
-          <h4>Piloté depuis un simple téléphone</h4>
-          <p>Le personnel scanne un QR code, entre un code PIN, et pilote le kiosque depuis son propre téléphone - sans
-            installer d'application. La connexion résiste même si l'écran se verrouille.</p>
-        </div>
-
-        <div class="counter-block reveal delay-200">
-          <div class="friction-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <line x1="1" y1="1" x2="23" y2="23"></line>
-              <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
-              <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
-              <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
-              <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
-              <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
-              <line x1="12" y1="20" x2="12.01" y2="20"></line>
-            </svg>
-          </div>
-          <h4>Fonctionne partout, même sans réseau sur place</h4>
-          <p>Le kit embarque son propre routeur. Les statistiques de visite se synchronisent dès qu'une connexion
-            apparaît - ou en un clic.</p>
-        </div>
-
-        <div class="counter-block reveal delay-250">
-          <div class="friction-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="3"></circle>
-              <path
-                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z">
-              </path>
-            </svg>
-          </div>
-          <h4>Vos équipes gèrent le contenu, sans développeur</h4>
-          <p>Un accès protégé par code permet à votre équipe de changer vidéos, fiches et textes, en français comme en
-            anglais, et de sauvegarder le contenu entre deux salons.</p>
-        </div>
-
-        <div class="counter-block reveal delay-300">
-          <div class="friction-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M8 3H5a2 2 0 0 0-2 2v3"></path>
-              <path d="M21 8V5a2 2 0 0 0-2-2h-3"></path>
-              <path d="M3 16v3a2 2 0 0 0 2 2h3"></path>
-              <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
-            </svg>
-          </div>
-          <h4>S'adapte à votre installation</h4>
-          <p>Écran tactile ou souris, grand écran ou ordinateur portable&nbsp;: l'expérience reste la même partout.</p>
-        </div>
-
-        <div class="counter-block reveal delay-400">
-          <div class="friction-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="1 4 1 10 7 10"></polyline>
-              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-            </svg>
-          </div>
-          <h4>Toujours prêt pour le visiteur suivant</h4>
-          <p>Après quelques minutes d'inactivité, l'application revient d'elle-même à sa vue de départ. En option, un
-            écran de veille 3D, animé dans la scène, prend le relais pour continuer d'attirer le regard depuis l'allée.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="kit" class="section">
-      <div class="section-number reveal">Le kit</div>
-      <h2 class="reveal delay-100">Tout ce qu'il faut, dans une seule caisse.</h2>
-
-      <div class="friction-grid">
-        <div class="counter-block reveal delay-100">
           <div class="friction-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
@@ -3828,37 +3873,185 @@
               <line x1="15" y1="20" x2="15" y2="23"></line>
             </svg>
           </div>
-          <h4>Mini PC</h4>
-          <p>Fait tourner le kiosque et la scène 3D en autonomie complète.</p>
-        </div>
-
-        <div class="counter-block reveal delay-150">
-          <div class="friction-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
-              <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
-              <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
-              <line x1="12" y1="20" x2="12.01" y2="20"></line>
-            </svg>
-          </div>
-          <h4>Routeur de voyage</h4>
-          <p>Un réseau fermé pour le kiosque et les télécommandes, indépendant du wifi du lieu.</p>
+          <h4>Le kit hors ligne</h4>
+          <p>Le matériel pour faire tourner l'expérience sur votre stand, hors ligne&nbsp;: mini PC préparé, routeur de
+            voyage (un réseau fermé, indépendant du wifi du lieu), câbles et alimentation. Vous branchez quatre câbles,
+            c'est prêt en dix minutes. Un guide d'une page accompagne le kit, et nous vous aidons à distance pour
+            l'installation, avant le salon. Flight case en option.</p>
         </div>
 
         <div class="counter-block reveal delay-200">
           <div class="friction-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
-              <path
-                d="M20 7h-3V5a3 3 0 0 0-3-3H10a3 3 0 0 0-3 3v2H4a1 1 0 0 0-1 1v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a1 1 0 0 0-1-1z">
-              </path>
-              <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+              <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
             </svg>
           </div>
-          <h4>Mobilier et flight case sur mesure</h4>
-          <p>Habillage et présentoir pour l'exposition, caisse de transport renforcée pour le trajet&nbsp;: tout est
-            construit sur mesure pour ce kit.</p>
+          <h4>Ce que vous fournissez</h4>
+          <p>L'écran tactile et le téléphone de pilotage. Vous les louez sur place auprès de votre loueur de salon, comme
+            vous le faites déjà. Nous vous donnons les prérequis à demander&nbsp;: un écran tactile avec entrée HDMI et
+            sortie USB, et un navigateur sur votre mobile ou votre tablette pour la télécommande.</p>
+        </div>
+      </div>
+
+      <p class="section-note reveal delay-200">En option, sur devis&nbsp;: modélisation 3D de votre produit, mobilier et
+        présentoir sur mesure, flight case, écran de veille 3D animé.</p>
+    </section>
+
+    <section id="tarifs" class="section section--wide">
+      <div class="section-number reveal">Tarifs</div>
+      <h2 class="reveal delay-100">Deux formules, un prix clair</h2>
+      <p class="reveal delay-200">Vous êtes propriétaire de l'outil. Le devis est établi après un appel de 30 minutes,
+        une fois votre produit et votre prochain salon connus.</p>
+
+      <div class="friction-grid">
+        <div class="counter-block reveal delay-100">
+          <h4>Logiciel</h4>
+          <div class="offer-price">4&nbsp;900&nbsp;€ <small>HT</small></div>
+          <p>L'expérience STAND à vos couleurs, à partir de vos données 3D existantes. Livrée sous forme d'application
+            autonome pour votre PC (télécommande et régie comprises). Analyse de vos fichiers incluse.</p>
+          <span class="offer-tag">Livré en 4 semaines</span>
+        </div>
+
+        <div class="counter-block counter-block--featured reveal delay-150">
+          <h4>Kit complet</h4>
+          <div class="offer-price">6&nbsp;900&nbsp;€ <small>HT</small></div>
+          <p>Le logiciel, plus le mini PC et le routeur configurés, livrés prêts à brancher.</p>
+          <p>Vous préférez acheter le matériel vous-même&nbsp;? Nous vous donnons les références et nous l'installons, à
+            distance ou en atelier.</p>
+        </div>
+
+        <div class="counter-block reveal delay-200">
+          <h4>Sur devis</h4>
+          <div class="offer-price">Selon votre scénario</div>
+          <ul class="offer-list">
+            <li>Modélisation 3D, si vos fichiers ne sont pas exploitables tels quels</li>
+            <li>Mobilier et présentoir, avec nos partenaires</li>
+            <li>Flight case</li>
+            <li>Écran de veille 3D animé</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="section-note reveal delay-200">Un premier acteur industriel nous fait déjà confiance. Nous ne pouvons
+        pas le citer, mais nous pouvons vous raconter comment nous l'avons accompagné.</p>
+    </section>
+
+    <section id="deroule" class="section section--wide">
+      <div class="section-number reveal">Comment ça se passe</div>
+      <h2 class="reveal delay-100">De l'appel au salon, en trois étapes</h2>
+
+      <div class="friction-grid">
+        <div class="counter-block reveal delay-100">
+          <div class="step-index">Étape 01</div>
+          <h4>Un appel de 30 minutes</h4>
+          <p>Vous décrivez votre produit et votre prochain salon. Nous regardons vos fichiers 3D, photos et vidéos en
+            direct, et nous définissons ensemble l'expérience. Le devis suit cet entretien.</p>
+        </div>
+
+        <div class="counter-block reveal delay-150">
+          <div class="step-index">Étape 02</div>
+          <h4>La production</h4>
+          <p>Nous construisons l'expérience à partir de vos fichiers&nbsp;: conversion et optimisation de la scène 3D,
+            parcours guidé, intégration de vos vidéos et de vos fiches. Comptez quatre semaines pour la formule
+            Logiciel.</p>
+        </div>
+
+        <div class="counter-block reveal delay-200">
+          <div class="step-index">Étape 03</div>
+          <h4>La livraison, avant le salon</h4>
+          <p>Le kit arrive prêt à brancher, avec son guide d'une page. Nous vous accompagnons à distance pour
+            l'installation et les réglages, avant le jour J.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="questions" class="section">
+      <div class="section-number reveal">Vos questions</div>
+      <h2 class="reveal delay-100">Ce qu'on nous demande le plus souvent</h2>
+
+      <div class="faq-grid reveal delay-200">
+        <div class="faq-item">
+          <div class="faq-head">
+            <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg></span>
+            <h4>Nous avons déjà des vidéos</h4>
+          </div>
+          <p>Elles sont dedans, au bon moment du parcours, et c'est le visiteur qui les choisit.</p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-head">
+            <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg></span>
+            <h4>Il n'y a pas de wifi sur le salon</h4>
+          </div>
+          <p>Le kit embarque son propre réseau. C'est justement conçu pour ça.</p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-head">
+            <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg></span>
+            <h4>Nos équipes ne sont pas techniques</h4>
+          </div>
+          <p>La régie s'ouvre avec un code, les contenus se changent sans développeur, et l'installation tient en quatre
+            câbles.</p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-head">
+            <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg></span>
+            <h4>C'est pour un seul salon&nbsp;?</h4>
+          </div>
+          <p>Non, c'est même l'argument central&nbsp;: le même outil ressert en showroom, en rendez-vous et sur vos
+            salons suivants.</p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-head">
+            <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg></span>
+            <h4>Nous n'avons pas de fichiers 3D</h4>
+          </div>
+          <p>Nous l'évaluons lors de l'appel. Des photos et des plans suffisent souvent pour démarrer, la modélisation
+            est alors chiffrée sur devis.</p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-head">
+            <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg></span>
+            <h4>Qui est sur place pendant le salon&nbsp;?</h4>
+          </div>
+          <p>Personne, et c'est voulu&nbsp;: le kit est conçu pour tourner seul. Nous vous accompagnons avant le salon,
+            pour l'installation et les réglages.</p>
         </div>
       </div>
     </section>
@@ -3872,8 +4065,8 @@
 
           <div class="cta-content">
             <h2>Parlons de votre prochain salon</h2>
-            <p class="cta-lead">Décrivez votre produit et votre prochain salon, nous vous disons comment STAND s'adapte.
-            </p>
+            <p class="cta-lead">Décrivez votre produit et votre prochain salon&nbsp;: nous vous disons comment STAND
+              s'adapte, et à quel prix.</p>
             <ul class="bullets">
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -3882,7 +4075,7 @@
                   <path d="M4 12l8 4 8-4"></path>
                   <path d="M4 17l8 4 8-4"></path>
                 </svg>
-                Fichiers 3D, photos et vidéos de votre produit évalués en direct
+                30 minutes, en visio, avec Corentin
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -3892,7 +4085,7 @@
                   <path d="M12 13l3 2"></path>
                   <path d="M9 2h6"></path>
                 </svg>
-                30 minutes pour vous dire comment STAND s'adapte à votre produit et votre salon
+                Vos fichiers 3D, photos et vidéos regardés en direct
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -3904,13 +4097,13 @@
                   <path d="M3.7 16c.35-1.2 1.2-2 2.5-2"></path>
                   <path d="M20.3 16c-.35-1.2-1.2-2-2.5-2"></path>
                 </svg>
-                Co-définition de vos besoins et de la meilleure expérience pour vos visiteurs
+                Le devis vous est envoyé après l'appel
               </li>
             </ul>
 
             <div class="cta-social">
               <a class="cta-social__btn--calendar" href="https://calendar.app.google/SDuiKb9ZBQ6BcbED6" target="_blank"
-                rel="noopener noreferrer" aria-label="Plannifier mon appel">
+                rel="noopener noreferrer" aria-label="Planifier mon appel">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round" aria-hidden="true">
                   <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
@@ -3918,7 +4111,18 @@
                   <line x1="8" y1="2" x2="8" y2="6" />
                   <line x1="3" y1="10" x2="21" y2="10" />
                 </svg>
-                <span>Plannifier mon appel</span>
+                <span>Planifier mon appel</span>
+              </a>
+              <a class="cta-social__btn--card" href="https://s.blinq.me/wEhJoOeZIrvGvSIe46Yy?bs=icl" target="_blank"
+                rel="noopener noreferrer" aria-label="Ma carte de visite">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="5" width="20" height="14" rx="2" />
+                  <circle cx="8" cy="12" r="2.2" />
+                  <line x1="13" y1="10" x2="18" y2="10" />
+                  <line x1="13" y1="14" x2="18" y2="14" />
+                </svg>
+                <span>Ma carte de visite</span>
               </a>
               <a href="mailto:corentin.duboc@fractal-innov.fr" aria-label="Envoyer un e-mail">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -4148,7 +4352,7 @@
       /* 0c. Bandeau offre : masqué au scroll bas, réaffiché au scroll haut + nav active selon la section */
       const siteTopEl = document.querySelector('.site-top');
       const navLinksAll = document.querySelectorAll('#mainNav .nav-link');
-      const sectionIdsNav = ['probleme', 'valeur', 'jumeau-3d', 'fonctionnalites', 'kit'];
+      const sectionIdsNav = ['demo', 'probleme', 'valeur', 'jumeau-3d', 'livre', 'tarifs', 'deroule', 'questions'];
       let lastScrollYForBanner = window.scrollY;
       let headerScrollRaf = 0;
       const reduceMotionBanner = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -4159,7 +4363,7 @@
         const trigger = window.scrollY + headerH + 28;
         let activeId = null;
 
-        const firstSec = document.getElementById('probleme');
+        const firstSec = document.getElementById(sectionIdsNav[0]);
         if (firstSec) {
           const firstTop = firstSec.getBoundingClientRect().top + window.scrollY;
           if (trigger >= firstTop) {
