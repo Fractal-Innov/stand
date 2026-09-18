@@ -38,3 +38,10 @@ Tous les messages de commit suivent https://www.conventionalcommits.org/en/v1.0.
 - L'iframe de la démo n'est créée qu'au clic (« Lancer la démo ») pour masquer le démarrage à froid du serveur Render. L'origine est définie une seule fois dans le script (`DEMO_ORIGIN`).
 - Contrat avec le démonstrateur (`useContratPoi.ts` côté borne) : `?poi=<id>` à l'ouverture, `postMessage({ type: 'stand:goto', poi })` une fois chargé (`poi` null = vue de départ), retour `{ type: 'stand:poi', poi }` à chaque changement d'item, ce qui synchronise l'onglet de la lecture guidée. Identifiants : `votre-stand`, `attirer`, `presenter`, `emporter`, `logiciel`, `materiel`.
 - La télécommande est chargée depuis `REMOTE_URL` (`/remote/public`, sans PIN). Les deux iframes reçoivent le même `?salle=<id>` généré à chaque chargement de page : une télécommande ne pilote que sa borne.
+
+## Partage en salon
+
+- Aperçu de partage : `assets/share/og-image.jpg` (1200 × 630, composé depuis le hero), Open Graph et Twitter en URL absolues dans `<head>`. Icônes : `favicon.ico`, `assets/icons/`, `site.webmanifest`.
+- Farfadet (`#share`, bas droite) : partage l'endroit courant par QR, lien copié ou feuille de partage native. L'état vit sur `<body>` en `data-section` (scroll-spy), `data-poi` (lecture guidée et démo) et `data-demo` (démo lancée). URL produite : `https://stand.fractal-innov.fr/?poi=<id>&demo=1#<section>` ; à l'arrivée, `?poi=` ouvre l'onglet et `&demo=1` relance la démo au même POI. Le mode « Télécommande » donne `REMOTE_URL?salle=<id>` : le téléphone qui scanne pilote la démo affichée sur cet écran (relais WebSocket sur Render, aucun wifi commun requis).
+- QR généré côté client avec `assets/js/qrcode.min.js` (qrcode-generator 1.4.4, MIT).
+
