@@ -7291,6 +7291,220 @@
         transition: none;
       }
     }
+    /* ============================================================
+       LE JUMEAU 3D : la lecture guidée se parcourt comme le menu
+       de la borne. Onglets groupés (sujets, contenus), compteur et
+       « suivant » dans chaque panneau, bouton primaire vers la démo.
+       ============================================================ */
+    .section--tour {
+      isolation: isolate;
+    }
+
+    .section--tour::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(60% 45% at 50% 55%, rgba(40, 89, 255, 0.09), transparent 70%);
+    }
+
+    .tour {
+      box-shadow: 0 30px 80px -40px rgba(40, 89, 255, 0.45), 0 0 0 1px rgba(110, 168, 255, 0.06);
+    }
+
+    .tour__tabs {
+      gap: 0.6rem 1.5rem;
+      padding: 0.7rem 0.8rem;
+      align-items: stretch;
+    }
+
+    @media (min-width: 768px) {
+      .tour__tabs {
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+    }
+
+    .tour__group {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex: 0 0 auto;
+    }
+
+    .tour__group-label {
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-right: 0.35rem;
+      white-space: nowrap;
+    }
+
+    .tour__tab {
+      font-size: 0.84rem;
+      padding: 0.5rem 0.85rem;
+      position: relative;
+    }
+
+    .tour__tab.is-active {
+      background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-purple-deep));
+      border-color: transparent;
+      box-shadow: 0 6px 18px -6px rgba(40, 89, 255, 0.6);
+    }
+
+    @media (min-width: 768px) {
+      .tour__tabs {
+        flex-wrap: wrap;
+      }
+
+      .tour__group {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .tour__tabs {
+        -webkit-mask: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+        mask: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+      }
+
+      .tour__group-label {
+        display: none;
+      }
+
+      .tour__group + .tour__group {
+        position: relative;
+        padding-left: 0.85rem;
+      }
+
+      .tour__group + .tour__group::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 20%;
+        bottom: 20%;
+        width: 1px;
+        background: rgba(255, 255, 255, 0.14);
+      }
+    }
+
+    /* Le texte glisse avec l'image quand on change de sujet */
+    .tour__text {
+      animation: tourTextIn 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes tourTextIn {
+      from { opacity: 0; transform: translateX(10px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    /* Compteur et « suivant » : le parcours a un sens de lecture */
+    .tour__nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      width: 100%;
+      padding-top: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 0.25rem;
+    }
+
+    .tour__count {
+      font-size: 0.78rem;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-muted);
+    }
+
+    .tour__next {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      max-width: 100%;
+      font: inherit;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--accent-blue-light);
+      background: transparent;
+      border: 0;
+      padding: 0.25rem 0;
+      cursor: pointer;
+      text-align: right;
+    }
+
+    .tour__next svg {
+      flex: 0 0 auto;
+      transition: transform 0.25s ease;
+    }
+
+    .tour__next:hover svg {
+      transform: translateX(3px);
+    }
+
+    .tour__next:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
+    /* Bouton vers la démo : le primaire de la page, avec ce qu'il fait */
+    .tour__act {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.45rem;
+    }
+
+    .tour__go {
+      margin-top: 0;
+      position: relative;
+      isolation: isolate;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-purple-deep));
+      box-shadow: 0 10px 24px -10px rgba(40, 89, 255, 0.7);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .tour__go::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: inherit;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .tour__go:hover {
+      background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-purple-deep));
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px -10px rgba(139, 92, 246, 0.7);
+    }
+
+    .tour__go:hover::before {
+      opacity: 1;
+    }
+
+    .tour__act-hint {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tour__text {
+        animation: none;
+      }
+
+      .tour__go,
+      .tour__next svg {
+        transition: none;
+      }
+    }
   </style>
 
 </head>
@@ -7717,7 +7931,7 @@
       </div>
     </section>
 
-    <section id="jumeau-3d" class="section">
+    <section id="jumeau-3d" class="section section--tour">
       <div class="section-number reveal">Le jumeau 3D</div>
       <h2 class="reveal delay-100">Votre produit, en 3D, à explorer du bout du doigt</h2>
       <p class="reveal delay-200">Un menu simple guide la visite&nbsp;: chaque sujet amène la caméra exactement là où
@@ -7727,7 +7941,9 @@
 
       <div class="tour reveal delay-300">
         <div class="tour__tabs" role="tablist" aria-label="Les entrées du menu de la démo">
-          <button type="button" role="tab" class="tour__tab is-active" id="tab-vue" aria-selected="true"
+          <div class="tour__group" role="presentation">
+            <span class="tour__group-label">Les sujets</span>
+<button type="button" role="tab" class="tour__tab is-active" id="tab-vue" aria-selected="true"
             aria-controls="panel-vue" data-panel="vue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round" aria-hidden="true">
@@ -7767,7 +7983,10 @@
             </svg>
             Emporter sur son smartphone
           </button>
-          <button type="button" role="tab" class="tour__tab" id="tab-logiciel" aria-selected="false"
+          </div>
+          <div class="tour__group" role="presentation">
+            <span class="tour__group-label">Les contenus</span>
+<button type="button" role="tab" class="tour__tab" id="tab-logiciel" aria-selected="false"
             aria-controls="panel-logiciel" data-panel="logiciel" tabindex="-1">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round" aria-hidden="true">
@@ -7787,6 +8006,7 @@
             </svg>
             La fiche
           </button>
+          </div>
         </div>
 
         <div class="tour__panels">
@@ -7803,7 +8023,10 @@
                 <li>Un geste pour y aller</li>
                 <li>Retour au départ à tout moment</li>
               </ul>
-              <button type="button" class="tour__go" data-poi="votre-stand">Voir dans la démo</button>
+              <div class="tour__act">
+                <button type="button" class="tour__go" data-poi="votre-stand"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg> Voir dans la démo</button>
+                <span class="tour__act-hint">Remonte à la borne et ouvre ce sujet</span>
+              </div>
             </div>
           </div>
 
@@ -7820,7 +8043,10 @@
                 <li>Lisible à dix mètres</li>
                 <li>Sans intervention</li>
               </ul>
-              <button type="button" class="tour__go" data-poi="attirer">Voir dans la démo</button>
+              <div class="tour__act">
+                <button type="button" class="tour__go" data-poi="attirer"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg> Voir dans la démo</button>
+                <span class="tour__act-hint">Remonte à la borne et ouvre ce sujet</span>
+              </div>
             </div>
           </div>
 
@@ -7837,7 +8063,10 @@
                 <li>Télécommande sur tablette</li>
                 <li>Vidéos, PDF, vues 3D</li>
               </ul>
-              <button type="button" class="tour__go" data-poi="presenter">Voir dans la démo</button>
+              <div class="tour__act">
+                <button type="button" class="tour__go" data-poi="presenter"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg> Voir dans la démo</button>
+                <span class="tour__act-hint">Remonte à la borne et ouvre ce sujet</span>
+              </div>
             </div>
           </div>
 
@@ -7854,7 +8083,10 @@
                 <li>La même expérience en poche</li>
                 <li>Un contact qui reste</li>
               </ul>
-              <button type="button" class="tour__go" data-poi="emporter">Voir dans la démo</button>
+              <div class="tour__act">
+                <button type="button" class="tour__go" data-poi="emporter"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg> Voir dans la démo</button>
+                <span class="tour__act-hint">Remonte à la borne et ouvre ce sujet</span>
+              </div>
             </div>
           </div>
 
@@ -7871,7 +8103,10 @@
                 <li>Plein écran d'un geste</li>
                 <li>Retour à la 3D en fermant</li>
               </ul>
-              <button type="button" class="tour__go" data-poi="logiciel">Voir dans la démo</button>
+              <div class="tour__act">
+                <button type="button" class="tour__go" data-poi="logiciel"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg> Voir dans la démo</button>
+                <span class="tour__act-hint">Remonte à la borne et ouvre ce sujet</span>
+              </div>
             </div>
           </div>
 
@@ -7888,7 +8123,10 @@
                 <li>Lecture page à page</li>
                 <li>En français et en anglais</li>
               </ul>
-              <button type="button" class="tour__go" data-poi="materiel">Voir dans la démo</button>
+              <div class="tour__act">
+                <button type="button" class="tour__go" data-poi="materiel"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg> Voir dans la démo</button>
+                <span class="tour__act-hint">Remonte à la borne et ouvre ce sujet</span>
+              </div>
             </div>
           </div>
         </div>
@@ -8900,6 +9138,27 @@
         const key = POI_TO_PANEL[poi] || poi;
         const tab = tourTabs.find((t) => t.getAttribute('data-panel') === key);
         if (tab && !tab.classList.contains('is-active')) activateTab(tab, true);
+      });
+      /* Compteur et « suivant » dans chaque panneau, construits depuis les onglets */
+      tourPanels.forEach((panel) => {
+        const text = panel.querySelector('.tour__text');
+        const idx = tourTabs.findIndex((t) => 'panel-' + t.getAttribute('data-panel') === panel.id);
+        if (!text || idx < 0) return;
+        const next = tourTabs[(idx + 1) % tourTabs.length];
+        const nav = document.createElement('div');
+        nav.className = 'tour__nav';
+        const count = document.createElement('span');
+        count.className = 'tour__count';
+        count.textContent = (idx + 1) + ' / ' + tourTabs.length;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tour__next';
+        btn.innerHTML = '<span>' + (idx === tourTabs.length - 1 ? 'Revenir au départ' : 'Suivant : ' + next.textContent.trim()) + '</span>'
+          + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>';
+        btn.addEventListener('click', () => { activateTab(next); next.focus({ preventScroll: true }); });
+        nav.append(count, btn);
+        const act = text.querySelector('.tour__act');
+        if (act) text.insertBefore(nav, act); else text.appendChild(nav);
       });
       tourTabs.forEach((tab, i) => {
         tab.addEventListener('click', () => activateTab(tab));
