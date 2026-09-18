@@ -6566,6 +6566,235 @@
         transition: none;
       }
     }
+    /* ── Démo : une scène en deux temps (1 l'écran, 2 la télécommande), un fil entre les deux,
+       la borne qui s'allume, des actions au même vocabulaire que le reste de la page. ── */
+    .demo-step {
+      display: inline-grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      margin-left: 0.15rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-blue-deep) 0%, var(--accent-purple-deep) 100%);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    /* Bouton de lancement : anneau qui pulse, comme le visuel du hero */
+    .demo-launch__icon {
+      position: relative;
+    }
+
+    .demo-launch__icon::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.7);
+      animation: heroPlayRing 2.4s ease-out infinite;
+    }
+
+    .demo-launch:hover .demo-launch__icon {
+      transform: scale(1.08);
+    }
+
+    .demo-launch:disabled {
+      cursor: progress;
+    }
+
+    .demo-launch:disabled .demo-launch__icon {
+      animation: demoBreathe 1.2s ease-in-out infinite;
+    }
+
+    .demo-launch:disabled .demo-launch__icon::after {
+      animation: none;
+      opacity: 0;
+    }
+
+    @keyframes demoBreathe {
+      0%, 100% { transform: scale(0.94); opacity: 0.75; }
+      50% { transform: scale(1.02); opacity: 1; }
+    }
+
+    /* La borne s'allume : halo de marque autour de l'écran une fois la démo chargée */
+    .demo-screen__bezel {
+      transition: box-shadow 0.9s ease, border-color 0.9s ease;
+    }
+
+    .demo-screen__bezel:has(.is-live) {
+      border-color: rgba(110, 168, 255, 0.35);
+      box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9), 0 0 70px -14px rgba(110, 168, 255, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .demo-phone__bezel {
+      transition: box-shadow 0.9s ease, border-color 0.9s ease;
+    }
+
+    .demo-phone__bezel:has(.is-live) {
+      border-color: rgba(139, 92, 246, 0.4);
+      box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9), 0 0 60px -14px rgba(139, 92, 246, 0.55);
+    }
+
+    /* Les gestes : lisibles, et allumés dès que la borne l'est */
+    .demo-hints li {
+      padding: 0.35rem 0.7rem;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+      transition: color 0.6s ease, border-color 0.6s ease, background 0.6s ease;
+    }
+
+    .demo-hints li svg {
+      color: var(--accent-blue-light);
+    }
+
+    .demo-screen:has(.is-live) .demo-hints li {
+      color: #fff;
+      border-color: rgba(110, 168, 255, 0.3);
+      background: rgba(110, 168, 255, 0.08);
+    }
+
+    /* Le fil entre le téléphone et l'écran : pointillé au repos, il circule quand la télécommande est prise */
+    .demo-phone {
+      position: relative;
+    }
+
+    .demo-link {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .demo-link {
+        position: absolute;
+        left: calc(-1 * clamp(1.5rem, 3vw, 2.5rem));
+        width: clamp(1.5rem, 3vw, 2.5rem);
+        top: 46%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.3rem;
+        pointer-events: none;
+      }
+
+      .demo-link__line {
+        position: relative;
+        width: 100%;
+        height: 2px;
+        background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.35) 0 6px, transparent 6px 12px);
+        opacity: 0.5;
+      }
+
+      /* Pointe vers l'écran : la télécommande pilote, l'écran obéit */
+      .demo-link__line::before {
+        content: '';
+        position: absolute;
+        left: -1px;
+        top: -4px;
+        width: 8px;
+        height: 8px;
+        border-left: 2px solid rgba(255, 255, 255, 0.5);
+        border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+        transform: rotate(45deg);
+        transition: border-color 0.6s ease;
+      }
+
+      .demo-stage:has(#remoteViewport.is-live) .demo-link__line::before {
+        border-color: var(--accent-blue-light);
+      }
+
+      .demo-stage:has(#remoteViewport.is-live) .demo-link__line {
+        opacity: 1;
+        background: repeating-linear-gradient(90deg, var(--accent-purple) 0 6px, transparent 6px 12px);
+        animation: demoFlow 0.9s linear infinite;
+      }
+
+      @keyframes demoFlow {
+        to { background-position: -12px 0; }
+      }
+    }
+
+    /* Prendre la télécommande : le second geste, en primaire */
+    .demo-remote-launch {
+      position: relative;
+      padding: 0.75rem 1.3rem;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-blue-deep) 0%, var(--accent-purple-deep) 100%);
+      box-shadow: 0 10px 26px -10px rgba(40, 89, 255, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      overflow: hidden;
+      isolation: isolate;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .demo-remote-launch::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 55%, var(--accent-pink) 100%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .demo-remote-launch:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px -12px rgba(110, 168, 255, 0.75);
+    }
+
+    .demo-remote-launch:hover::before {
+      opacity: 1;
+    }
+
+    /* Actions sous la scène : contour, comme les secondaires partout ailleurs */
+    .demo-actions {
+      margin-top: 1.4rem;
+      gap: 0.6rem;
+    }
+
+    .demo-action-btn {
+      height: 44px;
+      padding: 0 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: transparent;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .demo-action-btn svg {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+
+    .demo-action-btn:hover {
+      border-color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.06);
+      transform: none;
+    }
+
+    .demo-action-btn:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .demo-launch__icon::after,
+      .demo-launch:disabled .demo-launch__icon,
+      .demo-link__line {
+        animation: none;
+      }
+
+      .demo-screen__bezel,
+      .demo-phone__bezel,
+      .demo-hints li,
+      .demo-remote-launch,
+      .demo-action-btn {
+        transition: none;
+      }
+    }
   </style>
 
 </head>
@@ -6710,6 +6939,7 @@
               <line x1="12" y1="17" x2="12" y2="21"></line>
             </svg>
             L'écran tactile de votre stand
+            <span class="demo-step" aria-hidden="true">1</span>
           </div>
           <div class="demo-screen__bezel">
             <div class="demo-screen__viewport" id="demoViewport">
@@ -6771,7 +7001,9 @@
               <line x1="12" y1="18" x2="12.01" y2="18"></line>
             </svg>
             La télécommande
+            <span class="demo-step" aria-hidden="true">2</span>
           </div>
+          <div class="demo-link" aria-hidden="true"><span class="demo-link__line"></span></div>
           <div class="demo-phone__bezel">
             <div class="demo-phone__notch" aria-hidden="true"></div>
             <div class="demo-phone__viewport" id="remoteViewport">
@@ -6798,32 +7030,32 @@
       </div>
 
       <div class="demo-actions reveal delay-300">
-        <button type="button" class="showcase-link"
-          data-demo-fullscreen-src="https://salon-demo-app.onrender.com/">Ouvrir en plein écran</button>
-        <div class="qr-wrap">
-          <button type="button" class="demo-action-btn" id="qrToggle" aria-expanded="false" aria-controls="qrPopover">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="3" width="7" height="7" rx="1"></rect>
-              <rect x="14" y="3" width="7" height="7" rx="1"></rect>
-              <rect x="3" y="14" width="7" height="7" rx="1"></rect>
-              <path d="M14 14h3v3h-3zM20 14h1v1h-1zM14 20h1v1h-1zM18 18h3v3h-3z"></path>
-            </svg>
-            Sur votre téléphone
-          </button>
-          <div class="qr-popover" id="qrPopover" hidden>
-            <svg class="qr-popover__code" viewBox="0 0 37 37" shape-rendering="crispEdges" role="img"
-              aria-label="QR code vers Render">
-              <path fill="#ffffff" d="M0 0h37v37H0z" />
-              <path stroke="#0b0d16"
-                d="M4 4.5h7m5 0h3m1 0h5m1 0h7M4 5.5h1m5 0h1m1 0h1m1 0h2m2 0h3m1 0h2m2 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m4 0h5m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m3 0h2m1 0h2m3 0h3m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h6m2 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m2 0h1m3 0h1m1 0h2m1 0h2m2 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M15 11.5h1m1 0h7M4 12.5h1m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m1 0h4m6 0h1m2 0h1M4 13.5h1m1 0h2m6 0h1m3 0h1m1 0h1m3 0h3m2 0h1m2 0h1M4 14.5h1m1 0h3m1 0h1m2 0h1m2 0h2m3 0h1m3 0h1m1 0h1m2 0h3M5 15.5h1m1 0h3m1 0h3m6 0h2m1 0h1m1 0h2m1 0h1m2 0h1M4 16.5h2m1 0h2m1 0h2m1 0h4m2 0h3m2 0h1m1 0h1m2 0h1m1 0h2M4 17.5h1m1 0h1m1 0h1m5 0h4m2 0h3m1 0h3m2 0h1m2 0h1M5 18.5h4m1 0h5m3 0h1m2 0h2m2 0h1m2 0h2m1 0h2M4 19.5h1m2 0h1m3 0h2m4 0h2m2 0h1m1 0h2m3 0h2m1 0h1M4 20.5h1m1 0h2m2 0h3m3 0h1m1 0h1m1 0h2m1 0h4m2 0h1m1 0h2M5 21.5h2m1 0h1m2 0h3m2 0h1m1 0h1m1 0h2m3 0h2m2 0h2m1 0h1M4 22.5h1m2 0h1m2 0h4m2 0h2m2 0h1m4 0h4m2 0h2M5 23.5h3m3 0h3m1 0h1m4 0h3m1 0h2m1 0h1m1 0h1m1 0h1M4 24.5h1m2 0h1m1 0h5m1 0h2m2 0h3m1 0h6M12 25.5h1m4 0h1m5 0h2m3 0h1m1 0h3M4 26.5h7m7 0h1m1 0h2m1 0h2m1 0h1m1 0h2m1 0h2M4 27.5h1m5 0h1m6 0h2m2 0h1m2 0h1m3 0h2m1 0h1M4 28.5h1m1 0h3m1 0h1m1 0h3m3 0h1m2 0h1m2 0h5m2 0h2M4 29.5h1m1 0h3m1 0h1m2 0h1m2 0h3m1 0h2m5 0h2m1 0h3M4 30.5h1m1 0h3m1 0h1m1 0h1m2 0h2m6 0h1m3 0h3m2 0h1M4 31.5h1m5 0h1m3 0h8m1 0h2m3 0h1m2 0h1M4 32.5h7m1 0h1m1 0h1m1 0h1m3 0h2m1 0h4m1 0h2m1 0h2" />
-            </svg>
-            <p>Scannez pour ouvrir la même démo sur votre téléphone<br><span>Render</span></p>
-          </div>
-        </div>
-        <a class="demo-action-btn demo-action-btn--mobile-remote" href="https://salon-demo-app.onrender.com/remote"
-          target="_blank" rel="noopener noreferrer">Ouvrir
-          la télécommande</a>
+        <button type="button" class="demo-action-btn" data-demo-fullscreen-src="https://salon-demo-app.onrender.com/">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"></path>
+          </svg>
+          Ouvrir en plein écran
+        </button>
+        <button type="button" class="demo-action-btn" id="demoShare">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+            <path d="M14 14h3v3h-3zM20 14h1v1h-1zM14 20h1v1h-1zM18 18h3v3h-3z"></path>
+          </svg>
+          Sur votre téléphone
+        </button>
+        <a class="demo-action-btn demo-action-btn--mobile-remote" id="mobileRemote"
+          href="https://salon-demo-app.onrender.com/remote/public" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+          </svg>
+          Ouvrir la télécommande
+        </a>
       </div>
     </section>
 
@@ -8017,6 +8249,13 @@
         demoIframe.src = demoHref(DEMO_URL, Object.assign({ poi }, reprise));
         reprise = {};
         document.body.dataset.demo = '1';
+        if (demoLaunch) {
+          demoLaunch.disabled = true;
+          const t = demoLaunch.querySelector('.demo-launch__text');
+          const h = demoLaunch.querySelector('.demo-launch__hint');
+          if (t) t.textContent = 'La borne se réveille';
+          if (h) h.textContent = 'Une dizaine de secondes, puis « Démarrer » sur l\'écran';
+        }
         if (poi) document.body.dataset.poi = poi;
         demoViewport.classList.add('is-loading');
         demoIframe.addEventListener('load', () => {
@@ -8042,6 +8281,8 @@
         if (window.ResizeObserver) new ResizeObserver(fitRemote).observe(remoteViewport);
         else window.addEventListener('resize', fitRemote);
         remoteLaunch.addEventListener('click', () => {
+          /* Une télécommande sans borne ne pilote rien : la borne se lance en même temps */
+          launchDemo(null);
           const frame = document.createElement('iframe');
           frame.className = 'demo-phone__iframe';
           frame.title = 'STAND - télécommande de la démo';
@@ -8051,23 +8292,14 @@
         });
       }
 
-      /* QR code : popover, fermé au clic dehors ou à Échap */
-      const qrToggle = document.getElementById('qrToggle');
-      const qrPopover = document.getElementById('qrPopover');
-      if (qrToggle && qrPopover) {
-        const setQr = (open) => {
-          qrPopover.hidden = !open;
-          qrToggle.setAttribute('aria-expanded', String(open));
-        };
-        qrToggle.addEventListener('click', () => setQr(qrPopover.hidden));
-        document.addEventListener('click', (e) => {
-          if (qrPopover.hidden) return;
-          if (!qrPopover.contains(e.target) && e.target !== qrToggle && !qrToggle.contains(e.target)) setQr(false);
-        });
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && !qrPopover.hidden) setQr(false);
-        });
-      }
+      /* « Sur votre téléphone » : ouvre le farfadet sur cet endroit (la démo, relancée au même POI) */
+      const demoShare = document.getElementById('demoShare');
+      if (demoShare) demoShare.addEventListener('click', (e) => {
+        e.stopPropagation(); /* sinon le « clic dehors » du farfadet le referme aussitôt */
+        document.dispatchEvent(new CustomEvent('stand:share', { detail: 'place' }));
+      });
+      const mobileRemote = document.getElementById('mobileRemote');
+      if (mobileRemote) mobileRemote.href = demoHref(REMOTE_URL);
 
       /* 6. LECTURE GUIDÉE (jumeau 3D) : onglets + « Voir dans la démo » */
       const tourTabs = Array.from(document.querySelectorAll('.tour__tab'));
@@ -8370,6 +8602,12 @@
           setOpen(sharePanel.hidden);
         });
         shareClose.addEventListener('click', () => setOpen(false));
+        document.addEventListener('stand:share', (e) => {
+          const wanted = e.detail === 'remote' ? 'remote' : 'place';
+          const btn = shareModes.find((b) => b.getAttribute('data-mode') === wanted);
+          if (btn && mode !== wanted) btn.click();
+          setOpen(true);
+        });
         document.addEventListener('click', (e) => {
           if (sharePanel.hidden || share.contains(e.target)) return;
           setOpen(false);
