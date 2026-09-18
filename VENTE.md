@@ -30,7 +30,7 @@ STAND est un kiosque d'exposition interactif qui met le produit du client en 3D 
 - Bilingue FR / EN d'un geste.
 - La démo revient seule à sa vue de départ pour le visiteur suivant.
 
-La démo web publique (https://salon-demo-app.onrender.com/, intégrée sur https://www.fractal-innov.fr/stand/) est le meilleur argument : la faire ouvrir sur le téléphone du prospect pendant l'échange. Le serveur s'endort : la relancer toutes les dix minutes en salon.
+La démo web publique (https://stand-demonstrateur.osc-fr1.scalingo.io/, intégrée sur https://www.fractal-innov.fr/stand/) est le meilleur argument : la faire ouvrir sur le téléphone du prospect pendant l'échange. Le serveur s'endort : la relancer toutes les dix minutes en salon.
 
 ## Ce que le client achète
 
