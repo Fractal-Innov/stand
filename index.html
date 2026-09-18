@@ -7762,6 +7762,204 @@
         transition: none;
       }
     }
+    /* ============================================================
+       VOS QUESTIONS : six objections, six réponses courtes. Sur grand
+       écran tout est lisible d'un coup, en deux colonnes ; sur
+       téléphone l'accordéon reste, première question ouverte.
+       ============================================================ */
+    .section--faq {
+      isolation: isolate;
+    }
+
+    .section--faq::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(50% 40% at 30% 40%, rgba(124, 58, 237, 0.08), transparent 70%);
+    }
+
+    .faq-item {
+      position: relative;
+      border-radius: 14px;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.55s ease, transform 0.55s ease, background 0.35s ease, border-color 0.35s ease;
+      transition-delay: calc(var(--i, 0) * 70ms), calc(var(--i, 0) * 70ms), 0s, 0s;
+    }
+
+    .faq-grid.active .faq-item {
+      opacity: 1;
+      transform: none;
+    }
+
+    .faq-item:hover {
+      border-color: var(--glass-border-highlight);
+    }
+
+    /* Icône en pastille, qui s'allume sur la carte survolée ou ouverte */
+    .faq-item {
+      --faq-icon-size: 34px;
+      --faq-icon-gap: 0.8rem;
+    }
+
+    .faq-icon {
+      border-radius: 10px;
+      background: rgba(110, 168, 255, 0.08);
+      border: 1px solid rgba(110, 168, 255, 0.18);
+      transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+    }
+
+    .faq-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .faq-item:hover .faq-icon,
+    .faq-item.open .faq-icon {
+      background: rgba(110, 168, 255, 0.16);
+      box-shadow: 0 0 18px rgba(110, 168, 255, 0.25);
+      color: #fff;
+    }
+
+    /* La question est celle du prospect : guillemets discrets */
+    .faq-head h4::before {
+      content: '« ';
+      color: var(--accent-blue-light);
+      opacity: 0.7;
+    }
+
+    .faq-head h4::after {
+      content: ' »';
+      color: var(--accent-blue-light);
+      opacity: 0.7;
+    }
+
+    .faq-item p {
+      padding-top: 0;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding-top 0.35s ease;
+    }
+
+    .faq-item.open p {
+      padding-top: 0.55rem;
+    }
+
+    /* Grand écran : deux colonnes, tout ouvert, pas de chevron */
+    @media (min-width: 768px) {
+      .faq-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .faq-item {
+        cursor: default;
+        user-select: text;
+        padding: 1.35rem 1.35rem 1.3rem;
+      }
+
+      .faq-item .faq-chevron {
+        display: none;
+      }
+
+      .faq-item p {
+        max-height: none;
+        opacity: 1;
+        overflow: visible;
+        padding-top: 0.65rem;
+        padding-left: 0;
+        font-size: 0.97rem;
+      }
+
+      .faq-item ul {
+        max-height: none;
+        opacity: 1;
+        overflow: visible;
+      }
+
+      .faq-head {
+        align-items: flex-start;
+        padding-bottom: 0;
+      }
+
+      .faq-head h4 {
+        padding-top: 0.35rem;
+      }
+
+      /* Fil fin entre la question et la réponse */
+      .faq-item p::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 2px;
+        margin-bottom: 0.65rem;
+        border-radius: 2px;
+        background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+        opacity: 0.7;
+      }
+    }
+
+    /* Téléphone : accordéon, chevron dans un cercle */
+    @media (max-width: 767px) {
+      .faq-item {
+        --faq-icon-size: 30px;
+        --faq-icon-gap: 0.65rem;
+        padding: 0.95rem 0.9rem;
+      }
+
+      .faq-icon svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .faq-chevron {
+        width: 26px;
+        height: 26px;
+        flex-basis: 26px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        padding: 4px;
+        box-sizing: border-box;
+      }
+
+      .faq-item.open .faq-chevron {
+        border-color: rgba(110, 168, 255, 0.45);
+        background: rgba(110, 168, 255, 0.12);
+      }
+
+      .faq-item.open {
+        background: var(--glass-bg-hover);
+        border-color: rgba(110, 168, 255, 0.3);
+      }
+    }
+
+    .section .faq-more {
+      margin-top: 1.6rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: none;
+    }
+
+    .faq-more a {
+      color: var(--accent-blue-light);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(110, 168, 255, 0.4);
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .faq-more a:hover {
+      color: #fff;
+      border-color: #fff;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .faq-item {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
   </style>
 
 </head>
@@ -8768,7 +8966,7 @@
       </ol>
     </section>
 
-    <section id="questions" class="section">
+    <section id="questions" class="section section--faq">
       <div class="section-number reveal">Vos questions</div>
       <h2 class="reveal delay-100">Ce qu'on nous demande le plus souvent</h2>
 
@@ -8879,6 +9077,8 @@
             pour l'installation et les réglages.</p>
         </div>
       </div>
+
+      <p class="faq-more reveal delay-300">Une autre question&nbsp;? <a href="#contact">Elle a sa place dans l'appel de 30 min</a></p>
     </section>
 
     <section id="contact" class="contact reveal">
@@ -9207,13 +9407,31 @@
       });
 
       /* 3. ACCORDÉON FAQ */
+      /* Accordéon sur téléphone seulement : sur grand écran les six réponses sont
+         courtes et se lisent d'un coup, en deux colonnes. */
       const faqItems = document.querySelectorAll('.faq-item');
-      faqItems.forEach(item => {
-        item.classList.remove('open');
-        item.setAttribute('aria-expanded', 'false');
-        item.setAttribute('role', 'button');
-        item.setAttribute('tabindex', '0');
+      const faqAccordion = window.matchMedia('(max-width: 767px)');
+      const faqApplyMode = () => {
+        faqItems.forEach((item, i) => {
+          if (faqAccordion.matches) {
+            item.classList.toggle('open', i === 0);
+            item.setAttribute('aria-expanded', String(i === 0));
+            item.setAttribute('role', 'button');
+            item.setAttribute('tabindex', '0');
+          } else {
+            item.classList.add('open');
+            item.removeAttribute('aria-expanded');
+            item.removeAttribute('role');
+            item.removeAttribute('tabindex');
+          }
+        });
+      };
+      faqApplyMode();
+      faqAccordion.addEventListener('change', faqApplyMode);
+      faqItems.forEach((item, i) => {
+        item.style.setProperty('--i', String(i));
         const toggle = () => {
+          if (!faqAccordion.matches) return;
           const isOpen = item.classList.contains('open');
           item.classList.toggle('open', !isOpen);
           item.setAttribute('aria-expanded', String(!isOpen));
