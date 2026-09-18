@@ -6900,6 +6900,8 @@
         if (window.ResizeObserver) new ResizeObserver(fitKiosk).observe(demoViewport);
         else window.addEventListener('resize', fitKiosk);
       }
+      /* Reprise d'un média (lien partagé) : ?media=&t=&page= sont passés à la borne au premier lancement */
+      let reprise = {};
       function launchDemo(poi) {
         if (!demoViewport) return;
         if (demoIframe) {
@@ -6913,7 +6915,8 @@
         demoIframe.className = 'demo-screen__iframe';
         demoIframe.title = 'STAND - démo en ligne';
         demoIframe.setAttribute('allow', 'autoplay; fullscreen; xr-spatial-tracking; gamepad');
-        demoIframe.src = demoHref(DEMO_URL, { poi });
+        demoIframe.src = demoHref(DEMO_URL, Object.assign({ poi }, reprise));
+        reprise = {};
         document.body.dataset.demo = '1';
         if (poi) document.body.dataset.poi = poi;
         demoViewport.classList.add('is-loading');
@@ -6989,7 +6992,18 @@
         }
       }
       window.addEventListener('message', (e) => {
-        if (e.origin !== DEMO_ORIGIN || !e.data || e.data.type !== 'stand:poi') return;
+        if (e.origin !== DEMO_ORIGIN || !e.data) return;
+        /* stand:state : le média du POI et sa progression, pour le lien « voilà où j'en suis » */
+        if (e.data.type === 'stand:state') {
+          const d = document.body.dataset;
+          const set = (k, v) => { if (v === null || v === undefined || v === '') delete d[k]; else d[k] = String(v); };
+          set('media', e.data.media);
+          set('mediaType', e.data.mediaType);
+          set('t', e.data.t);
+          set('page', e.data.page);
+          return;
+        }
+        if (e.data.type !== 'stand:poi') return;
         const poi = e.data.poi;
         if (!poi) return;
         const key = POI_TO_PANEL[poi] || poi;
@@ -7100,6 +7114,7 @@
           const tab = tourTabs.find((t) => t.getAttribute('data-panel') === key);
           if (tab) activateTab(tab, true);
         }
+        ['media', 't', 'page'].forEach((k) => { if (params.get(k)) reprise[k] = params.get(k); });
         if (params.get('demo') === '1') launchDemo(poi);
         /* Le saut d'ancre se fait avant que la page ait sa hauteur finale : on le rejoue une fois chargée */
         const nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
@@ -7155,12 +7170,25 @@
           const poiMatters = poi && (section === 'demo' || section === 'jumeau-3d');
           if (poiMatters) url.searchParams.set('poi', poi);
           if (demo && section === 'demo') url.searchParams.set('demo', '1');
-          if (section) url.hash = section;
           let where = section ? SECTION_LABEL[section] || 'La page' : 'Le haut de la page';
           if (poiMatters) {
             const tab = tourTabs.find((t) => t.getAttribute('data-panel') === (POI_TO_PANEL[poi] || poi));
             if (tab) where += ' : ' + tab.textContent.trim();
           }
+          /* Le média en cours dans la démo et sa progression (stand:state) */
+          if (demo && section === 'demo' && d.media) {
+            url.searchParams.set('media', d.media);
+            if (d.mediaType === 'video' && Number(d.t) > 0) {
+              url.searchParams.set('t', d.t);
+              const sec = Number(d.t);
+              where += ' à ' + Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
+            }
+            if (d.mediaType === 'datasheet' && Number(d.page) > 1) {
+              url.searchParams.set('page', d.page);
+              where += ', page ' + d.page;
+            }
+          }
+          if (section) url.hash = section;
           return { url: url.toString(), where, hint: HINT_PLACE };
         }
 
@@ -7264,7 +7292,7 @@
         /* Mise à jour en direct quand la section, l'onglet ou le POI changent */
         if (window.MutationObserver) {
           new MutationObserver(() => { if (!sharePanel.hidden) render(); })
-            .observe(document.body, { attributes: true, attributeFilter: ['data-section', 'data-poi', 'data-demo'] });
+            .observe(document.body, { attributes: true, attributeFilter: ['data-section', 'data-poi', 'data-demo', 'data-media', 'data-media-type', 'data-t', 'data-page'] });
         }
       }
     });
