@@ -14,16 +14,19 @@
   <meta property="og:url" content="https://stand.fractal-innov.fr/">
   <meta property="og:site_name" content="STAND par Fractal Innov">
   <meta property="og:title" content="STAND : votre produit reste chez vous, votre démo part en salon">
-  <meta property="og:description" content="STAND met le jumeau 3D de votre produit sur un écran tactile, avec vos vidéos et vos fiches, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
+  <meta property="og:description"
+    content="STAND met le jumeau 3D de votre produit sur un écran tactile, avec vos vidéos et vos fiches, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
   <meta property="og:image" content="https://stand.fractal-innov.fr/assets/share/og-image.jpg">
   <meta property="og:image:secure_url" content="https://stand.fractal-innov.fr/assets/share/og-image.jpg">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="STAND, le kiosque d'exposition interactif : la scène 3D d'un stand de salon avec sa borne tactile">
+  <meta property="og:image:alt"
+    content="STAND, le kiosque d'exposition interactif : la scène 3D d'un stand de salon avec sa borne tactile">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="STAND : votre produit reste chez vous, votre démo part en salon">
-  <meta name="twitter:description" content="STAND met le jumeau 3D de votre produit sur un écran tactile, avec vos vidéos et vos fiches, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
+  <meta name="twitter:description"
+    content="STAND met le jumeau 3D de votre produit sur un écran tactile, avec vos vidéos et vos fiches, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
   <meta name="twitter:image" content="https://stand.fractal-innov.fr/assets/share/og-image.jpg">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png">
@@ -5236,6 +5239,7 @@
         transition: none;
       }
     }
+
     /* ── Farfadet : partager l'endroit où l'on est. Bouton flottant en bas à droite, panneau
        avec QR, libellé « Vous êtes ici », lien à copier et feuille de partage native. ── */
     .share {
@@ -5512,6 +5516,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       .share__fab,
       .share__fab-label,
       .share__panel,
@@ -5520,6 +5525,7 @@
         transition: none;
       }
     }
+
     /* ── Déroulé : frise en trois étapes. Le fil se dessine à l'apparition, les marqueurs
        s'allument à sa suite ; l'étape 1 porte l'action, les cartes ne se soulèvent pas. ── */
     .timeline {
@@ -5564,8 +5570,13 @@
       box-shadow: 0 0 0 6px var(--bg-base), 0 0 28px -6px rgba(110, 168, 255, 0.7);
     }
 
-    .timeline.active .timeline__step:nth-child(2) .timeline__marker { transition-delay: 0.35s; }
-    .timeline.active .timeline__step:nth-child(3) .timeline__marker { transition-delay: 0.7s; }
+    .timeline.active .timeline__step:nth-child(2) .timeline__marker {
+      transition-delay: 0.35s;
+    }
+
+    .timeline.active .timeline__step:nth-child(3) .timeline__marker {
+      transition-delay: 0.7s;
+    }
 
     /* Le fil, sur mobile : un segment sous chaque marqueur jusqu'au suivant (le dernier n'en a pas) */
     .timeline__step:not(:last-child)::before {
@@ -5730,6 +5741,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       .timeline::before,
       .timeline__step::before,
       .timeline__marker,
@@ -5737,6 +5749,7 @@
         transition: none;
       }
     }
+
     /* ── Contact : le bouton principal reprend le primaire du hero, les autres accès sont
        nommés (carte, e-mail, LinkedIn, Instagram) plutôt que devinés, et la photo dit qui parle. ── */
     .cta-photo-wrap {
@@ -5858,11 +5871,13 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       .cta-social a,
       .cta-social a.cta-social__btn--calendar::before {
         transition: none;
       }
     }
+
     /* ── Contact : plus de boîte colorée. Le fond de page, une aurore lente derrière l'action,
        le portrait cerclé d'un anneau qui tourne, un seul bouton qui respire. ── */
     .contact {
@@ -5935,9 +5950,17 @@
     }
 
     @keyframes contactDrift {
-      0% { transform: translate3d(0, 0, 0) scale(1); }
-      50% { transform: translate3d(6vmax, -4vmax, 0) scale(1.08); }
-      100% { transform: translate3d(-4vmax, 5vmax, 0) scale(0.96); }
+      0% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate3d(6vmax, -4vmax, 0) scale(1.08);
+      }
+
+      100% {
+        transform: translate3d(-4vmax, 5vmax, 0) scale(0.96);
+      }
     }
 
     .contact__inner {
@@ -5989,12 +6012,23 @@
     }
 
     @keyframes contactSpin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     @keyframes contactBreathe {
-      0%, 100% { transform: scale(0.92); opacity: 0.6; }
-      50% { transform: scale(1.06); opacity: 1; }
+
+      0%,
+      100% {
+        transform: scale(0.92);
+        opacity: 0.6;
+      }
+
+      50% {
+        transform: scale(1.06);
+        opacity: 1;
+      }
     }
 
     .contact__ring img {
@@ -6105,8 +6139,15 @@
     }
 
     @keyframes contactPulse {
-      0%, 100% { box-shadow: 0 18px 40px -14px rgba(40, 89, 255, 0.8), 0 0 0 0 rgba(110, 168, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
-      50% { box-shadow: 0 18px 44px -12px rgba(124, 58, 237, 0.85), 0 0 0 10px rgba(110, 168, 255, 0), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
+
+      0%,
+      100% {
+        box-shadow: 0 18px 40px -14px rgba(40, 89, 255, 0.8), 0 0 0 0 rgba(110, 168, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
+
+      50% {
+        box-shadow: 0 18px 44px -12px rgba(124, 58, 237, 0.85), 0 0 0 10px rgba(110, 168, 255, 0), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
     }
 
     /* Lumière sous le curseur (--mx/--my posés en JS) */
@@ -6140,8 +6181,15 @@
     }
 
     @keyframes contactSheen {
-      0%, 70% { transform: skewX(-18deg) translateX(0); }
-      100% { transform: skewX(-18deg) translateX(420%); }
+
+      0%,
+      70% {
+        transform: skewX(-18deg) translateX(0);
+      }
+
+      100% {
+        transform: skewX(-18deg) translateX(420%);
+      }
     }
 
     .contact__primary:hover,
@@ -6245,6 +6293,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       .contact::before,
       .contact__aurora span,
       .contact__ring::before,
@@ -6257,11 +6306,19 @@
         transition: none;
       }
     }
+
     /* ── Hero : entrée en scène, visuel qui appelle le clic, piliers qui mènent quelque part,
        fil qui descend vers la démo. ── */
     @keyframes heroIn {
-      from { opacity: 0; transform: translateY(14px); }
-      to { opacity: 1; transform: none; }
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
     }
 
     .hero-eyebrow,
@@ -6274,12 +6331,29 @@
       animation: heroIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
-    .hero h1 { animation-delay: 0.08s; }
-    .hero-lead { animation-delay: 0.16s; }
-    .hero-cta { animation-delay: 0.24s; }
-    .hero-visual { animation-delay: 0.2s; }
-    .hero-pillars { animation-delay: 0.4s; }
-    .hero-scroll { animation-delay: 0.7s; }
+    .hero h1 {
+      animation-delay: 0.08s;
+    }
+
+    .hero-lead {
+      animation-delay: 0.16s;
+    }
+
+    .hero-cta {
+      animation-delay: 0.24s;
+    }
+
+    .hero-visual {
+      animation-delay: 0.2s;
+    }
+
+    .hero-pillars {
+      animation-delay: 0.4s;
+    }
+
+    .hero-scroll {
+      animation-delay: 0.7s;
+    }
 
     /* Visuel : lueur de marque qui dérive derrière le cadre, bouton lecture visible au repos */
     .hero-visual::before {
@@ -6298,8 +6372,13 @@
     }
 
     @keyframes heroGlow {
-      0% { transform: translate3d(-3%, 2%, 0) rotate(-2deg) scale(1); }
-      100% { transform: translate3d(3%, -2%, 0) rotate(2deg) scale(1.06); }
+      0% {
+        transform: translate3d(-3%, 2%, 0) rotate(-2deg) scale(1);
+      }
+
+      100% {
+        transform: translate3d(3%, -2%, 0) rotate(2deg) scale(1.06);
+      }
     }
 
     .hero-visual:hover::before,
@@ -6325,8 +6404,15 @@
     }
 
     @keyframes heroPlayRing {
-      0% { transform: scale(1); opacity: 0.8; }
-      100% { transform: scale(1.7); opacity: 0; }
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: scale(1.7);
+        opacity: 0;
+      }
     }
 
     .hero-visual:hover .hero-visual__play,
@@ -6458,9 +6544,19 @@
     }
 
     @keyframes heroScrollDot {
-      0% { transform: translateY(0); opacity: 0; }
-      20% { opacity: 1; }
-      100% { transform: translateY(100px); opacity: 0; }
+      0% {
+        transform: translateY(0);
+        opacity: 0;
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(100px);
+        opacity: 0;
+      }
     }
 
     /* La section démo remonte : le fil arrive sur son titre */
@@ -6546,6 +6642,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       .hero-eyebrow,
       .hero h1,
       .hero-lead,
@@ -6566,6 +6663,7 @@
         transition: none;
       }
     }
+
     /* ── Démo : une scène en deux temps (1 l'écran, 2 la télécommande), un fil entre les deux,
        la borne qui s'allume, des actions au même vocabulaire que le reste de la page. ── */
     .demo-step {
@@ -6614,8 +6712,17 @@
     }
 
     @keyframes demoBreathe {
-      0%, 100% { transform: scale(0.94); opacity: 0.75; }
-      50% { transform: scale(1.02); opacity: 1; }
+
+      0%,
+      100% {
+        transform: scale(0.94);
+        opacity: 0.75;
+      }
+
+      50% {
+        transform: scale(1.02);
+        opacity: 1;
+      }
     }
 
     /* La borne s'allume : halo de marque autour de l'écran une fois la démo chargée */
@@ -6712,7 +6819,9 @@
       }
 
       @keyframes demoFlow {
-        to { background-position: -12px 0; }
+        to {
+          background-position: -12px 0;
+        }
       }
     }
 
@@ -6781,6 +6890,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       .demo-launch__icon::after,
       .demo-launch:disabled .demo-launch__icon,
       .demo-link__line {
@@ -6795,6 +6905,7 @@
         transition: none;
       }
     }
+
     /* ============================================================
        LE DÉFI : trois frictions, puis le pivot vers STAND
        Ton plus chaud (rose, violet) que le reste de la page : ici
@@ -6871,9 +6982,17 @@
     }
 
     @keyframes defiOut {
-      0% { transform: scale(1); }
-      40% { transform: scale(1.25); }
-      100% { transform: scale(1); }
+      0% {
+        transform: scale(1);
+      }
+
+      40% {
+        transform: scale(1.25);
+      }
+
+      100% {
+        transform: scale(1);
+      }
     }
 
     /* Les trois frictions : numérotées, entrée en cascade, accent rose */
@@ -6896,8 +7015,13 @@
       transform: none;
     }
 
-    .friction-grid.active .friction-card:nth-child(2) { transition-delay: 0.12s, 0.12s, 0s, 0s; }
-    .friction-grid.active .friction-card:nth-child(3) { transition-delay: 0.24s, 0.24s, 0s, 0s; }
+    .friction-grid.active .friction-card:nth-child(2) {
+      transition-delay: 0.12s, 0.12s, 0s, 0s;
+    }
+
+    .friction-grid.active .friction-card:nth-child(3) {
+      transition-delay: 0.24s, 0.24s, 0s, 0s;
+    }
 
     .friction-card::before {
       content: '';
@@ -6970,7 +7094,9 @@
     }
 
     @keyframes defiSheen {
-      to { transform: translateX(120%); }
+      to {
+        transform: translateX(120%);
+      }
     }
 
     .defi-pivot__spark {
@@ -7067,6 +7193,7 @@
         animation: none;
       }
     }
+
     /* ============================================================
        CE QUE VOUS GAGNEZ : quatre étapes qui se lisent en défilant.
        Fil de progression, gain nommé sur chaque étape, pastilles
@@ -7285,12 +7412,14 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       .sticky-steps__right::after,
       .step-gain,
       .sticky-pager__dot {
         transition: none;
       }
     }
+
     /* ============================================================
        LE JUMEAU 3D : la lecture guidée se parcourt comme le menu
        de la borne. Onglets groupés (sujets, contenus), compteur et
@@ -7375,12 +7504,12 @@
         display: none;
       }
 
-      .tour__group + .tour__group {
+      .tour__group+.tour__group {
         position: relative;
         padding-left: 0.85rem;
       }
 
-      .tour__group + .tour__group::before {
+      .tour__group+.tour__group::before {
         content: '';
         position: absolute;
         left: 0;
@@ -7397,8 +7526,15 @@
     }
 
     @keyframes tourTextIn {
-      from { opacity: 0; transform: translateX(10px); }
-      to { opacity: 1; transform: none; }
+      from {
+        opacity: 0;
+        transform: translateX(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
     }
 
     /* Compteur et « suivant » : le parcours a un sens de lecture */
@@ -7505,6 +7641,7 @@
         transition: none;
       }
     }
+
     /* ============================================================
        TARIFS : deux formules qui se comparent d'un coup d'œil, un
        seul geste ensuite (l'appel). Sur téléphone, le tableau tient
@@ -7751,6 +7888,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       .offer-table .ok,
       .offer-table .no {
         transform: none;
@@ -7762,6 +7900,7 @@
         transition: none;
       }
     }
+
     /* ============================================================
        VOS QUESTIONS : six objections, six réponses courtes. Sur grand
        écran tout est lisible d'un coup, en deux colonnes ; sur
@@ -7960,6 +8099,7 @@
         transition: none;
       }
     }
+
     /* ============================================================
        CE QUI EST LIVRÉ : trois statuts (livré, à louer, à vous) qui se
        distinguent d'un regard, un schéma qui s'allume, et sur
@@ -8071,8 +8211,13 @@
       transform: none;
     }
 
-    .kit-grid.active .kit-card:nth-child(2) { transition-delay: 0.1s, 0.1s, 0s; }
-    .kit-grid.active .kit-card:nth-child(3) { transition-delay: 0.2s, 0.2s, 0s; }
+    .kit-grid.active .kit-card:nth-child(2) {
+      transition-delay: 0.1s, 0.1s, 0s;
+    }
+
+    .kit-grid.active .kit-card:nth-child(3) {
+      transition-delay: 0.2s, 0.2s, 0s;
+    }
 
     .kit-grid.active .kit-card:hover {
       transform: translateY(-3px);
@@ -8139,8 +8284,15 @@
     }
 
     @keyframes wiringLed {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.45; }
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.45;
+      }
     }
 
     .wiring__badge circle {
@@ -8320,7 +8472,10 @@
         <nav class="hero-pillars" aria-label="Ce que STAND change">
           <a href="#step-attirer" class="hero-pillar">
             <span class="hero-pillar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg></span>
             <div class="hero-pillar__text"><strong>Attirer</strong>Une expérience 3D plutôt qu'un panneau</div>
             <svg class="hero-pillar__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -8329,8 +8484,11 @@
           </a>
           <a href="#step-expliquer" class="hero-pillar">
             <span class="hero-pillar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
-            <div class="hero-pillar__text"><strong>Expliquer sans vous</strong>Le visiteur comprend seul, sans attendre</div>
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg></span>
+            <div class="hero-pillar__text"><strong>Expliquer sans vous</strong>Le visiteur comprend seul, sans attendre
+            </div>
             <svg class="hero-pillar__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6"></path>
@@ -8338,7 +8496,10 @@
           </a>
           <a href="#step-reutiliser" class="hero-pillar">
             <span class="hero-pillar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg></span>
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+              </svg></span>
             <div class="hero-pillar__text"><strong>Réutiliser</strong>Showroom, rendez-vous, salons suivants</div>
             <svg class="hero-pillar__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -8466,7 +8627,8 @@
         <button type="button" class="demo-action-btn" data-demo-fullscreen-src="https://salon-demo-app.onrender.com/">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" aria-hidden="true">
-            <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"></path>
+            <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3">
+            </path>
           </svg>
           Ouvrir en plein écran
         </button>
@@ -8589,13 +8751,18 @@
               alt="" loading="lazy" decoding="async">
             <img class="sticky-visual__img" data-step="4" src="assets/demo/step-reutiliser.webp" width="1600"
               height="900" alt="" loading="lazy" decoding="async">
-            <div class="sticky-visual__caption" id="stickyCaption"><b class="sticky-visual__n">01</b><span>Le visiteur s'arrête devant la borne</span></div>
+            <div class="sticky-visual__caption" id="stickyCaption"><b class="sticky-visual__n">01</b><span>Le visiteur
+                s'arrête devant la borne</span></div>
           </div>
           <div class="sticky-pager" id="stickyPager" aria-label="Étapes">
-            <button type="button" class="sticky-pager__dot is-active" data-goto="step-attirer" aria-label="Étape 1, Attirer"></button>
-            <button type="button" class="sticky-pager__dot" data-goto="step-expliquer" aria-label="Étape 2, Expliquer"></button>
-            <button type="button" class="sticky-pager__dot" data-goto="step-vendre" aria-label="Étape 3, Faire vendre"></button>
-            <button type="button" class="sticky-pager__dot" data-goto="step-reutiliser" aria-label="Étape 4, Réutiliser"></button>
+            <button type="button" class="sticky-pager__dot is-active" data-goto="step-attirer"
+              aria-label="Étape 1, Attirer"></button>
+            <button type="button" class="sticky-pager__dot" data-goto="step-expliquer"
+              aria-label="Étape 2, Expliquer"></button>
+            <button type="button" class="sticky-pager__dot" data-goto="step-vendre"
+              aria-label="Étape 3, Faire vendre"></button>
+            <button type="button" class="sticky-pager__dot" data-goto="step-reutiliser"
+              aria-label="Étape 4, Réutiliser"></button>
             <span class="sticky-pager__hint">Faites défiler</span>
           </div>
         </div>
@@ -8613,7 +8780,8 @@
             </div>
           </div>
 
-          <div class="step-card" id="step-expliquer" data-step="2" data-caption="La bonne vidéo, au bon moment du parcours">
+          <div class="step-card" id="step-expliquer" data-step="2"
+            data-caption="La bonne vidéo, au bon moment du parcours">
             <div class="step-num">02</div>
             <div class="step-body">
               <h4>Expliquer</h4>
@@ -8625,7 +8793,8 @@
             </div>
           </div>
 
-          <div class="step-card" id="step-vendre" data-step="3" data-caption="Le commercial pilote l'écran depuis sa tablette">
+          <div class="step-card" id="step-vendre" data-step="3"
+            data-caption="Le commercial pilote l'écran depuis sa tablette">
             <div class="step-num">03</div>
             <div class="step-body">
               <h4>Faire vendre</h4>
@@ -8637,7 +8806,8 @@
             </div>
           </div>
 
-          <div class="step-card" id="step-reutiliser" data-step="4" data-caption="Le même récit, en rendez-vous et en showroom">
+          <div class="step-card" id="step-reutiliser" data-step="4"
+            data-caption="Le même récit, en rendez-vous et en showroom">
             <div class="step-num">04</div>
             <div class="step-body">
               <h4>Réutiliser</h4>
@@ -8666,69 +8836,69 @@
         <div class="tour__tabs" role="tablist" aria-label="Les entrées du menu de la démo">
           <div class="tour__group" role="presentation">
             <span class="tour__group-label">Les sujets</span>
-<button type="button" role="tab" class="tour__tab is-active" id="tab-vue" aria-selected="true"
-            aria-controls="panel-vue" data-panel="vue">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
-              <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
-              <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
-              <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
-            </svg>
-            Vue d'ensemble
-          </button>
-          <button type="button" role="tab" class="tour__tab" id="tab-attirer" aria-selected="false"
-            aria-controls="panel-attirer" data-panel="attirer" tabindex="-1">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" aria-hidden="true">
-              <path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"></path>
-              <path d="M15 9.5a4 4 0 0 1 0 5"></path>
-              <path d="M18 7a8 8 0 0 1 0 10"></path>
-            </svg>
-            Attirer depuis l'allée
-          </button>
-          <button type="button" role="tab" class="tour__tab" id="tab-presenter" aria-selected="false"
-            aria-controls="panel-presenter" data-panel="presenter" tabindex="-1">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="4" width="18" height="12" rx="2"></rect>
-              <line x1="12" y1="16" x2="12" y2="21"></line>
-              <line x1="8" y1="21" x2="16" y2="21"></line>
-            </svg>
-            Présenter à un client
-          </button>
-          <button type="button" role="tab" class="tour__tab" id="tab-emporter" aria-selected="false"
-            aria-controls="panel-emporter" data-panel="emporter" tabindex="-1">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" aria-hidden="true">
-              <rect x="5" y="2" width="14" height="20" rx="2"></rect>
-              <line x1="12" y1="18" x2="12.01" y2="18"></line>
-            </svg>
-            Emporter sur son smartphone
-          </button>
+            <button type="button" role="tab" class="tour__tab is-active" id="tab-vue" aria-selected="true"
+              aria-controls="panel-vue" data-panel="vue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+              </svg>
+              Vue d'ensemble
+            </button>
+            <button type="button" role="tab" class="tour__tab" id="tab-attirer" aria-selected="false"
+              aria-controls="panel-attirer" data-panel="attirer" tabindex="-1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"></path>
+                <path d="M15 9.5a4 4 0 0 1 0 5"></path>
+                <path d="M18 7a8 8 0 0 1 0 10"></path>
+              </svg>
+              Attirer depuis l'allée
+            </button>
+            <button type="button" role="tab" class="tour__tab" id="tab-presenter" aria-selected="false"
+              aria-controls="panel-presenter" data-panel="presenter" tabindex="-1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="12" rx="2"></rect>
+                <line x1="12" y1="16" x2="12" y2="21"></line>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+              </svg>
+              Présenter à un client
+            </button>
+            <button type="button" role="tab" class="tour__tab" id="tab-emporter" aria-selected="false"
+              aria-controls="panel-emporter" data-panel="emporter" tabindex="-1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+              </svg>
+              Emporter sur son smartphone
+            </button>
           </div>
           <div class="tour__group" role="presentation">
             <span class="tour__group-label">Les contenus</span>
-<button type="button" role="tab" class="tour__tab" id="tab-logiciel" aria-selected="false"
-            aria-controls="panel-logiciel" data-panel="logiciel" tabindex="-1">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" aria-hidden="true">
-              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-              <path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"></path>
-            </svg>
-            La vidéo
-          </button>
-          <button type="button" role="tab" class="tour__tab" id="tab-materiel" aria-selected="false"
-            aria-controls="panel-materiel" data-panel="materiel" tabindex="-1">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" aria-hidden="true">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="8" y1="13" x2="16" y2="13"></line>
-              <line x1="8" y1="17" x2="13" y2="17"></line>
-            </svg>
-            La fiche
-          </button>
+            <button type="button" role="tab" class="tour__tab" id="tab-logiciel" aria-selected="false"
+              aria-controls="panel-logiciel" data-panel="logiciel" tabindex="-1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"></path>
+              </svg>
+              La vidéo
+            </button>
+            <button type="button" role="tab" class="tour__tab" id="tab-materiel" aria-selected="false"
+              aria-controls="panel-materiel" data-panel="materiel" tabindex="-1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="8" y1="13" x2="16" y2="13"></line>
+                <line x1="8" y1="17" x2="13" y2="17"></line>
+              </svg>
+              La fiche
+            </button>
           </div>
         </div>
 
@@ -8747,7 +8917,10 @@
                 <li>Retour au départ à tout moment</li>
               </ul>
               <div class="tour__act">
-                <button type="button" class="tour__go" data-poi="votre-stand"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg> Voir dans la démo</button>
+                <button type="button" class="tour__go" data-poi="votre-stand"><svg width="14" height="14"
+                    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5v14l11-7z"></path>
+                  </svg> Voir dans la démo</button>
                 <span class="tour__act-hint">Remonte à la borne et ouvre ce sujet</span>
               </div>
             </div>
@@ -8767,7 +8940,10 @@
                 <li>Sans intervention</li>
               </ul>
               <div class="tour__act">
-                <button type="button" class="tour__go" data-poi="attirer"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg> Voir dans la démo</button>
+                <button type="button" class="tour__go" data-poi="attirer"><svg width="14" height="14"
+                    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5v14l11-7z"></path>
+                  </svg> Voir dans la démo</button>
                 <span class="tour__act-hint">Remonte à la borne et ouvre ce sujet</span>
               </div>
             </div>
@@ -8787,7 +8963,10 @@
                 <li>Vidéos, PDF, vues 3D</li>
               </ul>
               <div class="tour__act">
-                <button type="button" class="tour__go" data-poi="presenter"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg> Voir dans la démo</button>
+                <button type="button" class="tour__go" data-poi="presenter"><svg width="14" height="14"
+                    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5v14l11-7z"></path>
+                  </svg> Voir dans la démo</button>
                 <span class="tour__act-hint">Remonte à la borne et ouvre ce sujet</span>
               </div>
             </div>
@@ -8807,7 +8986,10 @@
                 <li>Un contact qui reste</li>
               </ul>
               <div class="tour__act">
-                <button type="button" class="tour__go" data-poi="emporter"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg> Voir dans la démo</button>
+                <button type="button" class="tour__go" data-poi="emporter"><svg width="14" height="14"
+                    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5v14l11-7z"></path>
+                  </svg> Voir dans la démo</button>
                 <span class="tour__act-hint">Remonte à la borne et ouvre ce sujet</span>
               </div>
             </div>
@@ -8827,7 +9009,10 @@
                 <li>Retour à la 3D en fermant</li>
               </ul>
               <div class="tour__act">
-                <button type="button" class="tour__go" data-poi="logiciel"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg> Voir dans la démo</button>
+                <button type="button" class="tour__go" data-poi="logiciel"><svg width="14" height="14"
+                    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5v14l11-7z"></path>
+                  </svg> Voir dans la démo</button>
                 <span class="tour__act-hint">Remonte à la borne et ouvre ce sujet</span>
               </div>
             </div>
@@ -8847,7 +9032,10 @@
                 <li>En français et en anglais</li>
               </ul>
               <div class="tour__act">
-                <button type="button" class="tour__go" data-poi="materiel"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg> Voir dans la démo</button>
+                <button type="button" class="tour__go" data-poi="materiel"><svg width="14" height="14"
+                    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5v14l11-7z"></path>
+                  </svg> Voir dans la démo</button>
                 <span class="tour__act-hint">Remonte à la borne et ouvre ce sujet</span>
               </div>
             </div>
@@ -8947,7 +9135,8 @@
             <li><b>2</b><span><strong>USB</strong>, le tactile : de l'écran vers le mini PC</span></li>
             <li><b>3</b><span><strong>Alimentation</strong> : du mini PC à la prise du stand</span></li>
             <li><b>4</b><span><strong>Câble réseau</strong> : du mini PC au routeur de voyage</span></li>
-            <li class="wiring__list-wifi"><b>wifi</b><span>Le téléphone du commercial se connecte au routeur, sans application</span></li>
+            <li class="wiring__list-wifi"><b>wifi</b><span>Le téléphone du commercial se connecte au routeur, sans
+                application</span></li>
           </ol>
           <div class="wiring__scroll">
             <svg class="wiring__svg" viewBox="0 0 960 400" role="img"
@@ -9079,7 +9268,6 @@
                   <span class="offer-head__name">Kit complet</span>
                   <strong class="offer-head__price">6&nbsp;900&nbsp;€ <small>HT</small></strong>
                   <span class="offer-head__meta">Logiciel + matériel configuré</span>
-                  <span class="offer-head__delta">+ 2&nbsp;000&nbsp;€ HT</span>
                 </div>
               </th>
             </tr>
@@ -9151,8 +9339,7 @@
       </div>
 
       <div class="offer-cta reveal delay-300">
-        <a class="offer-cta__btn" href="https://calendar.app.google/SDuiKb9ZBQ6BcbED6" target="_blank"
-          rel="noopener">
+        <a class="offer-cta__btn" href="https://calendar.app.google/SDuiKb9ZBQ6BcbED6" target="_blank" rel="noopener">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="3" y="4" width="18" height="18" rx="2"></rect>
@@ -9187,7 +9374,9 @@
               <span class="timeline__icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round">
-                  <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.8 2z"></path>
+                  <path
+                    d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.8 2z">
+                  </path>
                 </svg>
               </span>
               <span class="timeline__when">30 minutes</span>
@@ -9197,7 +9386,9 @@
               direct, et nous définissons ensemble l'expérience. Le devis suit cet entretien.</p>
             <a href="#contact" class="timeline__cta">Réserver l'appel
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6"></path>
+              </svg>
             </a>
           </div>
         </li>
@@ -9356,7 +9547,8 @@
         </div>
       </div>
 
-      <p class="faq-more reveal delay-300">Une autre question&nbsp;? <a href="#contact">Elle a sa place dans l'appel de 30 min</a></p>
+      <p class="faq-more reveal delay-300">Une autre question&nbsp;? <a href="#contact">Elle a sa place dans l'appel de
+          30 min</a></p>
     </section>
 
     <section id="contact" class="contact reveal">
@@ -9501,7 +9693,9 @@
         <p class="share__title" id="shareTitle">Partager cet endroit</p>
         <button type="button" class="share__close" id="shareClose" aria-label="Fermer">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+            aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18"></path>
+          </svg>
         </button>
       </div>
       <div class="share__modes" role="tablist" aria-label="Quoi partager">
@@ -9510,9 +9704,11 @@
         <button type="button" role="tab" class="share__mode" id="shareModeRemote" aria-selected="false"
           data-mode="remote">Télécommande</button>
       </div>
-      <p class="share__where"><span class="share__dot" aria-hidden="true"></span><span id="shareWhere">La page</span></p>
+      <p class="share__where"><span class="share__dot" aria-hidden="true"></span><span id="shareWhere">La page</span>
+      </p>
       <div class="share__qr" id="shareQr" role="img" aria-label="QR code vers cet endroit de la page"></div>
-      <p class="share__hint" id="shareHint">Scannez avec l'appareil photo du téléphone : la page s'ouvre au même endroit</p>
+      <p class="share__hint" id="shareHint">Scannez avec l'appareil photo du téléphone : la page s'ouvre au même endroit
+      </p>
       <code class="share__url" id="shareUrl">stand.fractal-innov.fr</code>
       <div class="share__actions">
         <button type="button" class="share__btn" id="shareCopy">Copier le lien</button>
@@ -10257,7 +10453,7 @@
               title: mode === 'remote' ? 'STAND : télécommande de la démo' : 'STAND : ' + state.where,
               text: 'STAND, le kiosque d\'exposition interactif. ' + state.where,
               url: state.url
-            }).catch(() => {});
+            }).catch(() => { });
           });
         }
 
