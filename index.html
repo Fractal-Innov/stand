@@ -7067,6 +7067,230 @@
         animation: none;
       }
     }
+    /* ============================================================
+       CE QUE VOUS GAGNEZ : quatre étapes qui se lisent en défilant.
+       Fil de progression, gain nommé sur chaque étape, pastilles
+       cliquables sous le visuel : on voit où l'on est et où aller.
+       ============================================================ */
+    .section--gains {
+      isolation: isolate;
+    }
+
+    .section--gains::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(55% 40% at 15% 25%, rgba(40, 89, 255, 0.09), transparent 70%),
+        radial-gradient(40% 40% at 90% 80%, rgba(34, 197, 94, 0.05), transparent 70%);
+    }
+
+    /* Fil vertical derrière les numéros, qui se remplit jusqu'à l'étape active */
+    .sticky-steps__right {
+      --fill: 0px;
+      position: relative;
+    }
+
+    .sticky-steps__right::before,
+    .sticky-steps__right::after {
+      content: '';
+      position: absolute;
+      left: calc(1.25rem + 24px);
+      top: 2rem;
+      bottom: 2rem;
+      width: 2px;
+      transform: translateX(-50%);
+      border-radius: 2px;
+      pointer-events: none;
+    }
+
+    .sticky-steps__right::before {
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .sticky-steps__right::after {
+      bottom: auto;
+      height: var(--fill);
+      background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
+      box-shadow: 0 0 12px rgba(110, 168, 255, 0.35);
+      transition: height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .step-num {
+      position: relative;
+      z-index: 1;
+      opacity: 0.7;
+      background: #10131f;
+    }
+
+    .step-card::before {
+      display: none;
+    }
+
+    /* L'étape active devient une carte, les autres restent lisibles */
+    .step-card {
+      border-radius: 14px;
+      border-top-color: transparent;
+      padding-right: 1.25rem;
+      transition: background 0.45s ease, border-color 0.45s ease;
+    }
+
+    .step-card:last-child {
+      border-bottom-color: transparent;
+    }
+
+    .step-card.is-active {
+      background: linear-gradient(90deg, rgba(110, 168, 255, 0.07), rgba(255, 255, 255, 0.02) 70%, transparent);
+    }
+
+    .step-body {
+      opacity: 0.55;
+    }
+
+    .step-body h4 {
+      font-size: 1.2rem;
+    }
+
+    /* Le gain, nommé : ce que l'étape rapporte */
+    .step-gain {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 0 0 0.7rem;
+      padding: 0.28rem 0.7rem 0.28rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: color 0.45s ease, background 0.45s ease, border-color 0.45s ease;
+    }
+
+    .step-gain::before {
+      content: '';
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      transition: background 0.45s ease;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E") center / 10px no-repeat;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E") center / 10px no-repeat;
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .step-card.is-active .step-gain {
+      color: var(--green);
+      background: rgba(34, 197, 94, 0.08);
+      border-color: rgba(34, 197, 94, 0.22);
+    }
+
+    .step-card.is-active .step-gain::before {
+      background: var(--green);
+    }
+
+    /* Visuel : halo, numéro dans la légende, pastilles de navigation */
+    .sticky-visual {
+      box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(110, 168, 255, 0.08), 0 20px 70px -20px rgba(40, 89, 255, 0.35);
+    }
+
+    .sticky-visual__caption {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .sticky-visual__n {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 0.15rem 0.45rem;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-purple-deep));
+      color: #fff;
+    }
+
+    .sticky-pager {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .sticky-pager__dot {
+      width: 22px;
+      height: 6px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      cursor: pointer;
+      transition: background 0.3s, width 0.3s;
+    }
+
+    .sticky-pager__dot:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .sticky-pager__dot.is-active {
+      width: 34px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    }
+
+    .sticky-pager__dot:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 3px;
+    }
+
+    .sticky-pager__hint {
+      margin-left: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      opacity: 0.8;
+    }
+
+    .sticky-pager.is-end .sticky-pager__hint {
+      opacity: 0;
+    }
+
+    @media (max-width: 900px) {
+      .sticky-pager {
+        display: none;
+      }
+
+      .sticky-steps__right::before,
+      .sticky-steps__right::after {
+        left: calc(1rem + 20px);
+      }
+
+      .step-card {
+        padding-right: 0;
+      }
+
+      .step-card.is-active {
+        background: none;
+      }
+
+      .step-gain,
+      .step-card.is-active .step-gain {
+        color: var(--green);
+        background: rgba(34, 197, 94, 0.08);
+        border-color: rgba(34, 197, 94, 0.22);
+      }
+
+      .step-gain::before {
+        background: var(--green);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sticky-steps__right::after,
+      .step-gain,
+      .sticky-pager__dot {
+        transition: none;
+      }
+    }
   </style>
 
 </head>
@@ -7409,7 +7633,7 @@
       </div>
     </section>
 
-    <section id="valeur" class="section">
+    <section id="valeur" class="section section--gains">
       <div class="sticky-steps">
 
         <div class="sticky-steps__left">
@@ -7428,7 +7652,14 @@
               alt="" loading="lazy" decoding="async">
             <img class="sticky-visual__img" data-step="4" src="assets/demo/step-reutiliser.webp" width="1600"
               height="900" alt="" loading="lazy" decoding="async">
-            <div class="sticky-visual__caption" id="stickyCaption">Le visiteur s'arrête devant la borne</div>
+            <div class="sticky-visual__caption" id="stickyCaption"><b class="sticky-visual__n">01</b><span>Le visiteur s'arrête devant la borne</span></div>
+          </div>
+          <div class="sticky-pager" id="stickyPager" aria-label="Étapes">
+            <button type="button" class="sticky-pager__dot is-active" data-goto="step-attirer" aria-label="Étape 1, Attirer"></button>
+            <button type="button" class="sticky-pager__dot" data-goto="step-expliquer" aria-label="Étape 2, Expliquer"></button>
+            <button type="button" class="sticky-pager__dot" data-goto="step-vendre" aria-label="Étape 3, Faire vendre"></button>
+            <button type="button" class="sticky-pager__dot" data-goto="step-reutiliser" aria-label="Étape 4, Réutiliser"></button>
+            <span class="sticky-pager__hint">Faites défiler</span>
           </div>
         </div>
 
@@ -7437,6 +7668,7 @@
             <div class="step-num">01</div>
             <div class="step-body">
               <h4>Attirer</h4>
+              <span class="step-gain">Plus de visiteurs qui s'arrêtent</span>
               <p>Un produit qui bouge en 3D sur un grand écran arrête plus de monde qu'un panneau. Le visiteur touche,
                 il reste. En option, un écran de veille 3D animé attire le regard depuis l'allée.</p>
               <img class="step-card__img" src="assets/demo/step-attirer.webp" width="1600" height="900" alt=""
@@ -7448,6 +7680,7 @@
             <div class="step-num">02</div>
             <div class="step-body">
               <h4>Expliquer</h4>
+              <span class="step-gain">Compris sans attendre un commercial</span>
               <p>Le jumeau 3D, un parcours guidé et la bonne vidéo au bon moment&nbsp;: le visiteur comprend le
                 problème, la solution et le fonctionnement, sans attendre qu'un commercial se libère.</p>
               <img class="step-card__img" src="assets/demo/step-expliquer.webp" width="1600" height="760" alt=""
@@ -7459,6 +7692,7 @@
             <div class="step-num">03</div>
             <div class="step-body">
               <h4>Faire vendre</h4>
+              <span class="step-gain">Le même récit à chaque conversation</span>
               <p>Le commercial pilote la scène depuis son téléphone (QR code et code PIN, sans application) et s'appuie
                 sur le même récit à chaque conversation.</p>
               <img class="step-card__img" src="assets/demo/step-vendre.webp" width="1600" height="900" alt=""
@@ -7470,6 +7704,7 @@
             <div class="step-num">04</div>
             <div class="step-body">
               <h4>Réutiliser</h4>
+              <span class="step-gain">Un support qui ressert après le salon</span>
               <p>Le même contenu ressert sur vos prochains salons, en showroom et en rendez-vous commercial. Vos équipes
                 le modifient elles-mêmes, sans développeur. En option, le visiteur repart avec la présentation sur son
                 téléphone, via un QR code.</p>
@@ -8480,6 +8715,8 @@
       const stepCards = document.querySelectorAll('.step-card');
       const stickyImgs = document.querySelectorAll('.sticky-visual__img');
       const stickyCaption = document.getElementById('stickyCaption');
+      const stickyPager = document.getElementById('stickyPager');
+      const stepsRight = document.querySelector('.sticky-steps__right');
       if (stepCards.length) {
         let activeStep = null;
         function setActiveStep() {
@@ -8506,7 +8743,28 @@
           const step = best.getAttribute('data-step');
           stepCards.forEach((c) => c.classList.toggle('is-active', c === best));
           stickyImgs.forEach((img) => img.classList.toggle('is-active', img.getAttribute('data-step') === step));
-          if (stickyCaption) stickyCaption.textContent = best.getAttribute('data-caption') || '';
+          if (stickyCaption) {
+            const n = stickyCaption.querySelector('.sticky-visual__n');
+            const t = stickyCaption.querySelector('span');
+            if (n) n.textContent = String(step).padStart(2, '0');
+            if (t) t.textContent = best.getAttribute('data-caption') || '';
+          }
+          if (stickyPager) {
+            stickyPager.querySelectorAll('.sticky-pager__dot').forEach((d) => d.classList.toggle('is-active', d.getAttribute('data-goto') === best.id));
+            stickyPager.classList.toggle('is-end', best === stepCards[stepCards.length - 1]);
+          }
+          /* Le fil se remplit jusqu'au numéro de l'étape active */
+          const num = best.querySelector('.step-num');
+          if (num && stepsRight) {
+            stepsRight.style.setProperty('--fill', Math.max(0, best.offsetTop + num.offsetTop + num.offsetHeight / 2 - 32) + 'px');
+          }
+        }
+        if (stickyPager) {
+          stickyPager.addEventListener('click', (e) => {
+            const dot = e.target.closest('.sticky-pager__dot');
+            const target = dot && document.getElementById(dot.getAttribute('data-goto'));
+            if (target) target.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+          });
         }
         window.addEventListener('scroll', setActiveStep, { passive: true });
         window.addEventListener('resize', setActiveStep);
