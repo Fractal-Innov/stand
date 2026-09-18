@@ -1,5 +1,7 @@
 # STAND, landing page
 
+La fiche de vente de référence est `VENTE.md` (offre, prix, objections, journal) : tout wording de la page doit lui être conforme.
+
 Site statique d'une seule page (`index.html`, CSS et JS inclus dedans), déployé par GitHub Pages sur https://stand.fractal-innov.fr. La démo embarquée est servie depuis https://salon-demo-app.onrender.com/.
 
 ## Commits : Conventional Commits 1.0.0
