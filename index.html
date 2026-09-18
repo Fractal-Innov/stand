@@ -1570,7 +1570,7 @@
     }
 
     @media (min-width: 641px) and (max-width: 1024px) {
-      #defi .pullquote {
+      #probleme .pullquote {
         margin: 2.5rem 0 1.25rem;
       }
 
@@ -6795,6 +6795,278 @@
         transition: none;
       }
     }
+    /* ============================================================
+       LE DÉFI : trois frictions, puis le pivot vers STAND
+       Ton plus chaud (rose, violet) que le reste de la page : ici
+       on parle de ce qui coince, pas encore de la solution.
+       ============================================================ */
+    .section--defi {
+      isolation: isolate;
+    }
+
+    .section--defi::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(60% 50% at 85% 30%, rgba(244, 114, 182, 0.07), transparent 70%),
+        radial-gradient(50% 45% at 10% 70%, rgba(139, 92, 246, 0.08), transparent 70%);
+    }
+
+    /* Accroche et chrono : "trois minutes" devient une horloge qui s'écoule */
+    .defi-lead {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.9rem 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .defi-lead p {
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    .defi-timer {
+      --p: 1;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.35rem 0.85rem 0.35rem 0.4rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .defi-timer__ring {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, var(--bg-base) 55%, transparent 56%),
+        conic-gradient(var(--accent-pink) calc(var(--p) * 360deg), rgba(255, 255, 255, 0.1) 0);
+      transition: none;
+    }
+
+    .defi-timer__value {
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #fff;
+      min-width: 2.6ch;
+    }
+
+    .defi-timer.is-out .defi-timer__value {
+      color: var(--accent-pink);
+    }
+
+    .defi-timer.is-out .defi-timer__ring {
+      animation: defiOut 0.6s ease;
+    }
+
+    @keyframes defiOut {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.25); }
+      100% { transform: scale(1); }
+    }
+
+    /* Les trois frictions : numérotées, entrée en cascade, accent rose */
+    .friction-grid {
+      list-style: none;
+      padding: 0;
+      margin-top: 2.5rem;
+    }
+
+    .friction-card {
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s, border-color 0.3s;
+    }
+
+    .friction-grid.active .friction-card {
+      opacity: 1;
+      transform: none;
+    }
+
+    .friction-grid.active .friction-card:nth-child(2) { transition-delay: 0.12s, 0.12s, 0s, 0s; }
+    .friction-grid.active .friction-card:nth-child(3) { transition-delay: 0.24s, 0.24s, 0s, 0s; }
+
+    .friction-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple) 60%, transparent);
+      opacity: 0.55;
+      transition: opacity 0.3s;
+    }
+
+    .friction-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .friction-card:hover::before {
+      opacity: 1;
+    }
+
+    .friction-index {
+      position: absolute;
+      right: 1.25rem;
+      top: 0.9rem;
+      font-size: 2.6rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: rgba(255, 255, 255, 0.05);
+      pointer-events: none;
+      transition: color 0.3s;
+    }
+
+    .friction-card:hover .friction-index {
+      color: rgba(244, 114, 182, 0.16);
+    }
+
+    .friction-icon {
+      color: var(--accent-pink);
+      background: rgba(244, 114, 182, 0.08);
+      border-color: rgba(244, 114, 182, 0.22);
+      box-shadow: inset 0 0 20px rgba(244, 114, 182, 0.12);
+    }
+
+    /* Le pivot : la phrase qui bascule du problème vers STAND */
+    .defi-pivot {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-top: 2.25rem;
+      padding: 1.1rem 1.4rem;
+      border-radius: 14px;
+      border: 1px solid rgba(110, 168, 255, 0.22);
+      background: linear-gradient(90deg, rgba(40, 89, 255, 0.14), rgba(124, 58, 237, 0.06) 70%, transparent);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .defi-pivot::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.08) 50%, transparent 70%);
+      transform: translateX(-120%);
+    }
+
+    .defi-pivot.active::after {
+      animation: defiSheen 1.4s ease 0.5s 1;
+    }
+
+    @keyframes defiSheen {
+      to { transform: translateX(120%); }
+    }
+
+    .defi-pivot__spark {
+      flex: 0 0 auto;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-purple-deep));
+      box-shadow: 0 0 0 4px rgba(110, 168, 255, 0.12), 0 8px 20px rgba(40, 89, 255, 0.3);
+    }
+
+    .defi-pivot p {
+      margin: 0;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.1rem;
+      max-width: none;
+    }
+
+    /* Pour qui : un encart lisible, plus une citation en italique */
+    #probleme .pullquote.defi-who {
+      margin: 1.25rem 0 0;
+      padding: 1.6rem 2rem;
+      border-left-width: 3px;
+    }
+
+    .defi-who__label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-blue-light);
+      margin-bottom: 0.6rem;
+    }
+
+    #probleme .defi-who p {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 1.15rem;
+      max-width: none;
+    }
+
+    .defi-who__tags {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0;
+      margin: 0.9rem 0 0;
+    }
+
+    .defi-who__tags li {
+      padding: 0.38rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    #probleme .defi-who .defi-who__note {
+      margin-top: 1rem;
+      font-size: 0.98rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 767px) {
+      .friction-grid {
+        gap: 1rem;
+      }
+
+      .friction-card {
+        padding: 1.5rem;
+      }
+
+      .defi-pivot {
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .friction-card {
+        opacity: 1;
+        transform: none;
+        transition: background 0.3s, border-color 0.3s;
+      }
+
+      .defi-pivot.active::after,
+      .defi-timer.is-out .defi-timer__ring {
+        animation: none;
+      }
+    }
   </style>
 
 </head>
@@ -7059,15 +7331,21 @@
       </div>
     </section>
 
-    <section id="probleme" class="section">
+    <section id="probleme" class="section section--defi">
       <div class="section-number reveal">Le défi</div>
       <h2 class="reveal delay-100">Sur un salon, vous avez trois minutes pour vous faire comprendre</h2>
-      <p class="reveal delay-200">Et souvent, votre produit n'est même pas là.&nbsp;<span
-          class="text-white text-white--block">STAND le remplace par son jumeau 3D, et laisse à vos commerciaux le soin
-          de conclure.</span></p>
+      <div class="defi-lead reveal delay-200">
+        <p>Et souvent, votre produit n'est même pas là.</p>
+        <div class="defi-timer" id="defiTimer" aria-hidden="true">
+          <span class="defi-timer__ring"></span>
+          <span class="defi-timer__value">3:00</span>
+          <span class="defi-timer__label">par visiteur</span>
+        </div>
+      </div>
 
-      <div class="friction-grid reveal delay-200">
-        <div class="friction-card">
+      <ol class="friction-grid reveal delay-200">
+        <li class="friction-card">
+          <span class="friction-index">01</span>
           <div class="friction-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -7079,19 +7357,22 @@
           <h3>Le produit est absent</h3>
           <p>Trop grand, trop fragile, trop cher à déplacer, ou pas encore fini&nbsp;: il reste à l'atelier, et le
             visiteur ne le voit jamais.</p>
-        </div>
-        <div class="friction-card">
+        </li>
+        <li class="friction-card">
+          <span class="friction-index">02</span>
           <div class="friction-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              <line x1="8" y1="10" x2="16" y2="10" stroke-dasharray="1 3"></line>
             </svg>
           </div>
           <h3>Le stand ne raconte rien tout seul</h3>
           <p>Tant qu'un commercial n'est pas libre, le visiteur attend ou repart. Et quand il est pris en charge, chacun
             explique le produit à sa façon.</p>
-        </div>
-        <div class="friction-card">
+        </li>
+        <li class="friction-card">
+          <span class="friction-index">03</span>
           <div class="friction-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -7101,13 +7382,30 @@
           </div>
           <h3>Trois minutes ne suffisent pas</h3>
           <p>Un produit complexe ne s'explique pas d'un coup d'œil, et vos visiteurs ne restent pas plus longtemps.</p>
-        </div>
+        </li>
+      </ol>
+
+      <div class="defi-pivot reveal delay-200">
+        <span class="defi-pivot__spark" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l2.3 6.7L21 12l-6.7 2.3L12 21l-2.3-6.7L3 12l6.7-2.3z"></path>
+          </svg>
+        </span>
+        <p>STAND le remplace par son jumeau 3D, et laisse à vos commerciaux le soin de conclure.</p>
       </div>
 
-      <div class="pullquote reveal delay-200">
-        <p>STAND s'adresse aux industriels et fabricants dont le produit ne monte pas sur un stand&nbsp;: machines,
-          équipements lourds, systèmes intégrés, produits en cours de développement. Et à ceux qui font plusieurs salons
-          par an ou disposent d'un showroom&nbsp;: c'est là que l'investissement se rentabilise.</p>
+      <div class="pullquote defi-who reveal delay-300">
+        <div class="defi-who__label">Pour qui</div>
+        <p>Les industriels et fabricants dont le produit ne monte pas sur un stand.</p>
+        <ul class="defi-who__tags" aria-label="Exemples de produits">
+          <li>Machines</li>
+          <li>Équipements lourds</li>
+          <li>Systèmes intégrés</li>
+          <li>Produits en cours de développement</li>
+        </ul>
+        <p class="defi-who__note">Et ceux qui font plusieurs salons par an ou disposent d'un showroom&nbsp;: c'est là
+          que l'investissement se rentabilise.</p>
       </div>
     </section>
 
@@ -8468,6 +8766,32 @@
           contactPrimary.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
           contactPrimary.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
         });
+      }
+
+      /* 11c. LE DÉFI : le chrono des trois minutes s'écoule une fois la section vue */
+      const defiTimer = document.getElementById('defiTimer');
+      if (defiTimer) {
+        const value = defiTimer.querySelector('.defi-timer__value');
+        const TOTAL = 180;
+        const DURATION = reduceMotion ? 0 : 4200;
+        const fmt = (sec) => Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
+        const finish = () => { defiTimer.style.setProperty('--p', '0'); value.textContent = fmt(0); defiTimer.classList.add('is-out'); };
+        const run = () => {
+          if (!DURATION) { finish(); return; }
+          const start = performance.now();
+          const tick = (now) => {
+            const k = Math.min(1, (now - start) / DURATION);
+            const eased = 1 - Math.pow(1 - k, 2);
+            defiTimer.style.setProperty('--p', String(1 - eased));
+            value.textContent = fmt(Math.round(TOTAL * (1 - eased)));
+            if (k < 1) requestAnimationFrame(tick); else finish();
+          };
+          requestAnimationFrame(tick);
+        };
+        const io = new IntersectionObserver((entries) => {
+          if (entries.some((e) => e.isIntersecting)) { io.disconnect(); setTimeout(run, 500); }
+        }, { threshold: 0.6 });
+        io.observe(defiTimer);
       }
 
       /* 12. FARFADET : QR et feuille de partage vers l'endroit courant. L'état vit dans
