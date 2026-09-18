@@ -6255,6 +6255,252 @@
         transition: none;
       }
     }
+    /* ── Hero : entrée en scène, visuel qui appelle le clic, piliers qui mènent quelque part,
+       fil qui descend vers la démo. ── */
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .hero-eyebrow,
+    .hero h1,
+    .hero-lead,
+    .hero-cta,
+    .hero-visual,
+    .hero-pillars,
+    .hero-scroll {
+      animation: heroIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .hero h1 { animation-delay: 0.08s; }
+    .hero-lead { animation-delay: 0.16s; }
+    .hero-cta { animation-delay: 0.24s; }
+    .hero-visual { animation-delay: 0.2s; }
+    .hero-pillars { animation-delay: 0.4s; }
+    .hero-scroll { animation-delay: 0.7s; }
+
+    /* Visuel : lueur de marque qui dérive derrière le cadre, bouton lecture visible au repos */
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      inset: -12% -8%;
+      z-index: -1;
+      border-radius: 40%;
+      background:
+        radial-gradient(45% 55% at 30% 40%, rgba(40, 89, 255, 0.4), transparent 70%),
+        radial-gradient(45% 55% at 75% 65%, rgba(139, 92, 246, 0.36), transparent 70%),
+        radial-gradient(35% 45% at 60% 20%, rgba(244, 114, 182, 0.22), transparent 70%);
+      opacity: 0.8;
+      animation: heroGlow 14s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes heroGlow {
+      0% { transform: translate3d(-3%, 2%, 0) rotate(-2deg) scale(1); }
+      100% { transform: translate3d(3%, -2%, 0) rotate(2deg) scale(1.06); }
+    }
+
+    .hero-visual:hover::before,
+    .hero-visual:focus-visible::before {
+      opacity: 1;
+    }
+
+    .hero-visual__play {
+      opacity: 0.92;
+      transform: scale(1);
+      background: linear-gradient(135deg, var(--accent-blue-deep) 0%, var(--accent-purple-deep) 100%);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 12px 30px -10px rgba(40, 89, 255, 0.8);
+    }
+
+    .hero-visual__play::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.7);
+      animation: heroPlayRing 2.4s ease-out infinite;
+    }
+
+    @keyframes heroPlayRing {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.7); opacity: 0; }
+    }
+
+    .hero-visual:hover .hero-visual__play,
+    .hero-visual:focus-visible .hero-visual__play {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+
+    .hero-visual:hover .hero-visual__frame,
+    .hero-visual:focus-visible .hero-visual__frame {
+      transform: perspective(1400px) rotateY(0) rotateX(0) translateY(-6px) scale(1.01);
+    }
+
+    /* Piliers : des liens vers les étapes de « Ce que vous gagnez » */
+    .hero-pillar {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      column-gap: 0.75rem;
+      padding: 0.5rem 0.6rem;
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.25s ease, transform 0.25s ease;
+    }
+
+    .hero-pillar:hover,
+    .hero-pillar:focus-visible {
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-2px);
+    }
+
+    .hero-pillar:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 2px;
+    }
+
+    .hero-pillar__icon {
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: rgba(110, 168, 255, 0.1);
+      border: 1px solid rgba(110, 168, 255, 0.25);
+      color: var(--accent-blue-light);
+      box-shadow: inset 0 0 18px rgba(110, 168, 255, 0.12);
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .hero-pillar__icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .hero-pillar:hover .hero-pillar__icon {
+      background: rgba(110, 168, 255, 0.2);
+      border-color: rgba(110, 168, 255, 0.5);
+    }
+
+    .hero-pillar__arrow {
+      width: 18px;
+      height: 18px;
+      color: rgba(255, 255, 255, 0.55);
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .hero-pillar:hover .hero-pillar__arrow,
+    .hero-pillar:focus-visible .hero-pillar__arrow {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (hover: none) {
+      .hero-pillar__arrow {
+        opacity: 0.6;
+        transform: none;
+      }
+    }
+
+    /* Le fil vers la démo : une ligne qui descend, un point qui la parcourt, le nom de ce qui vient */
+    .hero-scroll {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      width: 44px;
+      margin: clamp(1rem, 2.5vh, 1.6rem) auto 0;
+      text-decoration: none;
+    }
+
+    .hero-scroll:hover .hero-scroll__line,
+    .hero-scroll:focus-visible .hero-scroll__line {
+      background: linear-gradient(180deg, transparent, var(--accent-blue-light));
+    }
+
+    .hero-scroll:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 2px;
+      border-radius: 8px;
+    }
+
+    .hero-scroll__line {
+      position: relative;
+      display: block;
+      width: 2px;
+      height: 64px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, transparent, rgba(110, 168, 255, 0.5));
+      overflow: hidden;
+    }
+
+    .hero-scroll__line i {
+      position: absolute;
+      left: 0;
+      top: -14px;
+      width: 2px;
+      height: 14px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, transparent, #fff);
+      animation: heroScrollDot 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes heroScrollDot {
+      0% { transform: translateY(0); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(72px); opacity: 0; }
+    }
+
+    /* La section démo remonte : le fil arrive sur son titre */
+    .hero {
+      padding-bottom: clamp(0.75rem, 2vh, 1.25rem);
+    }
+
+    #demo.section {
+      padding-top: clamp(1.5rem, 3vh, 2.25rem);
+    }
+
+    @media (max-width: 767px) {
+      .hero-scroll {
+        display: none;
+      }
+
+      .hero {
+        padding-bottom: clamp(2.2rem, 6vw, 3rem);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-eyebrow,
+      .hero h1,
+      .hero-lead,
+      .hero-cta,
+      .hero-visual,
+      .hero-pillars,
+      .hero-scroll,
+      .hero-visual::before,
+      .hero-visual__play::after,
+      .hero-scroll__line i {
+        animation: none;
+      }
+
+      .hero-pillar,
+      .hero-pillar__icon,
+      .hero-pillar__arrow,
+      .hero-visual__frame {
+        transition: none;
+      }
+    }
   </style>
 
 </head>
@@ -6309,7 +6555,7 @@
         </div>
 
         <div class="hero-cta">
-          <a href="#demo" class="hero-cta__btn hero-cta__btn--primary">
+          <a href="#demo" class="hero-cta__btn hero-cta__btn--primary" data-launch-demo>
             <span>Tester la démo</span>
             <svg class="hero-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -6321,7 +6567,7 @@
         </div>
 
         <!-- Visuel hero : poster de la démo aujourd'hui, boucle vidéo ou scène Needle demain (même emplacement) -->
-        <a href="#demo" class="hero-visual" aria-label="Voir la démo STAND">
+        <a href="#demo" class="hero-visual" aria-label="Lancer la démo STAND" data-launch-demo>
           <figure class="hero-visual__frame">
             <video class="hero-visual__img" id="heroVideo" muted loop playsinline autoplay preload="metadata"
               poster="assets/demo/hero-poster.webp" width="1280" height="720" disablepictureinpicture
@@ -6334,7 +6580,7 @@
             </video>
             <figcaption class="hero-visual__caption">
               <span class="hero-visual__dot" aria-hidden="true"></span>
-              <span>Extrait de la démo, à tester ci-dessous</span>
+              <span>Extrait de la démo, cliquez pour la lancer</span>
             </figcaption>
             <span class="hero-visual__play" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor">
@@ -6344,35 +6590,40 @@
           </figure>
         </a>
 
-        <div class="hero-pillars" aria-label="Ce que STAND change">
-          <div class="hero-pillar">
-            <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
-            </svg>
+        <nav class="hero-pillars" aria-label="Ce que STAND change">
+          <a href="#step-attirer" class="hero-pillar">
+            <span class="hero-pillar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
             <div class="hero-pillar__text"><strong>Attirer</strong>Une expérience 3D plutôt qu'un panneau</div>
-          </div>
-
-          <div class="hero-pillar">
-            <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            <svg class="hero-pillar__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
             </svg>
-            <div class="hero-pillar__text"><strong>Expliquer sans vous</strong>Le visiteur comprend seul, sans
-              attendre</div>
-          </div>
-
-          <div class="hero-pillar">
-            <svg class="hero-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          </a>
+          <a href="#step-expliquer" class="hero-pillar">
+            <span class="hero-pillar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
+            <div class="hero-pillar__text"><strong>Expliquer sans vous</strong>Le visiteur comprend seul, sans attendre</div>
+            <svg class="hero-pillar__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="1 4 1 10 7 10"></polyline>
-              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
             </svg>
+          </a>
+          <a href="#step-reutiliser" class="hero-pillar">
+            <span class="hero-pillar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg></span>
             <div class="hero-pillar__text"><strong>Réutiliser</strong>Showroom, rendez-vous, salons suivants</div>
-          </div>
-        </div>
+            <svg class="hero-pillar__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
+          </a>
+        </nav>
       </div>
+
+      <a href="#demo" class="hero-scroll" aria-label="Descendre vers la démo">
+        <span class="hero-scroll__line" aria-hidden="true"><i></i></span>
+      </a>
     </section>
   </div>
 
@@ -6587,7 +6838,7 @@
         </div>
 
         <div class="sticky-steps__right">
-          <div class="step-card" data-step="1" data-caption="Le visiteur s'arrête devant la borne">
+          <div class="step-card" id="step-attirer" data-step="1" data-caption="Le visiteur s'arrête devant la borne">
             <div class="step-num">01</div>
             <div class="step-body">
               <h4>Attirer</h4>
@@ -6598,7 +6849,7 @@
             </div>
           </div>
 
-          <div class="step-card" data-step="2" data-caption="La bonne vidéo, au bon moment du parcours">
+          <div class="step-card" id="step-expliquer" data-step="2" data-caption="La bonne vidéo, au bon moment du parcours">
             <div class="step-num">02</div>
             <div class="step-body">
               <h4>Expliquer</h4>
@@ -6609,7 +6860,7 @@
             </div>
           </div>
 
-          <div class="step-card" data-step="3" data-caption="Le commercial pilote l'écran depuis sa tablette">
+          <div class="step-card" id="step-vendre" data-step="3" data-caption="Le commercial pilote l'écran depuis sa tablette">
             <div class="step-num">03</div>
             <div class="step-body">
               <h4>Faire vendre</h4>
@@ -6620,7 +6871,7 @@
             </div>
           </div>
 
-          <div class="step-card" data-step="4" data-caption="Le même récit, en rendez-vous et en showroom">
+          <div class="step-card" id="step-reutiliser" data-step="4" data-caption="Le même récit, en rendez-vous et en showroom">
             <div class="step-num">04</div>
             <div class="step-body">
               <h4>Réutiliser</h4>
@@ -7710,6 +7961,10 @@
         demoViewport.appendChild(demoIframe);
       }
       if (demoLaunch) demoLaunch.addEventListener('click', () => launchDemo(null));
+      /* Un seul clic depuis le hero : l'ancre défile, la borne se charge pendant ce temps */
+      document.querySelectorAll('[data-launch-demo]').forEach((el) => {
+        el.addEventListener('click', () => launchDemo(null));
+      });
 
       const remoteViewport = document.getElementById('remoteViewport');
       const remoteLaunch = document.getElementById('remoteLaunch');
