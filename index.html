@@ -7968,7 +7968,6 @@
        ============================================================ */
     .kit-card {
       position: relative;
-      overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
@@ -7977,9 +7976,40 @@
       position: absolute;
       left: 0;
       right: 0;
-      top: 0;
+      top: -1px;
       height: 3px;
+      border-radius: 16px 16px 0 0;
       background: var(--kit-accent, var(--accent-blue-deep));
+    }
+
+    /* Infobulles : ancrées sur la ligne entière, pas sur le mot (qui peut passer
+       à la ligne) ; elles restent dans la carte et ne sont plus rognées */
+    .kit-card li {
+      position: relative;
+    }
+
+    .kit-card li .tip {
+      position: static;
+    }
+
+    .kit-card li .tip::after {
+      left: 1.3rem;
+      right: 0;
+      max-width: none;
+      width: auto;
+      bottom: calc(100% + 6px);
+    }
+
+    .kit-card li .tip::before {
+      left: 1.3rem;
+      bottom: calc(100% + 0px);
+      margin-left: 8px;
+    }
+
+    .kit-card:has(.tip:hover),
+    .kit-card:has(.tip:focus-visible),
+    .kit-card:has(.tip.is-open) {
+      z-index: 5;
     }
 
     .kit-card:hover {
