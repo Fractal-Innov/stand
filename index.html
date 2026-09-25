@@ -99,7 +99,9 @@
       scroll-padding-top: 7.75rem;
     }
 
-    @media (min-width: 951px) {
+    /* Suit le passage du burger à la pilule (1130/1131 px), pas 950 : c'est la
+       hauteur du bandeau qui décide de l'offset. */
+    @media (min-width: 1131px) {
       html {
         scroll-padding-top: 8.25rem;
       }
@@ -113,7 +115,7 @@
     }
 
     /* Tablette : offset plus grand pour que #defi / la carte showcase ne passent pas sous le sticky */
-    @media (min-width: 641px) and (max-width: 1024px) {
+    @media (min-width: 641px) and (max-width: 1130px) {
       html {
         scroll-padding-top: 9rem;
       }
@@ -2965,8 +2967,15 @@
       max-width: none;
     }
 
-    /* RESPONSIVE & MOBILE MENU */
-    @media (max-width: 950px) {
+    /* RESPONSIVE & MOBILE MENU
+       ⚠️ Règle du 25/09/2026 : les liens de la navbar ne passent JAMAIS sur
+       deux lignes. Le burger tient donc jusqu'à 1130 px et non plus 950 :
+       la pilule a besoin de 1080 px pour ces libellés (mesuré), soit
+       1112 px de viewport, plus 17 px pour une barre de défilement Windows
+       (comptée par la media query, absente de la mise en page).
+       Même principe sur l'accueil, avec son propre seuil (libellés plus
+       courts) : le mécanisme est commun, la valeur dépend du texte. */
+    @media (max-width: 1130px) {
 
       /* Même gouttière qu’au bandeau (masthead-inner ≈ 100vw − 2rem → 1rem de chaque côté) */
       .masthead {
@@ -3072,12 +3081,19 @@
     }
 
     /* Desktop : liens centrés dans l’espace entre logo et CTA - pill plus large (~85 %) + padding vertical généreux (réf. maquette) */
+    /* La typographie du hero garde son palier de 951 px : elle ne dépend pas
+       du bandeau. Seul ce qui suit la hauteur de la pilule est passé à 1131. */
     @media (min-width: 951px) {
+      .hero {
+        --hero-fs-h1: clamp(2.2rem, 3.05vw, 3.25rem);
+      }
+    }
+
+    @media (min-width: 1131px) {
       .hero {
         /* Compensation : on augmente l'overlap du hero-wrapper ci-dessous,
            puis on restitue la même distance visuelle header -> eyebrow */
         padding-top: calc(clamp(2.1rem, 3.85vh, 2.75rem) - 1rem);
-        --hero-fs-h1: clamp(2.2rem, 3.05vw, 3.25rem);
       }
 
       .masthead {
@@ -3090,7 +3106,11 @@
         grid-template-columns: auto 1fr auto;
         align-items: center;
         gap: clamp(0.75rem, 2vw, 1.75rem);
-        max-width: min(1120px, calc(85vw - 2rem));
+        /* 85vw comme avant, mais jamais sous 1080 px (la place des libellés
+           sur une rangée), et jamais plus large que l'écran moins la
+           gouttière. Au-delà de ~1310 px, la formule rend exactement
+           l'ancienne valeur. */
+        max-width: min(1120px, calc(100vw - 2rem), max(calc(85vw - 2rem), 1080px));
         --masthead-burger-size: 46px;
         --masthead-text-size: 0.98rem;
         --masthead-pad-trb: 0.72rem;
@@ -3115,7 +3135,10 @@
       .main-nav-links {
         grid-column: 2;
         display: flex;
-        flex-wrap: wrap;
+        /* Une seconde rangée est interdite : si les libellés ne tiennent plus,
+           on remonte le point de rupture du burger (1130/1131). */
+        flex-wrap: nowrap;
+        white-space: nowrap;
         justify-content: center;
         align-items: center;
         gap: clamp(1rem, 2vw, 1.75rem);
@@ -3257,7 +3280,7 @@
       scroll-margin-top: var(--sticky-nav-offset);
     }
 
-    @media (min-width: 951px) {
+    @media (min-width: 1131px) {
       #valeur {
         --sticky-nav-offset: 8.25rem;
         scroll-margin-top: var(--sticky-nav-offset);
@@ -3271,7 +3294,7 @@
       }
     }
 
-    @media (min-width: 641px) and (max-width: 1024px) {
+    @media (min-width: 641px) and (max-width: 1130px) {
       #valeur {
         --sticky-nav-offset: 9rem;
         scroll-margin-top: var(--sticky-nav-offset);
