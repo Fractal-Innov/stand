@@ -3023,6 +3023,15 @@
     .footer__liens a:hover, .footer__liens a:focus-visible,
     .footer__catalyseur:hover, .footer__catalyseur:focus-visible { color: #fff; border-color: rgba(255, 255, 255, 0.3); }
 
+    /* ── Démo : passage vers l'appel (étape 3, 30/09/2026) ── */
+    .demo-suite {
+      display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+      gap: 1rem 1.75rem; max-width: 860px; margin: 2.5rem auto 0; text-align: left;
+    }
+    .demo-suite p { margin: 0; flex: 1 1 380px; color: var(--text-muted); }
+    .demo-suite b { color: var(--text-main, #fff); font-weight: 600; }
+    .demo-suite .hero-cta__btn { flex: none; }
+
     /* RESPONSIVE & MOBILE MENU
        ⚠️ Règle du 25/09/2026 : les liens de la navbar ne passent JAMAIS sur
        deux lignes. Le burger tient donc jusqu'à 1130 px et non plus 950 :
@@ -8289,6 +8298,15 @@
           </svg>
           Ouvrir la télécommande
         </a>
+      </div>
+
+      <!-- Étape 3 (30/09/2026) : pas encore de référence citable (client sous NDA),
+           la démo sert de preuve. Ce passage raccroche le visiteur qui vient de
+           la manipuler à l'étape suivante : l'appel. -->
+      <div class="demo-suite reveal delay-300">
+        <p>Ce que vous venez de manipuler, vos visiteurs le manipuleront.
+          <b>Avec votre produit à la place de ce stand</b> : c'est ce que nous regardons ensemble en 30 minutes.</p>
+        <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30 min</a>
       </div>
     </section>
 
