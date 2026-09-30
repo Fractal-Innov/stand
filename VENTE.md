@@ -68,7 +68,7 @@ La démo web publique (https://stand-demonstrateur.osc-fr1.scalingo.io/, intégr
 ## Le processus de vente
 
 1. **Appel de 30 minutes, gratuit et sans engagement** : le prospect décrit son produit et son prochain salon ; on vérifie que le démonstrateur répond au besoin et on prépare l'atelier. Ce n'est **pas** l'atelier.
-2. **L'atelier** (première étape du parcours client) : analyse des données d'entrée du client (fichiers 3D, photos, vidéos) et de tous les aspects du projet. **[à confirmer : l'atelier est-il facturé, et comment le dire ?]**
+2. **L'atelier** (première étape du parcours client) : analyse des données d'entrée du client (fichiers 3D, photos, vidéos) et de tous les aspects du projet. **Pas de facturation à part** : son coût est intégré au devis, et payé seulement si le projet est lancé (décidé le 30/09/2026). À dire ainsi : « l'atelier est compris dans le projet ».
 3. **Le devis et le délai**, issus de l'atelier.
 4. Production à partir des fichiers du client, puis livraison du kit avant le salon.
 
