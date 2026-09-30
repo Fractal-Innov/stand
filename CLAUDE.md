@@ -2,7 +2,7 @@
 
 La fiche de vente de référence est `VENTE.md` (offre, prix, objections, journal) : tout wording de la page doit lui être conforme.
 
-Site statique d'une seule page (`index.html`, CSS et JS inclus dedans), déployé par GitHub Pages sur https://www.fractal-innov.fr/stand. La démo embarquée est servie depuis https://stand-demonstrateur.osc-fr1.scalingo.io/.
+Site statique d'une seule page (`index.html`, CSS et JS inclus dedans), déployé par GitHub Pages sur https://www.fractal-innov.fr/stand. Le workflow publie une **liste blanche** (`index.html`, `favicon.ico`, `site.webmanifest`, `assets/`, `CNAME`) : `VENTE.md`, `CLAUDE.md` et `docs/` restent dans le dépôt. Un fichier ajouté au site doit être ajouté à la liste dans `.github/workflows/jekyll-gh-pages.yml`. La démo embarquée est servie depuis https://stand-demonstrateur.osc-fr1.scalingo.io/.
 
 ## Commits : Conventional Commits 1.0.0
 
