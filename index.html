@@ -8132,6 +8132,34 @@
         transition: none;
       }
     }
+    /* ─── Scène 3D unique (30/09/2026) ───
+       Une seule iframe de démo dans toute la page, dans un calque enfant de <body>
+       posé par-dessus l'emplacement actif ([data-scene-slot]). On déplace le calque,
+       jamais l'iframe : la déplacer dans le DOM la rechargerait. Les variables
+       --kiosk-* reprennent la mise à l'échelle borne de .demo-screen__iframe. */
+    #scene3d {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      z-index: 10;
+      overflow: hidden;
+      border-radius: 6px;
+      background: #0b0d16;
+      visibility: hidden;
+      --kiosk-width: 1200px;
+      --kiosk-scale: 1;
+    }
+
+    /* Visible dès que l'iframe a chargé ; masqué si la démo n'a jamais répondu */
+    #scene3d.is-visible {
+      visibility: visible;
+    }
+
+    body[data-scene="erreur"] #scene3d {
+      visibility: hidden;
+    }
   </style>
 
 </head>
@@ -8286,7 +8314,7 @@
             <span class="demo-step" aria-hidden="true">1</span>
           </div>
           <div class="demo-screen__bezel">
-            <div class="demo-screen__viewport" id="demoViewport">
+            <div class="demo-screen__viewport" id="demoViewport" data-scene-slot="demo">
               <picture>
                 <source media="(max-width: 640px)" srcset="assets/demo/poster-portrait.webp">
                 <img class="demo-screen__poster" src="assets/demo/vue-ensemble.webp" width="1600" height="1064" alt=""
@@ -9665,55 +9693,138 @@
          puis pilotage par POI depuis la lecture guidée. */
       const demoViewport = document.getElementById('demoViewport');
       const demoLaunch = document.getElementById('demoLaunch');
-      let demoIframe = null;
       /* Doit rester synchro avec --kiosk-width (CSS) : largeur "desktop" à laquelle la démo est rendue
          avant d'être réduite à la taille réelle de sa boîte (évite le point de rupture "tablette"). */
       const KIOSK_WIDTH = 1200;
-      if (demoViewport) {
-        const fitKiosk = () => {
-          demoViewport.style.setProperty('--kiosk-scale', (demoViewport.clientWidth / KIOSK_WIDTH).toFixed(4));
-        };
-        fitKiosk();
-        if (window.ResizeObserver) new ResizeObserver(fitKiosk).observe(demoViewport);
-        else window.addEventListener('resize', fitKiosk);
-      }
+      /* Au-delà, la démo est considérée comme muette (serveur endormi, page d'erreur 502...) */
+      const SCENE_DELAI_MS = 20000;
       /* Reprise d'un média (lien partagé) : ?media=&t=&page= sont passés à la borne au premier lancement */
       let reprise = {};
-      function launchDemo(poi) {
-        if (!demoViewport) return;
-        if (demoIframe) {
-          if (poi && demoIframe.contentWindow) {
-            demoIframe.contentWindow.postMessage({ type: 'stand:goto', poi }, DEMO_ORIGIN);
-            document.body.dataset.poi = poi;
+
+      /* Une seule scène 3D dans la page (30/09/2026).
+         Le flux : charger() crée l'iframe une fois (avec demarrer=auto : pas de porte
+         « Démarrer »), l'état passe à « chargement » ; le premier message de la démo
+         (stand:poi ou stand:state) la déclare « prête » ; sans message après 20 s,
+         « erreur » et le bouton de l'écran propose de relancer. L'état est recopié sur
+         <body data-scene> pour le CSS, et annoncé par l'événement « scene:etat ». */
+      const scene = (() => {
+        const calque = document.createElement('div');
+        calque.id = 'scene3d';
+        document.body.appendChild(calque);
+        let iframe = null;
+        let minuterie = 0;
+        let poiDemande = null; /* le POI du dernier chargement, pour relancer au même endroit */
+        let poiEnAttente = null; /* un goto demandé avant que la démo écoute */
+        const api = { etat: 'vide', slot: null, charger, aller, placer, signal };
+        const slotEl = (id) => document.querySelector(`[data-scene-slot="${id}"]`);
+
+        function changerEtat(e) {
+          api.etat = e;
+          document.body.dataset.scene = e;
+          logScene('état →', e);
+          document.dispatchEvent(new CustomEvent('scene:etat', { detail: e }));
+        }
+        /* Recale le calque sur l'emplacement (coordonnées de la page, pas de l'écran) */
+        function placer(slotId) {
+          if (slotId) api.slot = slotId;
+          const el = api.slot && slotEl(api.slot);
+          if (!el) return;
+          const r = el.getBoundingClientRect();
+          calque.style.top = (r.top + window.scrollY) + 'px';
+          calque.style.left = (r.left + window.scrollX) + 'px';
+          calque.style.width = r.width + 'px';
+          calque.style.height = r.height + 'px';
+          calque.style.setProperty('--kiosk-scale', (r.width / KIOSK_WIDTH).toFixed(4));
+        }
+        function aller(poi) {
+          if (!poi) return;
+          document.body.dataset.poi = poi;
+          if (!iframe) return;
+          if (api.etat !== 'prete') { poiEnAttente = poi; logScene('goto mis en attente (démo pas encore prête) :', poi); return; }
+          if (iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'stand:goto', poi }, DEMO_ORIGIN);
+          logScene('stand:goto →', poi);
+        }
+        function charger(slotId, poi) {
+          if (iframe && api.etat !== 'erreur') {
+            logScene('déjà chargée : on la réutilise');
+            placer(slotId);
+            aller(poi);
+            return;
           }
-          return;
+          const el = slotEl(slotId);
+          if (!el) return;
+          if (iframe) { logScene('relance après erreur'); iframe.remove(); calque.classList.remove('is-visible'); }
+          poiDemande = poi || poiDemande;
+          iframe = document.createElement('iframe');
+          iframe.className = 'demo-screen__iframe';
+          iframe.title = 'Démonstrateur 3D : démo en ligne';
+          iframe.setAttribute('allow', 'autoplay; fullscreen; xr-spatial-tracking; gamepad');
+          iframe.src = demoHref(DEMO_URL, Object.assign({ poi: poiDemande, demarrer: 'auto' }, reprise));
+          reprise = {};
+          document.body.dataset.demo = '1';
+          if (poiDemande) document.body.dataset.poi = poiDemande;
+          el.classList.remove('is-live');
+          el.classList.add('is-loading');
+          iframe.addEventListener('load', () => {
+            logScene('iframe chargée, en attente du premier message de la démo');
+            el.classList.remove('is-loading');
+            el.classList.add('is-live');
+            calque.classList.add('is-visible');
+          });
+          clearTimeout(minuterie);
+          minuterie = setTimeout(() => {
+            if (api.etat !== 'chargement') return;
+            logScene(`aucun message en ${SCENE_DELAI_MS / 1000} s : erreur`);
+            el.classList.remove('is-loading', 'is-live');
+            changerEtat('erreur');
+          }, SCENE_DELAI_MS);
+          changerEtat('chargement');
+          logScene('chargement de', iframe.src);
+          calque.appendChild(iframe);
+          placer(slotId);
         }
-        demoIframe = document.createElement('iframe');
-        demoIframe.className = 'demo-screen__iframe';
-        demoIframe.title = 'Démonstrateur 3D : démo en ligne';
-        demoIframe.setAttribute('allow', 'autoplay; fullscreen; xr-spatial-tracking; gamepad');
-        demoIframe.src = demoHref(DEMO_URL, Object.assign({ poi }, reprise));
-        reprise = {};
-        document.body.dataset.demo = '1';
-        if (demoLaunch) {
-          demoLaunch.disabled = true;
-          const t = demoLaunch.querySelector('.demo-launch__text');
-          const h = demoLaunch.querySelector('.demo-launch__hint');
-          if (t) t.textContent = 'La borne se réveille';
-          if (h) h.textContent = 'Une dizaine de secondes, puis « Démarrer » sur l\'écran';
+        /* Appelé par l'écouteur de messages : la démo a parlé, elle est prête */
+        function signal(source) {
+          if (!iframe || source !== iframe.contentWindow || api.etat !== 'chargement') return;
+          clearTimeout(minuterie);
+          changerEtat('prete');
+          if (poiEnAttente) { const p = poiEnAttente; poiEnAttente = null; aller(p); }
         }
-        if (poi) document.body.dataset.poi = poi;
-        demoViewport.classList.add('is-loading');
-        demoIframe.addEventListener('load', () => {
-          demoViewport.classList.remove('is-loading');
-          demoViewport.classList.add('is-live');
+
+        /* Recalage : l'emplacement change de taille, la page s'allonge au-dessus de lui
+           (images, polices), ou il glisse pendant une animation d'apparition (.reveal) */
+        const recaler = () => { if (iframe) placer(); };
+        if (window.ResizeObserver) {
+          const ro = new ResizeObserver(recaler);
+          ro.observe(document.body);
+          document.querySelectorAll('[data-scene-slot]').forEach((el) => ro.observe(el));
+        }
+        window.addEventListener('resize', recaler);
+        window.addEventListener('load', recaler);
+        document.addEventListener('transitionend', recaler, true);
+        return api;
+      })();
+
+      /* L'écran de la démo raconte l'état de la scène sur son bouton */
+      if (demoLaunch) {
+        const texte = demoLaunch.querySelector('.demo-launch__text');
+        const aide = demoLaunch.querySelector('.demo-launch__hint');
+        document.addEventListener('scene:etat', (e) => {
+          if (e.detail === 'chargement') {
+            demoLaunch.disabled = true;
+            if (texte) texte.textContent = 'La borne se réveille';
+            if (aide) aide.textContent = 'Une dizaine de secondes';
+          } else if (e.detail === 'erreur') {
+            demoLaunch.disabled = false;
+            if (texte) texte.textContent = 'La 3D ne répond pas, réessayer';
+            if (aide) aide.textContent = 'Un clic relance la scène';
+          }
         });
-        demoViewport.appendChild(demoIframe);
+        demoLaunch.addEventListener('click', () => scene.charger('demo', null));
       }
-      if (demoLaunch) demoLaunch.addEventListener('click', () => launchDemo(null));
       /* Un seul clic depuis le hero : l'ancre défile, la borne se charge pendant ce temps */
       document.querySelectorAll('[data-launch-demo]').forEach((el) => {
-        el.addEventListener('click', () => launchDemo(null));
+        el.addEventListener('click', () => scene.charger('demo', null));
       });
 
       const remoteViewport = document.getElementById('remoteViewport');
@@ -9728,7 +9839,7 @@
         else window.addEventListener('resize', fitRemote);
         remoteLaunch.addEventListener('click', () => {
           /* Une télécommande sans borne ne pilote rien : la borne se lance en même temps */
-          launchDemo(null);
+          scene.charger('demo', null);
           const frame = document.createElement('iframe');
           frame.className = 'demo-phone__iframe';
           frame.title = 'Démonstrateur 3D : télécommande de la démo';
@@ -9777,6 +9888,7 @@
       }
       window.addEventListener('message', (e) => {
         if (e.origin !== DEMO_ORIGIN || !e.data) return;
+        if (e.data.type === 'stand:poi' || e.data.type === 'stand:state') scene.signal(e.source);
         /* stand:state : le média du POI et sa progression, pour le lien « voilà où j'en suis » */
         if (e.data.type === 'stand:state') {
           const d = document.body.dataset;
@@ -9867,7 +9979,7 @@
           const poi = btn.getAttribute('data-poi');
           const target = document.getElementById('demo');
           if (target) target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-          launchDemo(poi);
+          scene.charger('demo', poi);
         });
       });
 
@@ -9952,7 +10064,7 @@
           if (tab) activateTab(tab, true);
         }
         ['media', 't', 'page'].forEach((k) => { if (params.get(k)) reprise[k] = params.get(k); });
-        if (params.get('demo') === '1') launchDemo(poi);
+        if (params.get('demo') === '1') scene.charger('demo', poi);
         /* Le saut d'ancre se fait avant que la page ait sa hauteur finale : on le rejoue une fois chargée */
         const nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
         const isReload = nav && nav.type === 'reload';
