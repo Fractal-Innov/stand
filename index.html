@@ -1774,16 +1774,25 @@
       display: none;
     }
 
-    .demo-fullscreen-overlay__iframe {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border: 0;
+    /* La scène (#scene3d) se pose sous cette barre : rien par-dessus la 3D */
+    :root {
+      --barre-plein: calc(3.9rem + env(safe-area-inset-top, 0px));
+    }
+
+    .demo-fullscreen-overlay__attente {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      margin: 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-weight: 600;
     }
 
     .demo-fullscreen-overlay__close {
       position: absolute;
-      top: 1.25rem;
+      top: calc(env(safe-area-inset-top, 0px) + 0.7rem);
       right: 1.25rem;
       z-index: 1;
       display: inline-flex;
@@ -1821,14 +1830,9 @@
 
     @media (max-width: 640px) {
       .demo-fullscreen-overlay__close {
-        top: 0.85rem;
         right: 0.85rem;
         padding: 0.55rem 0.9rem;
         font-size: 0.85rem;
-      }
-
-      .demo-fullscreen-overlay__close span {
-        display: none;
       }
     }
 
@@ -4002,12 +4006,11 @@
     }
 
     /* Téléphone : boîte haute, comme avant, pour que le menu bas de la démo reste accessible */
+    /* Téléphone : boîte en portrait 3:4 (le menu bas de la démo reste accessible),
+       moins haute que les 85 % d'écran d'avant (30/09/2026) */
     @media (max-width: 640px) {
       .demo-screen__viewport {
-        aspect-ratio: auto;
-        height: 85vh;
-        height: 85dvh;
-        min-height: 600px;
+        aspect-ratio: 3 / 4;
       }
     }
 
@@ -7630,16 +7633,6 @@
     .tour__go::before { display: none; }
     .tour__go:hover { color: #fff; }
 
-    /* L'image avance d'une étape ; une étiquette le dit */
-    .tour__media.is-cliquable { position: relative; cursor: pointer; }
-    .tour__media-next {
-      position: absolute; right: 0.9rem; top: 0.9rem; display: inline-flex; align-items: center; gap: 0.35rem;
-      font-size: 0.78rem; font-weight: 700; color: #fff; padding: 0.4rem 0.8rem; border-radius: 100px;
-      background: rgba(9, 11, 19, 0.72); backdrop-filter: blur(6px);
-      border: 1px solid rgba(255, 255, 255, 0.18); pointer-events: none;
-      transition: background .2s ease;
-    }
-    .tour__media.is-cliquable:hover .tour__media-next { background: rgba(59, 104, 255, 0.85); }
 
     @media (max-width: 767px) {
       /* Téléphone : la barre seule, le libellé actif est le titre du panneau */
@@ -7649,7 +7642,7 @@
       .tour__next-sujet { display: none; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .tour__tab::before, .tour__next, .tour__media-next { transition: none; }
+      .tour__tab::before, .tour__next { transition: none; }
       .tour__next:hover { transform: none; }
     }
 
@@ -8132,6 +8125,148 @@
         transition: none;
       }
     }
+    /* ─── Scène 3D unique (30/09/2026) ───
+       Une seule iframe de démo dans toute la page, dans un calque enfant de <body>
+       posé par-dessus l'emplacement actif ([data-scene-slot]). On déplace le calque,
+       jamais l'iframe : la déplacer dans le DOM la rechargerait. Les variables
+       --kiosk-* reprennent la mise à l'échelle borne de .demo-screen__iframe. */
+    #scene3d {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      z-index: 10;
+      overflow: hidden;
+      border-radius: 6px;
+      background: #0b0d16;
+      visibility: hidden;
+      --kiosk-width: 1200px;
+      --kiosk-scale: 1;
+    }
+
+    /* Visible dès que l'iframe a chargé ; masqué si la démo n'a jamais répondu */
+    #scene3d.is-visible {
+      visibility: visible;
+    }
+
+    body[data-scene="erreur"] #scene3d {
+      visibility: hidden;
+    }
+    /* Parcours : la scène à sa taille réelle (pas de rendu « borne » réduit) */
+    #scene3d[data-slot="parcours"] .demo-screen__iframe {
+      width: 100%;
+      height: 100%;
+      transform: none;
+    }
+
+    /* Le coin bas gauche du parcours est celui de la carte : le calque le recopie */
+    @media (min-width: 900px) {
+      .tour__media {
+        border-bottom-left-radius: 17px;
+      }
+    }
+
+    /* Parcours en chargement : l'indicateur discret de l'écran de la démo */
+    .tour__media.is-loading::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+      animation: demoLoad 1.4s ease-in-out infinite;
+    }
+
+    .tour__media { position: relative; }
+
+    /* « Lancer la démo » du parcours : disparaît dès que la scène existe */
+    body[data-scene="chargement"] .tour__launch,
+    body[data-scene="prete"] .tour__launch { display: none; }
+
+    /* Commandes de la scène, première ligne du panneau, seulement quand elle est ici */
+    .tour__scene-cmd { display: none; align-items: center; gap: 0.6rem; min-height: 2rem; margin-bottom: -0.3rem; }
+    body[data-scene-ici="parcours"] .tour__scene-cmd { display: flex; }
+    body[data-scene-ici="parcours"] .tour__act { display: none; }
+    .tour__scene-cmd button {
+      background: none; border: 0; padding: 0.2rem 0; cursor: pointer;
+      font: inherit; font-size: 0.82rem; font-weight: 600; color: var(--text-muted);
+      text-decoration: underline; text-decoration-color: rgba(255, 255, 255, 0.25); text-underline-offset: 4px;
+    }
+    .tour__scene-cmd button:hover { color: #fff; }
+
+    /* Écran tactile : « Manipuler » sur la scène ; dans le parcours là où était le
+       dock, dans la section démo en haut (le dock de la borne occupe le bas) */
+    .scene3d__manip {
+      position: absolute; left: 50%; bottom: 0.8rem; transform: translateX(-50%); z-index: 1;
+      display: none; align-items: center; gap: 0.4rem;
+      font: inherit; font-size: 0.85rem; font-weight: 700; color: #fff; cursor: pointer;
+      padding: 0.55rem 1.1rem; border-radius: 100px;
+      background: rgba(9, 11, 19, 0.78); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .scene3d__manip[aria-pressed="true"] { background: rgba(59, 104, 255, 0.9); border-color: transparent; }
+    @media (pointer: coarse) {
+      #scene3d[data-slot="parcours"] .scene3d__manip,
+      #scene3d[data-slot="demo"] .scene3d__manip { display: inline-flex; }
+      #scene3d[data-slot="demo"] .scene3d__manip { top: 0.8rem; bottom: auto; }
+    }
+
+    /* Téléphone, section démo : la borne est rendue à 375 px de large (son dock
+       y tient) puis réduite à la largeur de la boîte (--mobile-scale, posé en JS) */
+    @media (max-width: 640px) {
+      #scene3d[data-slot="demo"]:not(.is-plein) .demo-screen__iframe {
+        width: calc(100% / var(--mobile-scale, 1));
+        height: calc(100% / var(--mobile-scale, 1));
+        transform: scale(var(--mobile-scale, 1));
+        transform-origin: 0 0;
+      }
+    }
+
+    /* Écran de la démo quand la scène est dans le parcours : image et repère */
+    .demo-repere {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1;
+      display: none; width: max-content; max-width: calc(100% - 2rem);
+      font: inherit; font-size: 0.88rem; font-weight: 700; color: #fff; cursor: pointer; text-align: center;
+      padding: 0.7rem 1.2rem; border-radius: 100px;
+      background: rgba(9, 11, 19, 0.78); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .demo-repere:hover { background: rgba(59, 104, 255, 0.85); }
+    .demo-screen__viewport.is-ailleurs .demo-repere { display: block; }
+    .demo-screen__viewport.is-ailleurs .demo-launch { display: none; }
+
+    /* Plein écran : le même calque, fixé sous la barre « Quitter », borne à taille réelle */
+    #scene3d.is-plein {
+      position: fixed;
+      top: var(--barre-plein) !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: calc(100% - var(--barre-plein)) !important;
+      z-index: 501;
+      border-radius: 0 !important;
+    }
+    #scene3d.is-plein .demo-screen__iframe {
+      width: 100%;
+      height: 100%;
+      transform: none;
+      pointer-events: auto;
+    }
+    #scene3d.is-plein .scene3d__manip { display: none !important; }
+
+    /* Écran tactile : la 3D se regarde, le doigt fait défiler la page.
+       « Manipuler » lui rend la main, « Terminé » la reprend. */
+    @media (pointer: coarse) {
+      #scene3d .demo-screen__iframe { pointer-events: none; }
+      #scene3d.is-manip .demo-screen__iframe { pointer-events: auto; }
+      #scene3d.is-manip { box-shadow: 0 0 0 2px var(--accent-blue-light); }
+    }
+    [data-scene-cmd="manipuler"][aria-pressed="true"] { color: #fff; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tour__media.is-loading::after { animation: none; transform: none; }
+    }
   </style>
 
 </head>
@@ -8286,12 +8421,13 @@
             <span class="demo-step" aria-hidden="true">1</span>
           </div>
           <div class="demo-screen__bezel">
-            <div class="demo-screen__viewport" id="demoViewport">
+            <div class="demo-screen__viewport" id="demoViewport" data-scene-slot="demo">
               <picture>
-                <source media="(max-width: 640px)" srcset="assets/demo/poster-portrait.webp">
                 <img class="demo-screen__poster" src="assets/demo/vue-ensemble.webp" width="1600" height="1064" alt=""
                   loading="lazy" decoding="async">
               </picture>
+              <button type="button" class="demo-repere" id="demoRepere">La démo vous attend dans le parcours, plus bas
+                <span aria-hidden="true">↓</span></button>
               <button type="button" class="demo-launch" id="demoLaunch"
                 data-demo-src="https://stand-demonstrateur.osc-fr1.scalingo.io/">
                 <span class="demo-launch__icon" aria-hidden="true">
@@ -8374,8 +8510,7 @@
       </div>
 
       <div class="demo-actions reveal delay-300">
-        <button type="button" class="demo-action-btn"
-          data-demo-fullscreen-src="https://stand-demonstrateur.osc-fr1.scalingo.io/">
+        <button type="button" class="demo-action-btn" data-scene-cmd="plein-ecran">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" aria-hidden="true">
             <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3">
@@ -8663,7 +8798,7 @@
 
         <div class="tour__panels">
           <div role="tabpanel" id="panel-vue" class="tour__panel is-active" aria-labelledby="tab-vue">
-            <div class="tour__media"><img src="assets/demo/vue-ensemble.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/vue-ensemble.webp" width="1600" height="1064"
                 alt="Vue d'ensemble de la démo : le stand entier, avec ses trois sujets cliquables" loading="lazy"
                 decoding="async"></div>
             <div class="tour__text">
@@ -8685,7 +8820,7 @@
           </div>
 
           <div role="tabpanel" id="panel-attirer" class="tour__panel" aria-labelledby="tab-attirer" hidden>
-            <div class="tour__media"><img src="assets/demo/attirer.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/attirer.webp" width="1600" height="1064"
                 alt="Dans la démo, un visiteur s'arrête devant la borne tactile qui diffuse la scène 3D en boucle"
                 loading="lazy" decoding="async"></div>
             <div class="tour__text">
@@ -8707,7 +8842,7 @@
           </div>
 
           <div role="tabpanel" id="panel-presenter" class="tour__panel" aria-labelledby="tab-presenter" hidden>
-            <div class="tour__media"><img src="assets/demo/presenter.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/presenter.webp" width="1600" height="1064"
                 alt="Dans la démo, un commercial présente le produit à une cliente sur l'écran tactile, tablette en main"
                 loading="lazy" decoding="async"></div>
             <div class="tour__text">
@@ -8729,7 +8864,7 @@
           </div>
 
           <div role="tabpanel" id="panel-emporter" class="tour__panel" aria-labelledby="tab-emporter" hidden>
-            <div class="tour__media"><img src="assets/demo/emporter.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/emporter.webp" width="1600" height="1064"
                 alt="Dans la démo, un visiteur scanne un QR code et repart avec la présentation sur son téléphone"
                 loading="lazy" decoding="async"></div>
             <div class="tour__text">
@@ -8751,7 +8886,7 @@
           </div>
 
           <div role="tabpanel" id="panel-logiciel" class="tour__panel" aria-labelledby="tab-logiciel" hidden>
-            <div class="tour__media"><img src="assets/demo/logiciel.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/logiciel.webp" width="1600" height="1064"
                 alt="Dans la démo, une vidéo s'ouvre par-dessus la scène 3D, sans quitter le parcours" loading="lazy"
                 decoding="async"></div>
             <div class="tour__text">
@@ -8773,7 +8908,7 @@
           </div>
 
           <div role="tabpanel" id="panel-materiel" class="tour__panel" aria-labelledby="tab-materiel" hidden>
-            <div class="tour__media"><img src="assets/demo/materiel.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/materiel.webp" width="1600" height="1064"
                 alt="Dans la démo, une fiche PDF se feuillette à l'écran, page après page" loading="lazy"
                 decoding="async"></div>
             <div class="tour__text">
@@ -9313,16 +9448,15 @@
   <div class="demo-fullscreen-overlay" id="demoFullscreenOverlay" role="dialog" aria-modal="true"
     aria-label="Démo en plein écran" hidden>
     <button type="button" class="demo-fullscreen-overlay__close" id="demoFullscreenClose"
-      aria-label="Fermer le plein écran">
+      aria-label="Quitter le plein écran">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
         stroke-linejoin="round" aria-hidden="true">
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
-      <span>Fermer</span>
+      <span>Quitter</span>
     </button>
-    <iframe class="demo-fullscreen-overlay__iframe" id="demoFullscreenIframe" title="Démonstrateur 3D : démo en ligne, plein écran"
-      allow="autoplay; fullscreen; xr-spatial-tracking; gamepad"></iframe>
+    <p class="demo-fullscreen-overlay__attente">La borne se réveille</p>
   </div>
 
   <!-- Farfadet : partager l'endroit où l'on est (section, onglet, POI de la démo) par QR ou feuille de partage -->
@@ -9405,7 +9539,38 @@
         }, { threshold: 0.2 }).observe(video);
       })();
 
-      const DEMO_ORIGIN = 'https://stand-demonstrateur.osc-fr1.scalingo.io';
+      /* Journal de la scène (30/09/2026) : muet par défaut. `?debug` dans l'URL,
+         ou `__debug.on()` dans la console (retenu pour l'onglet), le rend bavard ;
+         `__debug.off()` le coupe. Chaque décision de la scène y est racontée. */
+      const DEBUG_CLE = 'stand-debug';
+      let debugActif = new URLSearchParams(location.search).has('debug');
+      try { debugActif = debugActif || sessionStorage.getItem(DEBUG_CLE) === '1'; } catch (e) { }
+      window.__debug = {
+        on() { debugActif = true; try { sessionStorage.setItem(DEBUG_CLE, '1'); } catch (e) { } logScene('journal activé'); },
+        off() { logScene('journal coupé'); debugActif = false; try { sessionStorage.removeItem(DEBUG_CLE); } catch (e) { } },
+      };
+      function logScene(message, ...details) {
+        if (debugActif) console.log('%c[scène]', 'color:#6ea8ff;font-weight:600', message, ...details);
+      }
+
+      /* Origine de la démo. En test local seulement (page servie depuis localhost ou
+         le réseau local), `?demo-origin=http://…` branche la page sur une démo locale
+         (le miroir sur le port 4300). Partout ailleurs, la surcharge est ignorée :
+         la page de production ne parle qu'à Scalingo. */
+      const DEMO_ORIGIN_PROD = 'https://stand-demonstrateur.osc-fr1.scalingo.io';
+      const HOTE_LOCAL = /^(localhost|127\.0\.0\.1|192\.168\.\d{1,3}\.\d{1,3})$/;
+      const DEMO_ORIGIN = (() => {
+        const demande = new URLSearchParams(location.search).get('demo-origin');
+        if (!demande) return DEMO_ORIGIN_PROD;
+        let url;
+        try { url = new URL(demande); } catch (e) { logScene('origine de démo illisible, ignorée :', demande); return DEMO_ORIGIN_PROD; }
+        if (!HOTE_LOCAL.test(location.hostname) || !HOTE_LOCAL.test(url.hostname)) {
+          logScene('origine de démo refusée (réservée au réseau local) :', demande);
+          return DEMO_ORIGIN_PROD;
+        }
+        return url.origin;
+      })();
+      logScene('prête, origine de la démo :', DEMO_ORIGIN);
       const DEMO_URL = DEMO_ORIGIN + '/';
       const REMOTE_URL = DEMO_ORIGIN + '/remote/public';
       const SALLE_ID = Math.random().toString(36).slice(2, 10);
@@ -9632,57 +9797,265 @@
 
       /* 5. DÉMO : chargement au clic (masque le démarrage à froid du serveur),
          puis pilotage par POI depuis la lecture guidée. */
-      const demoViewport = document.getElementById('demoViewport');
       const demoLaunch = document.getElementById('demoLaunch');
-      let demoIframe = null;
       /* Doit rester synchro avec --kiosk-width (CSS) : largeur "desktop" à laquelle la démo est rendue
          avant d'être réduite à la taille réelle de sa boîte (évite le point de rupture "tablette"). */
       const KIOSK_WIDTH = 1200;
-      if (demoViewport) {
-        const fitKiosk = () => {
-          demoViewport.style.setProperty('--kiosk-scale', (demoViewport.clientWidth / KIOSK_WIDTH).toFixed(4));
-        };
-        fitKiosk();
-        if (window.ResizeObserver) new ResizeObserver(fitKiosk).observe(demoViewport);
-        else window.addEventListener('resize', fitKiosk);
-      }
+      /* Largeur de téléphone à laquelle le dock de la borne tient sans déborder */
+      const MOBILE_WIDTH = 375;
+      /* Au-delà, la démo est considérée comme muette (serveur endormi, page d'erreur 502...) */
+      const SCENE_DELAI_MS = 20000;
       /* Reprise d'un média (lien partagé) : ?media=&t=&page= sont passés à la borne au premier lancement */
       let reprise = {};
-      function launchDemo(poi) {
-        if (!demoViewport) return;
-        if (demoIframe) {
-          if (poi && demoIframe.contentWindow) {
-            demoIframe.contentWindow.postMessage({ type: 'stand:goto', poi }, DEMO_ORIGIN);
-            document.body.dataset.poi = poi;
+
+      /* Une seule scène 3D dans la page (30/09/2026).
+         Le flux : charger() crée l'iframe une fois (avec demarrer=auto : pas de porte
+         « Démarrer »), l'état passe à « chargement » ; le premier message de la démo
+         (stand:poi ou stand:state) la déclare « prête » ; sans message après 20 s,
+         « erreur » et le bouton de l'écran propose de relancer. L'état est recopié sur
+         <body data-scene> pour le CSS, et annoncé par l'événement « scene:etat ». */
+      const scene = (() => {
+        const calque = document.createElement('div');
+        calque.id = 'scene3d';
+        document.body.appendChild(calque);
+        let iframe = null;
+        let chargee = false; /* l'iframe a fini son load */
+        let minuterie = 0;
+        let poiDemande = null; /* le POI du dernier chargement, pour relancer au même endroit */
+        let poiEnAttente; /* un goto demandé avant que la démo écoute (null = vue de départ) */
+        const api = { etat: 'vide', slot: null, manip: false, plein: false, charger, aller, placer, signal, affichage, manipuler, pleinEcran };
+        const TACTILE = window.matchMedia('(pointer: coarse)').matches;
+        /* « Manipuler » posé sur la scène (visible dans le parcours sur tactile, par CSS) */
+        calque.insertAdjacentHTML('beforeend', '<button type="button" class="scene3d__manip" data-scene-cmd="manipuler" aria-pressed="false">✋ <span class="scene-manip-label">Manipuler</span></button>');
+        /* Un emplacement peut compter plusieurs éléments (une image par étape du
+           parcours) : on prend celui qui est affiché. */
+        function slotEl(id) {
+          const els = Array.from(document.querySelectorAll(`[data-scene-slot="${id}"]`));
+          return els.find((el) => el.getClientRects().length > 0) || els[0] || null;
+        }
+
+        function changerEtat(e) {
+          api.etat = e;
+          document.body.dataset.scene = e;
+          logScene('état →', e);
+          marquer();
+          document.dispatchEvent(new CustomEvent('scene:etat', { detail: e }));
+        }
+        /* Chaque emplacement dit où est la scène : ici en chargement, ici en direct,
+           ou ailleurs (il montre alors son image). Une seule passe pour tous. */
+        function marquer() {
+          const active = api.etat === 'chargement' || api.etat === 'prete';
+          document.querySelectorAll('[data-scene-slot]').forEach((el) => {
+            const ici = active && el.dataset.sceneSlot === api.slot;
+            el.classList.toggle('is-loading', ici && !chargee);
+            el.classList.toggle('is-live', ici && chargee);
+            el.classList.toggle('is-ailleurs', active && chargee && !ici);
+          });
+          calque.classList.toggle('is-visible', active && chargee);
+          document.body.dataset.sceneIci = active && chargee ? api.slot : '';
+        }
+        /* Recale le calque sur l'emplacement (coordonnées de la page, pas de l'écran) */
+        function placer(slotId) {
+          if (slotId && slotId !== api.slot) {
+            api.slot = slotId;
+            calque.dataset.slot = slotId;
+            marquer();
+            logScene('emplacement →', slotId);
+            manipuler(false);
+            affichage();
+            document.dispatchEvent(new CustomEvent('scene:slot', { detail: { slot: slotId } }));
           }
-          return;
+          const el = api.slot && slotEl(api.slot);
+          if (!el) return;
+          const r = el.getBoundingClientRect();
+          calque.style.top = (r.top + window.scrollY) + 'px';
+          calque.style.left = (r.left + window.scrollX) + 'px';
+          calque.style.width = r.width + 'px';
+          calque.style.height = r.height + 'px';
+          calque.style.borderRadius = getComputedStyle(el).borderRadius;
+          calque.style.setProperty('--kiosk-scale', (r.width / KIOSK_WIDTH).toFixed(4));
+          calque.style.setProperty('--mobile-scale', Math.min(1, r.width / MOBILE_WIDTH).toFixed(4));
         }
-        demoIframe = document.createElement('iframe');
-        demoIframe.className = 'demo-screen__iframe';
-        demoIframe.title = 'Démonstrateur 3D : démo en ligne';
-        demoIframe.setAttribute('allow', 'autoplay; fullscreen; xr-spatial-tracking; gamepad');
-        demoIframe.src = demoHref(DEMO_URL, Object.assign({ poi }, reprise));
-        reprise = {};
-        document.body.dataset.demo = '1';
-        if (demoLaunch) {
-          demoLaunch.disabled = true;
-          const t = demoLaunch.querySelector('.demo-launch__text');
-          const h = demoLaunch.querySelector('.demo-launch__hint');
-          if (t) t.textContent = 'La borne se réveille';
-          if (h) h.textContent = 'Une dizaine de secondes, puis « Démarrer » sur l\'écran';
+        /* poi null = vue de départ (contrat : stand:goto sans poi) ; undefined = rien à faire */
+        /* Ce que la démo montre d'elle-même (contrat : stand:affichage). Dans le
+           parcours, pas de dock (Suivant et le panneau font la navigation) ; sur
+           écran tactile, pas de marqueurs tant qu'on ne manipule pas. Ailleurs,
+           la borne complète. */
+        function affichage() {
+          if (!iframe || api.etat !== 'prete' || !iframe.contentWindow) return;
+          const parcours = api.slot === 'parcours' && !api.plein;
+          const message = { type: 'stand:affichage', dock: !parcours, marqueurs: !parcours || !TACTILE || api.manip };
+          iframe.contentWindow.postMessage(message, DEMO_ORIGIN);
+          logScene('stand:affichage →', `dock ${message.dock}, marqueurs ${message.marqueurs}`);
         }
-        if (poi) document.body.dataset.poi = poi;
-        demoViewport.classList.add('is-loading');
-        demoIframe.addEventListener('load', () => {
-          demoViewport.classList.remove('is-loading');
-          demoViewport.classList.add('is-live');
+        /* Manipuler (écran tactile) : la scène prend le doigt, les marqueurs reviennent */
+        function manipuler(on) {
+          on = !!on;
+          if (on === api.manip) return;
+          api.manip = on;
+          calque.classList.toggle('is-manip', on);
+          logScene(on ? 'manipuler : la 3D prend le doigt' : 'terminé : le doigt fait de nouveau défiler la page');
+          affichage();
+          document.dispatchEvent(new CustomEvent('scene:manip', { detail: on }));
+        }
+        /* Plein écran : le calque passe en position fixe sous la barre « Quitter »
+           (CSS .is-plein) ; même iframe, donc même caméra, rien ne se recharge.
+           L'observateur est suspendu tant qu'il est ouvert (voir decider). */
+        function pleinEcran(on) {
+          on = !!on;
+          if (on === api.plein) return;
+          api.plein = on;
+          manipuler(false);
+          calque.classList.toggle('is-plein', on);
+          logScene(on ? 'plein écran : la scène passe par-dessus la page' : 'plein écran fermé : retour à l\'emplacement ' + api.slot);
+          if (!on) placer();
+          affichage();
+          document.dispatchEvent(new CustomEvent('scene:plein', { detail: on }));
+        }
+        function aller(poi) {
+          if (poi === undefined) return;
+          if (poi) document.body.dataset.poi = poi;
+          if (!iframe) return;
+          if (api.etat !== 'prete') { poiEnAttente = poi; logScene('goto mis en attente (démo pas encore prête) :', poi || 'vue de départ'); return; }
+          if (iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'stand:goto', poi }, DEMO_ORIGIN);
+          logScene('stand:goto →', poi || 'vue de départ');
+        }
+        function charger(slotId, poi) {
+          if (iframe && api.etat !== 'erreur') {
+            logScene('déjà chargée : on la réutilise');
+            placer(slotId);
+            aller(poi === null ? undefined : poi);
+            return;
+          }
+          if (!slotEl(slotId)) return;
+          if (iframe) { logScene('relance après erreur'); iframe.remove(); chargee = false; }
+          poiDemande = poi || poiDemande;
+          iframe = document.createElement('iframe');
+          iframe.className = 'demo-screen__iframe';
+          iframe.title = 'Démonstrateur 3D : démo en ligne';
+          iframe.setAttribute('allow', 'autoplay; fullscreen; xr-spatial-tracking; gamepad');
+          iframe.src = demoHref(DEMO_URL, Object.assign({ poi: poiDemande, demarrer: 'auto' }, reprise));
+          reprise = {};
+          document.body.dataset.demo = '1';
+          if (poiDemande) document.body.dataset.poi = poiDemande;
+          iframe.addEventListener('load', () => {
+            logScene('iframe chargée, en attente du premier message de la démo');
+            chargee = true;
+            marquer();
+            placer();
+          });
+          clearTimeout(minuterie);
+          minuterie = setTimeout(() => {
+            if (api.etat !== 'chargement') return;
+            logScene(`aucun message en ${SCENE_DELAI_MS / 1000} s : erreur`);
+            changerEtat('erreur');
+          }, SCENE_DELAI_MS);
+          logScene('chargement de', iframe.src);
+          calque.appendChild(iframe);
+          placer(slotId);
+          changerEtat('chargement');
+        }
+        /* Appelé par l'écouteur de messages : la démo a parlé, elle est prête */
+        function signal(source) {
+          if (!iframe || source !== iframe.contentWindow || api.etat !== 'chargement') return;
+          clearTimeout(minuterie);
+          changerEtat('prete');
+          affichage();
+          if (poiEnAttente !== undefined) { const p = poiEnAttente; poiEnAttente = undefined; aller(p); }
+        }
+
+        /* Choix de l'emplacement : la scène suit le visiteur vers l'emplacement le
+           plus visible, avec une hystérésis pour ne jamais faire de ping-pong :
+           le candidat doit être visible à plus de 50 % ET dépasser l'actuel de
+           20 points. Aucun emplacement assez visible : elle reste où elle est. */
+        const SEUIL = 0.5;
+        const ECART = 0.2;
+        const taux = new Map(); /* élément → part visible (0 à 1) */
+        const tauxSlot = (id) => Math.max(0, ...Array.from(taux).filter(([el]) => el.dataset.sceneSlot === id && el.getClientRects().length > 0).map(([, r]) => r));
+        function decider() {
+          if (!iframe || api.etat === 'erreur' || api.plein) return;
+          const ids = [...new Set(Array.from(taux.keys()).map((el) => el.dataset.sceneSlot))];
+          const actuel = tauxSlot(api.slot);
+          /* Scène sortie de l'écran : on revient au mode « regarder » */
+          if (api.manip && actuel === 0) manipuler(false);
+          let meilleur = null;
+          ids.forEach((id) => {
+            if (id === api.slot) return;
+            const t = tauxSlot(id);
+            if (t > SEUIL && t > actuel + ECART && (!meilleur || t > meilleur.t)) meilleur = { id, t };
+          });
+          if (meilleur) {
+            logScene(`${api.slot} visible à ${Math.round(actuel * 100)} %, ${meilleur.id} à ${Math.round(meilleur.t * 100)} % : on déménage`);
+            placer(meilleur.id);
+          }
+        }
+        if ('IntersectionObserver' in window) {
+          const seuils = Array.from({ length: 21 }, (_, i) => i / 20);
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach((en) => taux.set(en.target, en.intersectionRatio));
+            decider();
+          }, { threshold: seuils });
+          document.querySelectorAll('[data-scene-slot]').forEach((el) => io.observe(el));
+        } else {
+          logScene('observateur indisponible : la scène reste dans son emplacement de départ');
+        }
+
+        /* Recalage : l'emplacement change de taille, la page s'allonge au-dessus de lui
+           (images, polices), ou il glisse pendant une animation d'apparition (.reveal) */
+        const recaler = () => { if (iframe) placer(); };
+        if (window.ResizeObserver) {
+          const ro = new ResizeObserver(recaler);
+          ro.observe(document.body);
+          document.querySelectorAll('[data-scene-slot]').forEach((el) => ro.observe(el));
+        }
+        window.addEventListener('resize', recaler);
+        window.addEventListener('load', recaler);
+        document.addEventListener('transitionend', recaler, true);
+        return api;
+      })();
+
+      /* « Manipuler » / « Terminé » : tous les boutons (section démo, six étapes du parcours) */
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-scene-cmd="manipuler"]');
+        if (btn) scene.manipuler(!scene.manip);
+      });
+      document.addEventListener('scene:manip', (e) => {
+        document.querySelectorAll('[data-scene-cmd="manipuler"]').forEach((btn) => {
+          btn.setAttribute('aria-pressed', String(e.detail));
+          const label = btn.querySelector('.scene-manip-label');
+          if (label) label.textContent = e.detail ? 'Terminé' : 'Manipuler';
         });
-        demoViewport.appendChild(demoIframe);
-      }
-      if (demoLaunch) demoLaunch.addEventListener('click', () => launchDemo(null));
+      });
+
+      /* Scène dans le parcours : l'écran de la démo propose de l'y rejoindre */
+      const demoRepere = document.getElementById('demoRepere');
+      if (demoRepere) demoRepere.addEventListener('click', () => {
+        const cible = document.querySelector('.tour__panel.is-active [data-scene-slot="parcours"]');
+        if (cible) cible.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+
+      /* Les boutons de lancement (écran de la démo, images du parcours) racontent
+         l'état de la scène ; ceux du parcours sont construits plus bas, d'où la
+         recherche au moment de l'événement */
+      document.addEventListener('scene:etat', (e) => {
+        document.querySelectorAll('.demo-launch').forEach((btn) => {
+          const texte = btn.querySelector('.demo-launch__text');
+          const aide = btn.querySelector('.demo-launch__hint');
+          if (e.detail === 'chargement') {
+            btn.disabled = true;
+            if (texte) texte.textContent = 'La borne se réveille';
+            if (aide) aide.textContent = 'Une dizaine de secondes';
+          } else if (e.detail === 'erreur') {
+            btn.disabled = false;
+            if (texte) texte.textContent = 'La 3D ne répond pas, réessayer';
+            if (aide) aide.textContent = 'Un clic relance la scène';
+          }
+        });
+      });
+      if (demoLaunch) demoLaunch.addEventListener('click', () => scene.charger('demo', null));
       /* Un seul clic depuis le hero : l'ancre défile, la borne se charge pendant ce temps */
       document.querySelectorAll('[data-launch-demo]').forEach((el) => {
-        el.addEventListener('click', () => launchDemo(null));
+        el.addEventListener('click', () => scene.charger('demo', null));
       });
 
       const remoteViewport = document.getElementById('remoteViewport');
@@ -9697,7 +10070,7 @@
         else window.addEventListener('resize', fitRemote);
         remoteLaunch.addEventListener('click', () => {
           /* Une télécommande sans borne ne pilote rien : la borne se lance en même temps */
-          launchDemo(null);
+          scene.charger('demo', null);
           const frame = document.createElement('iframe');
           frame.className = 'demo-phone__iframe';
           frame.title = 'Démonstrateur 3D : télécommande de la démo';
@@ -9722,6 +10095,9 @@
       /* Correspondance POI de la borne → onglet (seul « votre-stand » diffère) */
       const POI_TO_PANEL = { 'votre-stand': 'vue' };
       const PANEL_TO_POI = { vue: 'votre-stand' };
+      /* Ce que la scène reçoit pour chaque étape du parcours : « Vue d'ensemble »
+         est la vue de départ (le POI votre-stand ouvrirait sa vidéo par-dessus). */
+      const gotoEtape = (key) => (key === 'vue' ? null : (PANEL_TO_POI[key] || key));
       function activateTab(tab, fromDemo) {
         const key = tab.getAttribute('data-panel');
         document.body.dataset.poi = PANEL_TO_POI[key] || key;
@@ -9739,6 +10115,11 @@
           p.classList.toggle('is-active', on);
           p.hidden = !on;
         });
+        /* Scène dans le parcours : le calque rejoint l'image affichée, la caméra l'étape */
+        if (scene.slot === 'parcours') {
+          scene.placer();
+          if (!fromDemo) scene.aller(gotoEtape(key));
+        }
         /* Synchronisation depuis la borne : pas de défilement, le visiteur regarde la démo */
         if (!fromDemo && typeof tab.scrollIntoView === 'function') {
           tab.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
@@ -9746,6 +10127,7 @@
       }
       window.addEventListener('message', (e) => {
         if (e.origin !== DEMO_ORIGIN || !e.data) return;
+        if (e.data.type === 'stand:poi' || e.data.type === 'stand:state') scene.signal(e.source);
         /* stand:state : le média du POI et sa progression, pour le lien « voilà où j'en suis » */
         if (e.data.type === 'stand:state') {
           const d = document.body.dataset;
@@ -9809,12 +10191,31 @@
         const act = text.querySelector('.tour__act');
         if (act) text.insertBefore(nav, act); else text.appendChild(nav);
         /* L'image fait avancer aussi : c'est là que le regard se pose */
+        /* « Lancer la démo » sur l'image : le même bouton que l'écran de la démo,
+           la scène se charge ici, à l'étape affichée */
         const media = panel.querySelector('.tour__media');
-        if (media && next) {
-          media.classList.add('is-cliquable');
-          media.insertAdjacentHTML('beforeend', '<span class="tour__media-next" aria-hidden="true">Suivant' + ARROW + '</span>');
-          media.addEventListener('click', () => goTo(next));
+        if (media) {
+          const etape = tourTabs[idx].getAttribute('data-panel');
+          const lancer = document.createElement('button');
+          lancer.type = 'button';
+          lancer.className = 'demo-launch tour__launch';
+          lancer.innerHTML = '<span class="demo-launch__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg></span>'
+            + '<span class="demo-launch__text">Lancer la démo</span>'
+            + '<span class="demo-launch__hint">La scène 3D se charge en une dizaine de secondes</span>';
+          lancer.addEventListener('click', () => scene.charger('parcours', gotoEtape(etape)));
+          media.appendChild(lancer);
         }
+        /* Commandes de la scène, en tête du panneau (visibles quand elle est ici) */
+        const cmd = document.createElement('div');
+        cmd.className = 'tour__scene-cmd';
+        cmd.innerHTML = '<button type="button" class="tour__scene-plein" data-scene-cmd="plein-ecran">⤢ Plein écran</button>';
+        text.insertBefore(cmd, text.firstChild);
+      });
+      document.addEventListener('scene:slot', (e) => {
+        /* L'étape affichée, lue sur l'onglet actif (body.dataset.poi n'existe qu'après un premier geste) */
+        const tab = tourTabs.find((t) => t.classList.contains('is-active'));
+        const key = tab && tab.getAttribute('data-panel');
+        if (e.detail.slot === 'parcours' && key) scene.aller(gotoEtape(key));
       });
       tourTabs.forEach((tab, i) => {
         tab.addEventListener('click', () => activateTab(tab));
@@ -9836,7 +10237,7 @@
           const poi = btn.getAttribute('data-poi');
           const target = document.getElementById('demo');
           if (target) target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-          launchDemo(poi);
+          scene.charger('demo', poi);
         });
       });
 
@@ -9875,39 +10276,36 @@
         footerCopyright.textContent = `© ${new Date().getFullYear()} Fractal Innov`;
       }
 
-      /* 10. DÉMO EN PLEIN ÉCRAN : overlay interne, jamais de nouvel onglet */
+      /* 10. DÉMO EN PLEIN ÉCRAN : la même scène, sous une barre « Quitter » (30/09/2026).
+         L'overlay n'apporte que le fond et la barre ; la 3D est le calque #scene3d. */
       const demoFullscreenOverlay = document.getElementById('demoFullscreenOverlay');
-      const demoFullscreenIframe = document.getElementById('demoFullscreenIframe');
       const demoFullscreenClose = document.getElementById('demoFullscreenClose');
-      const demoFullscreenTriggers = document.querySelectorAll('[data-demo-fullscreen-src]');
-      if (demoFullscreenOverlay && demoFullscreenIframe && demoFullscreenClose && demoFullscreenTriggers.length) {
-        let lastFocusedEl = null;
-        const openDemoFullscreen = (src) => {
-          lastFocusedEl = document.activeElement;
-          demoFullscreenIframe.src = demoHref(src);
+      if (demoFullscreenOverlay && demoFullscreenClose) {
+        let declencheur = null;
+        const ouvrir = (btn) => {
+          declencheur = btn;
+          /* Scène pas encore chargée : elle se charge dans l'écran de la démo */
+          if (scene.etat === 'vide' || scene.etat === 'erreur') scene.charger('demo', null);
           demoFullscreenOverlay.hidden = false;
           document.body.classList.add('demo-fullscreen-open');
+          scene.pleinEcran(true);
           demoFullscreenClose.focus();
         };
-        const closeDemoFullscreen = () => {
+        const fermer = () => {
+          if (demoFullscreenOverlay.hidden) return;
           demoFullscreenOverlay.hidden = true;
           document.body.classList.remove('demo-fullscreen-open');
-          demoFullscreenIframe.src = '';
-          if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
-            lastFocusedEl.focus();
-          }
+          scene.pleinEcran(false);
+          if (declencheur && typeof declencheur.focus === 'function') declencheur.focus({ preventScroll: true });
         };
-        demoFullscreenTriggers.forEach((trigger) => {
-          trigger.addEventListener('click', () => {
-            openDemoFullscreen(trigger.getAttribute('data-demo-fullscreen-src'));
-          });
+        document.addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-scene-cmd="plein-ecran"]');
+          if (btn) ouvrir(btn);
         });
-        demoFullscreenClose.addEventListener('click', closeDemoFullscreen);
-        document.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape' && !demoFullscreenOverlay.hidden) {
-            closeDemoFullscreen();
-          }
-        });
+        demoFullscreenClose.addEventListener('click', fermer);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') fermer(); });
+        /* La démo ne répond pas : on rend la page, le message est sur l'écran de la démo */
+        document.addEventListener('scene:etat', (e) => { if (e.detail === 'erreur') fermer(); });
       }
 
       /* 11. ARRIVÉE PAR UN LIEN PARTAGÉ : ?poi=<id> ouvre l'onglet de la lecture guidée,
@@ -9921,7 +10319,7 @@
           if (tab) activateTab(tab, true);
         }
         ['media', 't', 'page'].forEach((k) => { if (params.get(k)) reprise[k] = params.get(k); });
-        if (params.get('demo') === '1') launchDemo(poi);
+        if (params.get('demo') === '1') scene.charger('demo', poi);
         /* Le saut d'ancre se fait avant que la page ait sa hauteur finale : on le rejoue une fois chargée */
         const nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
         const isReload = nav && nav.type === 'reload';
