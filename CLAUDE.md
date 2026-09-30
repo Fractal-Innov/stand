@@ -27,10 +27,10 @@ Tous les messages de commit suivent https://www.conventionalcommits.org/en/v1.0.
 - Pas de point final dans les titres (H2, H3, H4, questions de la FAQ).
 - La page doit rester fidèle à l'offre vendue :
   - l'écran tactile et le téléphone de pilotage ne sont pas fournis, le client les loue sur place ;
-  - le flight case, le mobilier, la modélisation 3D et l'écran de veille 3D sont des options sur devis ;
+  - le flight case, le mobilier, la modélisation 3D, l'écran de veille 3D et la présentation à emporter sur mobile sont des options sur devis ;
   - les vidéos et fiches sont produites par le client, STAND les affiche ;
   - le support couvre l'installation avant le salon, pas le salon lui-même ;
-  - pas de mode en ligne, pas de redémarrage ni de lancement automatique en standard ;
+  - pas de mode en ligne, pas de redémarrage ni de lancement automatique en standard (seule exception : la présentation à emporter sur mobile, option sur devis) ;
   - aucun prix ni délai affiché : le devis et le délai suivent l'atelier, qui suit l'appel de 30 minutes (l'appel n'est pas l'atelier) ;
   - une seule marque, Fractal Innov : aucun nom produit affiché (« STAND » n'est que le nom du dépôt et de la démo) ; l'offre se dit « le démonstrateur 3D de votre stand ».
 
