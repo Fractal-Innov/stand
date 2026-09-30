@@ -48,7 +48,7 @@ La démo web publique (https://stand-demonstrateur.osc-fr1.scalingo.io/, intégr
 - **L'expérience** : le jumeau 3D du produit, le parcours, l'affichage des vidéos et fiches FR / EN du client, la régie d'administration (accès par code), la télécommande téléphone. Application autonome (Electron) sur le PC du client. Les statistiques de visite se synchronisent quand une connexion apparaît.
 - **Le kit hors ligne** : mini PC préparé, routeur de voyage (réseau fermé, indépendant du wifi du lieu), câbles, alimentation. Installation par le client en dix minutes, quatre câbles. Guide d'une page. Support à distance **avant** le salon pour l'installation et le setup.
 - **Deux façons d'avoir le kit** : Fractal Innov l'achète, le configure et le livre prêt à brancher (le client en est propriétaire), ou le client achète sur nos références et nous installons à distance ou en atelier.
-- **Options sur devis** : plusieurs produits ou toute une gamme dans la même expérience, modélisation 3D (conversion + optimisation, dépend des fichiers du client), mobilier et présentoir avec nos partenaires, flight case, écran de veille 3D animé.
+- **Options sur devis** : plusieurs produits ou toute une gamme dans la même expérience, modélisation 3D (conversion + optimisation, dépend des fichiers du client), mobilier et présentoir avec nos partenaires, flight case, écran de veille 3D animé, présentation à emporter sur mobile (le visiteur scanne un QR code et retrouve la présentation sur son téléphone ; demande un hébergement en ligne, chiffré au devis).
 
 ## Ce qui n'est PAS dans l'offre (à dire clairement, ça rassure)
 
@@ -56,14 +56,14 @@ La démo web publique (https://stand-demonstrateur.osc-fr1.scalingo.io/, intégr
 - Les vidéos et fiches : produites par le client, STAND les affiche.
 - Une équipe sur place et un stock de rechange : le kit est conçu pour ne demander personne.
 - Le support pendant le salon.
-- Le mode en ligne.
+- Le mode en ligne en standard : la seule exception est la présentation à emporter sur mobile, option sur devis.
 - Le redémarrage automatique du mini PC et le lancement automatique de l'expérience : possibles en option, pas en standard. Ne pas le promettre.
 
 ## Formules et prix
 
 - **Aucun prix annoncé**, ni sur la page ni dans les relances : la section tarifs a été retirée de la landing le 23/09/2026 ; confirmé le 30/09/2026. Les anciens montants ne sont à recopier nulle part.
 - **Aucun délai annoncé** : il dépend de trop de critères (données du client, contexte de déploiement). Délai et prix sont fixés au devis, **après l'atelier**.
-- Sur devis : modélisation 3D, plusieurs produits ou toute la gamme, mobilier, flight case, écran de veille 3D.
+- Sur devis : modélisation 3D, plusieurs produits ou toute la gamme, mobilier, flight case, écran de veille 3D, présentation à emporter sur mobile.
 
 ## Le processus de vente
 
@@ -79,6 +79,7 @@ La démo web publique (https://stand-demonstrateur.osc-fr1.scalingo.io/, intégr
 - « Nos équipes ne sont pas techniques » : régie par code, contenus changés sans développeur, installation en quatre câbles.
 - « C'est pour un seul salon » : non, c'est l'argument central : showroom, rendez-vous, salons suivants.
 - « On n'a pas de fichiers 3D » : on l'évalue à l'atelier ; photos et plans suffisent souvent pour démarrer, la modélisation est alors sur devis.
+- « Combien ça coûte ? » : cela dépend du produit et des fichiers ; le devis suit l'atelier, et l'atelier est compris dans le projet. Jamais de fourchette.
 - « Qui est sur place pendant le salon ? » : personne, et c'est voulu ; accompagnement avant le salon.
 
 ## Preuve
@@ -107,4 +108,5 @@ Un premier acteur industriel, sous NDA : « nous ne pouvons pas le citer, nous p
 - 2026-09-18, fin de salon : cinq contacts qualifiés sur leur stand (fabricant de lits hydromassants, VR et plateformes motorisées, rameurs design, attelles motorisées, cabinets clés en main). Douleurs entendues : produit trop gros pour venir, salons jugés trop chers, visiteurs à occuper quand l'équipe est prise, gamme trop large pour le stand, ROI du salon à mesurer. Relance par e-mail avec lien calendrier ; le détail nominatif est tenu hors de ce dépôt public.
 - 2026-09-23 : section tarifs retirée de la landing.
 - 2026-09-30 : pivot décidé avec l'associé. Le démonstrateur de stand est la seule offre qui a rapporté ; www.fractal-innov.fr renvoie vers cette landing. Une seule marque, Fractal Innov : plus de nom produit affiché (« STAND » reste le nom du dépôt). Aucun prix ni délai annoncé ; l'appel de 30 min précède l'atelier, le devis suit l'atelier. Douleurs de Rééduca ajoutées à la page : la gamme (sur devis) et la mesure du salon (statistiques Umami).
+- 2026-09-30, cohérence de la page : « Ce que vous gagnez » dit les résultats, « Le jumeau 3D » les fonctions ; la télécommande n'est détaillée qu'une fois ; FAQ : « Combien ça coûte ? » remplace « C'est pour un seul salon ? », la question des fichiers 3D reste en note sous le jumeau. « Emporter sur mobile » devient une option sur devis (hébergement en ligne).
 - 2026-09-30, étape 3 (preuve) : pas de référence citable, la démo sert de preuve (passage vers l'appel sous la démo). Clause de référence ajoutée, proposée comme une opportunité au devis ; contrepartie à confirmer, sans remise.
