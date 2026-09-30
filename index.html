@@ -9405,7 +9405,38 @@
         }, { threshold: 0.2 }).observe(video);
       })();
 
-      const DEMO_ORIGIN = 'https://stand-demonstrateur.osc-fr1.scalingo.io';
+      /* Journal de la scène (30/09/2026) : muet par défaut. `?debug` dans l'URL,
+         ou `__debug.on()` dans la console (retenu pour l'onglet), le rend bavard ;
+         `__debug.off()` le coupe. Chaque décision de la scène y est racontée. */
+      const DEBUG_CLE = 'stand-debug';
+      let debugActif = new URLSearchParams(location.search).has('debug');
+      try { debugActif = debugActif || sessionStorage.getItem(DEBUG_CLE) === '1'; } catch (e) { }
+      window.__debug = {
+        on() { debugActif = true; try { sessionStorage.setItem(DEBUG_CLE, '1'); } catch (e) { } logScene('journal activé'); },
+        off() { logScene('journal coupé'); debugActif = false; try { sessionStorage.removeItem(DEBUG_CLE); } catch (e) { } },
+      };
+      function logScene(message, ...details) {
+        if (debugActif) console.log('%c[scène]', 'color:#6ea8ff;font-weight:600', message, ...details);
+      }
+
+      /* Origine de la démo. En test local seulement (page servie depuis localhost ou
+         le réseau local), `?demo-origin=http://…` branche la page sur une démo locale
+         (le miroir sur le port 4300). Partout ailleurs, la surcharge est ignorée :
+         la page de production ne parle qu'à Scalingo. */
+      const DEMO_ORIGIN_PROD = 'https://stand-demonstrateur.osc-fr1.scalingo.io';
+      const HOTE_LOCAL = /^(localhost|127\.0\.0\.1|192\.168\.\d{1,3}\.\d{1,3})$/;
+      const DEMO_ORIGIN = (() => {
+        const demande = new URLSearchParams(location.search).get('demo-origin');
+        if (!demande) return DEMO_ORIGIN_PROD;
+        let url;
+        try { url = new URL(demande); } catch (e) { logScene('origine de démo illisible, ignorée :', demande); return DEMO_ORIGIN_PROD; }
+        if (!HOTE_LOCAL.test(location.hostname) || !HOTE_LOCAL.test(url.hostname)) {
+          logScene('origine de démo refusée (réservée au réseau local) :', demande);
+          return DEMO_ORIGIN_PROD;
+        }
+        return url.origin;
+      })();
+      logScene('prête, origine de la démo :', DEMO_ORIGIN);
       const DEMO_URL = DEMO_ORIGIN + '/';
       const REMOTE_URL = DEMO_ORIGIN + '/remote/public';
       const SALLE_ID = Math.random().toString(36).slice(2, 10);
