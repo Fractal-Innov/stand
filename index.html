@@ -8160,6 +8160,87 @@
     body[data-scene="erreur"] #scene3d {
       visibility: hidden;
     }
+    /* Parcours : la scène à sa taille réelle (pas de rendu « borne » réduit) */
+    #scene3d[data-slot="parcours"] .demo-screen__iframe {
+      width: 100%;
+      height: 100%;
+      transform: none;
+    }
+
+    /* Le coin bas gauche du parcours est celui de la carte : le calque le recopie */
+    @media (min-width: 900px) {
+      .tour__media {
+        border-bottom-left-radius: 17px;
+      }
+    }
+
+    /* Parcours en chargement : l'indicateur discret de l'écran de la démo */
+    .tour__media.is-loading::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+      animation: demoLoad 1.4s ease-in-out infinite;
+    }
+
+    .tour__media { position: relative; }
+
+    /* Scène dans le parcours : l'image n'avance plus d'une étape, Suivant vit dans le panneau */
+    .tour__media.is-live .tour__media-next { display: none; }
+    .tour__media.is-live { cursor: default; }
+
+    /* « Explorer en 3D » : sur l'image, en haut à gauche, face à « Suivant » */
+    .tour__explore {
+      position: absolute; left: 0.9rem; top: 0.9rem; z-index: 1;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font: inherit; font-size: 0.78rem; font-weight: 700; color: #fff; cursor: pointer;
+      padding: 0.4rem 0.85rem; border: 0; border-radius: 100px;
+      background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-purple-deep));
+      box-shadow: 0 8px 20px -8px rgba(40, 89, 255, 0.8);
+      transition: transform .2s ease;
+    }
+    .tour__explore:hover { transform: translateY(-1px); }
+    .tour__explore:focus-visible { outline: 2px solid var(--accent-blue-light); outline-offset: 3px; }
+    body[data-scene="chargement"] .tour__explore,
+    body[data-scene="prete"] .tour__explore { display: none; }
+
+    /* Commandes de la scène, première ligne du panneau, seulement quand elle est ici */
+    .tour__scene-cmd { display: none; align-items: center; gap: 0.6rem; min-height: 2rem; margin-bottom: -0.3rem; }
+    body[data-scene-ici="parcours"] .tour__scene-cmd { display: flex; }
+    body[data-scene-ici="parcours"] .tour__act { display: none; }
+    .tour__scene-cmd button {
+      background: none; border: 0; padding: 0.2rem 0; cursor: pointer;
+      font: inherit; font-size: 0.82rem; font-weight: 600; color: var(--text-muted);
+      text-decoration: underline; text-decoration-color: rgba(255, 255, 255, 0.25); text-underline-offset: 4px;
+    }
+    .tour__scene-cmd button:hover { color: #fff; }
+    .tour__scene-cmd-sep { color: var(--text-muted); opacity: .5; }
+    .tour__scene-manip, .tour__scene-manip + .tour__scene-cmd-sep { display: none; }
+    @media (pointer: coarse) {
+      .tour__scene-manip { display: inline; }
+      .tour__scene-manip + .tour__scene-cmd-sep { display: inline; }
+    }
+
+    /* Écran de la démo quand la scène est dans le parcours : image et repère */
+    .demo-repere {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1;
+      display: none; width: max-content; max-width: calc(100% - 2rem);
+      font: inherit; font-size: 0.88rem; font-weight: 700; color: #fff; cursor: pointer; text-align: center;
+      padding: 0.7rem 1.2rem; border-radius: 100px;
+      background: rgba(9, 11, 19, 0.78); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .demo-repere:hover { background: rgba(59, 104, 255, 0.85); }
+    .demo-screen__viewport.is-ailleurs .demo-repere { display: block; }
+    .demo-screen__viewport.is-ailleurs .demo-launch { display: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tour__media.is-loading::after { animation: none; transform: none; }
+      .tour__explore { transition: none; }
+    }
   </style>
 
 </head>
@@ -8320,6 +8401,8 @@
                 <img class="demo-screen__poster" src="assets/demo/vue-ensemble.webp" width="1600" height="1064" alt=""
                   loading="lazy" decoding="async">
               </picture>
+              <button type="button" class="demo-repere" id="demoRepere">La démo vous attend dans le parcours, plus bas
+                <span aria-hidden="true">↓</span></button>
               <button type="button" class="demo-launch" id="demoLaunch"
                 data-demo-src="https://stand-demonstrateur.osc-fr1.scalingo.io/">
                 <span class="demo-launch__icon" aria-hidden="true">
@@ -8691,7 +8774,7 @@
 
         <div class="tour__panels">
           <div role="tabpanel" id="panel-vue" class="tour__panel is-active" aria-labelledby="tab-vue">
-            <div class="tour__media"><img src="assets/demo/vue-ensemble.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/vue-ensemble.webp" width="1600" height="1064"
                 alt="Vue d'ensemble de la démo : le stand entier, avec ses trois sujets cliquables" loading="lazy"
                 decoding="async"></div>
             <div class="tour__text">
@@ -8713,7 +8796,7 @@
           </div>
 
           <div role="tabpanel" id="panel-attirer" class="tour__panel" aria-labelledby="tab-attirer" hidden>
-            <div class="tour__media"><img src="assets/demo/attirer.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/attirer.webp" width="1600" height="1064"
                 alt="Dans la démo, un visiteur s'arrête devant la borne tactile qui diffuse la scène 3D en boucle"
                 loading="lazy" decoding="async"></div>
             <div class="tour__text">
@@ -8735,7 +8818,7 @@
           </div>
 
           <div role="tabpanel" id="panel-presenter" class="tour__panel" aria-labelledby="tab-presenter" hidden>
-            <div class="tour__media"><img src="assets/demo/presenter.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/presenter.webp" width="1600" height="1064"
                 alt="Dans la démo, un commercial présente le produit à une cliente sur l'écran tactile, tablette en main"
                 loading="lazy" decoding="async"></div>
             <div class="tour__text">
@@ -8757,7 +8840,7 @@
           </div>
 
           <div role="tabpanel" id="panel-emporter" class="tour__panel" aria-labelledby="tab-emporter" hidden>
-            <div class="tour__media"><img src="assets/demo/emporter.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/emporter.webp" width="1600" height="1064"
                 alt="Dans la démo, un visiteur scanne un QR code et repart avec la présentation sur son téléphone"
                 loading="lazy" decoding="async"></div>
             <div class="tour__text">
@@ -8779,7 +8862,7 @@
           </div>
 
           <div role="tabpanel" id="panel-logiciel" class="tour__panel" aria-labelledby="tab-logiciel" hidden>
-            <div class="tour__media"><img src="assets/demo/logiciel.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/logiciel.webp" width="1600" height="1064"
                 alt="Dans la démo, une vidéo s'ouvre par-dessus la scène 3D, sans quitter le parcours" loading="lazy"
                 decoding="async"></div>
             <div class="tour__text">
@@ -8801,7 +8884,7 @@
           </div>
 
           <div role="tabpanel" id="panel-materiel" class="tour__panel" aria-labelledby="tab-materiel" hidden>
-            <div class="tour__media"><img src="assets/demo/materiel.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/materiel.webp" width="1600" height="1064"
                 alt="Dans la démo, une fiche PDF se feuillette à l'écran, page après page" loading="lazy"
                 decoding="async"></div>
             <div class="tour__text">
@@ -9712,21 +9795,47 @@
         calque.id = 'scene3d';
         document.body.appendChild(calque);
         let iframe = null;
+        let chargee = false; /* l'iframe a fini son load */
         let minuterie = 0;
         let poiDemande = null; /* le POI du dernier chargement, pour relancer au même endroit */
-        let poiEnAttente = null; /* un goto demandé avant que la démo écoute */
+        let poiEnAttente; /* un goto demandé avant que la démo écoute (null = vue de départ) */
         const api = { etat: 'vide', slot: null, charger, aller, placer, signal };
-        const slotEl = (id) => document.querySelector(`[data-scene-slot="${id}"]`);
+        /* Un emplacement peut compter plusieurs éléments (une image par étape du
+           parcours) : on prend celui qui est affiché. */
+        function slotEl(id) {
+          const els = Array.from(document.querySelectorAll(`[data-scene-slot="${id}"]`));
+          return els.find((el) => el.getClientRects().length > 0) || els[0] || null;
+        }
 
         function changerEtat(e) {
           api.etat = e;
           document.body.dataset.scene = e;
           logScene('état →', e);
+          marquer();
           document.dispatchEvent(new CustomEvent('scene:etat', { detail: e }));
+        }
+        /* Chaque emplacement dit où est la scène : ici en chargement, ici en direct,
+           ou ailleurs (il montre alors son image). Une seule passe pour tous. */
+        function marquer() {
+          const active = api.etat === 'chargement' || api.etat === 'prete';
+          document.querySelectorAll('[data-scene-slot]').forEach((el) => {
+            const ici = active && el.dataset.sceneSlot === api.slot;
+            el.classList.toggle('is-loading', ici && !chargee);
+            el.classList.toggle('is-live', ici && chargee);
+            el.classList.toggle('is-ailleurs', active && chargee && !ici);
+          });
+          calque.classList.toggle('is-visible', active && chargee);
+          document.body.dataset.sceneIci = active && chargee ? api.slot : '';
         }
         /* Recale le calque sur l'emplacement (coordonnées de la page, pas de l'écran) */
         function placer(slotId) {
-          if (slotId) api.slot = slotId;
+          if (slotId && slotId !== api.slot) {
+            api.slot = slotId;
+            calque.dataset.slot = slotId;
+            marquer();
+            logScene('emplacement →', slotId);
+            document.dispatchEvent(new CustomEvent('scene:slot', { detail: { slot: slotId } }));
+          }
           const el = api.slot && slotEl(api.slot);
           if (!el) return;
           const r = el.getBoundingClientRect();
@@ -9734,26 +9843,27 @@
           calque.style.left = (r.left + window.scrollX) + 'px';
           calque.style.width = r.width + 'px';
           calque.style.height = r.height + 'px';
+          calque.style.borderRadius = getComputedStyle(el).borderRadius;
           calque.style.setProperty('--kiosk-scale', (r.width / KIOSK_WIDTH).toFixed(4));
         }
+        /* poi null = vue de départ (contrat : stand:goto sans poi) ; undefined = rien à faire */
         function aller(poi) {
-          if (!poi) return;
-          document.body.dataset.poi = poi;
+          if (poi === undefined) return;
+          if (poi) document.body.dataset.poi = poi;
           if (!iframe) return;
-          if (api.etat !== 'prete') { poiEnAttente = poi; logScene('goto mis en attente (démo pas encore prête) :', poi); return; }
+          if (api.etat !== 'prete') { poiEnAttente = poi; logScene('goto mis en attente (démo pas encore prête) :', poi || 'vue de départ'); return; }
           if (iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'stand:goto', poi }, DEMO_ORIGIN);
-          logScene('stand:goto →', poi);
+          logScene('stand:goto →', poi || 'vue de départ');
         }
         function charger(slotId, poi) {
           if (iframe && api.etat !== 'erreur') {
             logScene('déjà chargée : on la réutilise');
             placer(slotId);
-            aller(poi);
+            aller(poi === null ? undefined : poi);
             return;
           }
-          const el = slotEl(slotId);
-          if (!el) return;
-          if (iframe) { logScene('relance après erreur'); iframe.remove(); calque.classList.remove('is-visible'); }
+          if (!slotEl(slotId)) return;
+          if (iframe) { logScene('relance après erreur'); iframe.remove(); chargee = false; }
           poiDemande = poi || poiDemande;
           iframe = document.createElement('iframe');
           iframe.className = 'demo-screen__iframe';
@@ -9763,32 +9873,63 @@
           reprise = {};
           document.body.dataset.demo = '1';
           if (poiDemande) document.body.dataset.poi = poiDemande;
-          el.classList.remove('is-live');
-          el.classList.add('is-loading');
           iframe.addEventListener('load', () => {
             logScene('iframe chargée, en attente du premier message de la démo');
-            el.classList.remove('is-loading');
-            el.classList.add('is-live');
-            calque.classList.add('is-visible');
+            chargee = true;
+            marquer();
+            placer();
           });
           clearTimeout(minuterie);
           minuterie = setTimeout(() => {
             if (api.etat !== 'chargement') return;
             logScene(`aucun message en ${SCENE_DELAI_MS / 1000} s : erreur`);
-            el.classList.remove('is-loading', 'is-live');
             changerEtat('erreur');
           }, SCENE_DELAI_MS);
-          changerEtat('chargement');
           logScene('chargement de', iframe.src);
           calque.appendChild(iframe);
           placer(slotId);
+          changerEtat('chargement');
         }
         /* Appelé par l'écouteur de messages : la démo a parlé, elle est prête */
         function signal(source) {
           if (!iframe || source !== iframe.contentWindow || api.etat !== 'chargement') return;
           clearTimeout(minuterie);
           changerEtat('prete');
-          if (poiEnAttente) { const p = poiEnAttente; poiEnAttente = null; aller(p); }
+          if (poiEnAttente !== undefined) { const p = poiEnAttente; poiEnAttente = undefined; aller(p); }
+        }
+
+        /* Choix de l'emplacement : la scène suit le visiteur vers l'emplacement le
+           plus visible, avec une hystérésis pour ne jamais faire de ping-pong :
+           le candidat doit être visible à plus de 50 % ET dépasser l'actuel de
+           20 points. Aucun emplacement assez visible : elle reste où elle est. */
+        const SEUIL = 0.5;
+        const ECART = 0.2;
+        const taux = new Map(); /* élément → part visible (0 à 1) */
+        const tauxSlot = (id) => Math.max(0, ...Array.from(taux).filter(([el]) => el.dataset.sceneSlot === id && el.getClientRects().length > 0).map(([, r]) => r));
+        function decider() {
+          if (!iframe || api.etat === 'erreur' || document.body.classList.contains('demo-fullscreen-open')) return;
+          const ids = [...new Set(Array.from(taux.keys()).map((el) => el.dataset.sceneSlot))];
+          const actuel = tauxSlot(api.slot);
+          let meilleur = null;
+          ids.forEach((id) => {
+            if (id === api.slot) return;
+            const t = tauxSlot(id);
+            if (t > SEUIL && t > actuel + ECART && (!meilleur || t > meilleur.t)) meilleur = { id, t };
+          });
+          if (meilleur) {
+            logScene(`${api.slot} visible à ${Math.round(actuel * 100)} %, ${meilleur.id} à ${Math.round(meilleur.t * 100)} % : on déménage`);
+            placer(meilleur.id);
+          }
+        }
+        if ('IntersectionObserver' in window) {
+          const seuils = Array.from({ length: 21 }, (_, i) => i / 20);
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach((en) => taux.set(en.target, en.intersectionRatio));
+            decider();
+          }, { threshold: seuils });
+          document.querySelectorAll('[data-scene-slot]').forEach((el) => io.observe(el));
+        } else {
+          logScene('observateur indisponible : la scène reste dans son emplacement de départ');
         }
 
         /* Recalage : l'emplacement change de taille, la page s'allonge au-dessus de lui
@@ -9804,6 +9945,13 @@
         document.addEventListener('transitionend', recaler, true);
         return api;
       })();
+
+      /* Scène dans le parcours : l'écran de la démo propose de l'y rejoindre */
+      const demoRepere = document.getElementById('demoRepere');
+      if (demoRepere) demoRepere.addEventListener('click', () => {
+        const cible = document.querySelector('.tour__panel.is-active [data-scene-slot="parcours"]');
+        if (cible) cible.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
 
       /* L'écran de la démo raconte l'état de la scène sur son bouton */
       if (demoLaunch) {
@@ -9864,6 +10012,9 @@
       /* Correspondance POI de la borne → onglet (seul « votre-stand » diffère) */
       const POI_TO_PANEL = { 'votre-stand': 'vue' };
       const PANEL_TO_POI = { vue: 'votre-stand' };
+      /* Ce que la scène reçoit pour chaque étape du parcours : « Vue d'ensemble »
+         est la vue de départ (le POI votre-stand ouvrirait sa vidéo par-dessus). */
+      const gotoEtape = (key) => (key === 'vue' ? null : (PANEL_TO_POI[key] || key));
       function activateTab(tab, fromDemo) {
         const key = tab.getAttribute('data-panel');
         document.body.dataset.poi = PANEL_TO_POI[key] || key;
@@ -9881,6 +10032,11 @@
           p.classList.toggle('is-active', on);
           p.hidden = !on;
         });
+        /* Scène dans le parcours : le calque rejoint l'image affichée, la caméra l'étape */
+        if (scene.slot === 'parcours') {
+          scene.placer();
+          if (!fromDemo) scene.aller(gotoEtape(key));
+        }
         /* Synchronisation depuis la borne : pas de défilement, le visiteur regarde la démo */
         if (!fromDemo && typeof tab.scrollIntoView === 'function') {
           tab.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
@@ -9956,8 +10112,32 @@
         if (media && next) {
           media.classList.add('is-cliquable');
           media.insertAdjacentHTML('beforeend', '<span class="tour__media-next" aria-hidden="true">Suivant' + ARROW + '</span>');
-          media.addEventListener('click', () => goTo(next));
+          /* La scène posée dessus : l'image ne sert plus à avancer */
+          media.addEventListener('click', () => { if (!media.classList.contains('is-live')) goTo(next); });
         }
+        /* « Explorer en 3D » : la scène se charge ici, à l'étape affichée */
+        if (media) {
+          const etape = tourTabs[idx].getAttribute('data-panel');
+          const explore = document.createElement('button');
+          explore.type = 'button';
+          explore.className = 'tour__explore';
+          explore.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>Explorer en 3D';
+          explore.addEventListener('click', (e) => { e.stopPropagation(); scene.charger('parcours', gotoEtape(etape)); });
+          media.appendChild(explore);
+        }
+        /* Commandes de la scène, en tête du panneau (visibles quand elle est ici) */
+        const cmd = document.createElement('div');
+        cmd.className = 'tour__scene-cmd';
+        cmd.innerHTML = '<button type="button" class="tour__scene-manip" data-scene-cmd="manipuler">✋ Manipuler</button>'
+          + '<span class="tour__scene-cmd-sep" aria-hidden="true">·</span>'
+          + '<button type="button" class="tour__scene-plein" data-scene-cmd="plein-ecran">⤢ Plein écran</button>';
+        text.insertBefore(cmd, text.firstChild);
+      });
+      document.addEventListener('scene:slot', (e) => {
+        /* L'étape affichée, lue sur l'onglet actif (body.dataset.poi n'existe qu'après un premier geste) */
+        const tab = tourTabs.find((t) => t.classList.contains('is-active'));
+        const key = tab && tab.getAttribute('data-panel');
+        if (e.detail.slot === 'parcours' && key) scene.aller(gotoEtape(key));
       });
       tourTabs.forEach((tab, i) => {
         tab.addEventListener('click', () => activateTab(tab));
