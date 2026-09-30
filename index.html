@@ -8211,6 +8211,20 @@
     .demo-screen__viewport.is-ailleurs .demo-repere { display: block; }
     .demo-screen__viewport.is-ailleurs .demo-launch { display: none; }
 
+    /* Écran tactile : la 3D se regarde, le doigt fait défiler la page.
+       « Manipuler » lui rend la main, « Terminé » la reprend. */
+    @media (pointer: coarse) {
+      #scene3d .demo-screen__iframe { pointer-events: none; }
+      #scene3d.is-manip .demo-screen__iframe { pointer-events: auto; }
+      #scene3d.is-manip { box-shadow: 0 0 0 2px var(--accent-blue-light); }
+    }
+    /* Dans la section démo, le bouton n'existe que sur tactile et quand la scène est là */
+    .demo-action-btn--manip { display: none; }
+    @media (pointer: coarse) {
+      body[data-scene-ici="demo"] .demo-action-btn--manip { display: inline-flex; }
+    }
+    [data-scene-cmd="manipuler"][aria-pressed="true"] { color: #fff; }
+
     @media (prefers-reduced-motion: reduce) {
       .tour__media.is-loading::after { animation: none; transform: none; }
     }
@@ -8457,6 +8471,16 @@
       </div>
 
       <div class="demo-actions reveal delay-300">
+        <button type="button" class="demo-action-btn demo-action-btn--manip" data-scene-cmd="manipuler" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 11V5a1.5 1.5 0 0 1 3 0v6"></path>
+            <path d="M12 10a1.5 1.5 0 0 1 3 0v3"></path>
+            <path d="M15 12a1.5 1.5 0 0 1 3 0v4a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7L4 15a1.6 1.6 0 0 1 2.6-1.9L9 15">
+            </path>
+          </svg>
+          <span class="scene-manip-label">Manipuler</span>
+        </button>
         <button type="button" class="demo-action-btn"
           data-demo-fullscreen-src="https://stand-demonstrateur.osc-fr1.scalingo.io/">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -9771,7 +9795,7 @@
         let minuterie = 0;
         let poiDemande = null; /* le POI du dernier chargement, pour relancer au même endroit */
         let poiEnAttente; /* un goto demandé avant que la démo écoute (null = vue de départ) */
-        const api = { etat: 'vide', slot: null, manip: false, charger, aller, placer, signal, affichage };
+        const api = { etat: 'vide', slot: null, manip: false, charger, aller, placer, signal, affichage, manipuler };
         const TACTILE = window.matchMedia('(pointer: coarse)').matches;
         /* Un emplacement peut compter plusieurs éléments (une image par étape du
            parcours) : on prend celui qui est affiché. */
@@ -9807,6 +9831,7 @@
             calque.dataset.slot = slotId;
             marquer();
             logScene('emplacement →', slotId);
+            manipuler(false);
             affichage();
             document.dispatchEvent(new CustomEvent('scene:slot', { detail: { slot: slotId } }));
           }
@@ -9831,6 +9856,16 @@
           const message = { type: 'stand:affichage', dock: !parcours, marqueurs: !parcours || !TACTILE || api.manip };
           iframe.contentWindow.postMessage(message, DEMO_ORIGIN);
           logScene('stand:affichage →', `dock ${message.dock}, marqueurs ${message.marqueurs}`);
+        }
+        /* Manipuler (écran tactile) : la scène prend le doigt, les marqueurs reviennent */
+        function manipuler(on) {
+          on = !!on;
+          if (on === api.manip) return;
+          api.manip = on;
+          calque.classList.toggle('is-manip', on);
+          logScene(on ? 'manipuler : la 3D prend le doigt' : 'terminé : le doigt fait de nouveau défiler la page');
+          affichage();
+          document.dispatchEvent(new CustomEvent('scene:manip', { detail: on }));
         }
         function aller(poi) {
           if (poi === undefined) return;
@@ -9896,6 +9931,8 @@
           if (!iframe || api.etat === 'erreur' || document.body.classList.contains('demo-fullscreen-open')) return;
           const ids = [...new Set(Array.from(taux.keys()).map((el) => el.dataset.sceneSlot))];
           const actuel = tauxSlot(api.slot);
+          /* Scène sortie de l'écran : on revient au mode « regarder » */
+          if (api.manip && actuel === 0) manipuler(false);
           let meilleur = null;
           ids.forEach((id) => {
             if (id === api.slot) return;
@@ -9931,6 +9968,19 @@
         document.addEventListener('transitionend', recaler, true);
         return api;
       })();
+
+      /* « Manipuler » / « Terminé » : tous les boutons (section démo, six étapes du parcours) */
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-scene-cmd="manipuler"]');
+        if (btn) scene.manipuler(!scene.manip);
+      });
+      document.addEventListener('scene:manip', (e) => {
+        document.querySelectorAll('[data-scene-cmd="manipuler"]').forEach((btn) => {
+          btn.setAttribute('aria-pressed', String(e.detail));
+          const label = btn.querySelector('.scene-manip-label');
+          if (label) label.textContent = e.detail ? 'Terminé' : 'Manipuler';
+        });
+      });
 
       /* Scène dans le parcours : l'écran de la démo propose de l'y rejoindre */
       const demoRepere = document.getElementById('demoRepere');
@@ -10111,7 +10161,7 @@
         /* Commandes de la scène, en tête du panneau (visibles quand elle est ici) */
         const cmd = document.createElement('div');
         cmd.className = 'tour__scene-cmd';
-        cmd.innerHTML = '<button type="button" class="tour__scene-manip" data-scene-cmd="manipuler">✋ Manipuler</button>'
+        cmd.innerHTML = '<button type="button" class="tour__scene-manip" data-scene-cmd="manipuler" aria-pressed="false">✋ <span class="scene-manip-label">Manipuler</span></button>'
           + '<span class="tour__scene-cmd-sep" aria-hidden="true">·</span>'
           + '<button type="button" class="tour__scene-plein" data-scene-cmd="plein-ecran">⤢ Plein écran</button>';
         text.insertBefore(cmd, text.firstChild);
