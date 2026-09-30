@@ -30,7 +30,7 @@ Le démonstrateur 3D de stand de Fractal Innov (nom interne : STAND, jamais affi
 - Bilingue FR / EN d'un geste.
 - La démo revient seule à sa vue de départ pour le visiteur suivant.
 
-La démo web publique (https://stand-demonstrateur.osc-fr1.scalingo.io/, intégrée sur https://www.fractal-innov.fr/stand/) est le meilleur argument : la faire ouvrir sur le téléphone du prospect pendant l'échange. Le serveur s'endort : la relancer toutes les dix minutes en salon.
+La démo web publique (https://stand-demonstrateur.osc-fr1.scalingo.io/, intégrée sur https://www.fractal-innov.fr/stand/) est le meilleur argument : la faire ouvrir sur le téléphone du prospect pendant l'échange. Elle reste éveillée : un moniteur UptimeRobot, mis en place par l'associé, l'interroge toutes les 5 minutes et alerte par e-mail si elle tombe (vérifié le 30/09/2026 : réponse en 0,06 s). Avant un salon ou une relance, l'ouvrir une fois pour s'en assurer.
 
 ## Ce que le client achète
 
