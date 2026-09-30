@@ -8191,11 +8191,19 @@
       text-decoration: underline; text-decoration-color: rgba(255, 255, 255, 0.25); text-underline-offset: 4px;
     }
     .tour__scene-cmd button:hover { color: #fff; }
-    .tour__scene-cmd-sep { color: var(--text-muted); opacity: .5; }
-    .tour__scene-manip, .tour__scene-manip + .tour__scene-cmd-sep { display: none; }
+
+    /* Parcours, écran tactile : « Manipuler » sur la scène, là où était le dock */
+    .scene3d__manip {
+      position: absolute; left: 50%; bottom: 0.8rem; transform: translateX(-50%); z-index: 1;
+      display: none; align-items: center; gap: 0.4rem;
+      font: inherit; font-size: 0.85rem; font-weight: 700; color: #fff; cursor: pointer;
+      padding: 0.55rem 1.1rem; border-radius: 100px;
+      background: rgba(9, 11, 19, 0.78); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .scene3d__manip[aria-pressed="true"] { background: rgba(59, 104, 255, 0.9); border-color: transparent; }
     @media (pointer: coarse) {
-      .tour__scene-manip { display: inline; }
-      .tour__scene-manip + .tour__scene-cmd-sep { display: inline; }
+      #scene3d[data-slot="parcours"] .scene3d__manip { display: inline-flex; }
     }
 
     /* Écran de la démo quand la scène est dans le parcours : image et repère */
@@ -9797,6 +9805,8 @@
         let poiEnAttente; /* un goto demandé avant que la démo écoute (null = vue de départ) */
         const api = { etat: 'vide', slot: null, manip: false, charger, aller, placer, signal, affichage, manipuler };
         const TACTILE = window.matchMedia('(pointer: coarse)').matches;
+        /* « Manipuler » posé sur la scène (visible dans le parcours sur tactile, par CSS) */
+        calque.insertAdjacentHTML('beforeend', '<button type="button" class="scene3d__manip" data-scene-cmd="manipuler" aria-pressed="false">✋ <span class="scene-manip-label">Manipuler</span></button>');
         /* Un emplacement peut compter plusieurs éléments (une image par étape du
            parcours) : on prend celui qui est affiché. */
         function slotEl(id) {
@@ -10161,9 +10171,7 @@
         /* Commandes de la scène, en tête du panneau (visibles quand elle est ici) */
         const cmd = document.createElement('div');
         cmd.className = 'tour__scene-cmd';
-        cmd.innerHTML = '<button type="button" class="tour__scene-manip" data-scene-cmd="manipuler" aria-pressed="false">✋ <span class="scene-manip-label">Manipuler</span></button>'
-          + '<span class="tour__scene-cmd-sep" aria-hidden="true">·</span>'
-          + '<button type="button" class="tour__scene-plein" data-scene-cmd="plein-ecran">⤢ Plein écran</button>';
+        cmd.innerHTML = '<button type="button" class="tour__scene-plein" data-scene-cmd="plein-ecran">⤢ Plein écran</button>';
         text.insertBefore(cmd, text.firstChild);
       });
       document.addEventListener('scene:slot', (e) => {
