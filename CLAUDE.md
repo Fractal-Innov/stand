@@ -31,7 +31,8 @@ Tous les messages de commit suivent https://www.conventionalcommits.org/en/v1.0.
   - les vidéos et fiches sont produites par le client, STAND les affiche ;
   - le support couvre l'installation avant le salon, pas le salon lui-même ;
   - pas de mode en ligne, pas de redémarrage ni de lancement automatique en standard ;
-  - formules affichées : Logiciel 4 900 € HT (livré en 4 semaines) et Kit complet 6 900 € HT.
+  - aucun prix ni délai affiché : le devis et le délai suivent l'atelier, qui suit l'appel de 30 minutes (l'appel n'est pas l'atelier) ;
+  - une seule marque, Fractal Innov : aucun nom produit affiché (« STAND » n'est que le nom du dépôt et de la démo) ; l'offre se dit « le démonstrateur 3D de votre stand ».
 
 ## Démonstrateur et médias
 
