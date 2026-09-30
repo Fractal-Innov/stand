@@ -3351,29 +3351,26 @@
 
 
     #valeur {
-      /* Défilement ancre (#valeur) : aligné sur scroll-padding-top de `html` */
+      /* Hauteur réservée au bandeau pour la colonne sticky. Pas de scroll-margin-top ici :
+         il s'ajoutait au scroll-padding-top de <html> et l'ancre tombait deux fois trop bas. */
       --sticky-nav-offset: 7.75rem;
-      scroll-margin-top: var(--sticky-nav-offset);
     }
 
     @media (min-width: 1131px) {
       #valeur {
         --sticky-nav-offset: 8.25rem;
-        scroll-margin-top: var(--sticky-nav-offset);
       }
     }
 
     @media (max-width: 640px) {
       #valeur {
         --sticky-nav-offset: 6.75rem;
-        scroll-margin-top: var(--sticky-nav-offset);
       }
     }
 
     @media (min-width: 641px) and (max-width: 1130px) {
       #valeur {
         --sticky-nav-offset: 9rem;
-        scroll-margin-top: var(--sticky-nav-offset);
       }
     }
 
@@ -9680,6 +9677,34 @@
         });
       });
 
+      /* 2b. ANCRES DE SECTION (30/09/2026) : le nom de la section se pose juste sous
+         la barre, avec un léger espace. Le saut natif ne le peut pas : il aligne le
+         haut de la <section>, dont la marge intérieure varie de 45 à 128 px selon la
+         section et l'écran. On vise donc le repère visible (le surtitre
+         .section-number, ou la carte du contact) et on mesure la barre à chaque clic. */
+      const ANCRE_ESPACE = 24;
+      const repereSection = (sec) => sec.querySelector('.section-number') || sec.querySelector('.contact__inner') || sec;
+      /* Position dans le document sans les transform : un repère pas encore
+         « révélé » est décalé de quelques dizaines de pixels par son animation */
+      const hautDocument = (el) => { let y = 0; for (let n = el; n; n = n.offsetParent) y += n.offsetTop; return y; };
+      function allerSection(sec, doux) {
+        const barre = document.querySelector('.masthead-bg') || document.querySelector('.masthead');
+        const basBarre = barre ? barre.getBoundingClientRect().bottom : 0;
+        const y = Math.max(0, hautDocument(repereSection(sec)) - basBarre - ANCRE_ESPACE);
+        logScene('ancre #' + sec.id + ' : repère à ' + Math.round(y + basBarre + ANCRE_ESPACE) + ' px, bas de la barre ' + Math.round(basBarre) + ' px, défilement vers ' + Math.round(y));
+        window.scrollTo({ top: y, behavior: doux && !reduceMotion ? 'smooth' : 'auto' });
+      }
+      document.addEventListener('click', (e) => {
+        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        const lien = e.target.closest('a[href^="#"]');
+        const id = lien && lien.getAttribute('href').slice(1);
+        const sec = id && document.getElementById(id);
+        if (!sec || sec.tagName !== 'SECTION') return;
+        e.preventDefault();
+        if (location.hash !== '#' + id) history.pushState(null, '', '#' + id);
+        allerSection(sec, true);
+      });
+
       /* 3. ACCORDÉON FAQ */
       /* Accordéon sur téléphone seulement : sur grand écran les six réponses sont
          courtes et se lisent d'un coup, en deux colonnes. */
@@ -10310,7 +10335,10 @@
         const isReload = nav && nav.type === 'reload';
         const target = window.location.hash ? document.getElementById(window.location.hash.slice(1)) : null;
         if (target && !isReload) {
-          window.addEventListener('load', () => target.scrollIntoView({ block: 'start' }), { once: true });
+          window.addEventListener('load', () => {
+            if (target.tagName === 'SECTION') allerSection(target, false);
+            else target.scrollIntoView({ block: 'start' });
+          }, { once: true });
         }
       }
 
