@@ -8196,7 +8196,8 @@
     }
     .tour__scene-cmd button:hover { color: #fff; }
 
-    /* Parcours, écran tactile : « Manipuler » sur la scène, là où était le dock */
+    /* Écran tactile : « Manipuler » sur la scène ; dans le parcours là où était le
+       dock, dans la section démo en haut (le dock de la borne occupe le bas) */
     .scene3d__manip {
       position: absolute; left: 50%; bottom: 0.8rem; transform: translateX(-50%); z-index: 1;
       display: none; align-items: center; gap: 0.4rem;
@@ -8207,7 +8208,20 @@
     }
     .scene3d__manip[aria-pressed="true"] { background: rgba(59, 104, 255, 0.9); border-color: transparent; }
     @media (pointer: coarse) {
-      #scene3d[data-slot="parcours"] .scene3d__manip { display: inline-flex; }
+      #scene3d[data-slot="parcours"] .scene3d__manip,
+      #scene3d[data-slot="demo"] .scene3d__manip { display: inline-flex; }
+      #scene3d[data-slot="demo"] .scene3d__manip { top: 0.8rem; bottom: auto; }
+    }
+
+    /* Téléphone, section démo : la borne est rendue à 375 px de large (son dock
+       y tient) puis réduite à la largeur de la boîte (--mobile-scale, posé en JS) */
+    @media (max-width: 640px) {
+      #scene3d[data-slot="demo"]:not(.is-plein) .demo-screen__iframe {
+        width: calc(100% / var(--mobile-scale, 1));
+        height: calc(100% / var(--mobile-scale, 1));
+        transform: scale(var(--mobile-scale, 1));
+        transform-origin: 0 0;
+      }
     }
 
     /* Écran de la démo quand la scène est dans le parcours : image et repère */
@@ -8247,11 +8261,6 @@
       #scene3d .demo-screen__iframe { pointer-events: none; }
       #scene3d.is-manip .demo-screen__iframe { pointer-events: auto; }
       #scene3d.is-manip { box-shadow: 0 0 0 2px var(--accent-blue-light); }
-    }
-    /* Dans la section démo, le bouton n'existe que sur tactile et quand la scène est là */
-    .demo-action-btn--manip { display: none; }
-    @media (pointer: coarse) {
-      body[data-scene-ici="demo"] .demo-action-btn--manip { display: inline-flex; }
     }
     [data-scene-cmd="manipuler"][aria-pressed="true"] { color: #fff; }
 
@@ -8501,16 +8510,6 @@
       </div>
 
       <div class="demo-actions reveal delay-300">
-        <button type="button" class="demo-action-btn demo-action-btn--manip" data-scene-cmd="manipuler" aria-pressed="false">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round" aria-hidden="true">
-            <path d="M9 11V5a1.5 1.5 0 0 1 3 0v6"></path>
-            <path d="M12 10a1.5 1.5 0 0 1 3 0v3"></path>
-            <path d="M15 12a1.5 1.5 0 0 1 3 0v4a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7L4 15a1.6 1.6 0 0 1 2.6-1.9L9 15">
-            </path>
-          </svg>
-          <span class="scene-manip-label">Manipuler</span>
-        </button>
         <button type="button" class="demo-action-btn" data-scene-cmd="plein-ecran">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" aria-hidden="true">
@@ -9803,6 +9802,8 @@
       /* Doit rester synchro avec --kiosk-width (CSS) : largeur "desktop" à laquelle la démo est rendue
          avant d'être réduite à la taille réelle de sa boîte (évite le point de rupture "tablette"). */
       const KIOSK_WIDTH = 1200;
+      /* Largeur de téléphone à laquelle le dock de la borne tient sans déborder */
+      const MOBILE_WIDTH = 375;
       /* Au-delà, la démo est considérée comme muette (serveur endormi, page d'erreur 502...) */
       const SCENE_DELAI_MS = 20000;
       /* Reprise d'un média (lien partagé) : ?media=&t=&page= sont passés à la borne au premier lancement */
@@ -9874,6 +9875,7 @@
           calque.style.height = r.height + 'px';
           calque.style.borderRadius = getComputedStyle(el).borderRadius;
           calque.style.setProperty('--kiosk-scale', (r.width / KIOSK_WIDTH).toFixed(4));
+          calque.style.setProperty('--mobile-scale', Math.min(1, r.width / MOBILE_WIDTH).toFixed(4));
         }
         /* poi null = vue de départ (contrat : stand:goto sans poi) ; undefined = rien à faire */
         /* Ce que la démo montre d'elle-même (contrat : stand:affichage). Dans le
