@@ -3001,6 +3001,19 @@
       max-width: none;
     }
 
+    /* ── Footer sobre (30/09/2026) : logo, badge Catalyseur, liens ── */
+    .footer__logo img { display: block; height: 26px; width: auto; }
+    .footer__catalyseur {
+      font-size: .82rem; color: var(--text-muted); text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 999px; padding: .4rem .9rem;
+      transition: color .2s ease, border-color .2s ease;
+    }
+    .footer__catalyseur b { color: var(--text-main, #fff); }
+    .footer__liens { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.4rem; font-size: .85rem; color: var(--text-muted); }
+    .footer__liens a { color: var(--text-muted); text-decoration: none; transition: color .2s ease; }
+    .footer__liens a:hover, .footer__liens a:focus-visible,
+    .footer__catalyseur:hover, .footer__catalyseur:focus-visible { color: #fff; border-color: rgba(255, 255, 255, 0.3); }
+
     /* RESPONSIVE & MOBILE MENU */
     @media (max-width: 950px) {
 
@@ -3206,6 +3219,13 @@
         flex-direction: column;
         text-align: center;
       }
+
+      .footer__liens { justify-content: center; }
+
+      /* Badge sur deux lignes : coins arrondis plutôt que pilule ; marge basse
+         pour que le bouton QR flottant ne couvre pas le copyright */
+      .footer__catalyseur { border-radius: 14px; line-height: 1.5; }
+      .footer { padding-bottom: 5.5rem; }
 
       .exclusive-banner {
         padding: .6rem 1.5rem;
@@ -8025,8 +8045,8 @@
       <div class="hero-inner">
         <div class="hero-copy">
           <div class="hero-eyebrow">
-            <span class="hero-eyebrow__long">Le kiosque d'exposition interactif</span>
-            <span class="hero-eyebrow__short">Kiosque interactif</span>
+            <span class="hero-eyebrow__long">Le démonstrateur interactif de votre stand</span>
+            <span class="hero-eyebrow__short">Démonstrateur interactif</span>
           </div>
           <h1>
             <span class="hero-title-main">Votre produit reste chez vous<br><em>Votre démo part en salon</em></span>
@@ -9141,9 +9161,23 @@
       </div>
     </section>
 
+    <!-- Footer sobre (maquette A + badge Catalyseur, choisie le 30/09/2026) : la
+         section contact, juste au-dessus, porte déjà tous les boutons. Il sert à
+         rendre les mentions légales accessibles (obligation légale), le reste est
+         discret. -->
     <footer class="footer">
-      <p><b>Fractal Innov</b><br>Transmettre les savoirs par l'expérience.</p>
-      <p id="footerCopyright"></p>
+      <a class="footer__logo" href="#top" aria-label="Fractal Innov, retour en haut de la page">
+        <img src="assets/fractalinnov-logo.webp" alt="" width="770" height="142" loading="lazy" decoding="async">
+      </a>
+      <a class="footer__catalyseur" href="https://lecatalyseur.pold.fr/" target="_blank" rel="noopener">Accompagné
+        par le <b>Catalyseur</b> de Paris Ouest La Défense</a>
+      <nav class="footer__liens" aria-label="Liens du pied de page">
+        <a href="#contact">Réserver 30 min</a>
+        <a href="mailto:corentin.duboc@fractal-innov.fr">E-mail</a>
+        <a href="https://www.linkedin.com/in/corentin-duboc/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.fractal-innov.fr/mentions-legales/">Mentions légales</a>
+        <span id="footerCopyright">© Fractal Innov</span>
+      </nav>
     </footer>
 
   </main>
