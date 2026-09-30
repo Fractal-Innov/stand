@@ -4002,12 +4002,11 @@
     }
 
     /* Téléphone : boîte haute, comme avant, pour que le menu bas de la démo reste accessible */
+    /* Téléphone : boîte en portrait 3:4 (le menu bas de la démo reste accessible),
+       moins haute que les 85 % d'écran d'avant (30/09/2026) */
     @media (max-width: 640px) {
       .demo-screen__viewport {
-        aspect-ratio: auto;
-        height: 85vh;
-        height: 85dvh;
-        min-height: 600px;
+        aspect-ratio: 3 / 4;
       }
     }
 
@@ -7630,16 +7629,6 @@
     .tour__go::before { display: none; }
     .tour__go:hover { color: #fff; }
 
-    /* L'image avance d'une étape ; une étiquette le dit */
-    .tour__media.is-cliquable { position: relative; cursor: pointer; }
-    .tour__media-next {
-      position: absolute; right: 0.9rem; top: 0.9rem; display: inline-flex; align-items: center; gap: 0.35rem;
-      font-size: 0.78rem; font-weight: 700; color: #fff; padding: 0.4rem 0.8rem; border-radius: 100px;
-      background: rgba(9, 11, 19, 0.72); backdrop-filter: blur(6px);
-      border: 1px solid rgba(255, 255, 255, 0.18); pointer-events: none;
-      transition: background .2s ease;
-    }
-    .tour__media.is-cliquable:hover .tour__media-next { background: rgba(59, 104, 255, 0.85); }
 
     @media (max-width: 767px) {
       /* Téléphone : la barre seule, le libellé actif est le titre du panneau */
@@ -7649,7 +7638,7 @@
       .tour__next-sujet { display: none; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .tour__tab::before, .tour__next, .tour__media-next { transition: none; }
+      .tour__tab::before, .tour__next { transition: none; }
       .tour__next:hover { transform: none; }
     }
 
@@ -8188,24 +8177,9 @@
 
     .tour__media { position: relative; }
 
-    /* Scène dans le parcours : l'image n'avance plus d'une étape, Suivant vit dans le panneau */
-    .tour__media.is-live .tour__media-next { display: none; }
-    .tour__media.is-live { cursor: default; }
-
-    /* « Explorer en 3D » : sur l'image, en haut à gauche, face à « Suivant » */
-    .tour__explore {
-      position: absolute; left: 0.9rem; top: 0.9rem; z-index: 1;
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      font: inherit; font-size: 0.78rem; font-weight: 700; color: #fff; cursor: pointer;
-      padding: 0.4rem 0.85rem; border: 0; border-radius: 100px;
-      background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-purple-deep));
-      box-shadow: 0 8px 20px -8px rgba(40, 89, 255, 0.8);
-      transition: transform .2s ease;
-    }
-    .tour__explore:hover { transform: translateY(-1px); }
-    .tour__explore:focus-visible { outline: 2px solid var(--accent-blue-light); outline-offset: 3px; }
-    body[data-scene="chargement"] .tour__explore,
-    body[data-scene="prete"] .tour__explore { display: none; }
+    /* « Lancer la démo » du parcours : disparaît dès que la scène existe */
+    body[data-scene="chargement"] .tour__launch,
+    body[data-scene="prete"] .tour__launch { display: none; }
 
     /* Commandes de la scène, première ligne du panneau, seulement quand elle est ici */
     .tour__scene-cmd { display: none; align-items: center; gap: 0.6rem; min-height: 2rem; margin-bottom: -0.3rem; }
@@ -8239,7 +8213,6 @@
 
     @media (prefers-reduced-motion: reduce) {
       .tour__media.is-loading::after { animation: none; transform: none; }
-      .tour__explore { transition: none; }
     }
   </style>
 
@@ -8397,7 +8370,6 @@
           <div class="demo-screen__bezel">
             <div class="demo-screen__viewport" id="demoViewport" data-scene-slot="demo">
               <picture>
-                <source media="(max-width: 640px)" srcset="assets/demo/poster-portrait.webp">
                 <img class="demo-screen__poster" src="assets/demo/vue-ensemble.webp" width="1600" height="1064" alt=""
                   loading="lazy" decoding="async">
               </picture>
@@ -10122,22 +10094,19 @@
         const act = text.querySelector('.tour__act');
         if (act) text.insertBefore(nav, act); else text.appendChild(nav);
         /* L'image fait avancer aussi : c'est là que le regard se pose */
+        /* « Lancer la démo » sur l'image : le même bouton que l'écran de la démo,
+           la scène se charge ici, à l'étape affichée */
         const media = panel.querySelector('.tour__media');
-        if (media && next) {
-          media.classList.add('is-cliquable');
-          media.insertAdjacentHTML('beforeend', '<span class="tour__media-next" aria-hidden="true">Suivant' + ARROW + '</span>');
-          /* La scène posée dessus : l'image ne sert plus à avancer */
-          media.addEventListener('click', () => { if (!media.classList.contains('is-live')) goTo(next); });
-        }
-        /* « Explorer en 3D » : la scène se charge ici, à l'étape affichée */
         if (media) {
           const etape = tourTabs[idx].getAttribute('data-panel');
-          const explore = document.createElement('button');
-          explore.type = 'button';
-          explore.className = 'tour__explore';
-          explore.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>Explorer en 3D';
-          explore.addEventListener('click', (e) => { e.stopPropagation(); scene.charger('parcours', gotoEtape(etape)); });
-          media.appendChild(explore);
+          const lancer = document.createElement('button');
+          lancer.type = 'button';
+          lancer.className = 'demo-launch tour__launch';
+          lancer.innerHTML = '<span class="demo-launch__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg></span>'
+            + '<span class="demo-launch__text">Lancer la démo</span>'
+            + '<span class="demo-launch__hint">La scène 3D se charge en une dizaine de secondes</span>';
+          lancer.addEventListener('click', () => scene.charger('parcours', gotoEtape(etape)));
+          media.appendChild(lancer);
         }
         /* Commandes de la scène, en tête du panneau (visibles quand elle est ici) */
         const cmd = document.createElement('div');
