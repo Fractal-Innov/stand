@@ -4,35 +4,129 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>STAND - le kiosque d'exposition interactif | Fractal Innov</title>
+  <!-- Une seule marque, Fractal Innov (décision du 30/09/2026) : plus de nom
+       produit affiché. Le titre tient en 57 caractères, entier sur mobile ;
+       le nom de la marque vient du WebSite des données structurées, que
+       Google affiche au-dessus du titre. -->
+  <title>Démonstrateur 3D de salon, sans transporter votre machine</title>
   <meta name="description"
-    content="STAND met le jumeau 3D de votre produit sur un écran tactile, avec vos vidéos et vos fiches, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
-  <link rel="canonical" href="https://www.fractal-innov.fr/stand">
+    content="Le jumeau 3D de votre produit sur l'écran tactile de votre stand, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
+  <link rel="canonical" href="https://www.fractal-innov.fr/stand/">
   <meta name="theme-color" content="#090b13">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
-  <meta property="og:url" content="https://www.fractal-innov.fr/stand">
-  <meta property="og:site_name" content="STAND par Fractal Innov">
-  <meta property="og:title" content="STAND : votre produit reste chez vous, votre démo part en salon">
+  <meta property="og:url" content="https://www.fractal-innov.fr/stand/">
+  <meta property="og:site_name" content="Fractal Innov">
+  <meta property="og:title" content="Votre produit reste chez vous, votre démo part en salon">
   <meta property="og:description"
-    content="STAND met le jumeau 3D de votre produit sur un écran tactile, avec vos vidéos et vos fiches, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
+    content="Le jumeau 3D de votre produit sur l'écran tactile de votre stand, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
   <meta property="og:image" content="https://www.fractal-innov.fr/stand/assets/share/og-image.jpg">
   <meta property="og:image:secure_url" content="https://www.fractal-innov.fr/stand/assets/share/og-image.jpg">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt"
-    content="STAND, le kiosque d'exposition interactif : la scène 3D d'un stand de salon avec sa borne tactile">
+    content="Le démonstrateur 3D de salon de Fractal Innov : la scène 3D d'un stand avec sa borne tactile">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="STAND : votre produit reste chez vous, votre démo part en salon">
+  <meta name="twitter:title" content="Votre produit reste chez vous, votre démo part en salon">
   <meta name="twitter:description"
-    content="STAND met le jumeau 3D de votre produit sur un écran tactile, avec vos vidéos et vos fiches, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
+    content="Le jumeau 3D de votre produit sur l'écran tactile de votre stand, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
   <meta name="twitter:image" content="https://www.fractal-innov.fr/stand/assets/share/og-image.jpg">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
+  <!-- Données structurées : depuis le 30/09/2026 l'accueil renvoie ici,
+       cette page porte donc l'entreprise, le fondateur, le site et le service. -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "Organization",
+        "ProfessionalService"
+      ],
+      "@id": "https://www.fractal-innov.fr/#organisation",
+      "name": "Fractal Innov",
+      "url": "https://www.fractal-innov.fr/",
+      "email": "corentin.duboc@fractal-innov.fr",
+      "logo": "https://www.fractal-innov.fr/media/marque/fi-logo-252.webp",
+      "image": "https://www.fractal-innov.fr/stand/assets/share/og-image.jpg",
+      "description": "Fractal Innov conçoit le démonstrateur 3D de votre stand : le jumeau 3D de votre produit sur l'écran tactile, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.",
+      "foundingDate": "2024-11-01",
+      "founder": {
+        "@id": "https://www.fractal-innov.fr/#fondateur"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Suresnes",
+        "postalCode": "92150",
+        "addressRegion": "Île-de-France",
+        "addressCountry": "FR"
+      },
+      "areaServed": [
+        {
+          "@type": "AdministrativeArea",
+          "name": "Île-de-France"
+        },
+        {
+          "@type": "Country",
+          "name": "France"
+        }
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/corentin-duboc/",
+        "https://www.instagram.com/fractalinnov/"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://www.fractal-innov.fr/#fondateur",
+      "name": "Corentin Duboc",
+      "jobTitle": "Fondateur de Fractal Innov",
+      "worksFor": {
+        "@id": "https://www.fractal-innov.fr/#organisation"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/corentin-duboc/"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.fractal-innov.fr/#site",
+      "url": "https://www.fractal-innov.fr/",
+      "name": "Fractal Innov",
+      "inLanguage": "fr-FR",
+      "publisher": {
+        "@id": "https://www.fractal-innov.fr/#organisation"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.fractal-innov.fr/stand/#service",
+      "name": "Démonstrateur 3D pour stand de salon",
+      "serviceType": "Démonstrateur 3D interactif pour salon professionnel",
+      "description": "Le jumeau 3D de votre produit sur l'écran tactile de votre stand, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.",
+      "provider": {
+        "@id": "https://www.fractal-innov.fr/#organisation"
+      },
+      "areaServed": [
+        {
+          "@type": "AdministrativeArea",
+          "name": "Île-de-France"
+        },
+        {
+          "@type": "Country",
+          "name": "France"
+        }
+      ],
+      "url": "https://www.fractal-innov.fr/stand/"
+    }
+  ]
+}
+  </script>
   <style>
     /* Outfit - self-hosted (GDPR : zéro requête tierce sur ce site vitrine français). Deux graisses seulement. */
     @font-face {
@@ -2296,23 +2390,6 @@
 
     /* FAQ */
     /* OFFRES / DÉROULÉ / NOTES DE SECTION */
-    .offer-price {
-      font-size: 1.9rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--text-main);
-      margin: 0.2rem 0 1rem;
-      line-height: 1.2;
-    }
-
-    .offer-price small {
-      font-size: 0.8rem;
-      font-weight: 400;
-      color: var(--text-muted);
-      margin-left: 0.3rem;
-      letter-spacing: 0;
-    }
-
     .counter-block--featured {
       border-color: var(--glass-border-highlight);
       background: var(--glass-bg-hover);
@@ -2329,47 +2406,6 @@
       text-transform: uppercase;
       color: var(--accent-blue-light);
       margin-bottom: 0.8rem;
-    }
-
-    .offer-tag {
-      display: inline-block;
-      margin-top: 1rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--accent-blue-light);
-      border: 1px solid var(--glass-border);
-      border-radius: 100px;
-      padding: 4px 10px;
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .offer-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 0.5rem;
-    }
-
-    .offer-list li {
-      position: relative;
-      padding-left: 1.4rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .offer-list li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0.55em;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
     }
 
     .cta-social a.cta-social__btn--card {
@@ -2977,6 +3013,29 @@
        courts) : le mécanisme est commun, la valeur dépend du texte. */
     @media (max-width: 1130px) {
 
+    /* ── Footer sobre (30/09/2026) : logo, badge Catalyseur, liens ── */
+    .footer__logo img { display: block; height: 26px; width: auto; }
+    .footer__catalyseur {
+      font-size: .82rem; color: var(--text-muted); text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 999px; padding: .4rem .9rem;
+      transition: color .2s ease, border-color .2s ease;
+    }
+    .footer__catalyseur b { color: var(--text-main, #fff); }
+
+    /* Petite flèche « sortant » : signale le lien externe, glisse au survol */
+    .footer__catalyseur-fin { white-space: nowrap; } /* la flèche ne part jamais seule à la ligne */
+    .footer__catalyseur-fleche { margin-left: .35rem; vertical-align: -1px; opacity: .7; transition: transform .2s ease, opacity .2s ease; }
+    .footer__catalyseur:hover .footer__catalyseur-fleche,
+    .footer__catalyseur:focus-visible .footer__catalyseur-fleche { transform: translate(2px, -2px); opacity: 1; }
+    @media (prefers-reduced-motion: reduce) { .footer__catalyseur-fleche { transition: none; } }
+    .footer__liens { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.4rem; font-size: .85rem; color: var(--text-muted); }
+    .footer__liens a { color: var(--text-muted); text-decoration: none; transition: color .2s ease; }
+    .footer__liens a:hover, .footer__liens a:focus-visible,
+    .footer__catalyseur:hover, .footer__catalyseur:focus-visible { color: #fff; border-color: rgba(255, 255, 255, 0.3); }
+
+    /* RESPONSIVE & MOBILE MENU */
+    @media (max-width: 950px) {
+
       /* Même gouttière qu’au bandeau (masthead-inner ≈ 100vw − 2rem → 1rem de chaque côté) */
       .masthead {
         padding: 1rem 1rem 0.5rem;
@@ -3193,6 +3252,13 @@
         flex-direction: column;
         text-align: center;
       }
+
+      .footer__liens { justify-content: center; }
+
+      /* Badge sur deux lignes : coins arrondis plutôt que pilule ; marge basse
+         pour que le bouton QR flottant ne couvre pas le copyright */
+      .footer__catalyseur { border-radius: 14px; line-height: 1.5; font-size: .78rem; padding: .4rem .75rem; }
+      .footer { padding-bottom: 5.5rem; }
 
       .exclusive-banner {
         padding: .6rem 1.5rem;
@@ -3589,24 +3655,6 @@
       clip: rect(0, 0, 0, 0);
       white-space: nowrap;
       border: 0;
-    }
-
-    /* ── Masthead : nom du produit à côté du logo ── */
-    .masthead-product {
-      margin-left: 0.7rem;
-      padding-left: 0.7rem;
-      border-left: 1px solid rgba(255, 255, 255, 0.18);
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      line-height: 1;
-      color: var(--accent-blue-light);
-    }
-
-    @media (max-width: 420px) {
-      .masthead-product {
-        display: none;
-      }
     }
 
     /* ── Hero : eyebrow court sur smartphone ── */
@@ -4989,162 +5037,6 @@
     .wiring.is-drawn .wiring__badge--4 {
       opacity: 1;
       transition-delay: 1.65s;
-    }
-
-    /* ── Tarifs : tableau inclus / non inclus ── */
-    .offer-table-wrap {
-      margin-top: 2.5rem;
-      overflow-x: auto;
-      border-radius: 18px;
-      border: 1px solid var(--glass-border);
-      background: var(--glass-bg);
-    }
-
-    .offer-table {
-      width: 100%;
-      min-width: 560px;
-      border-collapse: collapse;
-    }
-
-    .offer-table th,
-    .offer-table td {
-      padding: 0.85rem 1rem;
-      border-bottom: 1px solid var(--glass-border);
-      text-align: left;
-      vertical-align: middle;
-    }
-
-    .offer-table thead th {
-      padding: 1.4rem 1rem 1.1rem;
-      vertical-align: bottom;
-    }
-
-    .offer-table tbody tr:last-child th,
-    .offer-table tbody tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .offer-table tbody th {
-      width: 46%;
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: var(--text-main);
-    }
-
-    .offer-table td {
-      width: 27%;
-      font-size: 0.86rem;
-      color: var(--text-muted);
-      text-align: center;
-    }
-
-    .offer-table .is-featured {
-      background: rgba(59, 104, 255, 0.09);
-    }
-
-    .offer-table thead th.is-featured {
-      box-shadow: inset 0 3px 0 var(--accent-blue);
-    }
-
-    .offer-head {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.2rem;
-      text-align: center;
-    }
-
-    .offer-head__name {
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent-blue-light);
-    }
-
-    .offer-head__price {
-      font-size: 1.7rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      color: var(--text-main);
-    }
-
-    .offer-head__price small {
-      font-size: 0.75rem;
-      font-weight: 400;
-      color: var(--text-muted);
-    }
-
-    .offer-head__meta {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .offer-badge {
-      margin-bottom: 0.3rem;
-      font-size: 0.66rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #fff;
-      background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-purple-deep));
-      border-radius: 100px;
-      padding: 0.25rem 0.6rem;
-    }
-
-    .offer-table .ok,
-    .offer-table .no {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-    }
-
-    .offer-table .ok {
-      background: rgba(74, 222, 128, 0.14);
-      color: var(--green);
-    }
-
-    .offer-table .ok::before {
-      content: '';
-      width: 6px;
-      height: 11px;
-      border-right: 2.5px solid currentColor;
-      border-bottom: 2.5px solid currentColor;
-      transform: rotate(45deg) translate(-1px, -2px);
-    }
-
-    .offer-table .no {
-      background: rgba(255, 255, 255, 0.06);
-      color: rgba(255, 255, 255, 0.35);
-    }
-
-    .offer-table .no::before {
-      content: '';
-      width: 10px;
-      height: 2px;
-      border-radius: 2px;
-      background: currentColor;
-    }
-
-    .section .offer-band {
-      max-width: none;
-      margin: 1.4rem 0 0;
-      padding: 0.9rem 1.2rem;
-      border-radius: 12px;
-      border: 1px dashed rgba(255, 255, 255, 0.18);
-      font-size: 0.9rem;
-      line-height: 1.55;
-      color: var(--text-muted);
-    }
-
-    .offer-band strong {
-      margin-right: 0.35rem;
-      font-weight: 600;
-      color: var(--text-main);
     }
 
     /* ── FAQ : chevron ── */
@@ -7666,265 +7558,6 @@
     }
 
     /* ============================================================
-       TARIFS : deux formules qui se comparent d'un coup d'œil, un
-       seul geste ensuite (l'appel). Sur téléphone, le tableau tient
-       dans la largeur : libellé + deux colonnes de coches.
-       ============================================================ */
-    .section--tarifs {
-      isolation: isolate;
-    }
-
-    .section--tarifs::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background: radial-gradient(50% 45% at 70% 45%, rgba(40, 89, 255, 0.09), transparent 70%);
-    }
-
-    .offer-table-wrap {
-      overflow: hidden;
-      box-shadow: 0 30px 80px -40px rgba(40, 89, 255, 0.4);
-    }
-
-    .offer-table {
-      min-width: 0;
-      table-layout: fixed;
-    }
-
-    .offer-table col,
-    .offer-table th,
-    .offer-table td {
-      box-sizing: border-box;
-    }
-
-    .offer-table tbody th {
-      width: auto;
-    }
-
-    .offer-table td,
-    .offer-table thead th:not(.offer-table__what) {
-      width: 27%;
-    }
-
-    /* Colonne kit : mise en avant plus nette */
-    .offer-table .is-featured {
-      background: linear-gradient(180deg, rgba(40, 89, 255, 0.16), rgba(124, 58, 237, 0.08));
-    }
-
-    .offer-table tbody .is-featured {
-      background: rgba(59, 104, 255, 0.09);
-    }
-
-    .offer-table thead th.is-featured {
-      box-shadow: inset 0 3px 0 var(--accent-purple);
-    }
-
-    .offer-head__delta {
-      margin-top: 0.15rem;
-      font-size: 0.74rem;
-      font-weight: 600;
-      color: var(--accent-blue-light);
-    }
-
-    /* Groupes de lignes : ce qui est commun, ce que le kit ajoute */
-    .offer-table .offer-group th {
-      padding: 0.7rem 1rem 0.45rem;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      background: rgba(0, 0, 0, 0.18);
-      width: auto;
-    }
-
-    .offer-table .offer-group--kit th {
-      color: var(--accent-blue-light);
-    }
-
-    /* Les coches apparaissent en cascade à l'arrivée du tableau */
-    .offer-table .ok,
-    .offer-table .no {
-      transform: scale(0.6);
-      opacity: 0;
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-      transition-delay: calc(var(--i, 0) * 45ms);
-    }
-
-    .offer-table-wrap.active .ok,
-    .offer-table-wrap.active .no {
-      transform: none;
-      opacity: 1;
-    }
-
-    .offer-table .ok {
-      box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
-    }
-
-    .offer-table tr:hover .ok {
-      box-shadow: 0 0 14px rgba(74, 222, 128, 0.25);
-    }
-
-    .offer-table tbody tr:not(.offer-group):hover th {
-      color: #fff;
-    }
-
-    /* Le geste suivant : l'appel, le même pour les deux formules */
-    .offer-cta {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem 1.25rem;
-      margin-top: 1.4rem;
-    }
-
-    .offer-cta__btn {
-      position: relative;
-      isolation: isolate;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      padding: 0.85rem 1.5rem;
-      border-radius: 100px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #fff;
-      text-decoration: none;
-      background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-purple-deep));
-      box-shadow: 0 12px 28px -12px rgba(40, 89, 255, 0.8);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .offer-cta__btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      border-radius: inherit;
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
-
-    .offer-cta__btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 34px -12px rgba(139, 92, 246, 0.8);
-    }
-
-    .offer-cta__btn:hover::before {
-      opacity: 1;
-    }
-
-    .offer-cta__btn:focus-visible {
-      outline: 2px solid var(--accent-blue-light);
-      outline-offset: 3px;
-    }
-
-    .offer-cta__hint {
-      font-size: 0.86rem;
-      color: var(--text-muted);
-    }
-
-    /* Téléphone : pas de défilement horizontal, en-têtes compactes */
-    @media (max-width: 640px) {
-      .offer-table-wrap {
-        margin-left: -0.5rem;
-        margin-right: -0.5rem;
-      }
-
-      .offer-table th,
-      .offer-table td {
-        padding: 0.7rem 0.5rem;
-      }
-
-      .offer-table thead th {
-        padding: 0.9rem 0.35rem 0.75rem;
-      }
-
-      .offer-table tbody th {
-        padding-left: 0.85rem;
-        font-size: 0.86rem;
-        line-height: 1.4;
-      }
-
-      .offer-table td,
-      .offer-table thead th:not(.offer-table__what) {
-        width: 82px;
-      }
-
-      .offer-table .offer-group th {
-        padding-left: 0.85rem;
-        font-size: 0.62rem;
-        letter-spacing: 0.12em;
-      }
-
-      .offer-head {
-        gap: 0.1rem;
-      }
-
-      .offer-head__name {
-        font-size: 0.62rem;
-        letter-spacing: 0.06em;
-      }
-
-      .offer-head__price {
-        font-size: 1.05rem;
-        white-space: nowrap;
-      }
-
-      .offer-head__price small {
-        font-size: 0.6rem;
-      }
-
-      .offer-head__meta {
-        display: none;
-      }
-
-      .offer-head__delta {
-        font-size: 0.62rem;
-        white-space: nowrap;
-      }
-
-      .offer-badge {
-        font-size: 0.52rem;
-        padding: 0.18rem 0.4rem;
-        letter-spacing: 0.06em;
-      }
-
-      .offer-table .ok,
-      .offer-table .no {
-        width: 24px;
-        height: 24px;
-      }
-
-      .offer-cta {
-        flex-direction: column;
-        align-items: stretch;
-        text-align: center;
-      }
-
-      .offer-cta__btn {
-        justify-content: center;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-
-      .offer-table .ok,
-      .offer-table .no {
-        transform: none;
-        opacity: 1;
-        transition: none;
-      }
-
-      .offer-cta__btn {
-        transition: none;
-      }
-    }
-
-    /* ============================================================
        VOS QUESTIONS : six objections, six réponses courtes. Sur grand
        écran tout est lisible d'un coup, en deux colonnes ; sur
        téléphone l'accordéon reste, première question ouverte.
@@ -8411,10 +8044,9 @@
 
   <header class="masthead">
     <div class="masthead-inner">
-      <a href="#top" class="masthead-brand" aria-label="STAND par Fractal Innov - Retour en haut de la page">
+      <a href="#top" class="masthead-brand" aria-label="Fractal Innov, retour en haut de la page">
         <img src="assets/fractalinnov-logo.webp" alt="Fractal Innov" class="masthead-logo-img" loading="eager"
           decoding="async" />
-        <span class="masthead-product" aria-hidden="true">STAND</span>
       </a>
 
       <nav class="main-nav" id="mainNav" aria-label="Navigation principale">
@@ -8423,7 +8055,7 @@
           <a href="#probleme" class="nav-link">Le défi</a>
           <a href="#valeur" class="nav-link">Ce que vous gagnez</a>
           <a href="#livre" class="nav-link">Ce qui est livré</a>
-          <a href="#tarifs" class="nav-link">Tarifs</a>
+          <a href="#deroule" class="nav-link">Comment ça se passe</a>
         </div>
         <a href="#contact" class="masthead-cta">Contact</a>
       </nav>
@@ -8446,13 +8078,13 @@
       <div class="hero-inner">
         <div class="hero-copy">
           <div class="hero-eyebrow">
-            <span class="hero-eyebrow__long">Le kiosque d'exposition interactif</span>
-            <span class="hero-eyebrow__short">Kiosque interactif</span>
+            <span class="hero-eyebrow__long">Le démonstrateur interactif de votre stand</span>
+            <span class="hero-eyebrow__short">Démonstrateur interactif</span>
           </div>
           <h1>
             <span class="hero-title-main">Votre produit reste chez vous<br><em>Votre démo part en salon</em></span>
           </h1>
-          <p class="hero-lead">STAND met le jumeau 3D de votre produit sur l'écran tactile de votre stand. Le visiteur
+          <p class="hero-lead">Le jumeau 3D de votre produit, sur l'écran tactile de votre stand. Le visiteur
             l'explore du doigt, votre commercial le pilote depuis son téléphone, sans réseau.</p>
         </div>
 
@@ -8469,15 +8101,15 @@
         </div>
 
         <!-- Visuel hero : poster de la démo aujourd'hui, boucle vidéo ou scène Needle demain (même emplacement) -->
-        <a href="#demo" class="hero-visual" aria-label="Lancer la démo STAND" data-launch-demo>
+        <a href="#demo" class="hero-visual" aria-label="Lancer la démo" data-launch-demo>
           <figure class="hero-visual__frame">
             <video class="hero-visual__img" id="heroVideo" muted loop playsinline autoplay preload="metadata"
               poster="assets/demo/hero-poster.webp" width="1280" height="720" disablepictureinpicture
-              aria-label="La scène 3D de la démo STAND : un stand de salon avec sa borne tactile, son écran de présentation et ses visiteurs">
+              aria-label="La scène 3D de la démo : un stand de salon avec sa borne tactile, son écran de présentation et ses visiteurs">
               <source src="assets/demo/hero-loop.webm" type="video/webm">
               <source src="assets/demo/hero-loop.mp4" type="video/mp4">
               <img class="hero-visual__img" src="assets/demo/hero-poster.webp" width="1280" height="720"
-                alt="La scène 3D de la démo STAND : un stand de salon avec sa borne tactile, son écran de présentation et ses visiteurs"
+                alt="La scène 3D de la démo : un stand de salon avec sa borne tactile, son écran de présentation et ses visiteurs"
                 fetchpriority="high" decoding="async">
             </video>
             <figcaption class="hero-visual__caption">
@@ -8492,7 +8124,7 @@
           </figure>
         </a>
 
-        <nav class="hero-pillars" aria-label="Ce que STAND change">
+        <nav class="hero-pillars" aria-label="Ce qui change sur votre stand">
           <a href="#step-attirer" class="hero-pillar">
             <span class="hero-pillar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -8740,7 +8372,7 @@
             <path d="M12 3l2.3 6.7L21 12l-6.7 2.3L12 21l-2.3-6.7L3 12l6.7-2.3z"></path>
           </svg>
         </span>
-        <p>STAND le remplace par son jumeau 3D, et laisse à vos commerciaux le soin de conclure.</p>
+        <p>Son jumeau 3D prend sa place, et laisse à vos commerciaux le soin de conclure.</p>
       </div>
 
       <div class="pullquote defi-who reveal delay-300">
@@ -8812,7 +8444,8 @@
               <h4>Expliquer</h4>
               <span class="step-gain">Compris sans attendre un commercial</span>
               <p>Le jumeau 3D, un parcours guidé et la bonne vidéo au bon moment&nbsp;: le visiteur comprend le
-                problème, la solution et le fonctionnement, sans attendre qu'un commercial se libère.</p>
+                problème, la solution et le fonctionnement, sans attendre qu'un commercial se libère. Toute votre gamme
+                  peut partager le même écran, sur devis.</p>
               <img class="step-card__img" src="assets/demo/step-expliquer.webp" width="1600" height="760" alt=""
                 loading="lazy" decoding="async">
             </div>
@@ -8838,8 +8471,8 @@
               <h4>Réutiliser</h4>
               <span class="step-gain">Un support qui ressert après le salon</span>
               <p>Le même contenu ressert sur vos prochains salons, en showroom et en rendez-vous commercial. Vos équipes
-                le modifient elles-mêmes, sans développeur. En option, le visiteur repart avec la présentation sur son
-                téléphone, via un QR code.</p>
+                  le modifient elles-mêmes, sans développeur. Et chaque salon se mesure&nbsp;: visites par jour,
+                  boutons touchés, vidéos regardées jusqu'au bout.</p>
               <img class="step-card__img" src="assets/demo/step-reutiliser.webp" width="1600" height="900" alt=""
                 loading="lazy" decoding="async">
             </div>
@@ -8854,7 +8487,7 @@
       <h2 class="reveal delay-100">Votre produit, en 3D, à explorer du bout du doigt</h2>
       <p class="reveal delay-200">Un menu simple guide la visite&nbsp;: chaque sujet amène la caméra exactement là où
         il faut, et des points cliquables ouvrent vidéos, fiches ou explications au moment où la question se pose. Dans
-        la démo, le produit fictif est un stand de salon. Avec STAND, c'est votre machine, votre équipement, votre
+        la démo, le produit fictif est un stand de salon. Chez vous, c'est votre machine, votre équipement, votre
         système.</p>
 
       <div class="tour reveal delay-300">
@@ -9069,7 +8702,7 @@
       </div>
 
       <p class="section-note reveal delay-200">Vous n'avez pas de fichiers 3D&nbsp;? Des photos et des plans suffisent
-        souvent pour démarrer. Nous regardons ensemble ce qui existe, lors de l'appel.</p>
+        souvent pour démarrer. Nous regardons ensemble ce qui existe, lors de l'atelier.</p>
     </section>
 
     <div class="band band--light">
@@ -9178,7 +8811,7 @@
               <g class="wiring__device">
                 <rect x="600" y="40" width="320" height="200" rx="12" class="wiring__shell"></rect>
                 <rect x="614" y="54" width="292" height="172" rx="6" fill="url(#wiringScreen)" opacity="0.9"></rect>
-                <text x="760" y="132" class="wiring__screen-text" text-anchor="middle">STAND</text>
+                <text x="760" y="132" class="wiring__screen-text" text-anchor="middle">DÉMO</text>
                 <text x="760" y="156" class="wiring__screen-sub" text-anchor="middle">le jumeau 3D de votre
                   produit</text>
                 <rect x="730" y="240" width="60" height="26" class="wiring__shell"></rect>
@@ -9269,124 +8902,6 @@
       </section>
     </div>
 
-    <section id="tarifs" class="section section--tarifs">
-      <div class="section-number reveal">Tarifs</div>
-      <h2 class="reveal delay-100">Deux formules, un prix clair</h2>
-      <p class="reveal delay-200">Vous êtes propriétaire de l'outil. Le devis est établi après un appel de 30 minutes,
-        une fois votre produit et votre prochain salon connus.</p>
-
-      <div class="offer-table-wrap reveal delay-200">
-        <table class="offer-table">
-          <thead>
-            <tr>
-              <th scope="col" class="offer-table__what"><span class="sr-only">Ce qui est inclus</span></th>
-              <th scope="col">
-                <div class="offer-head">
-                  <span class="offer-head__name">Logiciel</span>
-                  <strong class="offer-head__price">4&nbsp;900&nbsp;€ <small>HT</small></strong>
-                  <span class="offer-head__meta">Livré en 4 semaines</span>
-                </div>
-              </th>
-              <th scope="col" class="is-featured">
-                <div class="offer-head">
-                  <span class="offer-badge">Prêt à brancher</span>
-                  <span class="offer-head__name">Kit complet</span>
-                  <strong class="offer-head__price">6&nbsp;900&nbsp;€ <small>HT</small></strong>
-                  <span class="offer-head__meta">Logiciel + matériel configuré</span>
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="offer-group">
-              <th scope="rowgroup" colspan="3">Dans les deux formules</th>
-            </tr>
-            <tr>
-              <th scope="row">L'expérience STAND à vos couleurs, à partir de vos fichiers 3D</th>
-              <td><span class="ok"><span class="sr-only">Inclus</span></span></td>
-              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
-            </tr>
-            <tr>
-              <th scope="row">Jumeau 3D et parcours guidé</th>
-              <td><span class="ok"><span class="sr-only">Inclus</span></span></td>
-              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
-            </tr>
-            <tr>
-              <th scope="row">Vos vidéos et vos fiches, en français et en anglais</th>
-              <td><span class="ok"><span class="sr-only">Inclus</span></span></td>
-              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
-            </tr>
-            <tr>
-              <th scope="row">Régie protégée par code et télécommande sur téléphone</th>
-              <td><span class="ok"><span class="sr-only">Inclus</span></span></td>
-              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
-            </tr>
-            <tr>
-              <th scope="row">Application autonome, sans réseau, et statistiques de visite</th>
-              <td><span class="ok"><span class="sr-only">Inclus</span></span></td>
-              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
-            </tr>
-            <tr>
-              <th scope="row">Analyse de vos fichiers 3D</th>
-              <td><span class="ok"><span class="sr-only">Inclus</span></span></td>
-              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
-            </tr>
-            <tr>
-              <th scope="row">Notice d'utilisation</th>
-              <td><span class="ok"><span class="sr-only">Inclus</span></span></td>
-              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
-            </tr>
-            <tr class="offer-group offer-group--kit">
-              <th scope="rowgroup" colspan="3">En plus, dans le kit complet</th>
-            </tr>
-            <tr>
-              <th scope="row">Mini PC préparé, l'expérience installée</th>
-              <td><span class="no"><span class="sr-only">Non inclus</span></span></td>
-              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
-            </tr>
-            <tr>
-              <th scope="row">Routeur de voyage configuré, câbles, alimentation</th>
-              <td><span class="no"><span class="sr-only">Non inclus</span></span></td>
-              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
-            </tr>
-            <tr>
-              <th scope="row">Configuration initiale</th>
-              <td><span class="no"><span class="sr-only">Non inclus</span></span></td>
-              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
-            </tr>
-            <tr>
-              <th scope="row">Guide d'une page, kit prêt à brancher</th>
-              <td><span class="no"><span class="sr-only">Non inclus</span></span></td>
-              <td class="is-featured"><span class="ok"><span class="sr-only">Inclus</span></span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="offer-cta reveal delay-300">
-        <a class="offer-cta__btn" href="https://calendar.app.google/SDuiKb9ZBQ6BcbED6" target="_blank" rel="noopener">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="4" width="18" height="18" rx="2"></rect>
-            <line x1="16" y1="2" x2="16" y2="6"></line>
-            <line x1="8" y1="2" x2="8" y2="6"></line>
-            <line x1="3" y1="10" x2="21" y2="10"></line>
-          </svg>
-          Réserver l'appel de 30 min
-        </a>
-        <span class="offer-cta__hint">Le devis suit cet appel, pour l'une ou l'autre formule</span>
-      </div>
-
-      <p class="offer-band reveal delay-200"><strong>Sur devis, selon votre scénario&nbsp;:</strong> modélisation 3D si
-        vos
-        fichiers ne sont pas exploitables tels quels, mobilier et présentoir avec nos partenaires, flight case, écran
-        de veille 3D animé.</p>
-
-      <p class="section-note reveal delay-200">Un premier industriel nous fait déjà confiance&nbsp;: trois salons
-        internationaux, en Europe, aux États-Unis et en Asie, avec le même kit. Nous ne pouvons pas le citer, mais nous
-        pouvons vous raconter comment nous l'avons accompagné.</p>
-    </section>
-
     <section id="deroule" class="section">
       <div class="section-number reveal">Comment ça se passe</div>
       <h2 class="reveal delay-100">De l'appel au salon, en trois étapes</h2>
@@ -9407,8 +8922,8 @@
               <span class="timeline__when">30 minutes</span>
             </div>
             <h4>Un appel de 30 minutes</h4>
-            <p>Vous décrivez votre produit et votre prochain salon. Nous regardons vos fichiers 3D, photos et vidéos en
-              direct, et nous définissons ensemble l'expérience. Le devis suit cet entretien.</p>
+            <p>Vous décrivez votre produit et votre prochain salon. Nous vérifions ensemble que le démonstrateur répond
+              à votre besoin, et nous préparons l'atelier.</p>
             <a href="#contact" class="timeline__cta">Réserver l'appel
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                 stroke-linejoin="round" aria-hidden="true">
@@ -9430,11 +8945,12 @@
                   <path d="M2 12l10 5 10-5"></path>
                 </svg>
               </span>
-              <span class="timeline__when">4 semaines</span>
+              <span class="timeline__when">Délai au devis</span>
             </div>
-            <h4>La production</h4>
-            <p>Nous construisons l'expérience à partir de vos fichiers&nbsp;: conversion et optimisation de la scène 3D,
-              parcours guidé, intégration de vos vidéos et de vos fiches. Quatre semaines pour la formule Logiciel.</p>
+            <h4>L'atelier, puis la production</h4>
+            <p>L'atelier analyse vos fichiers 3D, photos et vidéos, et tout le projet&nbsp;: le devis et le délai en
+              découlent. Puis nous construisons l'expérience&nbsp;: scène 3D convertie et optimisée, parcours guidé,
+              vos vidéos et vos fiches intégrées.</p>
           </div>
         </li>
 
@@ -9550,7 +9066,7 @@
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg></span>
           </div>
-          <p>Nous l'évaluons lors de l'appel. Des photos et des plans suffisent souvent pour démarrer, la modélisation
+          <p>Nous l'évaluons lors de l'atelier. Des photos et des plans suffisent souvent pour démarrer, la modélisation
             est alors chiffrée sur devis.</p>
         </div>
 
@@ -9587,7 +9103,7 @@
 
         <h2 class="reveal delay-100">Parlons de votre prochain salon</h2>
         <p class="contact__lead reveal delay-100">Décrivez votre produit et votre prochain salon&nbsp;: nous vous
-          disons comment STAND s'adapte, et à quel prix.</p>
+          disons comment le démonstrateur s'adapte à votre cas, et comment se passe la suite.</p>
 
         <ul class="contact__facts reveal delay-200" aria-label="Comment se passe l'appel">
           <li>
@@ -9607,7 +9123,7 @@
               <path d="M4 12l8 4 8-4"></path>
               <path d="M4 17l8 4 8-4"></path>
             </svg>
-            Vos fichiers 3D regardés en direct
+            Gratuit, sans engagement
           </li>
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -9616,7 +9132,7 @@
               <path d="M14 3v5h5"></path>
               <path d="M9 13h6M9 17h4"></path>
             </svg>
-            Le devis après l'appel
+            Le devis après l'atelier
           </li>
         </ul>
 
@@ -9678,15 +9194,29 @@
       </div>
     </section>
 
+    <!-- Footer sobre (maquette A + badge Catalyseur, choisie le 30/09/2026) : la
+         section contact, juste au-dessus, porte déjà tous les boutons. Il sert à
+         rendre les mentions légales accessibles (obligation légale), le reste est
+         discret. -->
     <footer class="footer">
-      <p><b>Fractal Innov</b><br>Transmettre les savoirs par l'expérience.</p>
-      <p id="footerCopyright"></p>
+      <a class="footer__logo" href="#top" aria-label="Fractal Innov, retour en haut de la page">
+        <img src="assets/fractalinnov-logo.webp" alt="" width="770" height="142" loading="lazy" decoding="async">
+      </a>
+      <a class="footer__catalyseur" href="https://lecatalyseur.pold.fr/" target="_blank" rel="noopener">Accompagné
+        par le <b>Catalyseur Innovation</b> <span class="footer__catalyseur-fin">POLD<svg class="footer__catalyseur-fleche" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <nav class="footer__liens" aria-label="Liens du pied de page">
+        <a href="#contact">Réserver 30 min</a>
+        <a href="mailto:corentin.duboc@fractal-innov.fr">E-mail</a>
+        <a href="https://www.linkedin.com/in/corentin-duboc/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.fractal-innov.fr/mentions-legales/">Mentions légales</a>
+        <span id="footerCopyright">© Fractal Innov</span>
+      </nav>
     </footer>
 
   </main>
 
   <div class="demo-fullscreen-overlay" id="demoFullscreenOverlay" role="dialog" aria-modal="true"
-    aria-label="Démo STAND en plein écran" hidden>
+    aria-label="Démo en plein écran" hidden>
     <button type="button" class="demo-fullscreen-overlay__close" id="demoFullscreenClose"
       aria-label="Fermer le plein écran">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -9696,7 +9226,7 @@
       </svg>
       <span>Fermer</span>
     </button>
-    <iframe class="demo-fullscreen-overlay__iframe" id="demoFullscreenIframe" title="STAND - démo en ligne, plein écran"
+    <iframe class="demo-fullscreen-overlay__iframe" id="demoFullscreenIframe" title="Démonstrateur 3D : démo en ligne, plein écran"
       allow="autoplay; fullscreen; xr-spatial-tracking; gamepad"></iframe>
   </div>
 
@@ -9824,7 +9354,7 @@
 
       /* 0b. Nav active selon la section */
       const navLinksAll = document.querySelectorAll('#mainNav .nav-link');
-      const sectionIdsNav = ['demo', 'probleme', 'valeur', 'jumeau-3d', 'livre', 'tarifs', 'deroule', 'questions'];
+      const sectionIdsNav = ['demo', 'probleme', 'valeur', 'jumeau-3d', 'livre', 'deroule', 'questions'];
       let headerScrollRaf = 0;
       function updateNavActiveFromScroll() {
         if (!navLinksAll.length) return;
@@ -10034,7 +9564,7 @@
         }
         demoIframe = document.createElement('iframe');
         demoIframe.className = 'demo-screen__iframe';
-        demoIframe.title = 'STAND - démo en ligne';
+        demoIframe.title = 'Démonstrateur 3D : démo en ligne';
         demoIframe.setAttribute('allow', 'autoplay; fullscreen; xr-spatial-tracking; gamepad');
         demoIframe.src = demoHref(DEMO_URL, Object.assign({ poi }, reprise));
         reprise = {};
@@ -10075,7 +9605,7 @@
           launchDemo(null);
           const frame = document.createElement('iframe');
           frame.className = 'demo-phone__iframe';
-          frame.title = 'STAND - télécommande de la démo';
+          frame.title = 'Démonstrateur 3D : télécommande de la démo';
           frame.src = demoHref(REMOTE_URL);
           remoteViewport.appendChild(frame);
           remoteViewport.classList.add('is-live');
@@ -10307,11 +9837,6 @@
         io.observe(defiTimer);
       }
 
-      /* 11d. TARIFS : ordre d'apparition des coches, ligne par ligne */
-      document.querySelectorAll('.offer-table tbody tr').forEach((tr, i) => {
-        tr.querySelectorAll('.ok, .no').forEach((m) => m.style.setProperty('--i', String(i)));
-      });
-
       /* 12. FARFADET : QR et feuille de partage vers l'endroit courant. L'état vit dans
          data-section / data-poi / data-demo sur <body>, posés par le scroll-spy, la lecture
          guidée et la démo ; le panneau se met à jour quand ils changent. */
@@ -10322,7 +9847,7 @@
         const SITE = 'https://www.fractal-innov.fr/stand';
         const SECTION_LABEL = {
           demo: 'La démo', probleme: 'Le défi', valeur: 'Ce que vous gagnez', 'jumeau-3d': 'Le jumeau 3D',
-          livre: 'Ce qui est livré', tarifs: 'Tarifs', deroule: 'Le déroulé', questions: 'Questions fréquentes',
+          livre: 'Ce qui est livré', deroule: 'Le déroulé', questions: 'Questions fréquentes',
           contact: 'Contact'
         };
         const shareWhere = document.getElementById('shareWhere');
@@ -10475,8 +10000,8 @@
           shareNative.addEventListener('click', () => {
             const state = currentState();
             navigator.share({
-              title: mode === 'remote' ? 'STAND : télécommande de la démo' : 'STAND : ' + state.where,
-              text: 'STAND, le kiosque d\'exposition interactif. ' + state.where,
+              title: mode === 'remote' ? 'Télécommande de la démo 3D' : 'Démonstrateur 3D : ' + state.where,
+              text: 'Le démonstrateur 3D de salon de Fractal Innov. ' + state.where,
               url: state.url
             }).catch(() => { });
           });
