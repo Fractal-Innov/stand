@@ -3003,16 +3003,6 @@
       max-width: none;
     }
 
-    /* RESPONSIVE & MOBILE MENU
-       ⚠️ Règle du 25/09/2026 : les liens de la navbar ne passent JAMAIS sur
-       deux lignes. Le burger tient donc jusqu'à 1130 px et non plus 950 :
-       la pilule a besoin de 1080 px pour ces libellés (mesuré), soit
-       1112 px de viewport, plus 17 px pour une barre de défilement Windows
-       (comptée par la media query, absente de la mise en page).
-       Même principe sur l'accueil, avec son propre seuil (libellés plus
-       courts) : le mécanisme est commun, la valeur dépend du texte. */
-    @media (max-width: 1130px) {
-
     /* ── Footer sobre (30/09/2026) : logo, badge Catalyseur, liens ── */
     .footer__logo img { display: block; height: 26px; width: auto; }
     .footer__catalyseur {
@@ -3033,8 +3023,15 @@
     .footer__liens a:hover, .footer__liens a:focus-visible,
     .footer__catalyseur:hover, .footer__catalyseur:focus-visible { color: #fff; border-color: rgba(255, 255, 255, 0.3); }
 
-    /* RESPONSIVE & MOBILE MENU */
-    @media (max-width: 950px) {
+    /* RESPONSIVE & MOBILE MENU
+       ⚠️ Règle du 25/09/2026 : les liens de la navbar ne passent JAMAIS sur
+       deux lignes. Le burger tient donc jusqu'à 1130 px et non plus 950 :
+       la pilule a besoin de 1080 px pour ces libellés (mesuré), soit
+       1112 px de viewport, plus 17 px pour une barre de défilement Windows
+       (comptée par la media query, absente de la mise en page).
+       Même principe sur l'accueil, avec son propre seuil (libellés plus
+       courts) : le mécanisme est commun, la valeur dépend du texte. */
+    @media (max-width: 1130px) {
 
       /* Même gouttière qu’au bandeau (masthead-inner ≈ 100vw − 2rem → 1rem de chaque côté) */
       .masthead {
