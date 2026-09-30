@@ -10035,23 +10035,25 @@
         if (cible) cible.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
       });
 
-      /* L'écran de la démo raconte l'état de la scène sur son bouton */
-      if (demoLaunch) {
-        const texte = demoLaunch.querySelector('.demo-launch__text');
-        const aide = demoLaunch.querySelector('.demo-launch__hint');
-        document.addEventListener('scene:etat', (e) => {
+      /* Les boutons de lancement (écran de la démo, images du parcours) racontent
+         l'état de la scène ; ceux du parcours sont construits plus bas, d'où la
+         recherche au moment de l'événement */
+      document.addEventListener('scene:etat', (e) => {
+        document.querySelectorAll('.demo-launch').forEach((btn) => {
+          const texte = btn.querySelector('.demo-launch__text');
+          const aide = btn.querySelector('.demo-launch__hint');
           if (e.detail === 'chargement') {
-            demoLaunch.disabled = true;
+            btn.disabled = true;
             if (texte) texte.textContent = 'La borne se réveille';
             if (aide) aide.textContent = 'Une dizaine de secondes';
           } else if (e.detail === 'erreur') {
-            demoLaunch.disabled = false;
+            btn.disabled = false;
             if (texte) texte.textContent = 'La 3D ne répond pas, réessayer';
             if (aide) aide.textContent = 'Un clic relance la scène';
           }
         });
-        demoLaunch.addEventListener('click', () => scene.charger('demo', null));
-      }
+      });
+      if (demoLaunch) demoLaunch.addEventListener('click', () => scene.charger('demo', null));
       /* Un seul clic depuis le hero : l'ancre défile, la borne se charge pendant ce temps */
       document.querySelectorAll('[data-launch-demo]').forEach((el) => {
         el.addEventListener('click', () => scene.charger('demo', null));
