@@ -2492,7 +2492,7 @@
     }
 
     /* Ajuste micro-calage vertical : le titre doit être aligné avec le picto */
-    .faq-head h4 {
+    .faq-head h3 {
       margin: 0;
       transform: none;
       line-height: 1.25;
@@ -2503,12 +2503,12 @@
       padding: 1.05rem 0.95rem;
     }
 
-    .faq-item:not(.open) h4 {
+    .faq-item:not(.open) h3 {
       font-size: 0.95rem;
       margin-bottom: 0;
     }
 
-    .faq-item h4 {
+    .faq-item h3 {
       font-size: 0.95rem;
       font-weight: 600;
       color: var(--text-main);
@@ -2534,7 +2534,7 @@
         opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .faq-item.open h4 {
+    .faq-item.open h3 {
       margin-bottom: 0;
     }
 
@@ -2582,11 +2582,11 @@
 
     /* Desktop : texte un peu plus grand (sans toucher au mobile) */
     @media (min-width: 768px) {
-      .faq-item:not(.open) h4 {
+      .faq-item:not(.open) h3 {
         font-size: 1.05rem;
       }
 
-      .faq-item h4 {
+      .faq-item h3 {
         font-size: 1.05rem;
       }
 
@@ -2626,12 +2626,12 @@
         border-radius: 10px;
       }
 
-      .faq-item h4 {
+      .faq-item h3 {
         font-size: 0.95rem;
         margin-bottom: 0;
       }
 
-      .faq-item.open h4 {
+      .faq-item.open h3 {
         margin-bottom: 0;
       }
     }
@@ -3518,7 +3518,7 @@
       opacity: 1;
     }
 
-    .step-body h4 {
+    .step-body h3 {
       font-size: 1.08rem;
       font-weight: 600;
       color: var(--text-muted);
@@ -3527,7 +3527,7 @@
       transition: color 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .step-card.is-active .step-body h4 {
+    .step-card.is-active .step-body h3 {
       color: var(--text-main);
     }
 
@@ -4465,7 +4465,7 @@
         opacity: 1;
       }
 
-      .step-card .step-body h4 {
+      .step-card .step-body h3 {
         color: var(--text-main);
       }
     }
@@ -4729,7 +4729,7 @@
       height: 24px;
     }
 
-    .kit-card h4 {
+    .kit-card h3 {
       margin: 0 0 0.8rem;
       font-size: 1.05rem;
       font-weight: 600;
@@ -5563,7 +5563,7 @@
       white-space: nowrap;
     }
 
-    .timeline__card h4 {
+    .timeline__card h3 {
       margin: 0 0 0.6rem;
       font-size: 1.12rem;
       font-weight: 700;
@@ -7173,7 +7173,7 @@
       opacity: 0.55;
     }
 
-    .step-body h4 {
+    .step-body h3 {
       font-size: 1.2rem;
     }
 
@@ -7696,13 +7696,13 @@
     }
 
     /* La question est celle du prospect : guillemets discrets */
-    .faq-head h4::before {
+    .faq-head h3::before {
       content: '« ';
       color: var(--accent-blue-light);
       opacity: 0.7;
     }
 
-    .faq-head h4::after {
+    .faq-head h3::after {
       content: ' »';
       color: var(--accent-blue-light);
       opacity: 0.7;
@@ -7754,7 +7754,7 @@
         padding-bottom: 0;
       }
 
-      .faq-head h4 {
+      .faq-head h3 {
         padding-top: 0.35rem;
       }
 
@@ -8264,7 +8264,7 @@
   <header class="masthead">
     <div class="masthead-inner">
       <a href="#top" class="masthead-brand" aria-label="Fractal Innov, retour en haut de la page">
-        <img src="assets/fractalinnov-logo.webp" alt="Fractal Innov" class="masthead-logo-img" loading="eager"
+        <img src="assets/fractalinnov-logo.webp" alt="Fractal Innov" class="masthead-logo-img" width="770" height="142" loading="eager"
           decoding="async" />
       </a>
 
@@ -8655,7 +8655,7 @@
           <div class="step-card" id="step-attirer" data-step="1" data-caption="Le visiteur s'arrête devant la borne">
             <div class="step-num">01</div>
             <div class="step-body">
-              <h4>Attirer</h4>
+              <h3>Attirer</h3>
               <span class="step-gain">Plus de visiteurs qui s'arrêtent</span>
               <p>Un produit qui bouge en 3D sur un grand écran arrête plus de monde qu'un panneau. Le visiteur touche,
                 il reste. En option, un écran de veille 3D animé attire le regard depuis l'allée.</p>
@@ -8666,7 +8666,7 @@
             data-caption="La bonne vidéo, au bon moment du parcours">
             <div class="step-num">02</div>
             <div class="step-body">
-              <h4>Expliquer</h4>
+              <h3>Expliquer</h3>
               <span class="step-gain">Compris sans attendre un commercial</span>
               <p>Chaque visiteur repart avec l'explication complète, même quand tous vos commerciaux sont pris. Toute
                 votre gamme peut partager le même écran, sur devis.</p>
@@ -8677,7 +8677,7 @@
             data-caption="Le commercial pilote l'écran depuis son téléphone">
             <div class="step-num">03</div>
             <div class="step-body">
-              <h4>Faire vendre</h4>
+              <h3>Faire vendre</h3>
               <span class="step-gain">Le même récit à chaque conversation</span>
               <p>Votre commercial reprend la conversation avec le même support à chaque fois&nbsp;: le récit ne dépend
                 plus de qui est libre.</p>
@@ -8688,7 +8688,7 @@
             data-caption="Le même récit, en rendez-vous et en showroom">
             <div class="step-num">04</div>
             <div class="step-body">
-              <h4>Réutiliser</h4>
+              <h3>Réutiliser</h3>
               <span class="step-gain">Un support qui ressert après le salon</span>
               <p>Le même contenu ressert sur vos prochains salons, en showroom et en rendez-vous commercial. Vos équipes
                   le modifient elles-mêmes, sans développeur. Et chaque salon se mesure&nbsp;: visites par jour,
@@ -8932,7 +8932,7 @@
                 <line x1="12" y1="13" x2="12" y2="21"></line>
               </svg>
             </div>
-            <h4>Dans le carton</h4>
+            <h3>Dans le carton</h3>
             <ul>
               <li>Le mini PC préparé, l'expérience déjà installée</li>
               <li>Le routeur de voyage configuré&nbsp;: <abbr class="tip" tabindex="0"
@@ -8955,7 +8955,7 @@
                 <rect x="9" y="15" width="6" height="6"></rect>
               </svg>
             </div>
-            <h4>Vous louez sur place</h4>
+            <h3>Vous louez sur place</h3>
             <ul>
               <li>L'écran tactile, avec <abbr class="tip" tabindex="0"
                   data-tip="HDMI : le câble qui envoie l'image du mini PC vers l'écran. USB : le câble qui renvoie le toucher de l'écran vers le mini PC. Tout écran tactile professionnel en est équipé.">entrée
@@ -8977,7 +8977,7 @@
                 <path d="M20 6.5l-8 5-8-5"></path>
               </svg>
             </div>
-            <h4>Reste à vous, après le salon</h4>
+            <h3>Reste à vous, après le salon</h3>
             <ul>
               <li>Une <abbr class="tip" tabindex="0"
                   data-tip="Un programme installé sur le mini PC, qui tourne sans connexion Internet : la 3D, les vidéos et les fiches sont sur la machine, rien ne dépend du réseau du lieu.">application
@@ -9131,7 +9131,7 @@
               </span>
               <span class="timeline__when">30 minutes</span>
             </div>
-            <h4>Un appel de 30 minutes</h4>
+            <h3>Un appel de 30 minutes</h3>
             <p>Vous décrivez votre produit et votre prochain salon. Nous vérifions ensemble que le démonstrateur répond
               à votre besoin, et nous préparons l'atelier.</p>
             <a href="#contact" class="timeline__cta">Réserver l'appel
@@ -9157,7 +9157,7 @@
               </span>
               <span class="timeline__when">Délai au devis</span>
             </div>
-            <h4>L'atelier, puis la production</h4>
+            <h3>L'atelier, puis la production</h3>
             <p>L'atelier analyse vos fichiers 3D, photos et vidéos, et tout le projet&nbsp;: le devis et le délai en
               découlent. Puis nous construisons l'expérience&nbsp;: scène 3D convertie et optimisée, parcours guidé,
               vos vidéos et vos fiches intégrées.</p>
@@ -9178,7 +9178,7 @@
               </span>
               <span class="timeline__when">Avant le jour J</span>
             </div>
-            <h4>La livraison, avant le salon</h4>
+            <h3>La livraison, avant le salon</h3>
             <p>Le kit arrive prêt à brancher, avec son guide d'une page. Nous vous accompagnons à distance pour
               l'installation et les réglages, avant le jour J.</p>
           </div>
@@ -9198,7 +9198,7 @@
                 <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                 <path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"></path>
               </svg></span>
-            <h4>Nous avons déjà des vidéos</h4>
+            <h3>Nous avons déjà des vidéos</h3>
             <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
@@ -9217,7 +9217,7 @@
                 <line x1="12" y1="20" x2="12.01" y2="20"></line>
                 <line x1="3" y1="3" x2="21" y2="21"></line>
               </svg></span>
-            <h4>Il n'y a pas de wifi sur le salon</h4>
+            <h3>Il n'y a pas de wifi sur le salon</h3>
             <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
@@ -9235,7 +9235,7 @@
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
               </svg></span>
-            <h4>Nos équipes ne sont pas techniques</h4>
+            <h3>Nos équipes ne sont pas techniques</h3>
             <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
@@ -9252,7 +9252,7 @@
                 <path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"></path>
                 <circle cx="7.5" cy="7.5" r="1.5"></circle>
               </svg></span>
-            <h4>Combien ça coûte&nbsp;?</h4>
+            <h3>Combien ça coûte&nbsp;?</h3>
             <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
@@ -9270,7 +9270,7 @@
                 <path d="M12 22V11.5"></path>
                 <path d="M20 6.5l-8 5-8-5"></path>
               </svg></span>
-            <h4>Nous n'avons pas de fichiers 3D</h4>
+            <h3>Nous n'avons pas de fichiers 3D</h3>
             <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
@@ -9287,7 +9287,7 @@
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                 <circle cx="12" cy="10" r="3"></circle>
               </svg></span>
-            <h4>Qui est sur place pendant le salon&nbsp;?</h4>
+            <h3>Qui est sur place pendant le salon&nbsp;?</h3>
             <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
