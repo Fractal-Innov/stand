@@ -9799,7 +9799,8 @@
         let minuterie = 0;
         let poiDemande = null; /* le POI du dernier chargement, pour relancer au même endroit */
         let poiEnAttente; /* un goto demandé avant que la démo écoute (null = vue de départ) */
-        const api = { etat: 'vide', slot: null, charger, aller, placer, signal };
+        const api = { etat: 'vide', slot: null, manip: false, charger, aller, placer, signal, affichage };
+        const TACTILE = window.matchMedia('(pointer: coarse)').matches;
         /* Un emplacement peut compter plusieurs éléments (une image par étape du
            parcours) : on prend celui qui est affiché. */
         function slotEl(id) {
@@ -9834,6 +9835,7 @@
             calque.dataset.slot = slotId;
             marquer();
             logScene('emplacement →', slotId);
+            affichage();
             document.dispatchEvent(new CustomEvent('scene:slot', { detail: { slot: slotId } }));
           }
           const el = api.slot && slotEl(api.slot);
@@ -9847,6 +9849,17 @@
           calque.style.setProperty('--kiosk-scale', (r.width / KIOSK_WIDTH).toFixed(4));
         }
         /* poi null = vue de départ (contrat : stand:goto sans poi) ; undefined = rien à faire */
+        /* Ce que la démo montre d'elle-même (contrat : stand:affichage). Dans le
+           parcours, pas de dock (Suivant et le panneau font la navigation) ; sur
+           écran tactile, pas de marqueurs tant qu'on ne manipule pas. Ailleurs,
+           la borne complète. */
+        function affichage() {
+          if (!iframe || api.etat !== 'prete' || !iframe.contentWindow) return;
+          const parcours = api.slot === 'parcours';
+          const message = { type: 'stand:affichage', dock: !parcours, marqueurs: !parcours || !TACTILE || api.manip };
+          iframe.contentWindow.postMessage(message, DEMO_ORIGIN);
+          logScene('stand:affichage →', `dock ${message.dock}, marqueurs ${message.marqueurs}`);
+        }
         function aller(poi) {
           if (poi === undefined) return;
           if (poi) document.body.dataset.poi = poi;
@@ -9895,6 +9908,7 @@
           if (!iframe || source !== iframe.contentWindow || api.etat !== 'chargement') return;
           clearTimeout(minuterie);
           changerEtat('prete');
+          affichage();
           if (poiEnAttente !== undefined) { const p = poiEnAttente; poiEnAttente = undefined; aller(p); }
         }
 
