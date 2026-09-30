@@ -1774,16 +1774,25 @@
       display: none;
     }
 
-    .demo-fullscreen-overlay__iframe {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border: 0;
+    /* La scène (#scene3d) se pose sous cette barre : rien par-dessus la 3D */
+    :root {
+      --barre-plein: calc(3.9rem + env(safe-area-inset-top, 0px));
+    }
+
+    .demo-fullscreen-overlay__attente {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      margin: 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-weight: 600;
     }
 
     .demo-fullscreen-overlay__close {
       position: absolute;
-      top: 1.25rem;
+      top: calc(env(safe-area-inset-top, 0px) + 0.7rem);
       right: 1.25rem;
       z-index: 1;
       display: inline-flex;
@@ -1821,14 +1830,9 @@
 
     @media (max-width: 640px) {
       .demo-fullscreen-overlay__close {
-        top: 0.85rem;
         right: 0.85rem;
         padding: 0.55rem 0.9rem;
         font-size: 0.85rem;
-      }
-
-      .demo-fullscreen-overlay__close span {
-        display: none;
       }
     }
 
@@ -8219,6 +8223,24 @@
     .demo-screen__viewport.is-ailleurs .demo-repere { display: block; }
     .demo-screen__viewport.is-ailleurs .demo-launch { display: none; }
 
+    /* Plein écran : le même calque, fixé sous la barre « Quitter », borne à taille réelle */
+    #scene3d.is-plein {
+      position: fixed;
+      top: var(--barre-plein) !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: calc(100% - var(--barre-plein)) !important;
+      z-index: 501;
+      border-radius: 0 !important;
+    }
+    #scene3d.is-plein .demo-screen__iframe {
+      width: 100%;
+      height: 100%;
+      transform: none;
+      pointer-events: auto;
+    }
+    #scene3d.is-plein .scene3d__manip { display: none !important; }
+
     /* Écran tactile : la 3D se regarde, le doigt fait défiler la page.
        « Manipuler » lui rend la main, « Terminé » la reprend. */
     @media (pointer: coarse) {
@@ -8489,8 +8511,7 @@
           </svg>
           <span class="scene-manip-label">Manipuler</span>
         </button>
-        <button type="button" class="demo-action-btn"
-          data-demo-fullscreen-src="https://stand-demonstrateur.osc-fr1.scalingo.io/">
+        <button type="button" class="demo-action-btn" data-scene-cmd="plein-ecran">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" aria-hidden="true">
             <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3">
@@ -9428,16 +9449,15 @@
   <div class="demo-fullscreen-overlay" id="demoFullscreenOverlay" role="dialog" aria-modal="true"
     aria-label="Démo en plein écran" hidden>
     <button type="button" class="demo-fullscreen-overlay__close" id="demoFullscreenClose"
-      aria-label="Fermer le plein écran">
+      aria-label="Quitter le plein écran">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
         stroke-linejoin="round" aria-hidden="true">
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
-      <span>Fermer</span>
+      <span>Quitter</span>
     </button>
-    <iframe class="demo-fullscreen-overlay__iframe" id="demoFullscreenIframe" title="Démonstrateur 3D : démo en ligne, plein écran"
-      allow="autoplay; fullscreen; xr-spatial-tracking; gamepad"></iframe>
+    <p class="demo-fullscreen-overlay__attente">La borne se réveille</p>
   </div>
 
   <!-- Farfadet : partager l'endroit où l'on est (section, onglet, POI de la démo) par QR ou feuille de partage -->
@@ -9803,7 +9823,7 @@
         let minuterie = 0;
         let poiDemande = null; /* le POI du dernier chargement, pour relancer au même endroit */
         let poiEnAttente; /* un goto demandé avant que la démo écoute (null = vue de départ) */
-        const api = { etat: 'vide', slot: null, manip: false, charger, aller, placer, signal, affichage, manipuler };
+        const api = { etat: 'vide', slot: null, manip: false, plein: false, charger, aller, placer, signal, affichage, manipuler, pleinEcran };
         const TACTILE = window.matchMedia('(pointer: coarse)').matches;
         /* « Manipuler » posé sur la scène (visible dans le parcours sur tactile, par CSS) */
         calque.insertAdjacentHTML('beforeend', '<button type="button" class="scene3d__manip" data-scene-cmd="manipuler" aria-pressed="false">✋ <span class="scene-manip-label">Manipuler</span></button>');
@@ -9862,7 +9882,7 @@
            la borne complète. */
         function affichage() {
           if (!iframe || api.etat !== 'prete' || !iframe.contentWindow) return;
-          const parcours = api.slot === 'parcours';
+          const parcours = api.slot === 'parcours' && !api.plein;
           const message = { type: 'stand:affichage', dock: !parcours, marqueurs: !parcours || !TACTILE || api.manip };
           iframe.contentWindow.postMessage(message, DEMO_ORIGIN);
           logScene('stand:affichage →', `dock ${message.dock}, marqueurs ${message.marqueurs}`);
@@ -9876,6 +9896,20 @@
           logScene(on ? 'manipuler : la 3D prend le doigt' : 'terminé : le doigt fait de nouveau défiler la page');
           affichage();
           document.dispatchEvent(new CustomEvent('scene:manip', { detail: on }));
+        }
+        /* Plein écran : le calque passe en position fixe sous la barre « Quitter »
+           (CSS .is-plein) ; même iframe, donc même caméra, rien ne se recharge.
+           L'observateur est suspendu tant qu'il est ouvert (voir decider). */
+        function pleinEcran(on) {
+          on = !!on;
+          if (on === api.plein) return;
+          api.plein = on;
+          manipuler(false);
+          calque.classList.toggle('is-plein', on);
+          logScene(on ? 'plein écran : la scène passe par-dessus la page' : 'plein écran fermé : retour à l\'emplacement ' + api.slot);
+          if (!on) placer();
+          affichage();
+          document.dispatchEvent(new CustomEvent('scene:plein', { detail: on }));
         }
         function aller(poi) {
           if (poi === undefined) return;
@@ -9938,7 +9972,7 @@
         const taux = new Map(); /* élément → part visible (0 à 1) */
         const tauxSlot = (id) => Math.max(0, ...Array.from(taux).filter(([el]) => el.dataset.sceneSlot === id && el.getClientRects().length > 0).map(([, r]) => r));
         function decider() {
-          if (!iframe || api.etat === 'erreur' || document.body.classList.contains('demo-fullscreen-open')) return;
+          if (!iframe || api.etat === 'erreur' || api.plein) return;
           const ids = [...new Set(Array.from(taux.keys()).map((el) => el.dataset.sceneSlot))];
           const actuel = tauxSlot(api.slot);
           /* Scène sortie de l'écran : on revient au mode « regarder » */
@@ -10239,39 +10273,36 @@
         footerCopyright.textContent = `© ${new Date().getFullYear()} Fractal Innov`;
       }
 
-      /* 10. DÉMO EN PLEIN ÉCRAN : overlay interne, jamais de nouvel onglet */
+      /* 10. DÉMO EN PLEIN ÉCRAN : la même scène, sous une barre « Quitter » (30/09/2026).
+         L'overlay n'apporte que le fond et la barre ; la 3D est le calque #scene3d. */
       const demoFullscreenOverlay = document.getElementById('demoFullscreenOverlay');
-      const demoFullscreenIframe = document.getElementById('demoFullscreenIframe');
       const demoFullscreenClose = document.getElementById('demoFullscreenClose');
-      const demoFullscreenTriggers = document.querySelectorAll('[data-demo-fullscreen-src]');
-      if (demoFullscreenOverlay && demoFullscreenIframe && demoFullscreenClose && demoFullscreenTriggers.length) {
-        let lastFocusedEl = null;
-        const openDemoFullscreen = (src) => {
-          lastFocusedEl = document.activeElement;
-          demoFullscreenIframe.src = demoHref(src);
+      if (demoFullscreenOverlay && demoFullscreenClose) {
+        let declencheur = null;
+        const ouvrir = (btn) => {
+          declencheur = btn;
+          /* Scène pas encore chargée : elle se charge dans l'écran de la démo */
+          if (scene.etat === 'vide' || scene.etat === 'erreur') scene.charger('demo', null);
           demoFullscreenOverlay.hidden = false;
           document.body.classList.add('demo-fullscreen-open');
+          scene.pleinEcran(true);
           demoFullscreenClose.focus();
         };
-        const closeDemoFullscreen = () => {
+        const fermer = () => {
+          if (demoFullscreenOverlay.hidden) return;
           demoFullscreenOverlay.hidden = true;
           document.body.classList.remove('demo-fullscreen-open');
-          demoFullscreenIframe.src = '';
-          if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
-            lastFocusedEl.focus();
-          }
+          scene.pleinEcran(false);
+          if (declencheur && typeof declencheur.focus === 'function') declencheur.focus({ preventScroll: true });
         };
-        demoFullscreenTriggers.forEach((trigger) => {
-          trigger.addEventListener('click', () => {
-            openDemoFullscreen(trigger.getAttribute('data-demo-fullscreen-src'));
-          });
+        document.addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-scene-cmd="plein-ecran"]');
+          if (btn) ouvrir(btn);
         });
-        demoFullscreenClose.addEventListener('click', closeDemoFullscreen);
-        document.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape' && !demoFullscreenOverlay.hidden) {
-            closeDemoFullscreen();
-          }
-        });
+        demoFullscreenClose.addEventListener('click', fermer);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') fermer(); });
+        /* La démo ne répond pas : on rend la page, le message est sur l'écran de la démo */
+        document.addEventListener('scene:etat', (e) => { if (e.detail === 'erreur') fermer(); });
       }
 
       /* 11. ARRIVÉE PAR UN LIEN PARTAGÉ : ?poi=<id> ouvre l'onglet de la lecture guidée,
