@@ -4454,22 +4454,10 @@
       color: #fff;
     }
 
-    .step-card__img {
-      display: none;
-    }
-
+    /* Mobile : pas d'image dans « Ce que vous gagnez », le texte porte le gain */
     @media (max-width: 900px) {
       .sticky-visual {
         display: none;
-      }
-
-      .step-card__img {
-        display: block;
-        width: 100%;
-        height: auto;
-        margin-top: 1rem;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
       }
 
       /* Sans colonne sticky, chaque étape se lit seule : pas d'atténuation */
@@ -8671,8 +8659,6 @@
               <span class="step-gain">Plus de visiteurs qui s'arrêtent</span>
               <p>Un produit qui bouge en 3D sur un grand écran arrête plus de monde qu'un panneau. Le visiteur touche,
                 il reste. En option, un écran de veille 3D animé attire le regard depuis l'allée.</p>
-              <img class="step-card__img" src="assets/demo/step-attirer.webp" width="1600" height="900" alt=""
-                loading="lazy" decoding="async">
             </div>
           </div>
 
@@ -8684,8 +8670,6 @@
               <span class="step-gain">Compris sans attendre un commercial</span>
               <p>Chaque visiteur repart avec l'explication complète, même quand tous vos commerciaux sont pris. Toute
                 votre gamme peut partager le même écran, sur devis.</p>
-              <img class="step-card__img" src="assets/demo/step-expliquer.webp" width="1600" height="760" alt=""
-                loading="lazy" decoding="async">
             </div>
           </div>
 
@@ -8697,8 +8681,6 @@
               <span class="step-gain">Le même récit à chaque conversation</span>
               <p>Votre commercial reprend la conversation avec le même support à chaque fois&nbsp;: le récit ne dépend
                 plus de qui est libre.</p>
-              <img class="step-card__img" src="assets/demo/step-vendre.webp" width="1600" height="900" alt=""
-                loading="lazy" decoding="async">
             </div>
           </div>
 
@@ -8711,8 +8693,6 @@
               <p>Le même contenu ressert sur vos prochains salons, en showroom et en rendez-vous commercial. Vos équipes
                   le modifient elles-mêmes, sans développeur. Et chaque salon se mesure&nbsp;: visites par jour,
                   boutons touchés, vidéos regardées jusqu'au bout.</p>
-              <img class="step-card__img" src="assets/demo/step-reutiliser.webp" width="1600" height="900" alt=""
-                loading="lazy" decoding="async">
             </div>
           </div>
         </div>
