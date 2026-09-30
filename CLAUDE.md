@@ -45,6 +45,6 @@ Tous les messages de commit suivent https://www.conventionalcommits.org/en/v1.0.
 
 ## Partage en salon
 
-- Aperçu de partage : `assets/share/og-image.jpg` (1200 × 630, composé depuis le hero), Open Graph et Twitter en URL absolues dans `<head>`. Icônes : `favicon.ico`, `assets/icons/`, `site.webmanifest`.
+- Aperçu de partage : `assets/share/og-image-v2.jpg` (1200 × 630, composé depuis le hero ; refait le 30/09/2026 : logo seul, badge « Démonstrateur interactif », pied « fractal-innov.fr/stand », sans nom produit ni tarifs). Changer d'image = changer de nom de fichier, sinon LinkedIn garde l'ancienne en cache ; Open Graph et Twitter en URL absolues dans `<head>`. Icônes : `favicon.ico`, `assets/icons/`, `site.webmanifest`.
 - Farfadet (`#share`, bas droite) : partage l'endroit courant par QR, lien copié ou feuille de partage native. L'état vit sur `<body>` en `data-section` (scroll-spy), `data-poi` (lecture guidée et démo) et `data-demo` (démo lancée). URL produite : `https://www.fractal-innov.fr/stand/?poi=<id>&demo=1#<section>` ; à l'arrivée, `?poi=` ouvre l'onglet et `&demo=1` relance la démo au même POI. Le mode « Télécommande » donne `REMOTE_URL?salle=<id>` : le téléphone qui scanne pilote la démo affichée sur cet écran (relais WebSocket sur Render, aucun wifi commun requis). Un `document.dispatchEvent(new CustomEvent('stand:share', { detail: 'place' | 'remote' }))` ouvre le farfadet dans ce mode (utilisé par « Sur votre téléphone » sous la démo).
 - QR généré côté client avec `assets/js/qrcode.min.js` (qrcode-generator 1.4.4, MIT).
