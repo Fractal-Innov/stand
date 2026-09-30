@@ -83,7 +83,16 @@ La démo web publique (https://stand-demonstrateur.osc-fr1.scalingo.io/, intégr
 
 ## Preuve
 
-Un premier acteur industriel, sous NDA : « nous ne pouvons pas le citer, nous pouvons vous raconter comment nous l'avons accompagné ».
+Un premier acteur industriel, sous NDA : « nous ne pouvons pas le citer, nous pouvons vous raconter comment nous l'avons accompagné ». Rien de ce client n'apparaît sur la page, pas même un fait anonyme (décidé le 30/09/2026).
+
+**En attendant une référence, la démo publique est la preuve** : la page invite à la manipuler, puis enchaîne sur l'appel (« avec votre produit à la place de ce stand »).
+
+**Devenir une référence : une opportunité, jamais une condition.** Au moment du devis, on propose au client, s'il le souhaite, d'être cité après son salon (nom, logo, une phrase, une photo du stand) pour une promotion mutuelle : sa présence sur nos supports, la nôtre sur les siens. Le devis est le même qu'il dise oui ou non ; un refus ne se discute pas.
+
+- Formulation type : « Si l'idée vous plaît, votre salon peut devenir une vitrine pour vous comme pour nous : après l'événement, nous le présentons sur notre page, avec votre accord sur chaque mot. En remerciement, [contrepartie à confirmer]. C'est une proposition, pas une condition. »
+- Quand la proposer : à la remise du devis, pas avant (elle ne doit pas peser sur la décision d'achat).
+- Ce que le client valide : le texte, les visuels et la date de publication, par écrit.
+- Contrepartie (état au 30/09/2026) : **pas de remise**, la trésorerie doit financer la suite de l'activité. Piste retenue mais non confirmée : une mise à jour offerte (contenus ou produit) avant son salon suivant. D'autres pistes restent à étudier avec l'associé, dont une publication croisée (article, post LinkedIn) qui ne coûte rien.
 
 ## Supports
 
@@ -98,3 +107,4 @@ Un premier acteur industriel, sous NDA : « nous ne pouvons pas le citer, nous p
 - 2026-09-18, fin de salon : cinq contacts qualifiés sur leur stand (fabricant de lits hydromassants, VR et plateformes motorisées, rameurs design, attelles motorisées, cabinets clés en main). Douleurs entendues : produit trop gros pour venir, salons jugés trop chers, visiteurs à occuper quand l'équipe est prise, gamme trop large pour le stand, ROI du salon à mesurer. Relance par e-mail avec lien calendrier ; le détail nominatif est tenu hors de ce dépôt public.
 - 2026-09-23 : section tarifs retirée de la landing.
 - 2026-09-30 : pivot décidé avec l'associé. Le démonstrateur de stand est la seule offre qui a rapporté ; www.fractal-innov.fr renvoie vers cette landing. Une seule marque, Fractal Innov : plus de nom produit affiché (« STAND » reste le nom du dépôt). Aucun prix ni délai annoncé ; l'appel de 30 min précède l'atelier, le devis suit l'atelier. Douleurs de Rééduca ajoutées à la page : la gamme (sur devis) et la mesure du salon (statistiques Umami).
+- 2026-09-30, étape 3 (preuve) : pas de référence citable, la démo sert de preuve (passage vers l'appel sous la démo). Clause de référence ajoutée, proposée comme une opportunité au devis ; contrepartie à confirmer, sans remise.
