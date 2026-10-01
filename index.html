@@ -8257,6 +8257,159 @@
     @media (prefers-reduced-motion: reduce) {
       .tour__media.is-loading::after { animation: none; transform: none; }
     }
+
+    /* ========== POINTS FORTS (01/10/2026) : référence pages produit Apple ==========
+       Piste horizontale en scroll-snap, la slide suivante dépasse sur le bord.
+       --pf-gouttiere aligne la première carte sur la colonne de contenu (1100 px). */
+    .pf {
+      --pf-gouttiere: max(1.5rem, calc((100vw - 1100px) / 2 + 3rem));
+      position: relative;
+      padding: 5rem 0 4rem;
+    }
+    .pf__entete { padding: 0 var(--pf-gouttiere); margin-bottom: 2.25rem; }
+    .pf__h2 {
+      font-weight: 600;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      color: var(--text-main);
+      margin: 0;
+    }
+    .pf__piste {
+      list-style: none;
+      margin: 0;
+      padding: 0 var(--pf-gouttiere);
+      display: flex;
+      gap: 1.25rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--pf-gouttiere);
+      scrollbar-width: none;
+      overscroll-behavior-x: contain;
+    }
+    .pf__piste::-webkit-scrollbar { display: none; }
+    .pf__slide {
+      flex: 0 0 min(78vw, 980px);
+      scroll-snap-align: start;
+      min-height: min(36rem, 68vh);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 3rem 2.5rem 2.5rem;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.025) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+    .pf__texte { text-align: center; max-width: 34rem; }
+    .pf__titre {
+      font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--text-main);
+      margin: 0;
+    }
+    .pf__sous-titre {
+      margin: .6rem 0 0;
+      color: var(--accent-blue-light);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    .pf__visuel {
+      flex: 1;
+      margin: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pf__visuel img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: min(44vh, 420px);
+      border-radius: 14px;
+      box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.8);
+    }
+    .pf__commandes {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: .9rem;
+      margin-top: 2rem;
+      padding: 0 1rem;
+    }
+    .pf__points {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      padding: 1.05rem 1.5rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+    }
+    .pf__point {
+      --pf-progres: 0;
+      position: relative;
+      width: 8px;
+      height: 8px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.35);
+      cursor: pointer;
+      overflow: hidden;
+      transition: width .4s cubic-bezier(.2, .8, .2, 1), background-color .3s;
+    }
+    .pf__point::before { content: ''; position: absolute; inset: -12px -5px; }
+    .pf__point:hover { background: rgba(255, 255, 255, 0.6); }
+    .pf__point[aria-current="true"] { width: 44px; background: rgba(255, 255, 255, 0.3); }
+    .pf__point[aria-current="true"]::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--text-main);
+      transform-origin: left center;
+      transform: scaleX(var(--pf-progres));
+    }
+    .pf[data-lecture="off"] .pf__point[aria-current="true"]::after { transform: scaleX(1); }
+    .pf__point:focus-visible, .pf__lecture:focus-visible { outline: 2px solid var(--accent-blue-light); outline-offset: 3px; }
+    .pf__lecture {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: background-color .25s;
+    }
+    .pf__lecture:hover { background: rgba(255, 255, 255, 0.16); }
+    .pf__lecture svg { width: 20px; height: 20px; }
+    .pf__ico-lecture, .pf[data-lecture="off"] .pf__ico-pause { display: none; }
+    .pf[data-lecture="off"] .pf__ico-lecture { display: block; }
+
+    @media (max-width: 767px) {
+      .pf { padding: 3.5rem 0 3rem; }
+      .pf__entete { margin-bottom: 1.5rem; }
+      .pf__piste { gap: .9rem; }
+      .pf__slide {
+        flex-basis: 86vw;
+        min-height: 31rem;
+        padding: 2.25rem 1.25rem 1.5rem;
+        gap: 1.5rem;
+        border-radius: 22px;
+      }
+      .pf__points { padding: .95rem 1.25rem; gap: .6rem; }
+      .pf__point[aria-current="true"] { width: 36px; }
+      .pf__lecture { width: 48px; height: 48px; }
+    }
   </style>
 
 </head>
@@ -8391,6 +8544,67 @@
   </div>
 
   <main class="page-rest">
+  <!-- POINTS FORTS (01/10/2026) : six slides, défilement automatique (bloc JS 2c) -->
+  <section id="points-forts" class="pf" aria-labelledby="pf-titre" aria-roledescription="carrousel" data-actif="0" data-lecture="on">
+    <div class="pf__entete">
+      <h2 id="pf-titre" class="pf__h2" data-repere>Points forts</h2>
+    </div>
+    <ul class="pf__piste" aria-live="off">
+          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="1 sur 6" data-index="0">
+            <div class="pf__texte">
+              <h3 class="pf__titre">Une interface épurée, que le visiteur comprend seul</h3>
+            </div>
+            <figure class="pf__visuel"><img src="assets/demo/vue-ensemble.webp" width="1600" height="1063" alt="La vue d'ensemble du démonstrateur : le produit en 3D et quelques boutons clairs" loading="lazy" decoding="async"></figure>
+          </li>
+          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="2 sur 6" data-index="1">
+            <div class="pf__texte">
+              <h3 class="pf__titre">Un seul démonstrateur, sur tous vos écrans</h3>
+              <p class="pf__sous-titre">Stand, showroom, visio</p>
+            </div>
+            <figure class="pf__visuel"><img src="assets/demo/materiel.webp" width="1600" height="1070" alt="Le démonstrateur affiché sur un écran de stand" loading="lazy" decoding="async"></figure>
+          </li>
+          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="3 sur 6" data-index="2">
+            <div class="pf__texte">
+              <h3 class="pf__titre">Pilotez la présentation depuis votre téléphone</h3>
+            </div>
+            <figure class="pf__visuel"><img src="assets/demo/presenter.webp" width="1600" height="1065" alt="Le commercial pilote la présentation depuis son téléphone" loading="lazy" decoding="async"></figure>
+          </li>
+          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="4 sur 6" data-index="3">
+            <div class="pf__texte">
+              <h3 class="pf__titre">La fluidité de la 3D, dans un navigateur ou une application</h3>
+            </div>
+            <figure class="pf__visuel"><img src="assets/demo/attirer.webp" width="1600" height="1061" alt="La scène 3D du démonstrateur, fluide et détaillée" loading="lazy" decoding="async"></figure>
+          </li>
+          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="5 sur 6" data-index="4">
+            <div class="pf__texte">
+              <h3 class="pf__titre">Votre produit présenté, sans le transporter</h3>
+              <p class="pf__sous-titre">Toute votre gamme, en option</p>
+            </div>
+            <figure class="pf__visuel"><img src="assets/demo/step-expliquer.webp" width="1600" height="760" alt="Le jumeau 3D du produit, présenté sur le stand à sa place" loading="lazy" decoding="async"></figure>
+          </li>
+          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="6 sur 6" data-index="5">
+            <div class="pf__texte">
+              <h3 class="pf__titre">Mesurez ce qui intéresse vos visiteurs</h3>
+              <p class="pf__sous-titre">Sans cookie, aucune donnée personnelle</p>
+            </div>
+            <figure class="pf__visuel"><img src="assets/demo/logiciel.webp" width="1600" height="1063" alt="Les statistiques d'utilisation du démonstrateur" loading="lazy" decoding="async"></figure>
+          </li>
+    </ul>
+    <div class="pf__commandes">
+      <div class="pf__points" role="group" aria-label="Choisir un point fort">
+            <button type="button" class="pf__point" aria-label="Point fort 1 : Une interface épurée, que le visiteur comprend seul" aria-current="true"></button>
+            <button type="button" class="pf__point" aria-label="Point fort 2 : Un seul démonstrateur, sur tous vos écrans"></button>
+            <button type="button" class="pf__point" aria-label="Point fort 3 : Pilotez la présentation depuis votre téléphone"></button>
+            <button type="button" class="pf__point" aria-label="Point fort 4 : La fluidité de la 3D, dans un navigateur ou une application"></button>
+            <button type="button" class="pf__point" aria-label="Point fort 5 : Votre produit présenté, sans le transporter"></button>
+            <button type="button" class="pf__point" aria-label="Point fort 6 : Mesurez ce qui intéresse vos visiteurs"></button>
+      </div>
+      <button type="button" class="pf__lecture" aria-label="Mettre en pause le défilement">
+        <svg class="pf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+        <svg class="pf__ico-lecture" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+    </div>
+  </section>
     <section id="demo" class="section">
       <div class="section-number reveal">La démo</div>
       <h2 class="reveal delay-100">Testez-la, c'est ce que vos visiteurs verront</h2>
@@ -9683,7 +9897,7 @@
          section et l'écran. On vise donc le repère visible (le surtitre
          .section-number, ou la carte du contact) et on mesure la barre à chaque clic. */
       const ANCRE_ESPACE = 24;
-      const repereSection = (sec) => sec.querySelector('.section-number') || sec.querySelector('.contact__inner') || sec;
+      const repereSection = (sec) => sec.querySelector('[data-repere]') || sec.querySelector('.section-number') || sec.querySelector('.contact__inner') || sec;
       /* Position dans le document sans les transform : un repère pas encore
          « révélé » est décalé de quelques dizaines de pixels par son animation */
       const hautDocument = (el) => { let y = 0; for (let n = el; n; n = n.offsetParent) y += n.offsetTop; return y; };
