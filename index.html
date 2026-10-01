@@ -1092,117 +1092,21 @@
       margin-bottom: 0;
     }
 
-    .hero-pillars {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(0.45rem, 1vw, 0.75rem);
-      margin-top: clamp(0.9rem, 2vh, 1.25rem);
-    }
 
-    .hero-pillar {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      align-items: start;
-      column-gap: 0.6rem;
-      padding: 0.35rem 0.2rem 0.45rem;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
-      min-width: 0;
-      position: relative;
-    }
 
-    .hero-pillar__icon {
-      flex: 0 0 auto;
-      width: 20px;
-      height: 20px;
-      padding: 2px;
-      /* plus d'espace autour du picto */
-      box-sizing: content-box;
-      color: var(--accent-blue);
-      margin-top: 0.08rem;
-      display: block;
-    }
 
-    .hero-pillar__text {
-      font-size: clamp(0.78rem, 1.25vw, 0.88rem);
-      line-height: 1.35;
-      color: rgba(255, 255, 255, 0.9);
-      text-align: left;
-    }
-
-    .hero-pillar__text strong {
-      display: block;
-      color: #fff;
-      font-weight: 600;
-      margin-bottom: 0.12rem;
-    }
 
     @media (max-width: 767px) {
-      .hero-pillars {
-        grid-template-columns: 1fr;
-        gap: 0.55rem;
-        margin-top: 0.9rem;
-        max-width: min(520px, 100%);
-        margin-left: auto;
-        margin-right: auto;
-      }
 
-      .hero-pillar {
-        padding: 0.35rem 0.15rem 0.6rem;
-        width: 100%;
-        max-width: min(520px, 100%);
-        margin-left: auto;
-        margin-right: auto;
-        align-items: center;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      }
 
-      .hero-pillar:last-child {
-        border-bottom: 0;
-      }
 
-      .hero-pillar__icon {
-        width: 24px;
-        height: 24px;
-        align-self: center;
-        margin-top: 0;
-        transform: none;
-      }
 
-      .hero-pillar__text {
-        font-size: 0.96rem;
-        line-height: 1.42;
-      }
     }
 
     @media (min-width: 768px) {
-      .hero-pillar {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        text-align: left;
-        gap: 0.45rem;
-        padding: 0.2rem clamp(0.4rem, 1vw, 0.75rem) 0.35rem;
-      }
 
       /* Séparateurs verticaux subtils comme les metas */
-      .hero-pillar:not(:last-child)::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: 15%;
-        bottom: 15%;
-        width: 1px;
-        background: rgba(255, 255, 255, 0.1);
-      }
 
-      .hero-pillar__icon {
-        width: 28px;
-        height: 28px;
-        margin-top: 0;
-      }
     }
 
     .hero-meta {
@@ -3685,11 +3589,6 @@
       grid-row: 3;
     }
 
-    .hero-pillars {
-      grid-column: 1;
-      grid-row: 4;
-    }
-
     @media (max-width: 767px) {
       .hero-cta {
         justify-content: center;
@@ -3698,10 +3597,6 @@
 
       .hero-visual {
         margin-top: clamp(1.5rem, 5vw, 2.2rem);
-      }
-
-      .hero-pillars {
-        margin-top: 1.4rem;
       }
     }
 
@@ -3726,14 +3621,6 @@
         grid-column: 2;
         grid-row: 1 / span 2;
         align-self: center;
-      }
-
-      .hero-pillars {
-        grid-column: 1 / -1;
-        grid-row: 3;
-        margin-top: clamp(1.6rem, 3.2vh, 2.4rem);
-        padding-top: clamp(1rem, 2vh, 1.4rem);
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
       }
     }
 
@@ -6220,10 +6107,6 @@
     .hero-lead,
     .hero-cta,
     .hero-visual,
-    .hero-pillars,
-    .hero-scroll {
-      animation: heroIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
 
     .hero h1 {
       animation-delay: 0.08s;
@@ -6239,10 +6122,6 @@
 
     .hero-visual {
       animation-delay: 0.2s;
-    }
-
-    .hero-pillars {
-      animation-delay: 0.4s;
     }
 
     .hero-scroll {
@@ -6321,75 +6200,15 @@
     }
 
     /* Piliers : des liens vers les étapes de « Ce que vous gagnez » */
-    .hero-pillar {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr) auto;
-      align-items: center;
-      column-gap: 0.75rem;
-      padding: 0.5rem 0.6rem;
-      border-radius: 12px;
-      text-decoration: none;
-      color: inherit;
-      transition: background 0.25s ease, transform 0.25s ease;
-    }
 
-    .hero-pillar:hover,
-    .hero-pillar:focus-visible {
-      background: rgba(255, 255, 255, 0.05);
-      transform: translateY(-2px);
-    }
 
-    .hero-pillar:focus-visible {
-      outline: 2px solid var(--accent-blue-light);
-      outline-offset: 2px;
-    }
 
-    .hero-pillar__icon {
-      width: 38px;
-      height: 38px;
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-      display: grid;
-      place-items: center;
-      border-radius: 10px;
-      background: rgba(110, 168, 255, 0.1);
-      border: 1px solid rgba(110, 168, 255, 0.25);
-      color: var(--accent-blue-light);
-      box-shadow: inset 0 0 18px rgba(110, 168, 255, 0.12);
-      transition: background 0.25s ease, border-color 0.25s ease;
-    }
 
-    .hero-pillar__icon svg {
-      width: 20px;
-      height: 20px;
-    }
 
-    .hero-pillar:hover .hero-pillar__icon {
-      background: rgba(110, 168, 255, 0.2);
-      border-color: rgba(110, 168, 255, 0.5);
-    }
 
-    .hero-pillar__arrow {
-      width: 18px;
-      height: 18px;
-      color: rgba(255, 255, 255, 0.55);
-      opacity: 0;
-      transform: translateX(-6px);
-      transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    }
 
-    .hero-pillar:hover .hero-pillar__arrow,
-    .hero-pillar:focus-visible .hero-pillar__arrow {
-      opacity: 1;
-      transform: none;
-    }
 
     @media (hover: none) {
-      .hero-pillar__arrow {
-        opacity: 0.6;
-        transform: none;
-      }
     }
 
     /* Le fil vers la démo : une ligne qui descend, un point qui la parcourt, le nom de ce qui vient */
@@ -6542,20 +6361,7 @@
       .hero-lead,
       .hero-cta,
       .hero-visual,
-      .hero-pillars,
-      .hero-scroll,
-      .hero-visual::before,
-      .hero-visual__play::after,
-      .hero-scroll__line i {
-        animation: none;
-      }
 
-      .hero-pillar,
-      .hero-pillar__icon,
-      .hero-pillar__arrow,
-      .hero-visual__frame {
-        transition: none;
-      }
     }
 
     /* ── Démo : une scène en deux temps (1 l'écran, 2 la télécommande), un fil entre les deux,
@@ -8257,6 +8063,349 @@
     @media (prefers-reduced-motion: reduce) {
       .tour__media.is-loading::after { animation: none; transform: none; }
     }
+
+    /* ========== POINTS FORTS (01/10/2026) : référence pages produit Apple ==========
+       Piste horizontale en scroll-snap, la slide suivante dépasse sur le bord.
+       --pf-gouttiere aligne la première carte sur la colonne de contenu (1100 px). */
+    .pf {
+      --pf-gouttiere: max(1.5rem, calc((100vw - 1100px) / 2 + 3rem));
+      position: relative;
+      padding: 5rem 0 4rem;
+    }
+    .pf__entete { padding: 0 var(--pf-gouttiere); margin-bottom: 2.25rem; }
+    .pf__h2 {
+      font-weight: 600;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      color: var(--text-main);
+      margin: 0;
+    }
+    .pf__piste {
+      list-style: none;
+      margin: 0;
+      padding: 0 var(--pf-gouttiere);
+      display: flex;
+      gap: 1.25rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--pf-gouttiere);
+      scrollbar-width: none;
+      overscroll-behavior-x: contain;
+    }
+    .pf__piste::-webkit-scrollbar { display: none; }
+    .pf__slide {
+      flex: 0 0 min(78vw, 980px);
+      scroll-snap-align: start;
+      min-height: min(36rem, 68vh);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 3rem 2.5rem 2.5rem;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.025) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+    .pf__texte { text-align: center; max-width: 34rem; }
+    .pf__titre {
+      font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--text-main);
+      margin: 0;
+      text-wrap: balance;
+    }
+    .pf__sous-titre {
+      margin: .6rem 0 0;
+      color: var(--accent-blue-light);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    /* Hauteur réservée : les images arrivent en différé, la section ne doit pas grandir
+       à leur chargement (une ancre visée pendant le défilement tomberait trop bas). */
+    .pf__visuel {
+      flex: 1 0 auto;
+      height: min(44vh, 420px);
+      margin: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pf__visuel img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 100%;
+      border-radius: 14px;
+      box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.8);
+    }
+    .pf__commandes {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: .9rem;
+      margin-top: 2rem;
+      padding: 0 1rem;
+    }
+    .pf__points {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      padding: 1.05rem 1.5rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+    }
+    .pf__point {
+      --pf-progres: 0;
+      position: relative;
+      width: 8px;
+      height: 8px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.35);
+      cursor: pointer;
+      overflow: hidden;
+      transition: width .4s cubic-bezier(.2, .8, .2, 1), background-color .3s;
+    }
+    .pf__point::before { content: ''; position: absolute; inset: -12px -5px; }
+    .pf__point:hover { background: rgba(255, 255, 255, 0.6); }
+    .pf__point[aria-current="true"] { width: 44px; background: rgba(255, 255, 255, 0.3); }
+    .pf__point[aria-current="true"]::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--text-main);
+      transform-origin: left center;
+      transform: scaleX(var(--pf-progres));
+    }
+    .pf[data-lecture="off"] .pf__point[aria-current="true"]::after { transform: scaleX(1); }
+    .pf__point:focus-visible, .pf__lecture:focus-visible { outline: 2px solid var(--accent-blue-light); outline-offset: 3px; }
+    .pf__lecture {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: background-color .25s;
+    }
+    .pf__lecture:hover { background: rgba(255, 255, 255, 0.16); }
+    .pf__lecture svg { width: 20px; height: 20px; }
+    .pf__ico-lecture, .pf[data-lecture="off"] .pf__ico-pause { display: none; }
+    .pf[data-lecture="off"] .pf__ico-lecture { display: block; }
+
+    @media (max-width: 767px) {
+      .pf { padding: 3.5rem 0 3rem; }
+      .pf__entete { margin-bottom: 1.5rem; }
+      .pf__piste { gap: .9rem; }
+      .pf__slide {
+        flex-basis: 86vw;
+        min-height: 31rem;
+        padding: 2.25rem 1.25rem 1.5rem;
+        gap: 1.5rem;
+        border-radius: 22px;
+      }
+      .pf__visuel { height: 15rem; }
+      .pf__points { padding: .95rem 1.25rem; gap: .6rem; }
+      .pf__point[aria-current="true"] { width: 36px; }
+      .pf__lecture { width: 48px; height: 48px; }
+    }
+
+    /* Points forts : le texte de la slide active apparaît pendant la translation de la
+       carte (dès qu'elle devient la plus proche), puis reste immobile.
+       .pf--pret est posé par le JS : sans lui, tous les titres restent visibles. */
+    .pf--pret .pf__slide .pf__texte { opacity: 0; transform: translateY(14px); transition: opacity .35s ease, transform .35s ease; }
+    .pf--pret .pf__slide--active .pf__texte {
+      opacity: 1;
+      transform: none;
+      transition: opacity .3s ease, transform .35s cubic-bezier(.2, .8, .2, 1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pf--pret .pf__slide .pf__texte { opacity: 1; transform: none; transition: none; }
+      .pf__point { transition: none; }
+    }
+
+    /* ========== BARRE D'APPARITION (01/10/2026) ==========
+       Fixe et hors du flux : cachée (translation + visibility) tant que body[data-barre]
+       ne vaut pas « visible ». La visibility suit la fin du glissement, pour que la barre
+       cachée ne soit pas atteignable au clavier. */
+    .masthead {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      transform: translateY(-120%);
+      visibility: hidden;
+      transition: transform .38s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .38s;
+    }
+    body[data-barre="visible"] .masthead {
+      transform: none;
+      visibility: visible;
+      transition: transform .38s cubic-bezier(.2, .8, .2, 1), visibility 0s;
+    }
+    .barre-actions {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      flex-shrink: 0;
+    }
+    /* ≥ 1131 px, .masthead-inner est une grille logo | liens | CTA : les actions vont à droite */
+    @media (min-width: 1131px) {
+      .barre-actions { grid-column: 3; justify-self: end; }
+    }
+    .barre-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: var(--masthead-burger-size);
+      padding: 0 1rem;
+      border-radius: var(--masthead-burger-radius);
+      font-size: var(--masthead-text-size);
+      font-weight: 600;
+      white-space: nowrap;
+      text-decoration: none;
+      transition: transform .2s ease, border-color .2s ease, background-color .2s ease, box-shadow .2s ease;
+    }
+    .barre-btn--ghost {
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .barre-btn--ghost:hover { border-color: rgba(255, 255, 255, 0.45); background: rgba(255, 255, 255, 0.08); }
+    .barre-btn--plein {
+      color: #fff;
+      border: 1px solid transparent;
+      background: linear-gradient(135deg, var(--accent-blue-deep) 0%, var(--accent-purple-deep) 100%);
+      box-shadow: 0 10px 26px -10px rgba(40, 89, 255, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    }
+    .barre-btn--plein:hover { transform: translateY(-1px); box-shadow: 0 16px 36px -12px rgba(110, 168, 255, 0.75); }
+    .barre-btn:focus-visible { outline: 2px solid var(--accent-blue-light); outline-offset: 3px; }
+    .barre-btn__court { display: none; }
+    @media (max-width: 559px) {
+      .barre-btn { padding: 0 .8rem; }
+      .barre-btn__long { display: none; }
+      .barre-btn__court { display: inline; }
+      .masthead-logo-img { max-width: 34vw; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .masthead, body[data-barre="visible"] .masthead { transition: none; }
+    }
+
+    /* ========== HERO ÉPURÉ (01/10/2026) : référence pages produit Apple ==========
+       Une colonne centrée : logo, surtitre, titre, accroche, visuel en grand, actions.
+       Préfixe .hero--epure pour passer devant les placements en grille d'origine. */
+    .hero.hero--epure { padding-top: 1.25rem; padding-bottom: 3.5rem; text-align: center; }
+    .hero--epure .hero-epure {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .hero--epure .hero-logo { align-self: flex-start; display: block; margin-bottom: clamp(2.5rem, 7vh, 4.5rem); }
+    .hero--epure .hero-logo img { display: block; height: clamp(26px, 3.2vw, 34px); width: auto; }
+    .hero--epure .hero-logo:focus-visible { outline: 2px solid var(--accent-blue-light); outline-offset: 4px; border-radius: 8px; }
+    .hero--epure .hero-copy { align-items: center; max-width: 46rem; }
+    .hero--epure h1 { text-align: center; font-size: clamp(2.1rem, 5.6vw, 3.9rem); line-height: 1.08; letter-spacing: -.02em; }
+    .hero--epure .hero-lead { text-align: center; max-width: 38rem; margin-left: auto; margin-right: auto; }
+    .hero--epure .hero-visual {
+      width: 100%;
+      max-width: 1000px;
+      margin-top: clamp(1.75rem, 4vh, 2.75rem);
+    }
+    .hero--epure .hero-cta {
+      justify-content: center;
+      margin-top: 1.75rem;
+    }
+    @media (max-width: 767px) {
+      .hero.hero--epure { padding-top: 1rem; }
+      .hero--epure .hero-logo { margin-bottom: 2.25rem; }
+      .hero--epure .hero-cta { flex-direction: column; align-items: stretch; width: 100%; }
+    }
+
+    /* ========== Retour auteur 01/10 : hero et Points forts tiennent dans l'écran ==========
+       Hero : titre sur deux lignes, visuel dimensionné sur la hauteur restante de l'écran,
+       actions posées en verre sur le bas du visuel (≥ 768 px). */
+    .hero--epure .hero-copy { max-width: none; }
+    .hero--epure h1 { font-size: clamp(2.1rem, 3.6vw, 3.2rem); }
+    /* Accroche en deux phrases, une par ligne dès que la largeur le permet */
+    @media (min-width: 768px) {
+      .hero--epure .hero-lead { max-width: 50rem; text-wrap: balance; }
+    }
+    .hero--epure .hero-scene {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      margin-top: clamp(1.5rem, 3.5vh, 2.5rem);
+    }
+    .hero--epure .hero-scene .hero-visual { margin-top: 0; max-width: none; }
+    @media (min-width: 768px) {
+      .hero--epure .hero-logo { margin-bottom: clamp(1.25rem, 4.5vh, 3.5rem); }
+      /* 16:9, et pas plus haut que l'écran sous le texte : --hero-haut-texte est mesuré
+         par le script (bloc 2e), 23rem par défaut */
+      .hero--epure .hero-scene {
+        max-width: min(1000px, calc((100svh - var(--hero-haut-texte, 23rem) - 1.5rem) * 16 / 9));
+      }
+      .hero--epure .hero-cta {
+        /* Centrée par les marges : l'animation d'entrée du hero réécrit transform */
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 1.1rem;
+        width: fit-content;
+        margin: 0 auto;
+        padding: .55rem;
+        flex-wrap: nowrap;
+        border-radius: 20px;
+        background: rgba(10, 11, 20, 0.62);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(14px) saturate(150%);
+        -webkit-backdrop-filter: blur(14px) saturate(150%);
+        box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.7);
+        z-index: 6;
+      }
+      .hero--epure .hero-visual__caption { top: .85rem; bottom: auto; }
+    }
+
+    /* Points forts : titre, cartes et minuterie dans un même écran ; la minuterie colle
+       au bas de l'écran tant que la galerie n'est pas entièrement montée. */
+    .pf__commandes {
+      position: sticky;
+      bottom: 1rem;
+      z-index: 5;
+    }
+    @media (min-width: 768px) {
+      .pf { padding-top: 3.5rem; }
+      .pf__h2 { font-size: clamp(2rem, 3vw, 2.6rem); }
+      .pf__entete { margin-bottom: 1.5rem; }
+      .pf__slide { min-height: 0; padding: 2.25rem 2rem 2rem; gap: 1.5rem; }
+      .pf__visuel { height: clamp(11rem, calc(100svh - 29rem), 420px); }
+      .pf__commandes { margin-top: 1.5rem; }
+    }
+
+    /* Visuel détouré (fond transparent) : ni ombre ni coins arrondis autour du cadre */
+    .pf__visuel img.pf__img--detoure { box-shadow: none; border-radius: 0; filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.55)); }
+
+    /* Accroche du hero : ce que c'est (affirmé), puis comment on s'en sert (en retrait),
+       chacune sur sa ligne ; interligne resserré pour que les deux blocs se lisent séparés */
+    .hero--epure .hero-lead { line-height: 1.45; }
+    .hero--epure .hero-lead__quoi,
+    .hero--epure .hero-lead__usage { display: block; }
+    .hero--epure .hero-lead__quoi { color: var(--text-main); font-weight: 500; }
+    .hero--epure .hero-lead__usage { margin-top: .5rem; font-size: .92em; }
   </style>
 
 </head>
@@ -8270,21 +8419,16 @@
           decoding="async" />
       </a>
 
-      <nav class="main-nav" id="mainNav" aria-label="Navigation principale">
-        <div class="main-nav-links">
-          <a href="#demo" class="nav-link">Démo</a>
-          <a href="#probleme" class="nav-link">Le défi</a>
-          <a href="#valeur" class="nav-link">Ce que vous gagnez</a>
-          <a href="#livre" class="nav-link">Ce qui est livré</a>
-          <a href="#deroule" class="nav-link">Comment ça se passe</a>
-        </div>
-        <a href="#contact" class="masthead-cta">Contact</a>
-      </nav>
-
-      <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu">
-        <span></span><span></span><span></span>
-      </button>
-
+      <!-- Barre d'apparition (01/10/2026) : masquée sur le hero, elle descend à l'arrivée
+           sur les Points forts (bloc JS 2d). Deux actions, libellés courts sur mobile. -->
+      <div class="barre-actions">
+        <a href="#demo" class="barre-btn barre-btn--ghost" data-launch-demo aria-label="Tester la démo">
+          <span class="barre-btn__long">Tester la démo</span><span class="barre-btn__court" aria-hidden="true">La démo</span>
+        </a>
+        <a href="#contact" class="barre-btn barre-btn--plein" aria-label="Réserver 30 min">
+          <span class="barre-btn__long">Réserver 30 min</span><span class="barre-btn__court" aria-hidden="true">30 min</span>
+        </a>
+      </div>
       <div class="masthead-bg" aria-hidden="true"></div>
     </div>
   </header>
@@ -8295,8 +8439,13 @@
     <div class="hero-fade" aria-hidden="true"></div>
     <div class="hero-overlay" aria-hidden="true"></div>
 
-    <section class="hero">
-      <div class="hero-inner">
+    <!-- HERO ÉPURÉ (01/10/2026) : logo, titre, accroche, visuel en grand, puis les deux
+         actions. La barre fixe n'apparaît qu'à partir des Points forts. -->
+    <section class="hero hero--epure">
+      <div class="hero-epure">
+        <a href="#top" class="hero-logo" aria-label="Fractal Innov, retour en haut de la page">
+          <img src="assets/fractalinnov-logo.webp" alt="Fractal Innov" width="770" height="142" loading="eager" decoding="async">
+        </a>
         <div class="hero-copy">
           <div class="hero-eyebrow">
             Démonstrateur interactif
@@ -8304,22 +8453,11 @@
           <h1>
             <span class="hero-title-main">Votre produit reste chez vous<br><em>Votre démo part en salon</em></span>
           </h1>
-          <p class="hero-lead">Le jumeau 3D de votre produit, sur l'écran tactile de votre stand. Le visiteur
-            l'explore du doigt, votre commercial le pilote depuis son téléphone, sans réseau.</p>
+          <p class="hero-lead"><span class="hero-lead__quoi">Le jumeau 3D de votre produit, sur votre stand, en showroom ou en visio.</span>
+            <span class="hero-lead__usage">Le visiteur l'explore du doigt, votre commercial le pilote depuis son téléphone.</span></p>
         </div>
-
-        <div class="hero-cta">
-          <a href="#demo" class="hero-cta__btn hero-cta__btn--primary" data-launch-demo>
-            <span>Tester la démo</span>
-            <svg class="hero-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="12" y1="4" x2="12" y2="20"></line>
-              <polyline points="6 14 12 20 18 14"></polyline>
-            </svg>
-          </a>
-          <a href="#contact" class="hero-cta__btn hero-cta__btn--ghost">Réserver 30 min</a>
-        </div>
-
+        <!-- Scène du hero : le visuel, et (≥ 768 px) la barre d'actions posée sur son bas -->
+        <div class="hero-scene">
         <!-- Visuel hero : poster de la démo aujourd'hui, boucle vidéo ou scène Needle demain (même emplacement) -->
         <a href="#demo" class="hero-visual" aria-label="Lancer la démo" data-launch-demo>
           <figure class="hero-visual__frame">
@@ -8344,53 +8482,90 @@
           </figure>
         </a>
 
-        <nav class="hero-pillars" aria-label="Ce qui change sur votre stand">
-          <a href="#step-attirer" class="hero-pillar">
-            <span class="hero-pillar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg></span>
-            <div class="hero-pillar__text"><strong>Attirer</strong>Une expérience 3D plutôt qu'un panneau</div>
-            <svg class="hero-pillar__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+        <div class="hero-cta">
+          <!-- Réserver = action principale (même rôle que dans la barre), la démo en secondaire -->
+          <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30 min</a>
+          <a href="#demo" class="hero-cta__btn hero-cta__btn--ghost" data-launch-demo>
+            <span>Tester la démo</span>
+            <svg class="hero-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 12h14M13 6l6 6-6 6"></path>
+              <line x1="12" y1="4" x2="12" y2="20"></line>
+              <polyline points="6 14 12 20 18 14"></polyline>
             </svg>
           </a>
-          <a href="#step-expliquer" class="hero-pillar">
-            <span class="hero-pillar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-              </svg></span>
-            <div class="hero-pillar__text"><strong>Expliquer sans vous</strong>Le visiteur comprend seul, sans attendre
-            </div>
-            <svg class="hero-pillar__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 12h14M13 6l6 6-6 6"></path>
-            </svg>
-          </a>
-          <a href="#step-reutiliser" class="hero-pillar">
-            <span class="hero-pillar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="1 4 1 10 7 10"></polyline>
-                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-              </svg></span>
-            <div class="hero-pillar__text"><strong>Réutiliser</strong>Showroom, rendez-vous, salons suivants</div>
-            <svg class="hero-pillar__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 12h14M13 6l6 6-6 6"></path>
-            </svg>
-          </a>
-        </nav>
-      </div>
+        </div>
 
-      <a href="#demo" class="hero-scroll" aria-label="Descendre vers la démo">
+        </div>
+      </div>
+      <a href="#points-forts" class="hero-scroll" aria-label="Descendre vers les points forts">
         <span class="hero-scroll__line" aria-hidden="true"><i></i></span>
       </a>
     </section>
   </div>
-
   <main class="page-rest">
+  <!-- POINTS FORTS (01/10/2026) : six slides, défilement automatique (bloc JS 2c) -->
+  <section id="points-forts" class="pf" aria-labelledby="pf-titre" aria-roledescription="carrousel" data-actif="0" data-lecture="on">
+    <div class="pf__entete">
+      <h2 id="pf-titre" class="pf__h2" data-repere>Points forts</h2>
+    </div>
+    <div class="pf__galerie">
+    <ul class="pf__piste" aria-live="off">
+          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="1 sur 6" data-index="0">
+            <div class="pf__texte">
+              <h3 class="pf__titre">Une interface épurée, que le visiteur comprend seul</h3>
+            </div>
+            <figure class="pf__visuel"><img src="assets/demo/vue-ensemble.webp" width="1600" height="1063" alt="La vue d'ensemble du démonstrateur : le produit en 3D et quelques boutons clairs" loading="lazy" decoding="async"></figure>
+          </li>
+          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="2 sur 6" data-index="1">
+            <div class="pf__texte">
+              <h3 class="pf__titre">Un seul démonstrateur, sur tous vos écrans</h3>
+              <p class="pf__sous-titre">Stand, showroom, visio</p>
+            </div>
+            <figure class="pf__visuel"><img class="pf__img--detoure" src="assets/points-forts/ecrans.webp" width="1600" height="1000" alt="Le même démonstrateur sur un écran tactile de stand, un ordinateur portable et une tablette" loading="lazy" decoding="async"></figure>
+          </li>
+          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="3 sur 6" data-index="2">
+            <div class="pf__texte">
+              <h3 class="pf__titre">Pilotez la présentation depuis votre téléphone</h3>
+            </div>
+            <figure class="pf__visuel"><img src="assets/demo/presenter.webp" width="1600" height="1065" alt="Le commercial pilote la présentation depuis son téléphone" loading="lazy" decoding="async"></figure>
+          </li>
+          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="4 sur 6" data-index="3">
+            <div class="pf__texte">
+              <h3 class="pf__titre">La fluidité de la 3D, dans un navigateur ou une application</h3>
+            </div>
+            <figure class="pf__visuel"><img src="assets/demo/attirer.webp" width="1600" height="1061" alt="La scène 3D du démonstrateur, fluide et détaillée" loading="lazy" decoding="async"></figure>
+          </li>
+          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="5 sur 6" data-index="4">
+            <div class="pf__texte">
+              <h3 class="pf__titre">Votre produit présenté, sans le transporter</h3>
+              <p class="pf__sous-titre">Toute votre gamme, en option</p>
+            </div>
+            <figure class="pf__visuel"><img src="assets/demo/step-expliquer.webp" width="1600" height="760" alt="Le jumeau 3D du produit, présenté sur le stand à sa place" loading="lazy" decoding="async"></figure>
+          </li>
+          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="6 sur 6" data-index="5">
+            <div class="pf__texte">
+              <h3 class="pf__titre">Mesurez ce qui intéresse vos visiteurs</h3>
+              <p class="pf__sous-titre">Sans cookie, aucune donnée personnelle</p>
+            </div>
+            <figure class="pf__visuel"><img src="assets/points-forts/stats.webp" width="1600" height="900" alt="Un tableau de bord de statistiques : visites, boutons touchés, vidéos vues jusqu'au bout, contenus les plus ouverts" loading="lazy" decoding="async"></figure>
+          </li>
+    </ul>
+    <div class="pf__commandes">
+      <div class="pf__points" role="group" aria-label="Choisir un point fort">
+            <button type="button" class="pf__point" aria-label="Point fort 1 : Une interface épurée, que le visiteur comprend seul" aria-current="true"></button>
+            <button type="button" class="pf__point" aria-label="Point fort 2 : Un seul démonstrateur, sur tous vos écrans"></button>
+            <button type="button" class="pf__point" aria-label="Point fort 3 : Pilotez la présentation depuis votre téléphone"></button>
+            <button type="button" class="pf__point" aria-label="Point fort 4 : La fluidité de la 3D, dans un navigateur ou une application"></button>
+            <button type="button" class="pf__point" aria-label="Point fort 5 : Votre produit présenté, sans le transporter"></button>
+            <button type="button" class="pf__point" aria-label="Point fort 6 : Mesurez ce qui intéresse vos visiteurs"></button>
+      </div>
+      <button type="button" class="pf__lecture" aria-label="Mettre en pause le défilement">
+        <svg class="pf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+        <svg class="pf__ico-lecture" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+    </div>
+    </div>
+  </section>
     <section id="demo" class="section">
       <div class="section-number reveal">La démo</div>
       <h2 class="reveal delay-100">Testez-la, c'est ce que vos visiteurs verront</h2>
@@ -9596,10 +9771,11 @@
 
       /* 0b. Nav active selon la section */
       const navLinksAll = document.querySelectorAll('#mainNav .nav-link');
-      const sectionIdsNav = ['demo', 'probleme', 'valeur', 'jumeau-3d', 'livre', 'deroule', 'questions'];
+      const sectionIdsNav = ['points-forts', 'demo', 'probleme', 'valeur', 'jumeau-3d', 'livre', 'deroule', 'questions'];
       let headerScrollRaf = 0;
       function updateNavActiveFromScroll() {
-        if (!navLinksAll.length) return;
+        /* Plus de liens de section dans la barre (01/10/2026) : le scroll-spy tourne
+           quand même, il pose body[data-section] pour le farfadet. */
         const headerH = 96;
         /* Le point de lecture suit scroll-padding-top de <html> : une ancre atteinte (#valeur)
            doit désigner sa propre section, pas la précédente. */
@@ -9658,24 +9834,41 @@
         reveals.forEach((el) => revealObserver.observe(el));
       }
 
-      /* 2. MENU BURGER MOBILE */
-      const burgerBtn = document.getElementById('burgerBtn');
-      const mainNav = document.getElementById('mainNav');
-      const navLinks = document.querySelectorAll('.nav-link, .masthead-cta');
-      burgerBtn.addEventListener('click', () => {
-        burgerBtn.classList.toggle('active');
-        mainNav.classList.toggle('menu-open');
-        document.body.style.overflow = mainNav.classList.contains('menu-open') ? 'hidden' : '';
-      });
-      navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          if (mainNav.classList.contains('menu-open')) {
-            burgerBtn.classList.remove('active');
-            mainNav.classList.remove('menu-open');
-            document.body.style.overflow = '';
-          }
-        });
-      });
+      /* 2e. HAUTEUR DU HERO (01/10/2026) : le visuel du hero doit tenir en entier dans le
+         premier écran. On mesure la hauteur occupée au-dessus de lui (logo, titre, accroche)
+         et on la donne au CSS, qui en déduit la largeur maximale du visuel en 16:9. */
+      (() => {
+        const scene = document.querySelector('.hero--epure .hero-scene');
+        if (!scene) return;
+        const mesurer = () => {
+          const haut = scene.getBoundingClientRect().top + window.scrollY;
+          document.documentElement.style.setProperty('--hero-haut-texte', Math.round(haut) + 'px');
+        };
+        mesurer();
+        window.addEventListener('resize', mesurer);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(mesurer);
+      })();
+
+      /* 2d. BARRE D'APPARITION (01/10/2026) : cachée tant que le hero occupe l'écran,
+         elle descend quand le haut des Points forts atteint le bas de la barre, et remonte
+         quand on revient au hero. État sur body[data-barre] (visible | cachee). */
+      (() => {
+        const pf = document.getElementById('points-forts');
+        const inner = document.querySelector('.masthead-inner');
+        if (!pf || !inner) { document.body.dataset.barre = 'visible'; return; }
+        let raf = 0;
+        function majBarre() {
+          raf = 0;
+          const seuil = inner.offsetTop + inner.offsetHeight;
+          const etat = pf.getBoundingClientRect().top <= seuil ? 'visible' : 'cachee';
+          if (document.body.dataset.barre === etat) return;
+          document.body.dataset.barre = etat;
+          logScene('barre : ' + (etat === 'visible' ? 'descend (Points forts atteints)' : 'remonte (retour au hero)'));
+        }
+        window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(majBarre); }, { passive: true });
+        window.addEventListener('resize', majBarre);
+        majBarre();
+      })();
 
       /* 2b. ANCRES DE SECTION (30/09/2026) : le nom de la section se pose juste sous
          la barre, avec un léger espace. Le saut natif ne le peut pas : il aligne le
@@ -9683,13 +9876,15 @@
          section et l'écran. On vise donc le repère visible (le surtitre
          .section-number, ou la carte du contact) et on mesure la barre à chaque clic. */
       const ANCRE_ESPACE = 24;
-      const repereSection = (sec) => sec.querySelector('.section-number') || sec.querySelector('.contact__inner') || sec;
+      const repereSection = (sec) => sec.querySelector('[data-repere]') || sec.querySelector('.section-number') || sec.querySelector('.contact__inner') || sec;
       /* Position dans le document sans les transform : un repère pas encore
          « révélé » est décalé de quelques dizaines de pixels par son animation */
       const hautDocument = (el) => { let y = 0; for (let n = el; n; n = n.offsetParent) y += n.offsetTop; return y; };
       function allerSection(sec, doux) {
-        const barre = document.querySelector('.masthead-bg') || document.querySelector('.masthead');
-        const basBarre = barre ? barre.getBoundingClientRect().bottom : 0;
+        /* Bas de la barre telle qu'elle sera affichée : la mesure ignore sa translation,
+           car elle peut être cachée (sur le hero) au moment du clic et descendre ensuite. */
+        const barre = document.querySelector('.masthead-inner');
+        const basBarre = barre ? barre.offsetTop + barre.offsetHeight : 0;
         const y = Math.max(0, hautDocument(repereSection(sec)) - basBarre - ANCRE_ESPACE);
         logScene('ancre #' + sec.id + ' : repère à ' + Math.round(y + basBarre + ANCRE_ESPACE) + ' px, bas de la barre ' + Math.round(basBarre) + ' px, défilement vers ' + Math.round(y));
         window.scrollTo({ top: y, behavior: doux && !reduceMotion ? 'smooth' : 'auto' });
@@ -9704,6 +9899,159 @@
         if (location.hash !== '#' + id) history.pushState(null, '', '#' + id);
         allerSection(sec, true);
       });
+
+      /* 2c. POINTS FORTS (01/10/2026) : le slider avance seul toutes les 5 s, mais
+         seulement quand la section est à l'écran et l'onglet visible. Il se met en pause
+         au survol de la souris et quand le focus clavier est dedans. Dès que le visiteur
+         touche la piste (doigt, souris, molette) ou clique un point, il a la main : le
+         défilement s'arrête et le bouton passe en « lecture ».
+         La slide active se déduit en continu de la position de la piste : pendant un
+         glissement, la carte qui arrive s'active (et son texte apparaît) dès qu'elle est
+         la plus proche. Pendant un défilement lancé par nous, la cible est connue
+         d'avance : on ne recalcule pas, pour ne pas allumer les slides traversées.
+         On fait défiler la piste (scrollTo), jamais la page.
+         Journal : ?debug, lignes « points forts : … ». */
+      (() => {
+        const pf = document.getElementById('points-forts');
+        if (!pf) return;
+        const piste = pf.querySelector('.pf__piste');
+        const slides = [...pf.querySelectorAll('.pf__slide')];
+        const points = [...pf.querySelectorAll('.pf__point')];
+        const bouton = pf.querySelector('.pf__lecture');
+        const DUREE = 5000;
+        let actif = -1;
+        let lecture = !reduceMotion;
+        let visible = false, survol = false, focusDedans = false;
+        let ecoule = 0, dernier = 0, raf = 0, rafScroll = 0;
+        let cible = null, cibleT = 0;
+
+        /* Décalage de la slide i dans la piste : la première est à 0 */
+        const gauche = (i) => slides[i].offsetLeft - slides[0].offsetLeft;
+        const maxScroll = () => piste.scrollWidth - piste.clientWidth;
+        const plusProche = () => {
+          let proche = 0;
+          slides.forEach((sl, k) => {
+            if (Math.abs(gauche(k) - piste.scrollLeft) < Math.abs(gauche(proche) - piste.scrollLeft)) proche = k;
+          });
+          return proche;
+        };
+
+        function marquer(i, raison) {
+          if (i === actif) return;
+          actif = i;
+          pf.dataset.actif = String(i);
+          slides.forEach((sl, k) => sl.classList.toggle('pf__slide--active', k === i));
+          points.forEach((pt, k) => {
+            pt.style.setProperty('--pf-progres', '0');
+            if (k === i) pt.setAttribute('aria-current', 'true'); else pt.removeAttribute('aria-current');
+          });
+          ecoule = 0;
+          if (raison) logScene('points forts : slide ' + (i + 1) + ' (' + raison + ')');
+        }
+
+        /* Cible atteinte (ou au plus près : la dernière slide bute sur la fin de la
+           piste) : la position redevient la source de vérité. */
+        function cibleAtteinte() {
+          if (cible === null) return true;
+          const but = Math.min(gauche(cible), maxScroll());
+          if (Math.abs(piste.scrollLeft - but) < 2) { cible = null; clearTimeout(cibleT); return true; }
+          return false;
+        }
+
+        function aller(i, raison) {
+          i = (i + slides.length) % slides.length;
+          marquer(i, raison);
+          cible = i;
+          clearTimeout(cibleT);
+          cibleT = setTimeout(() => { cible = null; }, 1200);
+          piste.scrollTo({ left: gauche(i), behavior: reduceMotion ? 'auto' : 'smooth' });
+          cibleAtteinte();
+        }
+
+        function arreter(raison) {
+          if (!lecture) return;
+          lecture = false;
+          pf.dataset.lecture = 'off';
+          bouton.setAttribute('aria-label', 'Reprendre le défilement');
+          logScene('points forts : défilement arrêté (' + raison + ')');
+        }
+
+        function reprendre() {
+          lecture = true;
+          ecoule = 0;
+          pf.dataset.lecture = 'on';
+          bouton.setAttribute('aria-label', 'Mettre en pause le défilement');
+          logScene('points forts : défilement repris');
+          planifier();
+        }
+
+        /* Une image sur deux : le temps n'avance que si rien ne retient le slider.
+           L'écart entre deux images est plafonné à 100 ms : un onglet revenu de
+           l'arrière-plan ne déclenche pas de rafale de changements. */
+        function tic(t) {
+          raf = 0;
+          const dt = dernier ? Math.min(t - dernier, 100) : 0;
+          dernier = t;
+          if (lecture && visible && !survol && !focusDedans && !document.hidden) {
+            ecoule += dt;
+            if (ecoule >= DUREE) aller(actif + 1, 'auto');
+          }
+          points[actif].style.setProperty('--pf-progres', String(Math.min(ecoule / DUREE, 1)));
+          planifier();
+        }
+
+        function planifier() {
+          if (raf) return;
+          if (lecture && visible) raf = requestAnimationFrame(tic);
+          else dernier = 0;
+        }
+
+        piste.addEventListener('scroll', () => {
+          if (rafScroll) return;
+          rafScroll = requestAnimationFrame(() => {
+            rafScroll = 0;
+            if (cibleAtteinte()) marquer(plusProche(), 'glissement');
+          });
+        }, { passive: true });
+
+        /* La main du visiteur sur la piste : doigt, clic, molette horizontale */
+        const mainVisiteur = () => { cible = null; arreter('glissement'); };
+        piste.addEventListener('pointerdown', mainVisiteur, { passive: true });
+        piste.addEventListener('touchstart', mainVisiteur, { passive: true });
+        piste.addEventListener('wheel', (e) => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) mainVisiteur(); }, { passive: true });
+
+        points.forEach((pt, k) => pt.addEventListener('click', () => {
+          arreter('point');
+          aller(k, 'point');
+        }));
+        bouton.addEventListener('click', () => (lecture ? arreter('bouton') : reprendre()));
+
+        piste.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') survol = true; });
+        piste.addEventListener('pointerleave', () => { survol = false; });
+        /* Seul le focus clavier retient le slider : un clic de souris donne aussi le focus
+           au bouton, et le slider resterait en pause jusqu'au clic suivant ailleurs. */
+        pf.addEventListener('focusin', (e) => { focusDedans = e.target.matches(':focus-visible'); });
+        pf.addEventListener('focusout', (e) => { if (!pf.contains(e.relatedTarget)) focusDedans = false; });
+
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver((entries) => {
+            visible = entries[0].isIntersecting;
+            logScene('points forts : section ' + (visible ? 'visible, le temps tourne' : 'hors écran, le temps s\'arrête'));
+            planifier();
+          }, { threshold: 0.4 }).observe(pf);
+        }
+        window.addEventListener('resize', () => {
+          piste.scrollTo({ left: gauche(actif), behavior: 'auto' });
+        });
+
+        marquer(0);
+        pf.classList.add('pf--pret');
+        if (!lecture) {
+          pf.dataset.lecture = 'off';
+          bouton.setAttribute('aria-label', 'Reprendre le défilement');
+          logScene('points forts : mouvement réduit demandé, pas de défilement automatique');
+        }
+      })();
 
       /* 3. ACCORDÉON FAQ */
       /* Accordéon sur téléphone seulement : sur grand écran les six réponses sont
