@@ -8410,6 +8410,25 @@
       .pf__point[aria-current="true"] { width: 36px; }
       .pf__lecture { width: 48px; height: 48px; }
     }
+
+    /* Points forts : le titre de la slide active entre avec un léger retard, puis flotte.
+       .pf--pret est posé par le JS : sans lui, tous les titres restent visibles. */
+    .pf--pret .pf__slide .pf__texte { opacity: 0; transform: translateY(14px); transition: opacity .35s ease, transform .35s ease; }
+    .pf--pret .pf__slide--active .pf__texte {
+      opacity: 1;
+      transform: none;
+      transition: opacity .6s ease .25s, transform .6s cubic-bezier(.2, .8, .2, 1) .25s;
+    }
+    .pf--pret .pf__slide--active .pf__titre { animation: pf-flotte 6s ease-in-out .9s infinite; }
+    @keyframes pf-flotte {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pf--pret .pf__slide .pf__texte { opacity: 1; transform: none; transition: none; }
+      .pf--pret .pf__slide--active .pf__titre { animation: none; }
+      .pf__point { transition: none; }
+    }
   </style>
 
 </head>
@@ -9918,6 +9937,138 @@
         if (location.hash !== '#' + id) history.pushState(null, '', '#' + id);
         allerSection(sec, true);
       });
+
+      /* 2c. POINTS FORTS (01/10/2026) : le slider avance seul toutes les 5 s, mais
+         seulement quand la section est à l'écran et l'onglet visible. Il se met en pause
+         au survol de la souris et quand le focus clavier est dedans. Un clic sur un point
+         ou un glissement au doigt rend la main au visiteur : le défilement s'arrête et le
+         bouton passe en « lecture ». On fait défiler la piste (scrollTo), jamais la page.
+         Journal : ?debug, lignes « points forts : … ». */
+      (() => {
+        const pf = document.getElementById('points-forts');
+        if (!pf) return;
+        const piste = pf.querySelector('.pf__piste');
+        const slides = [...pf.querySelectorAll('.pf__slide')];
+        const points = [...pf.querySelectorAll('.pf__point')];
+        const bouton = pf.querySelector('.pf__lecture');
+        const DUREE = 5000;
+        let actif = 0;
+        let lecture = !reduceMotion;
+        let visible = false, survol = false, focusDedans = false;
+        let ecoule = 0, dernier = 0, raf = 0;
+        let defilementAuto = false, finDefilementT = 0;
+
+        /* Décalage de la slide i dans la piste : la première est à 0 */
+        const gauche = (i) => slides[i].offsetLeft - slides[0].offsetLeft;
+
+        function marquer(i) {
+          actif = i;
+          pf.dataset.actif = String(i);
+          slides.forEach((sl, k) => sl.classList.toggle('pf__slide--active', k === i));
+          points.forEach((pt, k) => {
+            pt.style.setProperty('--pf-progres', '0');
+            if (k === i) pt.setAttribute('aria-current', 'true'); else pt.removeAttribute('aria-current');
+          });
+        }
+
+        function aller(i, raison) {
+          i = (i + slides.length) % slides.length;
+          marquer(i);
+          ecoule = 0;
+          defilementAuto = true;
+          piste.scrollTo({ left: gauche(i), behavior: reduceMotion ? 'auto' : 'smooth' });
+          logScene('points forts : slide ' + (i + 1) + ' (' + raison + ')');
+        }
+
+        function arreter(raison) {
+          if (!lecture) return;
+          lecture = false;
+          pf.dataset.lecture = 'off';
+          bouton.setAttribute('aria-label', 'Reprendre le défilement');
+          logScene('points forts : défilement arrêté (' + raison + ')');
+        }
+
+        function reprendre() {
+          lecture = true;
+          ecoule = 0;
+          pf.dataset.lecture = 'on';
+          bouton.setAttribute('aria-label', 'Mettre en pause le défilement');
+          logScene('points forts : défilement repris');
+          planifier();
+        }
+
+        /* Une image sur deux : le temps n'avance que si rien ne retient le slider.
+           L'écart entre deux images est plafonné à 100 ms : un onglet revenu de
+           l'arrière-plan ne déclenche pas de rafale de changements. */
+        function tic(t) {
+          raf = 0;
+          const dt = dernier ? Math.min(t - dernier, 100) : 0;
+          dernier = t;
+          if (lecture && visible && !survol && !focusDedans && !document.hidden) {
+            ecoule += dt;
+            if (ecoule >= DUREE) aller(actif + 1, 'auto');
+          }
+          points[actif].style.setProperty('--pf-progres', String(Math.min(ecoule / DUREE, 1)));
+          planifier();
+        }
+
+        function planifier() {
+          if (raf) return;
+          if (lecture && visible) raf = requestAnimationFrame(tic);
+          else dernier = 0;
+        }
+
+        /* Fin d'un défilement de la piste (scrollend n'existe pas partout : on attend
+           150 ms sans événement). Si ce n'est pas nous qui l'avons lancé, c'est le doigt
+           ou le pavé tactile du visiteur : on suit la slide la plus proche et on s'arrête. */
+        function finDefilement() {
+          if (defilementAuto) { defilementAuto = false; return; }
+          let proche = 0;
+          slides.forEach((sl, k) => {
+            if (Math.abs(gauche(k) - piste.scrollLeft) < Math.abs(gauche(proche) - piste.scrollLeft)) proche = k;
+          });
+          if (proche !== actif) {
+            marquer(proche);
+            logScene('points forts : slide ' + (proche + 1) + ' (glissement)');
+          }
+          arreter('glissement');
+        }
+        piste.addEventListener('scroll', () => {
+          clearTimeout(finDefilementT);
+          finDefilementT = setTimeout(finDefilement, 150);
+        }, { passive: true });
+
+        points.forEach((pt, k) => pt.addEventListener('click', () => {
+          arreter('point');
+          aller(k, 'point');
+        }));
+        bouton.addEventListener('click', () => (lecture ? arreter('bouton') : reprendre()));
+
+        piste.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') survol = true; });
+        piste.addEventListener('pointerleave', () => { survol = false; });
+        pf.addEventListener('focusin', () => { focusDedans = true; });
+        pf.addEventListener('focusout', (e) => { if (!pf.contains(e.relatedTarget)) focusDedans = false; });
+
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver((entries) => {
+            visible = entries[0].isIntersecting;
+            logScene('points forts : section ' + (visible ? 'visible, le temps tourne' : 'hors écran, le temps s\'arrête'));
+            planifier();
+          }, { threshold: 0.4 }).observe(pf);
+        }
+        window.addEventListener('resize', () => {
+          defilementAuto = true;
+          piste.scrollTo({ left: gauche(actif), behavior: 'auto' });
+        });
+
+        marquer(0);
+        pf.classList.add('pf--pret');
+        if (!lecture) {
+          pf.dataset.lecture = 'off';
+          bouton.setAttribute('aria-label', 'Reprendre le défilement');
+          logScene('points forts : mouvement réduit demandé, pas de défilement automatique');
+        }
+      })();
 
       /* 3. ACCORDÉON FAQ */
       /* Accordéon sur téléphone seulement : sur grand écran les six réponses sont
