@@ -8317,8 +8317,11 @@
       font-size: 1rem;
       font-weight: 500;
     }
+    /* Hauteur réservée : les images arrivent en différé, la section ne doit pas grandir
+       à leur chargement (une ancre visée pendant le défilement tomberait trop bas). */
     .pf__visuel {
-      flex: 1;
+      flex: 1 0 auto;
+      height: min(44vh, 420px);
       margin: 0;
       width: 100%;
       display: flex;
@@ -8330,7 +8333,7 @@
       width: auto;
       max-width: 100%;
       height: auto;
-      max-height: min(44vh, 420px);
+      max-height: 100%;
       border-radius: 14px;
       box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.8);
     }
@@ -8407,6 +8410,7 @@
         gap: 1.5rem;
         border-radius: 22px;
       }
+      .pf__visuel { height: 15rem; }
       .pf__points { padding: .95rem 1.25rem; gap: .6rem; }
       .pf__point[aria-current="true"] { width: 36px; }
       .pf__lecture { width: 48px; height: 48px; }
@@ -8425,6 +8429,75 @@
       .pf--pret .pf__slide .pf__texte { opacity: 1; transform: none; transition: none; }
       .pf__point { transition: none; }
     }
+
+    /* ========== BARRE D'APPARITION (01/10/2026) ==========
+       Fixe et hors du flux : cachée (translation + visibility) tant que body[data-barre]
+       ne vaut pas « visible ». La visibility suit la fin du glissement, pour que la barre
+       cachée ne soit pas atteignable au clavier. */
+    .masthead {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      transform: translateY(-120%);
+      visibility: hidden;
+      transition: transform .38s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .38s;
+    }
+    body[data-barre="visible"] .masthead {
+      transform: none;
+      visibility: visible;
+      transition: transform .38s cubic-bezier(.2, .8, .2, 1), visibility 0s;
+    }
+    .barre-actions {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      flex-shrink: 0;
+    }
+    /* ≥ 1131 px, .masthead-inner est une grille logo | liens | CTA : les actions vont à droite */
+    @media (min-width: 1131px) {
+      .barre-actions { grid-column: 3; justify-self: end; }
+    }
+    .barre-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: var(--masthead-burger-size);
+      padding: 0 1rem;
+      border-radius: var(--masthead-burger-radius);
+      font-size: var(--masthead-text-size);
+      font-weight: 600;
+      white-space: nowrap;
+      text-decoration: none;
+      transition: transform .2s ease, border-color .2s ease, background-color .2s ease, box-shadow .2s ease;
+    }
+    .barre-btn--ghost {
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .barre-btn--ghost:hover { border-color: rgba(255, 255, 255, 0.45); background: rgba(255, 255, 255, 0.08); }
+    .barre-btn--plein {
+      color: #fff;
+      border: 1px solid transparent;
+      background: linear-gradient(135deg, var(--accent-blue-deep) 0%, var(--accent-purple-deep) 100%);
+      box-shadow: 0 10px 26px -10px rgba(40, 89, 255, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    }
+    .barre-btn--plein:hover { transform: translateY(-1px); box-shadow: 0 16px 36px -12px rgba(110, 168, 255, 0.75); }
+    .barre-btn:focus-visible { outline: 2px solid var(--accent-blue-light); outline-offset: 3px; }
+    .barre-btn__court { display: none; }
+    @media (max-width: 559px) {
+      .barre-btn { padding: 0 .8rem; }
+      .barre-btn__long { display: none; }
+      .barre-btn__court { display: inline; }
+      .masthead-logo-img { max-width: 34vw; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .masthead, body[data-barre="visible"] .masthead { transition: none; }
+    }
   </style>
 
 </head>
@@ -8438,21 +8511,16 @@
           decoding="async" />
       </a>
 
-      <nav class="main-nav" id="mainNav" aria-label="Navigation principale">
-        <div class="main-nav-links">
-          <a href="#demo" class="nav-link">Démo</a>
-          <a href="#probleme" class="nav-link">Le défi</a>
-          <a href="#valeur" class="nav-link">Ce que vous gagnez</a>
-          <a href="#livre" class="nav-link">Ce qui est livré</a>
-          <a href="#deroule" class="nav-link">Comment ça se passe</a>
-        </div>
-        <a href="#contact" class="masthead-cta">Contact</a>
-      </nav>
-
-      <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu">
-        <span></span><span></span><span></span>
-      </button>
-
+      <!-- Barre d'apparition (01/10/2026) : masquée sur le hero, elle descend à l'arrivée
+           sur les Points forts (bloc JS 2d). Deux actions, libellés courts sur mobile. -->
+      <div class="barre-actions">
+        <a href="#demo" class="barre-btn barre-btn--ghost" data-launch-demo aria-label="Tester la démo">
+          <span class="barre-btn__long">Tester la démo</span><span class="barre-btn__court" aria-hidden="true">La démo</span>
+        </a>
+        <a href="#contact" class="barre-btn barre-btn--plein" aria-label="Réserver 30 min">
+          <span class="barre-btn__long">Réserver 30 min</span><span class="barre-btn__court" aria-hidden="true">30 min</span>
+        </a>
+      </div>
       <div class="masthead-bg" aria-hidden="true"></div>
     </div>
   </header>
@@ -9825,10 +9893,11 @@
 
       /* 0b. Nav active selon la section */
       const navLinksAll = document.querySelectorAll('#mainNav .nav-link');
-      const sectionIdsNav = ['demo', 'probleme', 'valeur', 'jumeau-3d', 'livre', 'deroule', 'questions'];
+      const sectionIdsNav = ['points-forts', 'demo', 'probleme', 'valeur', 'jumeau-3d', 'livre', 'deroule', 'questions'];
       let headerScrollRaf = 0;
       function updateNavActiveFromScroll() {
-        if (!navLinksAll.length) return;
+        /* Plus de liens de section dans la barre (01/10/2026) : le scroll-spy tourne
+           quand même, il pose body[data-section] pour le farfadet. */
         const headerH = 96;
         /* Le point de lecture suit scroll-padding-top de <html> : une ancre atteinte (#valeur)
            doit désigner sa propre section, pas la précédente. */
@@ -9887,24 +9956,26 @@
         reveals.forEach((el) => revealObserver.observe(el));
       }
 
-      /* 2. MENU BURGER MOBILE */
-      const burgerBtn = document.getElementById('burgerBtn');
-      const mainNav = document.getElementById('mainNav');
-      const navLinks = document.querySelectorAll('.nav-link, .masthead-cta');
-      burgerBtn.addEventListener('click', () => {
-        burgerBtn.classList.toggle('active');
-        mainNav.classList.toggle('menu-open');
-        document.body.style.overflow = mainNav.classList.contains('menu-open') ? 'hidden' : '';
-      });
-      navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          if (mainNav.classList.contains('menu-open')) {
-            burgerBtn.classList.remove('active');
-            mainNav.classList.remove('menu-open');
-            document.body.style.overflow = '';
-          }
-        });
-      });
+      /* 2d. BARRE D'APPARITION (01/10/2026) : cachée tant que le hero occupe l'écran,
+         elle descend quand le haut des Points forts atteint le bas de la barre, et remonte
+         quand on revient au hero. État sur body[data-barre] (visible | cachee). */
+      (() => {
+        const pf = document.getElementById('points-forts');
+        const inner = document.querySelector('.masthead-inner');
+        if (!pf || !inner) { document.body.dataset.barre = 'visible'; return; }
+        let raf = 0;
+        function majBarre() {
+          raf = 0;
+          const seuil = inner.offsetTop + inner.offsetHeight;
+          const etat = pf.getBoundingClientRect().top <= seuil ? 'visible' : 'cachee';
+          if (document.body.dataset.barre === etat) return;
+          document.body.dataset.barre = etat;
+          logScene('barre : ' + (etat === 'visible' ? 'descend (Points forts atteints)' : 'remonte (retour au hero)'));
+        }
+        window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(majBarre); }, { passive: true });
+        window.addEventListener('resize', majBarre);
+        majBarre();
+      })();
 
       /* 2b. ANCRES DE SECTION (30/09/2026) : le nom de la section se pose juste sous
          la barre, avec un léger espace. Le saut natif ne le peut pas : il aligne le
@@ -9917,8 +9988,10 @@
          « révélé » est décalé de quelques dizaines de pixels par son animation */
       const hautDocument = (el) => { let y = 0; for (let n = el; n; n = n.offsetParent) y += n.offsetTop; return y; };
       function allerSection(sec, doux) {
-        const barre = document.querySelector('.masthead-bg') || document.querySelector('.masthead');
-        const basBarre = barre ? barre.getBoundingClientRect().bottom : 0;
+        /* Bas de la barre telle qu'elle sera affichée : la mesure ignore sa translation,
+           car elle peut être cachée (sur le hero) au moment du clic et descendre ensuite. */
+        const barre = document.querySelector('.masthead-inner');
+        const basBarre = barre ? barre.offsetTop + barre.offsetHeight : 0;
         const y = Math.max(0, hautDocument(repereSection(sec)) - basBarre - ANCRE_ESPACE);
         logScene('ancre #' + sec.id + ' : repère à ' + Math.round(y + basBarre + ANCRE_ESPACE) + ' px, bas de la barre ' + Math.round(basBarre) + ' px, défilement vers ' + Math.round(y));
         window.scrollTo({ top: y, behavior: doux && !reduceMotion ? 'smooth' : 'auto' });
