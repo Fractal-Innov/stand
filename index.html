@@ -1092,117 +1092,21 @@
       margin-bottom: 0;
     }
 
-    .hero-pillars {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(0.45rem, 1vw, 0.75rem);
-      margin-top: clamp(0.9rem, 2vh, 1.25rem);
-    }
 
-    .hero-pillar {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      align-items: start;
-      column-gap: 0.6rem;
-      padding: 0.35rem 0.2rem 0.45rem;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
-      min-width: 0;
-      position: relative;
-    }
 
-    .hero-pillar__icon {
-      flex: 0 0 auto;
-      width: 20px;
-      height: 20px;
-      padding: 2px;
-      /* plus d'espace autour du picto */
-      box-sizing: content-box;
-      color: var(--accent-blue);
-      margin-top: 0.08rem;
-      display: block;
-    }
 
-    .hero-pillar__text {
-      font-size: clamp(0.78rem, 1.25vw, 0.88rem);
-      line-height: 1.35;
-      color: rgba(255, 255, 255, 0.9);
-      text-align: left;
-    }
-
-    .hero-pillar__text strong {
-      display: block;
-      color: #fff;
-      font-weight: 600;
-      margin-bottom: 0.12rem;
-    }
 
     @media (max-width: 767px) {
-      .hero-pillars {
-        grid-template-columns: 1fr;
-        gap: 0.55rem;
-        margin-top: 0.9rem;
-        max-width: min(520px, 100%);
-        margin-left: auto;
-        margin-right: auto;
-      }
 
-      .hero-pillar {
-        padding: 0.35rem 0.15rem 0.6rem;
-        width: 100%;
-        max-width: min(520px, 100%);
-        margin-left: auto;
-        margin-right: auto;
-        align-items: center;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      }
 
-      .hero-pillar:last-child {
-        border-bottom: 0;
-      }
 
-      .hero-pillar__icon {
-        width: 24px;
-        height: 24px;
-        align-self: center;
-        margin-top: 0;
-        transform: none;
-      }
 
-      .hero-pillar__text {
-        font-size: 0.96rem;
-        line-height: 1.42;
-      }
     }
 
     @media (min-width: 768px) {
-      .hero-pillar {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        text-align: left;
-        gap: 0.45rem;
-        padding: 0.2rem clamp(0.4rem, 1vw, 0.75rem) 0.35rem;
-      }
 
       /* Séparateurs verticaux subtils comme les metas */
-      .hero-pillar:not(:last-child)::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: 15%;
-        bottom: 15%;
-        width: 1px;
-        background: rgba(255, 255, 255, 0.1);
-      }
 
-      .hero-pillar__icon {
-        width: 28px;
-        height: 28px;
-        margin-top: 0;
-      }
     }
 
     .hero-meta {
@@ -3685,11 +3589,6 @@
       grid-row: 3;
     }
 
-    .hero-pillars {
-      grid-column: 1;
-      grid-row: 4;
-    }
-
     @media (max-width: 767px) {
       .hero-cta {
         justify-content: center;
@@ -3698,10 +3597,6 @@
 
       .hero-visual {
         margin-top: clamp(1.5rem, 5vw, 2.2rem);
-      }
-
-      .hero-pillars {
-        margin-top: 1.4rem;
       }
     }
 
@@ -3726,14 +3621,6 @@
         grid-column: 2;
         grid-row: 1 / span 2;
         align-self: center;
-      }
-
-      .hero-pillars {
-        grid-column: 1 / -1;
-        grid-row: 3;
-        margin-top: clamp(1.6rem, 3.2vh, 2.4rem);
-        padding-top: clamp(1rem, 2vh, 1.4rem);
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
       }
     }
 
@@ -6220,10 +6107,6 @@
     .hero-lead,
     .hero-cta,
     .hero-visual,
-    .hero-pillars,
-    .hero-scroll {
-      animation: heroIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
 
     .hero h1 {
       animation-delay: 0.08s;
@@ -6239,10 +6122,6 @@
 
     .hero-visual {
       animation-delay: 0.2s;
-    }
-
-    .hero-pillars {
-      animation-delay: 0.4s;
     }
 
     .hero-scroll {
@@ -6321,75 +6200,15 @@
     }
 
     /* Piliers : des liens vers les étapes de « Ce que vous gagnez » */
-    .hero-pillar {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr) auto;
-      align-items: center;
-      column-gap: 0.75rem;
-      padding: 0.5rem 0.6rem;
-      border-radius: 12px;
-      text-decoration: none;
-      color: inherit;
-      transition: background 0.25s ease, transform 0.25s ease;
-    }
 
-    .hero-pillar:hover,
-    .hero-pillar:focus-visible {
-      background: rgba(255, 255, 255, 0.05);
-      transform: translateY(-2px);
-    }
 
-    .hero-pillar:focus-visible {
-      outline: 2px solid var(--accent-blue-light);
-      outline-offset: 2px;
-    }
 
-    .hero-pillar__icon {
-      width: 38px;
-      height: 38px;
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-      display: grid;
-      place-items: center;
-      border-radius: 10px;
-      background: rgba(110, 168, 255, 0.1);
-      border: 1px solid rgba(110, 168, 255, 0.25);
-      color: var(--accent-blue-light);
-      box-shadow: inset 0 0 18px rgba(110, 168, 255, 0.12);
-      transition: background 0.25s ease, border-color 0.25s ease;
-    }
 
-    .hero-pillar__icon svg {
-      width: 20px;
-      height: 20px;
-    }
 
-    .hero-pillar:hover .hero-pillar__icon {
-      background: rgba(110, 168, 255, 0.2);
-      border-color: rgba(110, 168, 255, 0.5);
-    }
 
-    .hero-pillar__arrow {
-      width: 18px;
-      height: 18px;
-      color: rgba(255, 255, 255, 0.55);
-      opacity: 0;
-      transform: translateX(-6px);
-      transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    }
 
-    .hero-pillar:hover .hero-pillar__arrow,
-    .hero-pillar:focus-visible .hero-pillar__arrow {
-      opacity: 1;
-      transform: none;
-    }
 
     @media (hover: none) {
-      .hero-pillar__arrow {
-        opacity: 0.6;
-        transform: none;
-      }
     }
 
     /* Le fil vers la démo : une ligne qui descend, un point qui la parcourt, le nom de ce qui vient */
@@ -6542,20 +6361,7 @@
       .hero-lead,
       .hero-cta,
       .hero-visual,
-      .hero-pillars,
-      .hero-scroll,
-      .hero-visual::before,
-      .hero-visual__play::after,
-      .hero-scroll__line i {
-        animation: none;
-      }
 
-      .hero-pillar,
-      .hero-pillar__icon,
-      .hero-pillar__arrow,
-      .hero-visual__frame {
-        transition: none;
-      }
     }
 
     /* ── Démo : une scène en deux temps (1 l'écran, 2 la télécommande), un fil entre les deux,
@@ -8498,6 +8304,37 @@
     @media (prefers-reduced-motion: reduce) {
       .masthead, body[data-barre="visible"] .masthead { transition: none; }
     }
+
+    /* ========== HERO ÉPURÉ (01/10/2026) : référence pages produit Apple ==========
+       Une colonne centrée : logo, surtitre, titre, accroche, visuel en grand, actions.
+       Préfixe .hero--epure pour passer devant les placements en grille d'origine. */
+    .hero.hero--epure { padding-top: 1.25rem; padding-bottom: 3.5rem; text-align: center; }
+    .hero--epure .hero-epure {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .hero--epure .hero-logo { align-self: flex-start; display: block; margin-bottom: clamp(2.5rem, 7vh, 4.5rem); }
+    .hero--epure .hero-logo img { display: block; height: clamp(26px, 3.2vw, 34px); width: auto; }
+    .hero--epure .hero-logo:focus-visible { outline: 2px solid var(--accent-blue-light); outline-offset: 4px; border-radius: 8px; }
+    .hero--epure .hero-copy { align-items: center; max-width: 46rem; }
+    .hero--epure h1 { text-align: center; font-size: clamp(2.1rem, 5.6vw, 3.9rem); line-height: 1.08; letter-spacing: -.02em; }
+    .hero--epure .hero-lead { text-align: center; max-width: 38rem; margin-left: auto; margin-right: auto; }
+    .hero--epure .hero-visual {
+      width: 100%;
+      max-width: 1000px;
+      margin-top: clamp(1.75rem, 4vh, 2.75rem);
+    }
+    .hero--epure .hero-cta {
+      justify-content: center;
+      margin-top: 1.75rem;
+    }
+    @media (max-width: 767px) {
+      .hero.hero--epure { padding-top: 1rem; }
+      .hero--epure .hero-logo { margin-bottom: 2.25rem; }
+      .hero--epure .hero-cta { flex-direction: column; align-items: stretch; width: 100%; }
+    }
   </style>
 
 </head>
@@ -8531,8 +8368,13 @@
     <div class="hero-fade" aria-hidden="true"></div>
     <div class="hero-overlay" aria-hidden="true"></div>
 
-    <section class="hero">
-      <div class="hero-inner">
+    <!-- HERO ÉPURÉ (01/10/2026) : logo, titre, accroche, visuel en grand, puis les deux
+         actions. La barre fixe n'apparaît qu'à partir des Points forts. -->
+    <section class="hero hero--epure">
+      <div class="hero-epure">
+        <a href="#top" class="hero-logo" aria-label="Fractal Innov, retour en haut de la page">
+          <img src="assets/fractalinnov-logo.webp" alt="Fractal Innov" width="770" height="142" loading="eager" decoding="async">
+        </a>
         <div class="hero-copy">
           <div class="hero-eyebrow">
             Démonstrateur interactif
@@ -8540,22 +8382,9 @@
           <h1>
             <span class="hero-title-main">Votre produit reste chez vous<br><em>Votre démo part en salon</em></span>
           </h1>
-          <p class="hero-lead">Le jumeau 3D de votre produit, sur l'écran tactile de votre stand. Le visiteur
-            l'explore du doigt, votre commercial le pilote depuis son téléphone, sans réseau.</p>
+          <p class="hero-lead">Le jumeau 3D de votre produit, sur votre stand, en showroom ou en visio. Le visiteur
+            l'explore du doigt, votre commercial le pilote depuis son téléphone.</p>
         </div>
-
-        <div class="hero-cta">
-          <a href="#demo" class="hero-cta__btn hero-cta__btn--primary" data-launch-demo>
-            <span>Tester la démo</span>
-            <svg class="hero-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="12" y1="4" x2="12" y2="20"></line>
-              <polyline points="6 14 12 20 18 14"></polyline>
-            </svg>
-          </a>
-          <a href="#contact" class="hero-cta__btn hero-cta__btn--ghost">Réserver 30 min</a>
-        </div>
-
         <!-- Visuel hero : poster de la démo aujourd'hui, boucle vidéo ou scène Needle demain (même emplacement) -->
         <a href="#demo" class="hero-visual" aria-label="Lancer la démo" data-launch-demo>
           <figure class="hero-visual__frame">
@@ -8580,52 +8409,24 @@
           </figure>
         </a>
 
-        <nav class="hero-pillars" aria-label="Ce qui change sur votre stand">
-          <a href="#step-attirer" class="hero-pillar">
-            <span class="hero-pillar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg></span>
-            <div class="hero-pillar__text"><strong>Attirer</strong>Une expérience 3D plutôt qu'un panneau</div>
-            <svg class="hero-pillar__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+        <div class="hero-cta">
+          <a href="#demo" class="hero-cta__btn hero-cta__btn--primary" data-launch-demo>
+            <span>Tester la démo</span>
+            <svg class="hero-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 12h14M13 6l6 6-6 6"></path>
+              <line x1="12" y1="4" x2="12" y2="20"></line>
+              <polyline points="6 14 12 20 18 14"></polyline>
             </svg>
           </a>
-          <a href="#step-expliquer" class="hero-pillar">
-            <span class="hero-pillar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-              </svg></span>
-            <div class="hero-pillar__text"><strong>Expliquer sans vous</strong>Le visiteur comprend seul, sans attendre
-            </div>
-            <svg class="hero-pillar__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 12h14M13 6l6 6-6 6"></path>
-            </svg>
-          </a>
-          <a href="#step-reutiliser" class="hero-pillar">
-            <span class="hero-pillar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="1 4 1 10 7 10"></polyline>
-                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-              </svg></span>
-            <div class="hero-pillar__text"><strong>Réutiliser</strong>Showroom, rendez-vous, salons suivants</div>
-            <svg class="hero-pillar__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 12h14M13 6l6 6-6 6"></path>
-            </svg>
-          </a>
-        </nav>
-      </div>
+          <a href="#contact" class="hero-cta__btn hero-cta__btn--ghost">Réserver 30 min</a>
+        </div>
 
-      <a href="#demo" class="hero-scroll" aria-label="Descendre vers la démo">
+      </div>
+      <a href="#points-forts" class="hero-scroll" aria-label="Descendre vers les points forts">
         <span class="hero-scroll__line" aria-hidden="true"><i></i></span>
       </a>
     </section>
   </div>
-
   <main class="page-rest">
   <!-- POINTS FORTS (01/10/2026) : six slides, défilement automatique (bloc JS 2c) -->
   <section id="points-forts" class="pf" aria-labelledby="pf-titre" aria-roledescription="carrousel" data-actif="0" data-lecture="on">
