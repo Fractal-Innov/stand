@@ -8391,6 +8391,9 @@
       .pf__visuel { height: clamp(11rem, calc(100svh - 29rem), 420px); }
       .pf__commandes { margin-top: 1.5rem; }
     }
+
+    /* Visuel détouré (fond transparent) : ni ombre ni coins arrondis autour du cadre */
+    .pf__visuel img.pf__img--detoure { box-shadow: none; border-radius: 0; filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.55)); }
   </style>
 
 </head>
@@ -8505,7 +8508,7 @@
               <h3 class="pf__titre">Un seul démonstrateur, sur tous vos écrans</h3>
               <p class="pf__sous-titre">Stand, showroom, visio</p>
             </div>
-            <figure class="pf__visuel"><img src="assets/demo/materiel.webp" width="1600" height="1070" alt="Le démonstrateur affiché sur un écran de stand" loading="lazy" decoding="async"></figure>
+            <figure class="pf__visuel"><img class="pf__img--detoure" src="assets/points-forts/ecrans.webp" width="1600" height="1000" alt="Le même démonstrateur sur un écran tactile de stand, un ordinateur portable et une tablette" loading="lazy" decoding="async"></figure>
           </li>
           <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="3 sur 6" data-index="2">
             <div class="pf__texte">
@@ -8531,7 +8534,7 @@
               <h3 class="pf__titre">Mesurez ce qui intéresse vos visiteurs</h3>
               <p class="pf__sous-titre">Sans cookie, aucune donnée personnelle</p>
             </div>
-            <figure class="pf__visuel"><img src="assets/demo/logiciel.webp" width="1600" height="1063" alt="Les statistiques d'utilisation du démonstrateur" loading="lazy" decoding="async"></figure>
+            <figure class="pf__visuel"><img src="assets/points-forts/stats.webp" width="1600" height="900" alt="Un tableau de bord de statistiques : visites, boutons touchés, vidéos vues jusqu'au bout, contenus les plus ouverts" loading="lazy" decoding="async"></figure>
           </li>
     </ul>
     <div class="pf__commandes">
