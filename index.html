@@ -8309,6 +8309,7 @@
       line-height: 1.25;
       color: var(--text-main);
       margin: 0;
+      text-wrap: balance;
     }
     .pf__sous-titre {
       margin: .6rem 0 0;
@@ -8411,22 +8412,17 @@
       .pf__lecture { width: 48px; height: 48px; }
     }
 
-    /* Points forts : le titre de la slide active entre avec un léger retard, puis flotte.
+    /* Points forts : le texte de la slide active entre juste après le départ de la carte,
+       et il est en place quand elle s'arrête. Il reste ensuite immobile.
        .pf--pret est posé par le JS : sans lui, tous les titres restent visibles. */
     .pf--pret .pf__slide .pf__texte { opacity: 0; transform: translateY(14px); transition: opacity .35s ease, transform .35s ease; }
     .pf--pret .pf__slide--active .pf__texte {
       opacity: 1;
       transform: none;
-      transition: opacity .6s ease .25s, transform .6s cubic-bezier(.2, .8, .2, 1) .25s;
-    }
-    .pf--pret .pf__slide--active .pf__titre { animation: pf-flotte 6s ease-in-out .9s infinite; }
-    @keyframes pf-flotte {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
+      transition: opacity .4s ease .1s, transform .4s cubic-bezier(.2, .8, .2, 1) .1s;
     }
     @media (prefers-reduced-motion: reduce) {
       .pf--pret .pf__slide .pf__texte { opacity: 1; transform: none; transition: none; }
-      .pf--pret .pf__slide--active .pf__titre { animation: none; }
       .pf__point { transition: none; }
     }
   </style>
@@ -10046,7 +10042,9 @@
 
         piste.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') survol = true; });
         piste.addEventListener('pointerleave', () => { survol = false; });
-        pf.addEventListener('focusin', () => { focusDedans = true; });
+        /* Seul le focus clavier retient le slider : un clic de souris donne aussi le focus
+           au bouton, et le slider resterait en pause jusqu'au clic suivant ailleurs. */
+        pf.addEventListener('focusin', (e) => { focusDedans = e.target.matches(':focus-visible'); });
         pf.addEventListener('focusout', (e) => { if (!pf.contains(e.relatedTarget)) focusDedans = false; });
 
         if ('IntersectionObserver' in window) {
