@@ -8341,6 +8341,10 @@
        actions posées en verre sur le bas du visuel (≥ 768 px). */
     .hero--epure .hero-copy { max-width: none; }
     .hero--epure h1 { font-size: clamp(2.1rem, 3.6vw, 3.2rem); }
+    /* Accroche en deux phrases, une par ligne dès que la largeur le permet */
+    @media (min-width: 768px) {
+      .hero--epure .hero-lead { max-width: 50rem; text-wrap: balance; }
+    }
     .hero--epure .hero-scene {
       position: relative;
       width: 100%;
@@ -8441,8 +8445,8 @@
           <h1>
             <span class="hero-title-main">Votre produit reste chez vous<br><em>Votre démo part en salon</em></span>
           </h1>
-          <p class="hero-lead">Le jumeau 3D de votre produit, sur votre stand, en showroom ou en visio. Le visiteur
-            l'explore du doigt, votre commercial le pilote depuis son téléphone.</p>
+          <p class="hero-lead">Le jumeau 3D de votre produit, sur votre stand, en showroom ou en visio.<br>
+            Le visiteur l'explore du doigt, votre commercial le pilote depuis son téléphone.</p>
         </div>
         <!-- Scène du hero : le visuel, et (≥ 768 px) la barre d'actions posée sur son bas -->
         <div class="hero-scene">
