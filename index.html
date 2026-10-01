@@ -8398,6 +8398,14 @@
 
     /* Visuel détouré (fond transparent) : ni ombre ni coins arrondis autour du cadre */
     .pf__visuel img.pf__img--detoure { box-shadow: none; border-radius: 0; filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.55)); }
+
+    /* Accroche du hero : ce que c'est (affirmé), puis comment on s'en sert (en retrait),
+       chacune sur sa ligne ; interligne resserré pour que les deux blocs se lisent séparés */
+    .hero--epure .hero-lead { line-height: 1.45; }
+    .hero--epure .hero-lead__quoi,
+    .hero--epure .hero-lead__usage { display: block; }
+    .hero--epure .hero-lead__quoi { color: var(--text-main); font-weight: 500; }
+    .hero--epure .hero-lead__usage { margin-top: .5rem; font-size: .92em; }
   </style>
 
 </head>
@@ -8445,8 +8453,8 @@
           <h1>
             <span class="hero-title-main">Votre produit reste chez vous<br><em>Votre démo part en salon</em></span>
           </h1>
-          <p class="hero-lead">Le jumeau 3D de votre produit, sur votre stand, en showroom ou en visio.<br>
-            Le visiteur l'explore du doigt, votre commercial le pilote depuis son téléphone.</p>
+          <p class="hero-lead"><span class="hero-lead__quoi">Le jumeau 3D de votre produit, sur votre stand, en showroom ou en visio.</span>
+            <span class="hero-lead__usage">Le visiteur l'explore du doigt, votre commercial le pilote depuis son téléphone.</span></p>
         </div>
         <!-- Scène du hero : le visuel, et (≥ 768 px) la barre d'actions posée sur son bas -->
         <div class="hero-scene">
@@ -8475,7 +8483,9 @@
         </a>
 
         <div class="hero-cta">
-          <a href="#demo" class="hero-cta__btn hero-cta__btn--primary" data-launch-demo>
+          <!-- Réserver = action principale (même rôle que dans la barre), la démo en secondaire -->
+          <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30 min</a>
+          <a href="#demo" class="hero-cta__btn hero-cta__btn--ghost" data-launch-demo>
             <span>Tester la démo</span>
             <svg class="hero-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -8483,7 +8493,6 @@
               <polyline points="6 14 12 20 18 14"></polyline>
             </svg>
           </a>
-          <a href="#contact" class="hero-cta__btn hero-cta__btn--ghost">Réserver 30 min</a>
         </div>
 
         </div>
