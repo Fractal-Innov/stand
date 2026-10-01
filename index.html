@@ -8222,14 +8222,14 @@
       .pf__lecture { width: 48px; height: 48px; }
     }
 
-    /* Points forts : le texte de la slide active entre juste après le départ de la carte,
-       et il est en place quand elle s'arrête. Il reste ensuite immobile.
+    /* Points forts : le texte de la slide active apparaît pendant la translation de la
+       carte (dès qu'elle devient la plus proche), puis reste immobile.
        .pf--pret est posé par le JS : sans lui, tous les titres restent visibles. */
     .pf--pret .pf__slide .pf__texte { opacity: 0; transform: translateY(14px); transition: opacity .35s ease, transform .35s ease; }
     .pf--pret .pf__slide--active .pf__texte {
       opacity: 1;
       transform: none;
-      transition: opacity .4s ease .1s, transform .4s cubic-bezier(.2, .8, .2, 1) .1s;
+      transition: opacity .3s ease, transform .35s cubic-bezier(.2, .8, .2, 1);
     }
     @media (prefers-reduced-motion: reduce) {
       .pf--pret .pf__slide .pf__texte { opacity: 1; transform: none; transition: none; }
@@ -9810,9 +9810,14 @@
 
       /* 2c. POINTS FORTS (01/10/2026) : le slider avance seul toutes les 5 s, mais
          seulement quand la section est à l'écran et l'onglet visible. Il se met en pause
-         au survol de la souris et quand le focus clavier est dedans. Un clic sur un point
-         ou un glissement au doigt rend la main au visiteur : le défilement s'arrête et le
-         bouton passe en « lecture ». On fait défiler la piste (scrollTo), jamais la page.
+         au survol de la souris et quand le focus clavier est dedans. Dès que le visiteur
+         touche la piste (doigt, souris, molette) ou clique un point, il a la main : le
+         défilement s'arrête et le bouton passe en « lecture ».
+         La slide active se déduit en continu de la position de la piste : pendant un
+         glissement, la carte qui arrive s'active (et son texte apparaît) dès qu'elle est
+         la plus proche. Pendant un défilement lancé par nous, la cible est connue
+         d'avance : on ne recalcule pas, pour ne pas allumer les slides traversées.
+         On fait défiler la piste (scrollTo), jamais la page.
          Journal : ?debug, lignes « points forts : … ». */
       (() => {
         const pf = document.getElementById('points-forts');
@@ -9822,16 +9827,25 @@
         const points = [...pf.querySelectorAll('.pf__point')];
         const bouton = pf.querySelector('.pf__lecture');
         const DUREE = 5000;
-        let actif = 0;
+        let actif = -1;
         let lecture = !reduceMotion;
         let visible = false, survol = false, focusDedans = false;
-        let ecoule = 0, dernier = 0, raf = 0;
-        let defilementAuto = false, finDefilementT = 0;
+        let ecoule = 0, dernier = 0, raf = 0, rafScroll = 0;
+        let cible = null, cibleT = 0;
 
         /* Décalage de la slide i dans la piste : la première est à 0 */
         const gauche = (i) => slides[i].offsetLeft - slides[0].offsetLeft;
+        const maxScroll = () => piste.scrollWidth - piste.clientWidth;
+        const plusProche = () => {
+          let proche = 0;
+          slides.forEach((sl, k) => {
+            if (Math.abs(gauche(k) - piste.scrollLeft) < Math.abs(gauche(proche) - piste.scrollLeft)) proche = k;
+          });
+          return proche;
+        };
 
-        function marquer(i) {
+        function marquer(i, raison) {
+          if (i === actif) return;
           actif = i;
           pf.dataset.actif = String(i);
           slides.forEach((sl, k) => sl.classList.toggle('pf__slide--active', k === i));
@@ -9839,15 +9853,27 @@
             pt.style.setProperty('--pf-progres', '0');
             if (k === i) pt.setAttribute('aria-current', 'true'); else pt.removeAttribute('aria-current');
           });
+          ecoule = 0;
+          if (raison) logScene('points forts : slide ' + (i + 1) + ' (' + raison + ')');
+        }
+
+        /* Cible atteinte (ou au plus près : la dernière slide bute sur la fin de la
+           piste) : la position redevient la source de vérité. */
+        function cibleAtteinte() {
+          if (cible === null) return true;
+          const but = Math.min(gauche(cible), maxScroll());
+          if (Math.abs(piste.scrollLeft - but) < 2) { cible = null; clearTimeout(cibleT); return true; }
+          return false;
         }
 
         function aller(i, raison) {
           i = (i + slides.length) % slides.length;
-          marquer(i);
-          ecoule = 0;
-          defilementAuto = true;
+          marquer(i, raison);
+          cible = i;
+          clearTimeout(cibleT);
+          cibleT = setTimeout(() => { cible = null; }, 1200);
           piste.scrollTo({ left: gauche(i), behavior: reduceMotion ? 'auto' : 'smooth' });
-          logScene('points forts : slide ' + (i + 1) + ' (' + raison + ')');
+          cibleAtteinte();
         }
 
         function arreter(raison) {
@@ -9888,25 +9914,19 @@
           else dernier = 0;
         }
 
-        /* Fin d'un défilement de la piste (scrollend n'existe pas partout : on attend
-           150 ms sans événement). Si ce n'est pas nous qui l'avons lancé, c'est le doigt
-           ou le pavé tactile du visiteur : on suit la slide la plus proche et on s'arrête. */
-        function finDefilement() {
-          if (defilementAuto) { defilementAuto = false; return; }
-          let proche = 0;
-          slides.forEach((sl, k) => {
-            if (Math.abs(gauche(k) - piste.scrollLeft) < Math.abs(gauche(proche) - piste.scrollLeft)) proche = k;
-          });
-          if (proche !== actif) {
-            marquer(proche);
-            logScene('points forts : slide ' + (proche + 1) + ' (glissement)');
-          }
-          arreter('glissement');
-        }
         piste.addEventListener('scroll', () => {
-          clearTimeout(finDefilementT);
-          finDefilementT = setTimeout(finDefilement, 150);
+          if (rafScroll) return;
+          rafScroll = requestAnimationFrame(() => {
+            rafScroll = 0;
+            if (cibleAtteinte()) marquer(plusProche(), 'glissement');
+          });
         }, { passive: true });
+
+        /* La main du visiteur sur la piste : doigt, clic, molette horizontale */
+        const mainVisiteur = () => { cible = null; arreter('glissement'); };
+        piste.addEventListener('pointerdown', mainVisiteur, { passive: true });
+        piste.addEventListener('touchstart', mainVisiteur, { passive: true });
+        piste.addEventListener('wheel', (e) => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) mainVisiteur(); }, { passive: true });
 
         points.forEach((pt, k) => pt.addEventListener('click', () => {
           arreter('point');
@@ -9929,7 +9949,6 @@
           }, { threshold: 0.4 }).observe(pf);
         }
         window.addEventListener('resize', () => {
-          defilementAuto = true;
           piste.scrollTo({ left: gauche(actif), behavior: 'auto' });
         });
 
