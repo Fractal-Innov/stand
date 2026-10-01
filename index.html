@@ -8335,6 +8335,62 @@
       .hero--epure .hero-logo { margin-bottom: 2.25rem; }
       .hero--epure .hero-cta { flex-direction: column; align-items: stretch; width: 100%; }
     }
+
+    /* ========== Retour auteur 01/10 : hero et Points forts tiennent dans l'écran ==========
+       Hero : titre sur deux lignes, visuel dimensionné sur la hauteur restante de l'écran,
+       actions posées en verre sur le bas du visuel (≥ 768 px). */
+    .hero--epure .hero-copy { max-width: none; }
+    .hero--epure h1 { font-size: clamp(2.1rem, 3.6vw, 3.2rem); }
+    .hero--epure .hero-scene {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      margin-top: clamp(1.5rem, 3.5vh, 2.5rem);
+    }
+    .hero--epure .hero-scene .hero-visual { margin-top: 0; max-width: none; }
+    @media (min-width: 768px) {
+      .hero--epure .hero-logo { margin-bottom: clamp(1.25rem, 4.5vh, 3.5rem); }
+      /* 16:9, et pas plus haut que l'écran sous le texte : --hero-haut-texte est mesuré
+         par le script (bloc 2e), 23rem par défaut */
+      .hero--epure .hero-scene {
+        max-width: min(1000px, calc((100svh - var(--hero-haut-texte, 23rem) - 1.5rem) * 16 / 9));
+      }
+      .hero--epure .hero-cta {
+        /* Centrée par les marges : l'animation d'entrée du hero réécrit transform */
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 1.1rem;
+        width: fit-content;
+        margin: 0 auto;
+        padding: .55rem;
+        flex-wrap: nowrap;
+        border-radius: 20px;
+        background: rgba(10, 11, 20, 0.62);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(14px) saturate(150%);
+        -webkit-backdrop-filter: blur(14px) saturate(150%);
+        box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.7);
+        z-index: 6;
+      }
+      .hero--epure .hero-visual__caption { top: .85rem; bottom: auto; }
+    }
+
+    /* Points forts : titre, cartes et minuterie dans un même écran ; la minuterie colle
+       au bas de l'écran tant que la galerie n'est pas entièrement montée. */
+    .pf__commandes {
+      position: sticky;
+      bottom: 1rem;
+      z-index: 5;
+    }
+    @media (min-width: 768px) {
+      .pf { padding-top: 3.5rem; }
+      .pf__h2 { font-size: clamp(2rem, 3vw, 2.6rem); }
+      .pf__entete { margin-bottom: 1.5rem; }
+      .pf__slide { min-height: 0; padding: 2.25rem 2rem 2rem; gap: 1.5rem; }
+      .pf__visuel { height: clamp(11rem, calc(100svh - 29rem), 420px); }
+      .pf__commandes { margin-top: 1.5rem; }
+    }
   </style>
 
 </head>
@@ -8385,6 +8441,8 @@
           <p class="hero-lead">Le jumeau 3D de votre produit, sur votre stand, en showroom ou en visio. Le visiteur
             l'explore du doigt, votre commercial le pilote depuis son téléphone.</p>
         </div>
+        <!-- Scène du hero : le visuel, et (≥ 768 px) la barre d'actions posée sur son bas -->
+        <div class="hero-scene">
         <!-- Visuel hero : poster de la démo aujourd'hui, boucle vidéo ou scène Needle demain (même emplacement) -->
         <a href="#demo" class="hero-visual" aria-label="Lancer la démo" data-launch-demo>
           <figure class="hero-visual__frame">
@@ -8421,6 +8479,7 @@
           <a href="#contact" class="hero-cta__btn hero-cta__btn--ghost">Réserver 30 min</a>
         </div>
 
+        </div>
       </div>
       <a href="#points-forts" class="hero-scroll" aria-label="Descendre vers les points forts">
         <span class="hero-scroll__line" aria-hidden="true"><i></i></span>
@@ -8433,6 +8492,7 @@
     <div class="pf__entete">
       <h2 id="pf-titre" class="pf__h2" data-repere>Points forts</h2>
     </div>
+    <div class="pf__galerie">
     <ul class="pf__piste" aria-live="off">
           <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="1 sur 6" data-index="0">
             <div class="pf__texte">
@@ -8487,6 +8547,7 @@
         <svg class="pf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
         <svg class="pf__ico-lecture" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
       </button>
+    </div>
     </div>
   </section>
     <section id="demo" class="section">
@@ -9756,6 +9817,21 @@
         }, { root: null, threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
         reveals.forEach((el) => revealObserver.observe(el));
       }
+
+      /* 2e. HAUTEUR DU HERO (01/10/2026) : le visuel du hero doit tenir en entier dans le
+         premier écran. On mesure la hauteur occupée au-dessus de lui (logo, titre, accroche)
+         et on la donne au CSS, qui en déduit la largeur maximale du visuel en 16:9. */
+      (() => {
+        const scene = document.querySelector('.hero--epure .hero-scene');
+        if (!scene) return;
+        const mesurer = () => {
+          const haut = scene.getBoundingClientRect().top + window.scrollY;
+          document.documentElement.style.setProperty('--hero-haut-texte', Math.round(haut) + 'px');
+        };
+        mesurer();
+        window.addEventListener('resize', mesurer);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(mesurer);
+      })();
 
       /* 2d. BARRE D'APPARITION (01/10/2026) : cachée tant que le hero occupe l'écran,
          elle descend quand le haut des Points forts atteint le bas de la barre, et remonte
