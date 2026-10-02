@@ -4,8 +4,8 @@
     {
       "id": 1,
       "name": "stand-rencontre-linkedin",
-      "prompt": "Prépare-moi l'approche LinkedIn pour ce contact : Julien Morel, directeur commercial chez AquaForm (fictif), fabricant de baignoires et lits de balnéothérapie pour centres de rééducation. Je l'ai rencontré sur son stand à Rééduca le 18/09. Il m'a dit qu'ils n'amènent que le petit modèle sur les salons, le grand lit fait 450 kg et coûte une fortune à transporter. Ils seront au salon Kiné Expo en mars.",
-      "expected_output": "Angle produit absent / expliquer sans moi ; connexion <= 200 car. qui reprend l'échange sur le stand (lit de 450 kg) ; suivi avec la démo comme ressource et question sur Kiné Expo ; deux variantes ; journal mis à jour.",
+      "prompt": "Prépare-moi l'approche LinkedIn pour ce contact : Julien Morel, directeur commercial chez AquaForm (fictif), fabricant de baignoires et lits de balnéothérapie pour centres de rééducation. Je l'ai rencontré sur son stand à Rééduca le 18/09. Il m'a dit qu'ils n'amènent que le petit modèle sur les salons, le grand lit fait 450 kg et coûte une fortune à transporter. Ils seront au salon Rééduca de l'an prochain.",
+      "expected_output": "Angle produit absent / expliquer sans moi ; connexion <= 200 car. qui reprend l'échange sur le stand (lit de 450 kg) ; suivi avec la démo comme ressource et question sur le prochain Rééduca ; deux variantes ; journal mis à jour.",
       "files": [],
       "assertions": [
         "Chaque demande de connexion fait 200 caractères ou moins",

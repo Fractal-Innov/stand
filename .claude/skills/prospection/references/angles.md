@@ -6,12 +6,12 @@ Aide à choisir l'angle. Les faits produit viennent de `VENTE.md` : ce fichier n
 
 | Poste | Ce qui l'occupe | Mot qui parle (VENTE.md) | Question qui ouvre |
 |---|---|---|---|
-| Marketing, communication, responsable salons | faire venir du monde sur le stand, budget salons | attirer | Qu'est-ce qui fait s'arrêter un visiteur sur votre stand aujourd'hui ? |
-| Direction commerciale, commerciaux | expliquer un produit complexe, tenir le discours | expliquer sans moi | Quand toute l'équipe est prise sur le stand, que voient les visiteurs qui attendent ? |
-| Direction générale, fondateur | coût et retour des salons | réutiliser | Le support de vos salons sert-il aussi en showroom ou en rendez-vous ? |
+| **Marketing, communication, salons, événementiel (cible principale)** | faire venir du monde sur le stand, budget salons, supports de vente, mesurer ce que le salon rapporte | attirer, réutiliser | Qu'est-ce qui fait s'arrêter un visiteur sur votre stand aujourd'hui ? |
+| Direction commerciale (second contact) | expliquer un produit complexe, tenir le discours | expliquer sans moi | Quand toute l'équipe est prise sur le stand, que voient les visiteurs qui attendent ? |
+| Dirigeant, fondateur (à défaut de marketing) | coût et retour des salons | réutiliser | Le support de vos salons sert-il aussi en showroom ou en rendez-vous ? |
 | Marketing produit, R&D | produit pas fini, prototype, gamme large | montrer ce qui n'est pas là | Comment présentez-vous un produit qui n'est pas encore sorti de l'atelier ? |
 
-Sur un salon, la bonne personne est celle qui a signé le bon de commande du stand, pas le commercial de terrain : si la fiche décrit un commercial, l'approche peut viser à obtenir le bon interlocuteur (« qui s'occupe des salons chez vous ? »).
+Par défaut, l'angle est celui du marketing : c'est la cible principale (voir `VENTE.md`, « À qui le vendre »). Les angles commercial et dirigeant servent quand le contact occupe ce poste. Si la fiche décrit un commercial, l'approche peut viser à obtenir le bon interlocuteur (« qui s'occupe des salons et de la communication chez vous ? »).
 
 ## Selon la douleur
 
@@ -34,8 +34,6 @@ Sur un salon, la bonne personne est celle qui a signé le bon de commande du sta
 
 ## Valeur à apporter dans le suivi
 
-Par ordre de préférence :
+La valeur, c'est la question : elle montre qu'on a regardé leur produit et elle pointe ce qui est difficile à montrer sur leur stand. Pour la trouver, cherche ce que le produit a d'unique et qui passe mal dans un hall (une vue, un mouvement, une sensation, un fonctionnement invisible, une démonstration longue, une taille) et demande comment ils font aujourd'hui. Les douleurs de `VENTE.md` aident à choisir le sujet, mais la question parle de leur stand, jamais des autres entreprises.
 
-1. Une observation du terrain tirée du journal de `VENTE.md` (douleurs réellement entendues), reliée à leur cas. Ne jamais citer un autre prospect ni le client sous NDA.
-2. La démo publique à ouvrir sur téléphone (https://www.fractal-innov.fr/stand/), présentée comme « à essayer », avec ce qu'elle montre pour leur cas.
-3. Une remarque sur leur salon ou leur produit qui montre qu'on a regardé.
+Le lien vers la démo (https://www.fractal-innov.fr/stand/) suit la question, en simple information. Ne jamais citer un autre prospect ni le client sous NDA.

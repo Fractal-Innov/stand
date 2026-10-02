@@ -3,6 +3,7 @@
 
 Usage : check.py {connexion|suivi|email|relance} < message.txt
 Pour un e-mail ou une relance, la première ligne peut être « Objet : ... ».
+Les mentions RGPD (origine de l'adresse, refus) se placent après la signature : hors décompte.
 Code de sortie 1 s'il reste une ERREUR.
 """
 import re
@@ -10,7 +11,7 @@ import sys
 
 LIMITES = {  # (unité, maximum) pour le corps
     "connexion": ("car", 200),
-    "suivi": ("car", 600),
+    "suivi": ("car", 350),
     "email": ("mots", 90),
     "relance": ("mots", 70),
 }
@@ -27,6 +28,8 @@ INTERDITS = [  # (motif, raison) ; motifs insensibles à la casse sauf préfixe 
 ]
 APPEL = r"calendar\.app\.google|\bappel\b|\bcall\b|\bvisio\b|\bcréneau|\bminutes? de votre"
 LIEN = r"https?://"
+REFUS = r"\bstop\b|ne plus (recevoir|être contacté)|désinscri"
+ORIGINE = r"provient|trouvée? (sur|dans|via)|obtenue? (sur|via)|issue? de"
 
 
 def main():
@@ -64,8 +67,15 @@ def main():
         erreurs.append("lien dans une demande de connexion")
     if genre != "connexion" and "?" not in corps:
         erreurs.append("aucune question : finir par une question ouverte (ou la proposition d'appel)")
+    if genre in ("email", "relance"):
+        if not re.search(REFUS, texte, re.I):
+            erreurs.append("RGPD : aucun moyen de refuser la suite (ex. « Un simple stop en réponse et je ne vous écris plus. »)")
+        if genre == "email" and not re.search(ORIGINE, texte, re.I):
+            erreurs.append("RGPD : origine de l'adresse non indiquée (ex. « Votre adresse provient du site d'AquaForm. »)")
     if genre == "suivi" and re.search(APPEL, corps, re.I):
         avertissements.append("appel proposé dans le suivi : seulement si la fiche montre un intérêt explicite")
+    if re.search(r"plusieurs (fabricants|exposants|entreprises|clients)|m'a (beaucoup )?parlé|m'intrigue", corps, re.I):
+        avertissements.append("hors ton maison : pas de preuve sociale empruntée ni de compliment (voir principes.md)")
     if corps.count("?") > 2:
         avertissements.append("plus de deux questions : en garder une")
 

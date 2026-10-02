@@ -51,5 +51,6 @@ Tous les messages de commit suivent https://www.conventionalcommits.org/en/v1.0.
 
 ## Prospection
 
-- Skill `.claude/skills/prospection/` : messages LinkedIn (connexion de 200 caractères maximum, compte gratuit, puis suivi) et e-mails (e-mail à froid puis relance), rédigés à partir de `VENTE.md`. `scripts/check.py` contrôle longueur et wording, `scripts/journal.py` tient le journal.
-- Journal des prospects : `.prospection/journal.md`, tableau Markdown à coller dans Notion, ignoré par git (dépôt public, données nominatives).
+- Skill `.claude/skills/prospection/`, en quatre étapes : cibler (exposants d'un salon ou d'un secteur), qualifier (note A/B/C selon `VENTE.md`), trouver le contact (profil LinkedIn public par recherche web, e-mail professionnel supposé), rédiger (connexion LinkedIn de 200 caractères maximum, compte gratuit, puis suivi ; ou e-mail à froid puis relance). `scripts/check.py` contrôle longueur, wording et mentions RGPD des e-mails, `scripts/journal.py` tient le journal.
+- LinkedIn n'est jamais lu automatiquement (conditions d'utilisation, risque pour le compte) : l'utilisateur colle le profil dans la conversation.
+- Journal : `prospection/journal.md`, deux tableaux Markdown (Entreprises, Contacts), exportés à chaque écriture en `prospection/entreprises.csv` et `prospection/contacts.csv` pour l'import dans Notion. Dossier ignoré par git (`/prospection/` : dépôt public, données nominatives). Chaque donnée garde sa source ; un contact sans échange depuis 3 ans se supprime.

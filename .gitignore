@@ -3,4 +3,4 @@ assets/demo/HeroVideo.web.mp4
 .DS_Store
 
 # Journal des prospects (données nominatives, dépôt public)
-.prospection/
+/prospection/

@@ -14,7 +14,8 @@ Le démonstrateur 3D de stand de Fractal Innov (nom interne : STAND, jamais affi
 
 - Industriels et fabricants dont le produit ne monte pas sur un stand : machines, équipements lourds, systèmes intégrés, produits en cours de développement.
 - Entreprises qui font plusieurs salons par an ou ont un showroom : la réutilisation est l'argument économique.
-- Interlocuteurs : direction commerciale, marketing produit, responsable salons. Le mot qui parle à chacun : « attirer » (marketing), « expliquer sans moi » (commercial), « réutiliser » (direction).
+- Interlocuteur principal : le marketing et la communication (responsable marketing, communication, salons ou événementiel). Ils tiennent le budget des salons, commandent le stand et produisent les supports de vente : un outil d'aide à la vente sur salon est dans leur périmètre. Leur mot : « attirer », puis « réutiliser » (les contenus servent en showroom, en rendez-vous, aux salons suivants).
+- En second : la direction commerciale, utilisatrice de l'outil et alliée en interne (« expliquer sans moi »), rarement décisionnaire sur le stand. Le dirigeant seulement s'il n'existe aucun poste marketing ou communication (petite entreprise) : c'est alors lui qui fait le marketing.
 - Sur un stand, chercher celui qui a signé le bon de commande du stand, pas le commercial de terrain.
 
 ## Les trois douleurs
@@ -110,3 +111,4 @@ Un premier acteur industriel, sous NDA : « nous ne pouvons pas le citer, nous p
 - 2026-09-30 : pivot décidé avec l'associé. Le démonstrateur de stand est la seule offre qui a rapporté ; www.fractal-innov.fr renvoie vers cette landing. Une seule marque, Fractal Innov : plus de nom produit affiché (« STAND » reste le nom du dépôt). Aucun prix ni délai annoncé ; l'appel de 30 min précède l'atelier, le devis suit l'atelier. Douleurs de Rééduca ajoutées à la page : la gamme (sur devis) et la mesure du salon (statistiques Umami).
 - 2026-09-30, cohérence de la page : « Ce que vous gagnez » dit les résultats, « Le jumeau 3D » les fonctions ; la télécommande n'est détaillée qu'une fois ; FAQ : « Combien ça coûte ? » remplace « C'est pour un seul salon ? » ; « pas de fichiers 3D » reste en FAQ sous l'angle du coût (modélisation sur devis), la note sous le jumeau garde l'angle « des photos suffisent ». Pas de scène 3D dans « Ce que vous gagnez » (même stand trois sections de suite). « Emporter sur mobile » devient une option sur devis (hébergement en ligne).
 - 2026-09-30, étape 3 (preuve) : pas de référence citable, la démo sert de preuve (passage vers l'appel sous la démo). Clause de référence ajoutée, proposée comme une opportunité au devis ; contrepartie à confirmer, sans remise.
+- 2026-10-01 : cible de prospection précisée : le marketing et la communication d'abord (budget salons, stand, supports de vente), la direction commerciale en second contact, le dirigeant seulement sans poste marketing.
