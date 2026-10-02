@@ -1096,12 +1096,7 @@
 
 
 
-    @media (max-width: 767px) {
-
-
-
-
-    }
+    @media (max-width: 767px) {}
 
     @media (min-width: 768px) {
 
@@ -2912,33 +2907,100 @@
     }
 
     /* ── Footer sobre (30/09/2026) : logo, badge Catalyseur, liens ── */
-    .footer__logo img { display: block; height: 26px; width: auto; }
+    .footer__logo img {
+      display: block;
+      height: 26px;
+      width: auto;
+    }
+
     .footer__catalyseur {
-      font-size: .82rem; color: var(--text-muted); text-decoration: none;
-      border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 999px; padding: .4rem .9rem;
+      font-size: .82rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      padding: .4rem .9rem;
       transition: color .2s ease, border-color .2s ease;
     }
-    .footer__catalyseur b { color: var(--text-main, #fff); }
+
+    .footer__catalyseur b {
+      color: var(--text-main, #fff);
+    }
 
     /* Petite flèche « sortant » : signale le lien externe, glisse au survol */
-    .footer__catalyseur-fin { white-space: nowrap; } /* la flèche ne part jamais seule à la ligne */
-    .footer__catalyseur-fleche { margin-left: .35rem; vertical-align: -1px; opacity: .7; transition: transform .2s ease, opacity .2s ease; }
+    .footer__catalyseur-fin {
+      white-space: nowrap;
+    }
+
+    /* la flèche ne part jamais seule à la ligne */
+    .footer__catalyseur-fleche {
+      margin-left: .35rem;
+      vertical-align: -1px;
+      opacity: .7;
+      transition: transform .2s ease, opacity .2s ease;
+    }
+
     .footer__catalyseur:hover .footer__catalyseur-fleche,
-    .footer__catalyseur:focus-visible .footer__catalyseur-fleche { transform: translate(2px, -2px); opacity: 1; }
-    @media (prefers-reduced-motion: reduce) { .footer__catalyseur-fleche { transition: none; } }
-    .footer__liens { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.4rem; font-size: .85rem; color: var(--text-muted); }
-    .footer__liens a { color: var(--text-muted); text-decoration: none; transition: color .2s ease; }
-    .footer__liens a:hover, .footer__liens a:focus-visible,
-    .footer__catalyseur:hover, .footer__catalyseur:focus-visible { color: #fff; border-color: rgba(255, 255, 255, 0.3); }
+    .footer__catalyseur:focus-visible .footer__catalyseur-fleche {
+      transform: translate(2px, -2px);
+      opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .footer__catalyseur-fleche {
+        transition: none;
+      }
+    }
+
+    .footer__liens {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .5rem 1.4rem;
+      font-size: .85rem;
+      color: var(--text-muted);
+    }
+
+    .footer__liens a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .footer__liens a:hover,
+    .footer__liens a:focus-visible,
+    .footer__catalyseur:hover,
+    .footer__catalyseur:focus-visible {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
 
     /* ── Démo : passage vers l'appel (étape 3, 30/09/2026) ── */
     .demo-suite {
-      display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
-      gap: 1rem 1.75rem; max-width: 860px; margin: 2.5rem auto 0; text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem 1.75rem;
+      max-width: 860px;
+      margin: 2.5rem auto 0;
+      text-align: left;
     }
-    .demo-suite p { margin: 0; flex: 1 1 380px; color: var(--text-muted); }
-    .demo-suite b { color: var(--text-main, #fff); font-weight: 600; }
-    .demo-suite .hero-cta__btn { flex: none; }
+
+    .demo-suite p {
+      margin: 0;
+      flex: 1 1 380px;
+      color: var(--text-muted);
+    }
+
+    .demo-suite b {
+      color: var(--text-main, #fff);
+      font-weight: 600;
+    }
+
+    .demo-suite .hero-cta__btn {
+      flex: none;
+    }
 
     /* RESPONSIVE & MOBILE MENU
        ⚠️ Règle du 25/09/2026 : les liens de la navbar ne passent JAMAIS sur
@@ -3167,12 +3229,22 @@
         text-align: center;
       }
 
-      .footer__liens { justify-content: center; }
+      .footer__liens {
+        justify-content: center;
+      }
 
       /* Badge sur deux lignes : coins arrondis plutôt que pilule ; marge basse
          pour que le bouton QR flottant ne couvre pas le copyright */
-      .footer__catalyseur { border-radius: 14px; line-height: 1.5; font-size: .78rem; padding: .4rem .75rem; }
-      .footer { padding-bottom: 5.5rem; }
+      .footer__catalyseur {
+        border-radius: 14px;
+        line-height: 1.5;
+        font-size: .78rem;
+        padding: .4rem .75rem;
+      }
+
+      .footer {
+        padding-bottom: 5.5rem;
+      }
 
       .exclusive-banner {
         padding: .6rem 1.5rem;
@@ -6208,8 +6280,7 @@
 
 
 
-    @media (hover: none) {
-    }
+    @media (hover: none) {}
 
     /* Le fil vers la démo : une ligne qui descend, un point qui la parcourt, le nom de ce qui vient */
     .hero-scroll {
@@ -7357,89 +7428,231 @@
       -webkit-mask: none;
       mask: none;
     }
+
     .tour__tab {
-      display: flex; flex-direction: column; align-items: flex-start; gap: 0.45rem;
-      white-space: normal; text-align: left; line-height: 1.25;
-      font-size: 0.78rem; padding: 0.2rem 0.1rem 0.3rem;
-      border: 0; border-radius: 6px; background: none; box-shadow: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.45rem;
+      white-space: normal;
+      text-align: left;
+      line-height: 1.25;
+      font-size: 0.78rem;
+      padding: 0.2rem 0.1rem 0.3rem;
+      border: 0;
+      border-radius: 6px;
+      background: none;
+      box-shadow: none;
     }
-    .tour__tab svg { display: none; }
+
+    .tour__tab svg {
+      display: none;
+    }
+
     /* Le segment de la barre */
     .tour__tab::before {
-      content: ''; display: block; width: 100%; height: 4px; border-radius: 4px;
+      content: '';
+      display: block;
+      width: 100%;
+      height: 4px;
+      border-radius: 4px;
       background: rgba(255, 255, 255, 0.12);
       transition: background 0.3s ease;
     }
-    .tour__tab.is-done::before { background: rgba(110, 168, 255, 0.55); }
-    .tour__tab.is-active::before { background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); }
-    .tour__tab.is-active, .tour__tab:hover { color: #fff; background: none; box-shadow: none; }
-    .tour__tab:hover::before { background: rgba(255, 255, 255, 0.28); }
-    .tour__tab.is-active:hover::before { background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); }
-    .tour__num {
-      font-size: 0.68rem; font-weight: 700; font-variant-numeric: tabular-nums;
-      color: var(--text-muted); letter-spacing: .05em;
+
+    .tour__tab.is-done::before {
+      background: rgba(110, 168, 255, 0.55);
     }
-    .tour__tab.is-active .tour__num { color: var(--accent-blue-light); }
+
+    .tour__tab.is-active::before {
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    }
+
+    .tour__tab.is-active,
+    .tour__tab:hover {
+      color: #fff;
+      background: none;
+      box-shadow: none;
+    }
+
+    .tour__tab:hover::before {
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .tour__tab.is-active:hover::before {
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    }
+
+    .tour__num {
+      font-size: 0.68rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-muted);
+      letter-spacing: .05em;
+    }
+
+    .tour__tab.is-active .tour__num {
+      color: var(--accent-blue-light);
+    }
 
     /* Chips → liste à coches : elles ne se cliquent pas, elles ne le montrent plus */
-    .tour__chips { flex-direction: column; gap: 0.4rem; }
-    .tour__chips li {
-      border: 0; background: none; padding: 0 0 0 1.5rem; border-radius: 0;
-      font-size: 0.9rem; color: var(--text-main); position: relative;
+    .tour__chips {
+      flex-direction: column;
+      gap: 0.4rem;
     }
+
+    .tour__chips li {
+      border: 0;
+      background: none;
+      padding: 0 0 0 1.5rem;
+      border-radius: 0;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      position: relative;
+    }
+
     .tour__chips li::before {
-      content: ''; position: absolute; left: 0.1rem; top: 0.3em; width: 0.8rem; height: 0.45rem;
-      border-left: 2px solid var(--accent-blue-light); border-bottom: 2px solid var(--accent-blue-light);
+      content: '';
+      position: absolute;
+      left: 0.1rem;
+      top: 0.3em;
+      width: 0.8rem;
+      height: 0.45rem;
+      border-left: 2px solid var(--accent-blue-light);
+      border-bottom: 2px solid var(--accent-blue-light);
       transform: rotate(-45deg);
     }
 
     /* Navigation : Précédent discret, compteur, Suivant primaire */
-    .tour__nav { justify-content: flex-start; gap: 0.75rem; }
+    .tour__nav {
+      justify-content: flex-start;
+      gap: 0.75rem;
+    }
+
     .tour__prev {
-      flex: none; display: inline-grid; place-items: center; width: 2.4rem; height: 2.4rem;
-      color: var(--text-muted); background: transparent; cursor: pointer;
-      border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 50%;
+      flex: none;
+      display: inline-grid;
+      place-items: center;
+      width: 2.4rem;
+      height: 2.4rem;
+      color: var(--text-muted);
+      background: transparent;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 50%;
       transition: color .2s ease, border-color .2s ease;
     }
-    .tour__prev svg { transform: rotate(180deg); }
-    .tour__prev:hover { color: #fff; border-color: rgba(255, 255, 255, 0.35); }
-    .tour__prev:focus-visible { outline: 2px solid var(--accent-blue-light); outline-offset: 3px; }
+
+    .tour__prev svg {
+      transform: rotate(180deg);
+    }
+
+    .tour__prev:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .tour__prev:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 3px;
+    }
+
     .tour__next {
-      margin-left: auto; gap: 0.5rem; padding: 0.7rem 1.2rem; border-radius: 100px;
-      color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 700;
+      margin-left: auto;
+      gap: 0.5rem;
+      padding: 0.7rem 1.2rem;
+      border-radius: 100px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
       background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-purple-deep));
       box-shadow: 0 10px 24px -10px rgba(40, 89, 255, 0.7);
       transition: transform .2s ease, box-shadow .2s ease;
     }
-    .tour__next:hover { transform: translateY(-1px); box-shadow: 0 14px 30px -10px rgba(139, 92, 246, 0.7); }
-    .tour__next-sujet { font-weight: 600; opacity: .85; }
+
+    .tour__next:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px -10px rgba(139, 92, 246, 0.7);
+    }
+
+    .tour__next-sujet {
+      font-weight: 600;
+      opacity: .85;
+    }
 
     /* « Voir dans la démo » : un lien, plus un deuxième bouton primaire */
-    .tour__act { margin-top: 0.2rem; }
-    .tour__go, .tour__go:hover {
-      background: none; box-shadow: none; transform: none; padding: 0.2rem 0;
-      font-size: 0.82rem; font-weight: 600; color: var(--text-muted);
-      text-decoration: underline; text-decoration-color: rgba(255, 255, 255, 0.25); text-underline-offset: 4px;
+    .tour__act {
+      margin-top: 0.2rem;
     }
-    .tour__go::before { display: none; }
-    .tour__go:hover { color: #fff; }
+
+    .tour__go,
+    .tour__go:hover {
+      background: none;
+      box-shadow: none;
+      transform: none;
+      padding: 0.2rem 0;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-decoration-color: rgba(255, 255, 255, 0.25);
+      text-underline-offset: 4px;
+    }
+
+    .tour__go::before {
+      display: none;
+    }
+
+    .tour__go:hover {
+      color: #fff;
+    }
 
 
     @media (max-width: 767px) {
+
       /* Téléphone : la barre seule, le libellé actif est le titre du panneau */
-      .tour__tabs { gap: 0.35rem; padding: 0.9rem 0.9rem 0.7rem; }
+      .tour__tabs {
+        gap: 0.35rem;
+        padding: 0.9rem 0.9rem 0.7rem;
+      }
+
       /* Libellé masqué à l'œil mais lu par les lecteurs d'écran (même recette
          que .sr-only) : sans lui, l'onglet n'a plus de nom accessible */
       .tour__label {
-        position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-        overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
       }
-      .tour__tab { position: relative; min-height: 2.2rem; justify-content: flex-start; padding-top: 0.5rem; }
-      .tour__next-sujet { display: none; }
+
+      .tour__tab {
+        position: relative;
+        min-height: 2.2rem;
+        justify-content: flex-start;
+        padding-top: 0.5rem;
+      }
+
+      .tour__next-sujet {
+        display: none;
+      }
     }
+
     @media (prefers-reduced-motion: reduce) {
-      .tour__tab::before, .tour__next { transition: none; }
-      .tour__next:hover { transform: none; }
+
+      .tour__tab::before,
+      .tour__next {
+        transition: none;
+      }
+
+      .tour__next:hover {
+        transform: none;
+      }
     }
 
     /* ============================================================
@@ -7921,6 +8134,7 @@
         transition: none;
       }
     }
+
     /* ─── Scène 3D unique (30/09/2026) ───
        Une seule iframe de démo dans toute la page, dans un calque enfant de <body>
        posé par-dessus l'emplacement actif ([data-scene-slot]). On déplace le calque,
@@ -7949,6 +8163,7 @@
     body[data-scene="erreur"] #scene3d {
       visibility: hidden;
     }
+
     /* Parcours : la scène à sa taille réelle (pas de rendu « borne » réduit) */
     #scene3d[data-slot="parcours"] .demo-screen__iframe {
       width: 100%;
@@ -7975,38 +8190,90 @@
       animation: demoLoad 1.4s ease-in-out infinite;
     }
 
-    .tour__media { position: relative; }
+    .tour__media {
+      position: relative;
+    }
 
     /* « Lancer la démo » du parcours : disparaît dès que la scène existe */
     body[data-scene="chargement"] .tour__launch,
-    body[data-scene="prete"] .tour__launch { display: none; }
+    body[data-scene="prete"] .tour__launch {
+      display: none;
+    }
 
     /* Commandes de la scène, première ligne du panneau, seulement quand elle est ici */
-    .tour__scene-cmd { display: none; align-items: center; gap: 0.6rem; min-height: 2rem; margin-bottom: -0.3rem; }
-    body[data-scene-ici="parcours"] .tour__scene-cmd { display: flex; }
-    body[data-scene-ici="parcours"] .tour__act { display: none; }
-    .tour__scene-cmd button {
-      background: none; border: 0; padding: 0.2rem 0; cursor: pointer;
-      font: inherit; font-size: 0.82rem; font-weight: 600; color: var(--text-muted);
-      text-decoration: underline; text-decoration-color: rgba(255, 255, 255, 0.25); text-underline-offset: 4px;
+    .tour__scene-cmd {
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+      min-height: 2rem;
+      margin-bottom: -0.3rem;
     }
-    .tour__scene-cmd button:hover { color: #fff; }
+
+    body[data-scene-ici="parcours"] .tour__scene-cmd {
+      display: flex;
+    }
+
+    body[data-scene-ici="parcours"] .tour__act {
+      display: none;
+    }
+
+    .tour__scene-cmd button {
+      background: none;
+      border: 0;
+      padding: 0.2rem 0;
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-decoration-color: rgba(255, 255, 255, 0.25);
+      text-underline-offset: 4px;
+    }
+
+    .tour__scene-cmd button:hover {
+      color: #fff;
+    }
 
     /* Écran tactile : « Manipuler » sur la scène ; dans le parcours là où était le
        dock, dans la section démo en haut (le dock de la borne occupe le bas) */
     .scene3d__manip {
-      position: absolute; left: 50%; bottom: 0.8rem; transform: translateX(-50%); z-index: 1;
-      display: none; align-items: center; gap: 0.4rem;
-      font: inherit; font-size: 0.85rem; font-weight: 700; color: #fff; cursor: pointer;
-      padding: 0.55rem 1.1rem; border-radius: 100px;
-      background: rgba(9, 11, 19, 0.78); backdrop-filter: blur(6px);
+      position: absolute;
+      left: 50%;
+      bottom: 0.8rem;
+      transform: translateX(-50%);
+      z-index: 1;
+      display: none;
+      align-items: center;
+      gap: 0.4rem;
+      font: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      padding: 0.55rem 1.1rem;
+      border-radius: 100px;
+      background: rgba(9, 11, 19, 0.78);
+      backdrop-filter: blur(6px);
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
-    .scene3d__manip[aria-pressed="true"] { background: rgba(59, 104, 255, 0.9); border-color: transparent; }
+
+    .scene3d__manip[aria-pressed="true"] {
+      background: rgba(59, 104, 255, 0.9);
+      border-color: transparent;
+    }
+
     @media (pointer: coarse) {
+
       #scene3d[data-slot="parcours"] .scene3d__manip,
-      #scene3d[data-slot="demo"] .scene3d__manip { display: inline-flex; }
-      #scene3d[data-slot="demo"] .scene3d__manip { top: 0.8rem; bottom: auto; }
+      #scene3d[data-slot="demo"] .scene3d__manip {
+        display: inline-flex;
+      }
+
+      #scene3d[data-slot="demo"] .scene3d__manip {
+        top: 0.8rem;
+        bottom: auto;
+      }
     }
 
     /* Téléphone, section démo : la borne est rendue à 375 px de large (son dock
@@ -8022,16 +8289,38 @@
 
     /* Écran de la démo quand la scène est dans le parcours : image et repère */
     .demo-repere {
-      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1;
-      display: none; width: max-content; max-width: calc(100% - 2rem);
-      font: inherit; font-size: 0.88rem; font-weight: 700; color: #fff; cursor: pointer; text-align: center;
-      padding: 0.7rem 1.2rem; border-radius: 100px;
-      background: rgba(9, 11, 19, 0.78); backdrop-filter: blur(6px);
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      display: none;
+      width: max-content;
+      max-width: calc(100% - 2rem);
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      text-align: center;
+      padding: 0.7rem 1.2rem;
+      border-radius: 100px;
+      background: rgba(9, 11, 19, 0.78);
+      backdrop-filter: blur(6px);
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
-    .demo-repere:hover { background: rgba(59, 104, 255, 0.85); }
-    .demo-screen__viewport.is-ailleurs .demo-repere { display: block; }
-    .demo-screen__viewport.is-ailleurs .demo-launch { display: none; }
+
+    .demo-repere:hover {
+      background: rgba(59, 104, 255, 0.85);
+    }
+
+    .demo-screen__viewport.is-ailleurs .demo-repere {
+      display: block;
+    }
+
+    .demo-screen__viewport.is-ailleurs .demo-launch {
+      display: none;
+    }
 
     /* Plein écran : le même calque, fixé sous la barre « Quitter », borne à taille réelle */
     #scene3d.is-plein {
@@ -8043,40 +8332,64 @@
       z-index: 501;
       border-radius: 0 !important;
     }
+
     #scene3d.is-plein .demo-screen__iframe {
       width: 100%;
       height: 100%;
       transform: none;
       pointer-events: auto;
     }
-    #scene3d.is-plein .scene3d__manip { display: none !important; }
+
+    #scene3d.is-plein .scene3d__manip {
+      display: none !important;
+    }
 
     /* Écran tactile : la 3D se regarde, le doigt fait défiler la page.
        « Manipuler » lui rend la main, « Terminé » la reprend. */
     @media (pointer: coarse) {
-      #scene3d .demo-screen__iframe { pointer-events: none; }
-      #scene3d.is-manip .demo-screen__iframe { pointer-events: auto; }
-      #scene3d.is-manip { box-shadow: 0 0 0 2px var(--accent-blue-light); }
+      #scene3d .demo-screen__iframe {
+        pointer-events: none;
+      }
+
+      #scene3d.is-manip .demo-screen__iframe {
+        pointer-events: auto;
+      }
+
+      #scene3d.is-manip {
+        box-shadow: 0 0 0 2px var(--accent-blue-light);
+      }
     }
-    [data-scene-cmd="manipuler"][aria-pressed="true"] { color: #fff; }
+
+    [data-scene-cmd="manipuler"][aria-pressed="true"] {
+      color: #fff;
+    }
 
     @media (prefers-reduced-motion: reduce) {
-      .tour__media.is-loading::after { animation: none; transform: none; }
+      .tour__media.is-loading::after {
+        animation: none;
+        transform: none;
+      }
     }
 
     /* ========== POINTS FORTS (02/10/2026) : grille « bento » ==========
        Les six points forts visibles d'un coup, sans défilement automatique ni commandes :
-       la section présente le produit, elle se lit d'un regard.
-       ≥ 1024 px : [1 1 2] [1 1 3] [4 5 6], la carte 1 occupe deux colonnes et deux rangées.
-       768-1023 px : deux colonnes, cartes 1 et 6 en pleine largeur. Mobile : une colonne.
-       Le cadre de chaque visuel a une hauteur réservée (aspect-ratio) : les images
-       arrivent en différé et ne doivent pas décaler les ancres. */
+       la section présente le produit, elle se lit d'un regard. Deux cartes en grand
+       (voir le bloc « Bento » plus bas), quatre petites.
+       Les six visuels (assets/points-forts/1-interface … 6-stats, 1200 × 900) sont
+       montrés à la même taille : leur marge transparente est retirée par le CSS
+       (voir .pf__visuel img).
+       Les attributs width et height réservent la place avant le chargement différé
+       (les ancres ne bougent pas). */
     .pf {
       max-width: 1100px;
       margin: 0 auto;
       padding: 3.5rem 1.5rem 4rem;
     }
-    .pf__entete { margin-bottom: 1.5rem; }
+
+    .pf__entete {
+      margin-bottom: 1.5rem;
+    }
+
     .pf__h2 {
       font-weight: 600;
       font-size: clamp(2rem, 3vw, 2.6rem);
@@ -8085,6 +8398,7 @@
       color: var(--text-main);
       margin: 0;
     }
+
     .pf__grille {
       list-style: none;
       margin: 0;
@@ -8093,6 +8407,7 @@
       grid-template-columns: 1fr;
       gap: 1rem;
     }
+
     .pf__carte {
       display: flex;
       flex-direction: column;
@@ -8103,51 +8418,122 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       overflow: hidden;
     }
+
     .pf__titre {
-      font-size: 1.2rem;
+      font-size: 1.05rem;
       font-weight: 600;
       line-height: 1.3;
       color: var(--text-main);
       margin: 0;
       text-wrap: balance;
     }
+
     .pf__sous-titre {
-      margin: .4rem 0 0;
+      margin: .3rem 0 0;
       color: var(--accent-blue-light);
-      font-size: .95rem;
+      font-size: .9rem;
       font-weight: 500;
     }
-    /* Le visuel touche le bas de la carte : la capture semble sortir du cadre */
+
+    /* Calé en bas : dans une rangée, les titres restent alignés en haut. */
     .pf__visuel {
       position: relative;
-      margin: auto -1.5rem 0;
-      aspect-ratio: 16 / 10;
+      margin: auto 0 1.5rem;
+      /* 3:2 = le contenu le plus haut (6-stats) : les six remplissent toute la largeur */
+      aspect-ratio: 3 / 2;
+      container-type: size;
     }
+
+    /* Les visuels (1200 × 900) ont chacun leur marge transparente, de taille variable.
+       Chaque <img> déclare sa zone utile en fractions de l'image (--bx, --by, --bw, --bh,
+       mesurées sur le canal alpha, ombres douces exclues : seuil 150/255, 60 pour
+       4-fluidite dont les vues empilées semi-transparentes font partie du visuel) :
+       on agrandit l'image pour que cette zone remplisse le cadre (comme contain), centrée. Les six contenus ont ainsi la même taille à
+       l'écran, la marge déborde sans se voir. --hw : hauteur / largeur du fichier. */
     .pf__visuel img {
+      --hw: .75;
+      --r: min(100cqw / var(--bw, 1), 100cqh / (var(--hw) * var(--bh, 1)));
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      max-width: none;
+      width: var(--r);
+      height: auto;
+      left: calc((100cqw - var(--r) * var(--bw, 1)) / 2 - var(--r) * var(--bx, 0));
+      top: calc((100cqh - var(--r) * var(--hw) * var(--bh, 1)) / 2 - var(--r) * var(--hw) * var(--by, 0));
     }
-    /* Montages (écrans détourés, tableau de bord) : montrés en entier, avec une marge */
-    .pf__visuel img.pf__img--entier { inset: 0 1.5rem 1.5rem; width: calc(100% - 3rem); height: calc(100% - 1.5rem); object-fit: contain; }
-    .pf__visuel img.pf__img--detoure { filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.55)); }
+
+    .pf__visuel img.pf__img--detoure {
+      filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.55));
+    }
 
     @media (min-width: 768px) {
-      .pf__grille { grid-template-columns: repeat(2, 1fr); }
-      .pf__carte:first-child, .pf__carte:last-child { grid-column: span 2; }
-      .pf__carte:first-child .pf__visuel { aspect-ratio: 16 / 8; }
-      .pf__carte:last-child .pf__visuel { aspect-ratio: 16 / 6; }
+      .pf__grille {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
+
     @media (min-width: 1024px) {
-      .pf__grille { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-      .pf__carte:last-child { grid-column: auto; }
-      .pf__carte:last-child .pf__visuel { aspect-ratio: 16 / 10; }
-      .pf__carte:first-child { grid-column: span 2; grid-row: span 2; padding: 2rem 2rem 0; }
-      .pf__carte:first-child .pf__titre { font-size: clamp(1.5rem, 2.2vw, 1.9rem); }
-      /* La grande carte prend la hauteur des deux cartes de droite */
-      .pf__carte:first-child .pf__visuel { flex: 1 0 14rem; aspect-ratio: auto; margin-inline: -2rem; }
+      .pf__grille {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+      }
+    }
+
+    /* Bento : « sans le transporter » et « fluidité de la 3D » en grand (.pf__carte--fort),
+       en zigzag : [T T e] [T T i] [p F F] [s F F]. Placement dense : les petites cartes
+       remplissent les cases libres dans l'ordre du DOM.
+       Les visuels des grandes cartes sont larges (≈ 16:9) : la colonne du milieu est
+       élargie (1fr 2fr 1fr) pour que la grande carte, haute de deux petites, soit
+       assez large pour que son visuel la remplisse sans vide au-dessus ni au-dessous.
+       768-1023 px : grandes cartes en pleine largeur, cadre 16:9. Mobile : une colonne. */
+    @media (min-width: 768px) {
+      .pf .pf__carte--fort {
+        grid-column: span 2;
+      }
+
+      .pf .pf__carte--fort .pf__visuel {
+        aspect-ratio: 16 / 9;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .pf .pf__grille {
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-auto-flow: dense;
+      }
+
+      .pf .pf__carte--fort {
+        grid-row: span 2;
+        padding-top: 2rem;
+      }
+
+      .pf .pf__carte--droite {
+        grid-column: 2 / span 2;
+      }
+
+      .pf .pf__carte--fort .pf__titre {
+        font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+      }
+
+      /* Le visuel prend toute la hauteur laissée sous le titre (le calcul de
+         .pf__visuel img s'adapte au cadre) */
+      .pf .pf__carte--fort .pf__visuel {
+        flex: 1 1 0;
+        aspect-ratio: auto;
+        margin: 1rem -.75rem 1.25rem;
+      }
+
+      /* Carte produit : le visuel s'aligne sur le texte et remplit tout le cadre
+         (comme cover : le bord de la capture est rogné, plus aucun vide autour) */
+      .pf .pf__carte--fort .pf__visuel--rogne {
+        margin: 1rem 0 1.5rem;
+        border-radius: 14px;
+        overflow: hidden;
+      }
+
+      .pf .pf__visuel--rogne img {
+        /* × 1.03 : rogne aussi le liseré sombre qui encadre la capture */
+        --r: calc(max(100cqw / var(--bw, 1), 100cqh / (var(--hw) * var(--bh, 1))) * 1.03);
+      }
     }
 
     /* ========== BARRE D'APPARITION (01/10/2026) ==========
@@ -8163,11 +8549,13 @@
       visibility: hidden;
       transition: transform .38s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .38s;
     }
+
     body[data-barre="visible"] .masthead {
       transform: none;
       visibility: visible;
       transition: transform .38s cubic-bezier(.2, .8, .2, 1), visibility 0s;
     }
+
     .barre-actions {
       position: relative;
       z-index: 2;
@@ -8176,10 +8564,15 @@
       gap: .5rem;
       flex-shrink: 0;
     }
+
     /* ≥ 1131 px, .masthead-inner est une grille logo | liens | CTA : les actions vont à droite */
     @media (min-width: 1131px) {
-      .barre-actions { grid-column: 3; justify-self: end; }
+      .barre-actions {
+        grid-column: 3;
+        justify-self: end;
+      }
     }
+
     .barre-btn {
       position: relative;
       display: inline-flex;
@@ -8194,85 +8587,187 @@
       text-decoration: none;
       transition: transform .2s ease, border-color .2s ease, background-color .2s ease, box-shadow .2s ease;
     }
+
     .barre-btn--ghost {
       color: var(--text-main);
       border: 1px solid rgba(255, 255, 255, 0.22);
       background: rgba(255, 255, 255, 0.04);
     }
-    .barre-btn--ghost:hover { border-color: rgba(255, 255, 255, 0.45); background: rgba(255, 255, 255, 0.08); }
+
+    .barre-btn--ghost:hover {
+      border-color: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
     .barre-btn--plein {
       color: #fff;
       border: 1px solid transparent;
       background: linear-gradient(135deg, var(--accent-blue-deep) 0%, var(--accent-purple-deep) 100%);
       box-shadow: 0 10px 26px -10px rgba(40, 89, 255, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.18);
     }
-    .barre-btn--plein:hover { transform: translateY(-1px); box-shadow: 0 16px 36px -12px rgba(110, 168, 255, 0.75); }
-    .barre-btn:focus-visible { outline: 2px solid var(--accent-blue-light); outline-offset: 3px; }
-    .barre-btn__court { display: none; }
-    @media (max-width: 559px) {
-      .barre-btn { padding: 0 .8rem; }
-      .barre-btn__long { display: none; }
-      .barre-btn__court { display: inline; }
-      .masthead-logo-img { max-width: 34vw; }
+
+    .barre-btn--plein:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 36px -12px rgba(110, 168, 255, 0.75);
     }
+
+    .barre-btn:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 3px;
+    }
+
+    .barre-btn__court {
+      display: none;
+    }
+
+    @media (max-width: 559px) {
+      .barre-btn {
+        padding: 0 .8rem;
+      }
+
+      .barre-btn__long {
+        display: none;
+      }
+
+      .barre-btn__court {
+        display: inline;
+      }
+
+      .masthead-logo-img {
+        max-width: 34vw;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      .masthead, body[data-barre="visible"] .masthead { transition: none; }
+
+      .masthead,
+      body[data-barre="visible"] .masthead {
+        transition: none;
+      }
     }
 
     /* ========== HERO ÉPURÉ (01/10/2026) : référence pages produit Apple ==========
        Une colonne centrée : logo, surtitre, titre, accroche, visuel en grand, actions.
        Préfixe .hero--epure pour passer devant les placements en grille d'origine. */
-    .hero.hero--epure { padding-top: 1.25rem; padding-bottom: 3.5rem; text-align: center; }
+    .hero.hero--epure {
+      padding-top: 1.25rem;
+      padding-bottom: 3.5rem;
+      text-align: center;
+    }
+
     .hero--epure .hero-epure {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0;
     }
-    .hero--epure .hero-logo { align-self: flex-start; display: block; margin-bottom: clamp(2.5rem, 7vh, 4.5rem); }
-    .hero--epure .hero-logo img { display: block; height: clamp(26px, 3.2vw, 34px); width: auto; }
-    .hero--epure .hero-logo:focus-visible { outline: 2px solid var(--accent-blue-light); outline-offset: 4px; border-radius: 8px; }
-    .hero--epure .hero-copy { align-items: center; max-width: 46rem; }
-    .hero--epure h1 { text-align: center; font-size: clamp(2.1rem, 5.6vw, 3.9rem); line-height: 1.08; letter-spacing: -.02em; }
-    .hero--epure .hero-lead { text-align: center; max-width: 38rem; margin-left: auto; margin-right: auto; }
+
+    .hero--epure .hero-logo {
+      align-self: flex-start;
+      display: block;
+      margin-bottom: clamp(2.5rem, 7vh, 4.5rem);
+    }
+
+    .hero--epure .hero-logo img {
+      display: block;
+      height: clamp(26px, 3.2vw, 34px);
+      width: auto;
+    }
+
+    .hero--epure .hero-logo:focus-visible {
+      outline: 2px solid var(--accent-blue-light);
+      outline-offset: 4px;
+      border-radius: 8px;
+    }
+
+    .hero--epure .hero-copy {
+      align-items: center;
+      max-width: 46rem;
+    }
+
+    .hero--epure h1 {
+      text-align: center;
+      font-size: clamp(2.1rem, 5.6vw, 3.9rem);
+      line-height: 1.08;
+      letter-spacing: -.02em;
+    }
+
+    .hero--epure .hero-lead {
+      text-align: center;
+      max-width: 38rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     .hero--epure .hero-visual {
       width: 100%;
       max-width: 1000px;
       margin-top: clamp(1.75rem, 4vh, 2.75rem);
     }
+
     .hero--epure .hero-cta {
       justify-content: center;
       margin-top: 1.75rem;
     }
+
     @media (max-width: 767px) {
-      .hero.hero--epure { padding-top: 1rem; }
-      .hero--epure .hero-logo { margin-bottom: 2.25rem; }
-      .hero--epure .hero-cta { flex-direction: column; align-items: stretch; width: 100%; }
+      .hero.hero--epure {
+        padding-top: 1rem;
+      }
+
+      .hero--epure .hero-logo {
+        margin-bottom: 2.25rem;
+      }
+
+      .hero--epure .hero-cta {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+      }
     }
 
     /* ========== Retour auteur 01/10 : hero et Points forts tiennent dans l'écran ==========
        Hero : titre sur deux lignes, visuel dimensionné sur la hauteur restante de l'écran,
        actions posées en verre sur le bas du visuel (≥ 768 px). */
-    .hero--epure .hero-copy { max-width: none; }
-    .hero--epure h1 { font-size: clamp(2.1rem, 3.6vw, 3.2rem); }
+    .hero--epure .hero-copy {
+      max-width: none;
+    }
+
+    .hero--epure h1 {
+      font-size: clamp(2.1rem, 3.6vw, 3.2rem);
+    }
+
     /* Accroche en deux phrases, une par ligne dès que la largeur le permet */
     @media (min-width: 768px) {
-      .hero--epure .hero-lead { max-width: 50rem; text-wrap: balance; }
+      .hero--epure .hero-lead {
+        max-width: 50rem;
+        text-wrap: balance;
+      }
     }
+
     .hero--epure .hero-scene {
       position: relative;
       width: 100%;
       max-width: 1000px;
       margin-top: clamp(1.5rem, 3.5vh, 2.5rem);
     }
-    .hero--epure .hero-scene .hero-visual { margin-top: 0; max-width: none; }
+
+    .hero--epure .hero-scene .hero-visual {
+      margin-top: 0;
+      max-width: none;
+    }
+
     @media (min-width: 768px) {
-      .hero--epure .hero-logo { margin-bottom: clamp(1.25rem, 4.5vh, 3.5rem); }
+      .hero--epure .hero-logo {
+        margin-bottom: clamp(1.25rem, 4.5vh, 3.5rem);
+      }
+
       /* 16:9, et pas plus haut que l'écran sous le texte : --hero-haut-texte est mesuré
          par le script (bloc 2e), 23rem par défaut */
       .hero--epure .hero-scene {
         max-width: min(1000px, calc((100svh - var(--hero-haut-texte, 23rem) - 1.5rem) * 16 / 9));
       }
+
       .hero--epure .hero-cta {
         /* Centrée par les marges : l'animation d'entrée du hero réécrit transform */
         position: absolute;
@@ -8291,16 +8786,33 @@
         box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.7);
         z-index: 6;
       }
-      .hero--epure .hero-visual__caption { top: .85rem; bottom: auto; }
+
+      .hero--epure .hero-visual__caption {
+        top: .85rem;
+        bottom: auto;
+      }
     }
 
     /* Accroche du hero : ce que c'est (affirmé), puis comment on s'en sert (en retrait),
        chacune sur sa ligne ; interligne resserré pour que les deux blocs se lisent séparés */
-    .hero--epure .hero-lead { line-height: 1.45; }
+    .hero--epure .hero-lead {
+      line-height: 1.45;
+    }
+
     .hero--epure .hero-lead__quoi,
-    .hero--epure .hero-lead__usage { display: block; }
-    .hero--epure .hero-lead__quoi { color: var(--text-main); font-weight: 500; }
-    .hero--epure .hero-lead__usage { margin-top: .5rem; font-size: .92em; }
+    .hero--epure .hero-lead__usage {
+      display: block;
+    }
+
+    .hero--epure .hero-lead__quoi {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .hero--epure .hero-lead__usage {
+      margin-top: .5rem;
+      font-size: .92em;
+    }
   </style>
 
 </head>
@@ -8310,18 +8822,20 @@
   <header class="masthead">
     <div class="masthead-inner">
       <a href="#top" class="masthead-brand" aria-label="Fractal Innov, retour en haut de la page">
-        <img src="assets/fractalinnov-logo.webp" alt="Fractal Innov" class="masthead-logo-img" width="770" height="142" loading="eager"
-          decoding="async" />
+        <img src="assets/fractalinnov-logo.webp" alt="Fractal Innov" class="masthead-logo-img" width="770" height="142"
+          loading="eager" decoding="async" />
       </a>
 
       <!-- Barre d'apparition (01/10/2026) : masquée sur le hero, elle descend à l'arrivée
            sur les Points forts (bloc JS 2d). Deux actions, libellés courts sur mobile. -->
       <div class="barre-actions">
         <a href="#demo" class="barre-btn barre-btn--ghost" data-launch-demo aria-label="Tester la démo">
-          <span class="barre-btn__long">Tester la démo</span><span class="barre-btn__court" aria-hidden="true">La démo</span>
+          <span class="barre-btn__long">Tester la démo</span><span class="barre-btn__court" aria-hidden="true">La
+            démo</span>
         </a>
         <a href="#contact" class="barre-btn barre-btn--plein" aria-label="Réserver 30 min">
-          <span class="barre-btn__long">Réserver 30 min</span><span class="barre-btn__court" aria-hidden="true">30 min</span>
+          <span class="barre-btn__long">Réserver 30 min</span><span class="barre-btn__court" aria-hidden="true">30
+            min</span>
         </a>
       </div>
       <div class="masthead-bg" aria-hidden="true"></div>
@@ -8339,7 +8853,8 @@
     <section class="hero hero--epure">
       <div class="hero-epure">
         <a href="#top" class="hero-logo" aria-label="Fractal Innov, retour en haut de la page">
-          <img src="assets/fractalinnov-logo.webp" alt="Fractal Innov" width="770" height="142" loading="eager" decoding="async">
+          <img src="assets/fractalinnov-logo.webp" alt="Fractal Innov" width="770" height="142" loading="eager"
+            decoding="async">
         </a>
         <div class="hero-copy">
           <div class="hero-eyebrow">
@@ -8348,47 +8863,50 @@
           <h1>
             <span class="hero-title-main">Votre produit reste chez vous<br><em>Votre démo part en salon</em></span>
           </h1>
-          <p class="hero-lead"><span class="hero-lead__quoi">Le jumeau 3D de votre produit, sur votre stand, en showroom ou en visio.</span>
-            <span class="hero-lead__usage">Le visiteur l'explore du doigt, votre commercial le pilote depuis son téléphone.</span></p>
+          <p class="hero-lead"><span class="hero-lead__quoi">Le jumeau 3D de votre produit, sur votre stand, en showroom
+              ou en visio.</span>
+            <span class="hero-lead__usage">Le visiteur l'explore du doigt, votre commercial le pilote depuis son
+              téléphone.</span>
+          </p>
         </div>
         <!-- Scène du hero : le visuel, et (≥ 768 px) la barre d'actions posée sur son bas -->
         <div class="hero-scene">
-        <!-- Visuel hero : poster de la démo aujourd'hui, boucle vidéo ou scène Needle demain (même emplacement) -->
-        <a href="#demo" class="hero-visual" aria-label="Lancer la démo" data-launch-demo>
-          <figure class="hero-visual__frame">
-            <video class="hero-visual__img" id="heroVideo" muted loop playsinline autoplay preload="metadata"
-              poster="assets/demo/hero-poster.webp" width="1280" height="720" disablepictureinpicture
-              aria-label="La scène 3D de la démo : un stand de salon avec sa borne tactile, son écran de présentation et ses visiteurs">
-              <source src="assets/demo/hero-loop.webm" type="video/webm">
-              <source src="assets/demo/hero-loop.mp4" type="video/mp4">
-              <img class="hero-visual__img" src="assets/demo/hero-poster.webp" width="1280" height="720"
-                alt="La scène 3D de la démo : un stand de salon avec sa borne tactile, son écran de présentation et ses visiteurs"
-                fetchpriority="high" decoding="async">
-            </video>
-            <figcaption class="hero-visual__caption">
-              <span class="hero-visual__dot" aria-hidden="true"></span>
-              <span>Extrait de la démo, cliquez pour la lancer</span>
-            </figcaption>
-            <span class="hero-visual__play" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z"></path>
-              </svg>
-            </span>
-          </figure>
-        </a>
-
-        <div class="hero-cta">
-          <!-- Réserver = action principale (même rôle que dans la barre), la démo en secondaire -->
-          <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30 min</a>
-          <a href="#demo" class="hero-cta__btn hero-cta__btn--ghost" data-launch-demo>
-            <span>Tester la démo</span>
-            <svg class="hero-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="12" y1="4" x2="12" y2="20"></line>
-              <polyline points="6 14 12 20 18 14"></polyline>
-            </svg>
+          <!-- Visuel hero : poster de la démo aujourd'hui, boucle vidéo ou scène Needle demain (même emplacement) -->
+          <a href="#demo" class="hero-visual" aria-label="Lancer la démo" data-launch-demo>
+            <figure class="hero-visual__frame">
+              <video class="hero-visual__img" id="heroVideo" muted loop playsinline autoplay preload="metadata"
+                poster="assets/demo/hero-poster.webp" width="1280" height="720" disablepictureinpicture
+                aria-label="La scène 3D de la démo : un stand de salon avec sa borne tactile, son écran de présentation et ses visiteurs">
+                <source src="assets/demo/hero-loop.webm" type="video/webm">
+                <source src="assets/demo/hero-loop.mp4" type="video/mp4">
+                <img class="hero-visual__img" src="assets/demo/hero-poster.webp" width="1280" height="720"
+                  alt="La scène 3D de la démo : un stand de salon avec sa borne tactile, son écran de présentation et ses visiteurs"
+                  fetchpriority="high" decoding="async">
+              </video>
+              <figcaption class="hero-visual__caption">
+                <span class="hero-visual__dot" aria-hidden="true"></span>
+                <span>Extrait de la démo, cliquez pour la lancer</span>
+              </figcaption>
+              <span class="hero-visual__play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"></path>
+                </svg>
+              </span>
+            </figure>
           </a>
-        </div>
+
+          <div class="hero-cta">
+            <!-- Réserver = action principale (même rôle que dans la barre), la démo en secondaire -->
+            <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30 min</a>
+            <a href="#demo" class="hero-cta__btn hero-cta__btn--ghost" data-launch-demo>
+              <span>Tester la démo</span>
+              <svg class="hero-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="12" y1="4" x2="12" y2="20"></line>
+                <polyline points="6 14 12 20 18 14"></polyline>
+              </svg>
+            </a>
+          </div>
 
         </div>
       </div>
@@ -8398,53 +8916,68 @@
     </section>
   </div>
   <main class="page-rest">
-  <!-- POINTS FORTS (01/10/2026) : six slides, défilement automatique (bloc JS 2c) -->
-  <section id="points-forts" class="pf" aria-labelledby="pf-titre">
-    <div class="pf__entete">
-      <h2 id="pf-titre" class="pf__h2" data-repere>Points forts</h2>
-    </div>
-    <ul class="pf__grille">
-      <li class="pf__carte">
-        <div class="pf__texte">
-          <h3 class="pf__titre">Une interface épurée, que le visiteur comprend seul</h3>
-        </div>
-        <figure class="pf__visuel"><img src="assets/demo/vue-ensemble.webp" width="1600" height="1063" alt="La vue d'ensemble du démonstrateur : le produit en 3D et quelques boutons clairs" loading="lazy" decoding="async"></figure>
-      </li>
-      <li class="pf__carte">
-        <div class="pf__texte">
-          <h3 class="pf__titre">Un seul démonstrateur, sur tous vos écrans</h3>
-          <p class="pf__sous-titre">Stand, showroom, visio</p>
-        </div>
-        <figure class="pf__visuel"><img class="pf__img--entier pf__img--detoure" src="assets/points-forts/ecrans.webp" width="1600" height="1000" alt="Le même démonstrateur sur un écran tactile de stand, un ordinateur portable et une tablette" loading="lazy" decoding="async"></figure>
-      </li>
-      <li class="pf__carte">
-        <div class="pf__texte">
-          <h3 class="pf__titre">Pilotez la présentation depuis votre téléphone</h3>
-        </div>
-        <figure class="pf__visuel"><img src="assets/demo/presenter.webp" width="1600" height="1065" alt="Le commercial pilote la présentation depuis son téléphone" loading="lazy" decoding="async"></figure>
-      </li>
-      <li class="pf__carte">
-        <div class="pf__texte">
-          <h3 class="pf__titre">La fluidité de la 3D, dans un navigateur ou une application</h3>
-        </div>
-        <figure class="pf__visuel"><img src="assets/demo/attirer.webp" width="1600" height="1061" alt="La scène 3D du démonstrateur, fluide et détaillée" loading="lazy" decoding="async"></figure>
-      </li>
-      <li class="pf__carte">
-        <div class="pf__texte">
-          <h3 class="pf__titre">Votre produit présenté, sans le transporter</h3>
-          <p class="pf__sous-titre">Toute votre gamme, en option</p>
-        </div>
-        <figure class="pf__visuel"><img src="assets/demo/step-expliquer.webp" width="1600" height="760" alt="Le jumeau 3D du produit, présenté sur le stand à sa place" loading="lazy" decoding="async"></figure>
-      </li>
-      <li class="pf__carte">
-        <div class="pf__texte">
-          <h3 class="pf__titre">Mesurez ce qui intéresse vos visiteurs</h3>
-          <p class="pf__sous-titre">Sans cookie, aucune donnée personnelle</p>
-        </div>
-        <figure class="pf__visuel"><img class="pf__img--entier" src="assets/points-forts/stats.webp" width="1600" height="900" alt="Un tableau de bord de statistiques : visites, boutons touchés, vidéos vues jusqu'au bout, contenus les plus ouverts" loading="lazy" decoding="async"></figure>
-      </li>
-    </ul>
-  </section>
+    <!-- POINTS FORTS (01/10/2026) : six slides, défilement automatique (bloc JS 2c) -->
+    <section id="points-forts" class="pf" aria-labelledby="pf-titre">
+      <div class="pf__entete">
+        <h2 id="pf-titre" class="pf__h2" data-repere>En quelques mots...</h2>
+      </div>
+      <ul class="pf__grille">
+        <li class="pf__carte pf__carte--fort">
+          <div class="pf__texte">
+            <h3 class="pf__titre">Votre produit présenté, sans le transporter</h3>
+            <p class="pf__sous-titre">Toute votre gamme, en option</p>
+          </div>
+          <figure class="pf__visuel pf__visuel--rogne"><img style="--bx:0.062;--by:0.159;--bw:0.895;--bh:0.683"
+              src="assets/points-forts/5-transport.webp" width="1200" height="900"
+              alt="Le jumeau 3D du produit, présenté sur le stand à sa place" loading="lazy" decoding="async"></figure>
+        </li>
+        <li class="pf__carte">
+          <div class="pf__texte">
+            <h3 class="pf__titre">Une interface épurée, que le visiteur comprend seul</h3>
+          </div>
+          <figure class="pf__visuel"><img style="--bx:0.062;--by:0.159;--bw:0.895;--bh:0.683"
+              src="assets/points-forts/1-interface.webp" width="1200" height="900"
+              alt="La vue d'ensemble du démonstrateur : le produit en 3D et quelques boutons clairs" loading="lazy"
+              decoding="async"></figure>
+        </li>
+        <li class="pf__carte">
+          <div class="pf__texte">
+            <h3 class="pf__titre">Pilotez la présentation depuis votre téléphone</h3>
+          </div>
+          <figure class="pf__visuel"><img style="--bx:0.037;--by:0.142;--bw:0.947;--bh:0.762"
+              src="assets/points-forts/3-telephone.webp" width="1200" height="900"
+              alt="Le commercial pilote la présentation depuis son téléphone" loading="lazy" decoding="async"></figure>
+        </li>
+        <li class="pf__carte pf__carte--fort pf__carte--droite">
+          <div class="pf__texte">
+            <h3 class="pf__titre">La fluidité de la 3D, dans un navigateur ou une application</h3>
+          </div>
+          <figure class="pf__visuel"><img style="--bx:0.062;--by:0.172;--bw:0.912;--bh:0.680"
+              src="assets/points-forts/4-fluidite.webp" width="1200" height="900"
+              alt="La scène 3D du démonstrateur, fluide et détaillée" loading="lazy" decoding="async"></figure>
+        </li>
+        <li class="pf__carte">
+          <div class="pf__texte">
+            <h3 class="pf__titre">Un seul démonstrateur, sur tous vos écrans</h3>
+            <p class="pf__sous-titre">Stand, showroom, visio</p>
+          </div>
+          <figure class="pf__visuel"><img style="--bx:0.037;--by:0.100;--bw:0.952;--bh:0.771" class="pf__img--detoure"
+              src="assets/points-forts/2-ecrans.webp" width="1200" height="900"
+              alt="Le même démonstrateur sur un écran tactile de stand, un ordinateur portable et une tablette"
+              loading="lazy" decoding="async"></figure>
+        </li>
+        <li class="pf__carte">
+          <div class="pf__texte">
+            <h3 class="pf__titre">Mesurez ce qui intéresse vos visiteurs</h3>
+            <p class="pf__sous-titre">Sans cookie, aucune donnée personnelle</p>
+          </div>
+          <figure class="pf__visuel"><img style="--bx:0.050;--by:0.100;--bw:0.900;--bh:0.800"
+              src="assets/points-forts/6-stats.webp" width="1200" height="900"
+              alt="Un tableau de bord de statistiques : visites, boutons touchés, vidéos vues jusqu'au bout, contenus les plus ouverts"
+              loading="lazy" decoding="async"></figure>
+        </li>
+      </ul>
+    </section>
     <section id="demo" class="section">
       <div class="section-number reveal">La démo</div>
       <h2 class="reveal delay-100">Testez-la, c'est ce que vos visiteurs verront</h2>
@@ -8589,7 +9122,8 @@
            la manipuler à l'étape suivante : l'appel. -->
       <div class="demo-suite reveal delay-300">
         <p>Ce que vous venez de manipuler, vos visiteurs le manipuleront.
-          <b>Avec votre produit à la place de ce stand</b> : c'est ce que nous regardons ensemble en 30 minutes.</p>
+          <b>Avec votre produit à la place de ce stand</b> : c'est ce que nous regardons ensemble en 30 minutes.
+        </p>
         <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30 min</a>
       </div>
     </section>
@@ -8599,11 +9133,6 @@
       <h2 class="reveal delay-100">Sur un salon, vous avez trois minutes pour vous faire comprendre</h2>
       <div class="defi-lead reveal delay-200">
         <p>Et souvent, votre produit n'est même pas là.</p>
-        <div class="defi-timer" id="defiTimer" aria-hidden="true">
-          <span class="defi-timer__ring"></span>
-          <span class="defi-timer__value">3:00</span>
-          <span class="defi-timer__label">par visiteur</span>
-        </div>
       </div>
 
       <ol class="friction-grid reveal delay-200">
@@ -8747,8 +9276,8 @@
               <h3>Réutiliser</h3>
               <span class="step-gain">Un support qui ressert après le salon</span>
               <p>Le même contenu ressert sur vos prochains salons, en showroom et en rendez-vous commercial. Vos équipes
-                  le modifient elles-mêmes, sans développeur. Et chaque salon se mesure&nbsp;: visites par jour,
-                  boutons touchés, vidéos regardées jusqu'au bout.</p>
+                le modifient elles-mêmes, sans développeur. Et chaque salon se mesure&nbsp;: visites par jour,
+                boutons touchés, vidéos regardées jusqu'au bout.</p>
             </div>
           </div>
         </div>
@@ -8759,83 +9288,84 @@
     <section id="jumeau-3d" class="section section--tour">
       <div class="section-number reveal">Le jumeau 3D</div>
       <h2 class="reveal delay-100">Votre produit, en 3D, à explorer du bout du doigt</h2>
-      <p class="reveal delay-200">Chaque sujet amène la caméra au bon endroit. Dans la démo, c'est un stand&nbsp;; chez vous, votre machine.</p>
+      <p class="reveal delay-200">Chaque sujet amène la caméra au bon endroit. Dans la démo, c'est un stand&nbsp;; chez
+        vous, votre machine.</p>
 
       <div class="tour reveal delay-300">
         <div class="tour__tabs" role="tablist" aria-label="Le parcours de la démo, en six étapes">
-            <button type="button" role="tab" class="tour__tab is-active" id="tab-vue" aria-selected="true"
-              aria-controls="panel-vue" data-panel="vue">
-              <span class="tour__num" aria-hidden="true">1</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
-                <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
-                <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
-                <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
-              </svg>
-              <span class="tour__label">Vue d'ensemble</span>
-            </button>
-            <button type="button" role="tab" class="tour__tab" id="tab-attirer" aria-selected="false"
-              aria-controls="panel-attirer" data-panel="attirer" tabindex="-1">
-              <span class="tour__num" aria-hidden="true">2</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"></path>
-                <path d="M15 9.5a4 4 0 0 1 0 5"></path>
-                <path d="M18 7a8 8 0 0 1 0 10"></path>
-              </svg>
-              <span class="tour__label">Attirer depuis l'allée</span>
-            </button>
-            <button type="button" role="tab" class="tour__tab" id="tab-presenter" aria-selected="false"
-              aria-controls="panel-presenter" data-panel="presenter" tabindex="-1">
-              <span class="tour__num" aria-hidden="true">3</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="4" width="18" height="12" rx="2"></rect>
-                <line x1="12" y1="16" x2="12" y2="21"></line>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-              </svg>
-              <span class="tour__label">Présenter à un client</span>
-            </button>
-            <button type="button" role="tab" class="tour__tab" id="tab-emporter" aria-selected="false"
-              aria-controls="panel-emporter" data-panel="emporter" tabindex="-1">
-              <span class="tour__num" aria-hidden="true">4</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true">
-                <rect x="5" y="2" width="14" height="20" rx="2"></rect>
-                <line x1="12" y1="18" x2="12.01" y2="18"></line>
-              </svg>
-              <span class="tour__label">Emporter sur mobile</span>
-            </button>
-            <button type="button" role="tab" class="tour__tab" id="tab-logiciel" aria-selected="false"
-              aria-controls="panel-logiciel" data-panel="logiciel" tabindex="-1">
-              <span class="tour__num" aria-hidden="true">5</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true">
-                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                <path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"></path>
-              </svg>
-              <span class="tour__label">La vidéo</span>
-            </button>
-            <button type="button" role="tab" class="tour__tab" id="tab-materiel" aria-selected="false"
-              aria-controls="panel-materiel" data-panel="materiel" tabindex="-1">
-              <span class="tour__num" aria-hidden="true">6</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="8" y1="13" x2="16" y2="13"></line>
-                <line x1="8" y1="17" x2="13" y2="17"></line>
-              </svg>
-              <span class="tour__label">La fiche</span>
-            </button>
+          <button type="button" role="tab" class="tour__tab is-active" id="tab-vue" aria-selected="true"
+            aria-controls="panel-vue" data-panel="vue">
+            <span class="tour__num" aria-hidden="true">1</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+              <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+              <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+              <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+            </svg>
+            <span class="tour__label">Vue d'ensemble</span>
+          </button>
+          <button type="button" role="tab" class="tour__tab" id="tab-attirer" aria-selected="false"
+            aria-controls="panel-attirer" data-panel="attirer" tabindex="-1">
+            <span class="tour__num" aria-hidden="true">2</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"></path>
+              <path d="M15 9.5a4 4 0 0 1 0 5"></path>
+              <path d="M18 7a8 8 0 0 1 0 10"></path>
+            </svg>
+            <span class="tour__label">Attirer depuis l'allée</span>
+          </button>
+          <button type="button" role="tab" class="tour__tab" id="tab-presenter" aria-selected="false"
+            aria-controls="panel-presenter" data-panel="presenter" tabindex="-1">
+            <span class="tour__num" aria-hidden="true">3</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="12" rx="2"></rect>
+              <line x1="12" y1="16" x2="12" y2="21"></line>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+            </svg>
+            <span class="tour__label">Présenter à un client</span>
+          </button>
+          <button type="button" role="tab" class="tour__tab" id="tab-emporter" aria-selected="false"
+            aria-controls="panel-emporter" data-panel="emporter" tabindex="-1">
+            <span class="tour__num" aria-hidden="true">4</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+            <span class="tour__label">Emporter sur mobile</span>
+          </button>
+          <button type="button" role="tab" class="tour__tab" id="tab-logiciel" aria-selected="false"
+            aria-controls="panel-logiciel" data-panel="logiciel" tabindex="-1">
+            <span class="tour__num" aria-hidden="true">5</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"></path>
+            </svg>
+            <span class="tour__label">La vidéo</span>
+          </button>
+          <button type="button" role="tab" class="tour__tab" id="tab-materiel" aria-selected="false"
+            aria-controls="panel-materiel" data-panel="materiel" tabindex="-1">
+            <span class="tour__num" aria-hidden="true">6</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="8" y1="13" x2="16" y2="13"></line>
+              <line x1="8" y1="17" x2="13" y2="17"></line>
+            </svg>
+            <span class="tour__label">La fiche</span>
+          </button>
         </div>
 
         <div class="tour__panels">
           <div role="tabpanel" id="panel-vue" class="tour__panel is-active" aria-labelledby="tab-vue">
-            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/vue-ensemble.webp" width="1600" height="1064"
-                alt="Vue d'ensemble de la démo : le stand entier, avec ses trois sujets cliquables" loading="lazy"
-                decoding="async"></div>
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/vue-ensemble.webp" width="1600"
+                height="1064" alt="Vue d'ensemble de la démo : le stand entier, avec ses trois sujets cliquables"
+                loading="lazy" decoding="async"></div>
             <div class="tour__text">
               <h3>Vue d'ensemble</h3>
               <p>Le point de départ&nbsp;: le stand entier et ses trois sujets. Le visiteur touche celui qui
@@ -8855,7 +9385,8 @@
           </div>
 
           <div role="tabpanel" id="panel-attirer" class="tour__panel" aria-labelledby="tab-attirer" hidden>
-            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/attirer.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/attirer.webp" width="1600"
+                height="1064"
                 alt="Dans la démo, un visiteur s'arrête devant la borne tactile qui diffuse la scène 3D en boucle"
                 loading="lazy" decoding="async"></div>
             <div class="tour__text">
@@ -8877,12 +9408,14 @@
           </div>
 
           <div role="tabpanel" id="panel-presenter" class="tour__panel" aria-labelledby="tab-presenter" hidden>
-            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/presenter.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/presenter.webp" width="1600"
+                height="1064"
                 alt="Dans la démo, un commercial présente le produit à une cliente sur l'écran tactile, tablette en main"
                 loading="lazy" decoding="async"></div>
             <div class="tour__text">
               <h3>Présenter à un client</h3>
-              <p>Un support commun sur écran tactile, piloté depuis un téléphone ou une tablette&nbsp;: vidéos, fiches et vues 3D au
+              <p>Un support commun sur écran tactile, piloté depuis un téléphone ou une tablette&nbsp;: vidéos, fiches
+                et vues 3D au
                 rythme de la conversation.</p>
               <ul class="tour__chips">
                 <li>Écran tactile partagé</li>
@@ -8899,7 +9432,8 @@
           </div>
 
           <div role="tabpanel" id="panel-emporter" class="tour__panel" aria-labelledby="tab-emporter" hidden>
-            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/emporter.webp" width="1600" height="1064"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/emporter.webp" width="1600"
+                height="1064"
                 alt="Dans la démo, un visiteur scanne un QR code et repart avec la présentation sur son téléphone"
                 loading="lazy" decoding="async"></div>
             <div class="tour__text">
@@ -8921,9 +9455,9 @@
           </div>
 
           <div role="tabpanel" id="panel-logiciel" class="tour__panel" aria-labelledby="tab-logiciel" hidden>
-            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/logiciel.webp" width="1600" height="1064"
-                alt="Dans la démo, une vidéo s'ouvre par-dessus la scène 3D, sans quitter le parcours" loading="lazy"
-                decoding="async"></div>
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/logiciel.webp" width="1600"
+                height="1064" alt="Dans la démo, une vidéo s'ouvre par-dessus la scène 3D, sans quitter le parcours"
+                loading="lazy" decoding="async"></div>
             <div class="tour__text">
               <h3>La vidéo, au bon moment</h3>
               <p>Une vidéo s'ouvre par-dessus la scène, sans quitter le parcours. C'est là que vos vidéos existantes
@@ -8943,8 +9477,8 @@
           </div>
 
           <div role="tabpanel" id="panel-materiel" class="tour__panel" aria-labelledby="tab-materiel" hidden>
-            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/materiel.webp" width="1600" height="1064"
-                alt="Dans la démo, une fiche PDF se feuillette à l'écran, page après page" loading="lazy"
+            <div class="tour__media" data-scene-slot="parcours"><img src="assets/demo/materiel.webp" width="1600"
+                height="1064" alt="Dans la démo, une fiche PDF se feuillette à l'écran, page après page" loading="lazy"
                 decoding="async"></div>
             <div class="tour__text">
               <h3>La fiche, feuilletable</h3>
@@ -9469,7 +10003,11 @@
         <img src="assets/fractalinnov-logo.webp" alt="" width="770" height="142" loading="lazy" decoding="async">
       </a>
       <a class="footer__catalyseur" href="https://lecatalyseur.pold.fr/" target="_blank" rel="noopener">Accompagné
-        par le <b>Catalyseur Innovation</b> <span class="footer__catalyseur-fin">POLD<svg class="footer__catalyseur-fleche" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        par le <b>Catalyseur Innovation</b> <span class="footer__catalyseur-fin">POLD<svg
+            class="footer__catalyseur-fleche" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+            <path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></span></a>
       <nav class="footer__liens" aria-label="Liens du pied de page">
         <a href="#contact">Réserver 30 min</a>
         <a href="mailto:corentin.duboc@fractal-innov.fr">E-mail</a>
@@ -10631,6 +11169,7 @@
     });
   </script>
   <!-- Fond WebGL Three.js (sections + ancres écran) : voir DemoLoopDashboard_bgThree.html pour réintégrer. -->
+
 </body>
 
 </html>
