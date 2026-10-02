@@ -8064,176 +8064,90 @@
       .tour__media.is-loading::after { animation: none; transform: none; }
     }
 
-    /* ========== POINTS FORTS (01/10/2026) : référence pages produit Apple ==========
-       Piste horizontale en scroll-snap, la slide suivante dépasse sur le bord.
-       --pf-gouttiere aligne la première carte sur la colonne de contenu (1100 px). */
+    /* ========== POINTS FORTS (02/10/2026) : grille « bento » ==========
+       Les six points forts visibles d'un coup, sans défilement automatique ni commandes :
+       la section présente le produit, elle se lit d'un regard.
+       ≥ 1024 px : [1 1 2] [1 1 3] [4 5 6], la carte 1 occupe deux colonnes et deux rangées.
+       768-1023 px : deux colonnes, cartes 1 et 6 en pleine largeur. Mobile : une colonne.
+       Le cadre de chaque visuel a une hauteur réservée (aspect-ratio) : les images
+       arrivent en différé et ne doivent pas décaler les ancres. */
     .pf {
-      --pf-gouttiere: max(1.5rem, calc((100vw - 1100px) / 2 + 3rem));
-      position: relative;
-      padding: 5rem 0 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 4rem;
     }
-    .pf__entete { padding: 0 var(--pf-gouttiere); margin-bottom: 2.25rem; }
+    .pf__entete { margin-bottom: 1.5rem; }
     .pf__h2 {
       font-weight: 600;
-      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-size: clamp(2rem, 3vw, 2.6rem);
       line-height: 1.05;
       letter-spacing: -.02em;
       color: var(--text-main);
       margin: 0;
     }
-    .pf__piste {
+    .pf__grille {
       list-style: none;
       margin: 0;
-      padding: 0 var(--pf-gouttiere);
-      display: flex;
-      gap: 1.25rem;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-padding-inline: var(--pf-gouttiere);
-      scrollbar-width: none;
-      overscroll-behavior-x: contain;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
-    .pf__piste::-webkit-scrollbar { display: none; }
-    .pf__slide {
-      flex: 0 0 min(78vw, 980px);
-      scroll-snap-align: start;
-      min-height: min(36rem, 68vh);
+    .pf__carte {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      padding: 3rem 2.5rem 2.5rem;
-      border-radius: 28px;
+      gap: 1.25rem;
+      padding: 1.5rem 1.5rem 0;
+      border-radius: 22px;
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.025) 100%);
       border: 1px solid rgba(255, 255, 255, 0.08);
       overflow: hidden;
     }
-    .pf__texte { text-align: center; max-width: 34rem; }
     .pf__titre {
-      font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+      font-size: 1.2rem;
       font-weight: 600;
-      line-height: 1.25;
+      line-height: 1.3;
       color: var(--text-main);
       margin: 0;
       text-wrap: balance;
     }
     .pf__sous-titre {
-      margin: .6rem 0 0;
+      margin: .4rem 0 0;
       color: var(--accent-blue-light);
-      font-size: 1rem;
+      font-size: .95rem;
       font-weight: 500;
     }
-    /* Hauteur réservée : les images arrivent en différé, la section ne doit pas grandir
-       à leur chargement (une ancre visée pendant le défilement tomberait trop bas). */
+    /* Le visuel touche le bas de la carte : la capture semble sortir du cadre */
     .pf__visuel {
-      flex: 1 0 auto;
-      height: min(44vh, 420px);
-      margin: 0;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: relative;
+      margin: auto -1.5rem 0;
+      aspect-ratio: 16 / 10;
     }
     .pf__visuel img {
-      display: block;
-      width: auto;
-      max-width: 100%;
-      height: auto;
-      max-height: 100%;
-      border-radius: 14px;
-      box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.8);
-    }
-    .pf__commandes {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: .9rem;
-      margin-top: 2rem;
-      padding: 0 1rem;
-    }
-    .pf__points {
-      display: flex;
-      align-items: center;
-      gap: .7rem;
-      padding: 1.05rem 1.5rem;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-    }
-    .pf__point {
-      --pf-progres: 0;
-      position: relative;
-      width: 8px;
-      height: 8px;
-      padding: 0;
-      border: 0;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.35);
-      cursor: pointer;
-      overflow: hidden;
-      transition: width .4s cubic-bezier(.2, .8, .2, 1), background-color .3s;
-    }
-    .pf__point::before { content: ''; position: absolute; inset: -12px -5px; }
-    .pf__point:hover { background: rgba(255, 255, 255, 0.6); }
-    .pf__point[aria-current="true"] { width: 44px; background: rgba(255, 255, 255, 0.3); }
-    .pf__point[aria-current="true"]::after {
-      content: '';
       position: absolute;
       inset: 0;
-      border-radius: inherit;
-      background: var(--text-main);
-      transform-origin: left center;
-      transform: scaleX(var(--pf-progres));
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-    .pf[data-lecture="off"] .pf__point[aria-current="true"]::after { transform: scaleX(1); }
-    .pf__point:focus-visible, .pf__lecture:focus-visible { outline: 2px solid var(--accent-blue-light); outline-offset: 3px; }
-    .pf__lecture {
-      width: 54px;
-      height: 54px;
-      display: grid;
-      place-items: center;
-      border: 0;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-      color: var(--text-main);
-      cursor: pointer;
-      transition: background-color .25s;
-    }
-    .pf__lecture:hover { background: rgba(255, 255, 255, 0.16); }
-    .pf__lecture svg { width: 20px; height: 20px; }
-    .pf__ico-lecture, .pf[data-lecture="off"] .pf__ico-pause { display: none; }
-    .pf[data-lecture="off"] .pf__ico-lecture { display: block; }
+    /* Montages (écrans détourés, tableau de bord) : montrés en entier, avec une marge */
+    .pf__visuel img.pf__img--entier { inset: 0 1.5rem 1.5rem; width: calc(100% - 3rem); height: calc(100% - 1.5rem); object-fit: contain; }
+    .pf__visuel img.pf__img--detoure { filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.55)); }
 
-    @media (max-width: 767px) {
-      .pf { padding: 3.5rem 0 3rem; }
-      .pf__entete { margin-bottom: 1.5rem; }
-      .pf__piste { gap: .9rem; }
-      .pf__slide {
-        flex-basis: 86vw;
-        min-height: 31rem;
-        padding: 2.25rem 1.25rem 1.5rem;
-        gap: 1.5rem;
-        border-radius: 22px;
-      }
-      .pf__visuel { height: 15rem; }
-      .pf__points { padding: .95rem 1.25rem; gap: .6rem; }
-      .pf__point[aria-current="true"] { width: 36px; }
-      .pf__lecture { width: 48px; height: 48px; }
+    @media (min-width: 768px) {
+      .pf__grille { grid-template-columns: repeat(2, 1fr); }
+      .pf__carte:first-child, .pf__carte:last-child { grid-column: span 2; }
+      .pf__carte:first-child .pf__visuel { aspect-ratio: 16 / 8; }
+      .pf__carte:last-child .pf__visuel { aspect-ratio: 16 / 6; }
     }
-
-    /* Points forts : le texte de la slide active apparaît pendant la translation de la
-       carte (dès qu'elle devient la plus proche), puis reste immobile.
-       .pf--pret est posé par le JS : sans lui, tous les titres restent visibles. */
-    .pf--pret .pf__slide .pf__texte { opacity: 0; transform: translateY(14px); transition: opacity .35s ease, transform .35s ease; }
-    .pf--pret .pf__slide--active .pf__texte {
-      opacity: 1;
-      transform: none;
-      transition: opacity .3s ease, transform .35s cubic-bezier(.2, .8, .2, 1);
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .pf--pret .pf__slide .pf__texte { opacity: 1; transform: none; transition: none; }
-      .pf__point { transition: none; }
+    @media (min-width: 1024px) {
+      .pf__grille { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+      .pf__carte:last-child { grid-column: auto; }
+      .pf__carte:last-child .pf__visuel { aspect-ratio: 16 / 10; }
+      .pf__carte:first-child { grid-column: span 2; grid-row: span 2; padding: 2rem 2rem 0; }
+      .pf__carte:first-child .pf__titre { font-size: clamp(1.5rem, 2.2vw, 1.9rem); }
+      /* La grande carte prend la hauteur des deux cartes de droite */
+      .pf__carte:first-child .pf__visuel { flex: 1 0 14rem; aspect-ratio: auto; margin-inline: -2rem; }
     }
 
     /* ========== BARRE D'APPARITION (01/10/2026) ==========
@@ -8380,25 +8294,6 @@
       .hero--epure .hero-visual__caption { top: .85rem; bottom: auto; }
     }
 
-    /* Points forts : titre, cartes et minuterie dans un même écran ; la minuterie colle
-       au bas de l'écran tant que la galerie n'est pas entièrement montée. */
-    .pf__commandes {
-      position: sticky;
-      bottom: 1rem;
-      z-index: 5;
-    }
-    @media (min-width: 768px) {
-      .pf { padding-top: 3.5rem; }
-      .pf__h2 { font-size: clamp(2rem, 3vw, 2.6rem); }
-      .pf__entete { margin-bottom: 1.5rem; }
-      .pf__slide { min-height: 0; padding: 2.25rem 2rem 2rem; gap: 1.5rem; }
-      .pf__visuel { height: clamp(11rem, calc(100svh - 29rem), 420px); }
-      .pf__commandes { margin-top: 1.5rem; }
-    }
-
-    /* Visuel détouré (fond transparent) : ni ombre ni coins arrondis autour du cadre */
-    .pf__visuel img.pf__img--detoure { box-shadow: none; border-radius: 0; filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.55)); }
-
     /* Accroche du hero : ce que c'est (affirmé), puis comment on s'en sert (en retrait),
        chacune sur sa ligne ; interligne resserré pour que les deux blocs se lisent séparés */
     .hero--epure .hero-lead { line-height: 1.45; }
@@ -8504,67 +8399,51 @@
   </div>
   <main class="page-rest">
   <!-- POINTS FORTS (01/10/2026) : six slides, défilement automatique (bloc JS 2c) -->
-  <section id="points-forts" class="pf" aria-labelledby="pf-titre" aria-roledescription="carrousel" data-actif="0" data-lecture="on">
+  <section id="points-forts" class="pf" aria-labelledby="pf-titre">
     <div class="pf__entete">
       <h2 id="pf-titre" class="pf__h2" data-repere>Points forts</h2>
     </div>
-    <div class="pf__galerie">
-    <ul class="pf__piste" aria-live="off">
-          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="1 sur 6" data-index="0">
-            <div class="pf__texte">
-              <h3 class="pf__titre">Une interface épurée, que le visiteur comprend seul</h3>
-            </div>
-            <figure class="pf__visuel"><img src="assets/demo/vue-ensemble.webp" width="1600" height="1063" alt="La vue d'ensemble du démonstrateur : le produit en 3D et quelques boutons clairs" loading="lazy" decoding="async"></figure>
-          </li>
-          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="2 sur 6" data-index="1">
-            <div class="pf__texte">
-              <h3 class="pf__titre">Un seul démonstrateur, sur tous vos écrans</h3>
-              <p class="pf__sous-titre">Stand, showroom, visio</p>
-            </div>
-            <figure class="pf__visuel"><img class="pf__img--detoure" src="assets/points-forts/ecrans.webp" width="1600" height="1000" alt="Le même démonstrateur sur un écran tactile de stand, un ordinateur portable et une tablette" loading="lazy" decoding="async"></figure>
-          </li>
-          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="3 sur 6" data-index="2">
-            <div class="pf__texte">
-              <h3 class="pf__titre">Pilotez la présentation depuis votre téléphone</h3>
-            </div>
-            <figure class="pf__visuel"><img src="assets/demo/presenter.webp" width="1600" height="1065" alt="Le commercial pilote la présentation depuis son téléphone" loading="lazy" decoding="async"></figure>
-          </li>
-          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="4 sur 6" data-index="3">
-            <div class="pf__texte">
-              <h3 class="pf__titre">La fluidité de la 3D, dans un navigateur ou une application</h3>
-            </div>
-            <figure class="pf__visuel"><img src="assets/demo/attirer.webp" width="1600" height="1061" alt="La scène 3D du démonstrateur, fluide et détaillée" loading="lazy" decoding="async"></figure>
-          </li>
-          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="5 sur 6" data-index="4">
-            <div class="pf__texte">
-              <h3 class="pf__titre">Votre produit présenté, sans le transporter</h3>
-              <p class="pf__sous-titre">Toute votre gamme, en option</p>
-            </div>
-            <figure class="pf__visuel"><img src="assets/demo/step-expliquer.webp" width="1600" height="760" alt="Le jumeau 3D du produit, présenté sur le stand à sa place" loading="lazy" decoding="async"></figure>
-          </li>
-          <li class="pf__slide" role="group" aria-roledescription="diapositive" aria-label="6 sur 6" data-index="5">
-            <div class="pf__texte">
-              <h3 class="pf__titre">Mesurez ce qui intéresse vos visiteurs</h3>
-              <p class="pf__sous-titre">Sans cookie, aucune donnée personnelle</p>
-            </div>
-            <figure class="pf__visuel"><img src="assets/points-forts/stats.webp" width="1600" height="900" alt="Un tableau de bord de statistiques : visites, boutons touchés, vidéos vues jusqu'au bout, contenus les plus ouverts" loading="lazy" decoding="async"></figure>
-          </li>
+    <ul class="pf__grille">
+      <li class="pf__carte">
+        <div class="pf__texte">
+          <h3 class="pf__titre">Une interface épurée, que le visiteur comprend seul</h3>
+        </div>
+        <figure class="pf__visuel"><img src="assets/demo/vue-ensemble.webp" width="1600" height="1063" alt="La vue d'ensemble du démonstrateur : le produit en 3D et quelques boutons clairs" loading="lazy" decoding="async"></figure>
+      </li>
+      <li class="pf__carte">
+        <div class="pf__texte">
+          <h3 class="pf__titre">Un seul démonstrateur, sur tous vos écrans</h3>
+          <p class="pf__sous-titre">Stand, showroom, visio</p>
+        </div>
+        <figure class="pf__visuel"><img class="pf__img--entier pf__img--detoure" src="assets/points-forts/ecrans.webp" width="1600" height="1000" alt="Le même démonstrateur sur un écran tactile de stand, un ordinateur portable et une tablette" loading="lazy" decoding="async"></figure>
+      </li>
+      <li class="pf__carte">
+        <div class="pf__texte">
+          <h3 class="pf__titre">Pilotez la présentation depuis votre téléphone</h3>
+        </div>
+        <figure class="pf__visuel"><img src="assets/demo/presenter.webp" width="1600" height="1065" alt="Le commercial pilote la présentation depuis son téléphone" loading="lazy" decoding="async"></figure>
+      </li>
+      <li class="pf__carte">
+        <div class="pf__texte">
+          <h3 class="pf__titre">La fluidité de la 3D, dans un navigateur ou une application</h3>
+        </div>
+        <figure class="pf__visuel"><img src="assets/demo/attirer.webp" width="1600" height="1061" alt="La scène 3D du démonstrateur, fluide et détaillée" loading="lazy" decoding="async"></figure>
+      </li>
+      <li class="pf__carte">
+        <div class="pf__texte">
+          <h3 class="pf__titre">Votre produit présenté, sans le transporter</h3>
+          <p class="pf__sous-titre">Toute votre gamme, en option</p>
+        </div>
+        <figure class="pf__visuel"><img src="assets/demo/step-expliquer.webp" width="1600" height="760" alt="Le jumeau 3D du produit, présenté sur le stand à sa place" loading="lazy" decoding="async"></figure>
+      </li>
+      <li class="pf__carte">
+        <div class="pf__texte">
+          <h3 class="pf__titre">Mesurez ce qui intéresse vos visiteurs</h3>
+          <p class="pf__sous-titre">Sans cookie, aucune donnée personnelle</p>
+        </div>
+        <figure class="pf__visuel"><img class="pf__img--entier" src="assets/points-forts/stats.webp" width="1600" height="900" alt="Un tableau de bord de statistiques : visites, boutons touchés, vidéos vues jusqu'au bout, contenus les plus ouverts" loading="lazy" decoding="async"></figure>
+      </li>
     </ul>
-    <div class="pf__commandes">
-      <div class="pf__points" role="group" aria-label="Choisir un point fort">
-            <button type="button" class="pf__point" aria-label="Point fort 1 : Une interface épurée, que le visiteur comprend seul" aria-current="true"></button>
-            <button type="button" class="pf__point" aria-label="Point fort 2 : Un seul démonstrateur, sur tous vos écrans"></button>
-            <button type="button" class="pf__point" aria-label="Point fort 3 : Pilotez la présentation depuis votre téléphone"></button>
-            <button type="button" class="pf__point" aria-label="Point fort 4 : La fluidité de la 3D, dans un navigateur ou une application"></button>
-            <button type="button" class="pf__point" aria-label="Point fort 5 : Votre produit présenté, sans le transporter"></button>
-            <button type="button" class="pf__point" aria-label="Point fort 6 : Mesurez ce qui intéresse vos visiteurs"></button>
-      </div>
-      <button type="button" class="pf__lecture" aria-label="Mettre en pause le défilement">
-        <svg class="pf__ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-        <svg class="pf__ico-lecture" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-      </button>
-    </div>
-    </div>
   </section>
     <section id="demo" class="section">
       <div class="section-number reveal">La démo</div>
@@ -9899,159 +9778,6 @@
         if (location.hash !== '#' + id) history.pushState(null, '', '#' + id);
         allerSection(sec, true);
       });
-
-      /* 2c. POINTS FORTS (01/10/2026) : le slider avance seul toutes les 5 s, mais
-         seulement quand la section est à l'écran et l'onglet visible. Il se met en pause
-         au survol de la souris et quand le focus clavier est dedans. Dès que le visiteur
-         touche la piste (doigt, souris, molette) ou clique un point, il a la main : le
-         défilement s'arrête et le bouton passe en « lecture ».
-         La slide active se déduit en continu de la position de la piste : pendant un
-         glissement, la carte qui arrive s'active (et son texte apparaît) dès qu'elle est
-         la plus proche. Pendant un défilement lancé par nous, la cible est connue
-         d'avance : on ne recalcule pas, pour ne pas allumer les slides traversées.
-         On fait défiler la piste (scrollTo), jamais la page.
-         Journal : ?debug, lignes « points forts : … ». */
-      (() => {
-        const pf = document.getElementById('points-forts');
-        if (!pf) return;
-        const piste = pf.querySelector('.pf__piste');
-        const slides = [...pf.querySelectorAll('.pf__slide')];
-        const points = [...pf.querySelectorAll('.pf__point')];
-        const bouton = pf.querySelector('.pf__lecture');
-        const DUREE = 5000;
-        let actif = -1;
-        let lecture = !reduceMotion;
-        let visible = false, survol = false, focusDedans = false;
-        let ecoule = 0, dernier = 0, raf = 0, rafScroll = 0;
-        let cible = null, cibleT = 0;
-
-        /* Décalage de la slide i dans la piste : la première est à 0 */
-        const gauche = (i) => slides[i].offsetLeft - slides[0].offsetLeft;
-        const maxScroll = () => piste.scrollWidth - piste.clientWidth;
-        const plusProche = () => {
-          let proche = 0;
-          slides.forEach((sl, k) => {
-            if (Math.abs(gauche(k) - piste.scrollLeft) < Math.abs(gauche(proche) - piste.scrollLeft)) proche = k;
-          });
-          return proche;
-        };
-
-        function marquer(i, raison) {
-          if (i === actif) return;
-          actif = i;
-          pf.dataset.actif = String(i);
-          slides.forEach((sl, k) => sl.classList.toggle('pf__slide--active', k === i));
-          points.forEach((pt, k) => {
-            pt.style.setProperty('--pf-progres', '0');
-            if (k === i) pt.setAttribute('aria-current', 'true'); else pt.removeAttribute('aria-current');
-          });
-          ecoule = 0;
-          if (raison) logScene('points forts : slide ' + (i + 1) + ' (' + raison + ')');
-        }
-
-        /* Cible atteinte (ou au plus près : la dernière slide bute sur la fin de la
-           piste) : la position redevient la source de vérité. */
-        function cibleAtteinte() {
-          if (cible === null) return true;
-          const but = Math.min(gauche(cible), maxScroll());
-          if (Math.abs(piste.scrollLeft - but) < 2) { cible = null; clearTimeout(cibleT); return true; }
-          return false;
-        }
-
-        function aller(i, raison) {
-          i = (i + slides.length) % slides.length;
-          marquer(i, raison);
-          cible = i;
-          clearTimeout(cibleT);
-          cibleT = setTimeout(() => { cible = null; }, 1200);
-          piste.scrollTo({ left: gauche(i), behavior: reduceMotion ? 'auto' : 'smooth' });
-          cibleAtteinte();
-        }
-
-        function arreter(raison) {
-          if (!lecture) return;
-          lecture = false;
-          pf.dataset.lecture = 'off';
-          bouton.setAttribute('aria-label', 'Reprendre le défilement');
-          logScene('points forts : défilement arrêté (' + raison + ')');
-        }
-
-        function reprendre() {
-          lecture = true;
-          ecoule = 0;
-          pf.dataset.lecture = 'on';
-          bouton.setAttribute('aria-label', 'Mettre en pause le défilement');
-          logScene('points forts : défilement repris');
-          planifier();
-        }
-
-        /* Une image sur deux : le temps n'avance que si rien ne retient le slider.
-           L'écart entre deux images est plafonné à 100 ms : un onglet revenu de
-           l'arrière-plan ne déclenche pas de rafale de changements. */
-        function tic(t) {
-          raf = 0;
-          const dt = dernier ? Math.min(t - dernier, 100) : 0;
-          dernier = t;
-          if (lecture && visible && !survol && !focusDedans && !document.hidden) {
-            ecoule += dt;
-            if (ecoule >= DUREE) aller(actif + 1, 'auto');
-          }
-          points[actif].style.setProperty('--pf-progres', String(Math.min(ecoule / DUREE, 1)));
-          planifier();
-        }
-
-        function planifier() {
-          if (raf) return;
-          if (lecture && visible) raf = requestAnimationFrame(tic);
-          else dernier = 0;
-        }
-
-        piste.addEventListener('scroll', () => {
-          if (rafScroll) return;
-          rafScroll = requestAnimationFrame(() => {
-            rafScroll = 0;
-            if (cibleAtteinte()) marquer(plusProche(), 'glissement');
-          });
-        }, { passive: true });
-
-        /* La main du visiteur sur la piste : doigt, clic, molette horizontale */
-        const mainVisiteur = () => { cible = null; arreter('glissement'); };
-        piste.addEventListener('pointerdown', mainVisiteur, { passive: true });
-        piste.addEventListener('touchstart', mainVisiteur, { passive: true });
-        piste.addEventListener('wheel', (e) => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) mainVisiteur(); }, { passive: true });
-
-        points.forEach((pt, k) => pt.addEventListener('click', () => {
-          arreter('point');
-          aller(k, 'point');
-        }));
-        bouton.addEventListener('click', () => (lecture ? arreter('bouton') : reprendre()));
-
-        piste.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') survol = true; });
-        piste.addEventListener('pointerleave', () => { survol = false; });
-        /* Seul le focus clavier retient le slider : un clic de souris donne aussi le focus
-           au bouton, et le slider resterait en pause jusqu'au clic suivant ailleurs. */
-        pf.addEventListener('focusin', (e) => { focusDedans = e.target.matches(':focus-visible'); });
-        pf.addEventListener('focusout', (e) => { if (!pf.contains(e.relatedTarget)) focusDedans = false; });
-
-        if ('IntersectionObserver' in window) {
-          new IntersectionObserver((entries) => {
-            visible = entries[0].isIntersecting;
-            logScene('points forts : section ' + (visible ? 'visible, le temps tourne' : 'hors écran, le temps s\'arrête'));
-            planifier();
-          }, { threshold: 0.4 }).observe(pf);
-        }
-        window.addEventListener('resize', () => {
-          piste.scrollTo({ left: gauche(actif), behavior: 'auto' });
-        });
-
-        marquer(0);
-        pf.classList.add('pf--pret');
-        if (!lecture) {
-          pf.dataset.lecture = 'off';
-          bouton.setAttribute('aria-label', 'Reprendre le défilement');
-          logScene('points forts : mouvement réduit demandé, pas de défilement automatique');
-        }
-      })();
 
       /* 3. ACCORDÉON FAQ */
       /* Accordéon sur téléphone seulement : sur grand écran les six réponses sont
