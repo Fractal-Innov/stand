@@ -1,0 +1,47 @@
+{
+  "skill_name": "prospection",
+  "evals": [
+    {
+      "id": 1,
+      "name": "stand-rencontre-linkedin",
+      "prompt": "Prépare-moi l'approche LinkedIn pour ce contact : Julien Morel, directeur commercial chez AquaForm (fictif), fabricant de baignoires et lits de balnéothérapie pour centres de rééducation. Je l'ai rencontré sur son stand à Rééduca le 18/09. Il m'a dit qu'ils n'amènent que le petit modèle sur les salons, le grand lit fait 450 kg et coûte une fortune à transporter. Ils seront au salon Rééduca de l'an prochain.",
+      "expected_output": "Angle produit absent / expliquer sans moi ; connexion <= 200 car. qui reprend l'échange sur le stand (lit de 450 kg) ; suivi avec la démo comme ressource et question sur le prochain Rééduca ; deux variantes ; journal mis à jour.",
+      "files": [],
+      "assertions": [
+        "Chaque demande de connexion fait 200 caractères ou moins",
+        "Les demandes de connexion ne contiennent ni pitch, ni lien, ni demande d'appel",
+        "La connexion reprend un détail précis de l'échange sur le stand (grand lit, 450 kg, transport, petit modèle)",
+        "Le suivi apporte une valeur (observation ou démo) et finit par une question ouverte",
+        "Aucun prix, délai, nom « STAND » ni tiret cadratin dans les messages",
+        "Vouvoiement partout"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "post-froid-email",
+      "prompt": "Écris un premier email à Sophie Lambert, responsable marketing chez Neuroptic (fictif), qui vend des casques de réalité virtuelle pour la rééducation neurologique. Pas de contact direct, mais elle a posté sur LinkedIn la semaine dernière que leur stand à Rééduca était 'toujours plein, mais impossible de faire tester tout le monde avec 3 casques'. Son email : s.lambert@neuroptic.example",
+      "expected_output": "E-mail à froid : objet <= 50 car. propre au prospect, corps <= 90 mots, reprend le post (3 casques, file d'attente), question ouverte, pas d'appel ni de calendrier ; relance <= 70 mots ; signature Hugo Daniel CTO @ FractalInnov.",
+      "files": [],
+      "assertions": [
+        "L'objet fait 50 caractères ou moins et est propre au prospect",
+        "Le corps de l'e-mail à froid fait 90 mots ou moins (hors signature)",
+        "L'e-mail reprend l'idée du post (3 casques, stand plein, impossible de faire tester tout le monde)",
+        "Le premier e-mail ne demande pas d'appel et ne contient pas de lien calendrier",
+        "Signature : Hugo Daniel, CTO @ FractalInnov",
+        "Aucun prix, délai, nom « STAND » ni tiret cadratin dans les messages"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "fiche-incomplete",
+      "prompt": "Fais-moi une demande de connexion pour Thomas Girard, CEO de Mecaflex (fictif), ils font des attelles motorisées. C'est un bon prospect.",
+      "expected_output": "Aucun message rédigé : le skill signale qu'il manque un élément personnel vérifiable et propose des pistes pour le trouver (post, salons, actualité).",
+      "files": [],
+      "assertions": [
+        "Aucun message de connexion n'est rédigé",
+        "La réponse signale qu'il manque un élément personnel vérifiable",
+        "La réponse propose des pistes concrètes pour trouver cet élément"
+      ]
+    }
+  ]
+}
