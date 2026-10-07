@@ -47,13 +47,15 @@ La démo web publique (https://stand-demonstrateur.osc-fr1.scalingo.io/, intégr
 ## Ce qui est livré
 
 - **L'expérience** : le jumeau 3D du produit, le parcours, l'affichage des vidéos et fiches FR / EN du client, la régie d'administration (accès par code), la télécommande téléphone. Application autonome (Electron) sur le PC du client, qui s'installe aussi sur le portable du commercial (showroom, rendez-vous, visio avec partage d'écran). Les statistiques de visite se synchronisent quand une connexion apparaît.
+- **Le principe** (07/10/2026) : accessible sur un maximum d'appareils, avec le moins d'équipement spécifique. Fractal Innov est fournisseur de solution logicielle, pas standiste : le PC et le routeur sont un complément, le mobilier et le flight case passent par nos partenaires, avec leurs propres délais.
 - **Le kit hors ligne** : mini PC préparé, routeur de voyage (réseau fermé, indépendant du wifi du lieu), câbles, alimentation. Installation par le client en dix minutes, quatre câbles. Guide d'une page. Support à distance **avant** le salon pour l'installation et le setup.
 - **Deux façons d'avoir le kit** : Fractal Innov l'achète, le configure et le livre prêt à brancher (le client en est propriétaire), ou le client achète sur nos références et nous installons à distance ou en atelier.
 - **Options sur devis** : plusieurs produits ou toute une gamme dans la même expérience, modélisation 3D (conversion + optimisation, dépend des fichiers du client), mobilier et présentoir avec nos partenaires, flight case, écran de veille 3D animé, présentation à emporter sur mobile (le visiteur scanne un QR code et retrouve la présentation sur son téléphone ; demande un hébergement en ligne, chiffré au devis).
 
 ## Ce qui n'est PAS dans l'offre (à dire clairement, ça rassure)
 
-- Les écrans tactiles et le téléphone / la tablette de pilotage : loués sur place par le client auprès de son loueur de salon. Prérequis : écran tactile avec entrée HDMI et sortie USB tactile, un navigateur sur mobile ou tablette pour la télécommande.
+- Les écrans tactiles : loués sur place par le client auprès de son loueur de salon, à chaque événement (ni stockage, ni transport, ni obsolescence). Prérequis : entrée HDMI et sortie USB tactile.
+- Le téléphone ou la tablette de pilotage : celui du client, avec un navigateur, rien à installer. Rien à louer pour le pilotage.
 - Les vidéos et fiches : produites par le client, STAND les affiche.
 - Une équipe sur place et un stock de rechange : le kit est conçu pour ne demander personne.
 - Le support pendant le salon.
@@ -64,13 +66,14 @@ La démo web publique (https://stand-demonstrateur.osc-fr1.scalingo.io/, intégr
 
 - **Aucun prix annoncé**, ni sur la page ni dans les relances : la section tarifs a été retirée de la landing le 23/09/2026 ; confirmé le 30/09/2026. Les anciens montants ne sont à recopier nulle part.
 - **Aucun délai annoncé** : il dépend de trop de critères (données du client, contexte de déploiement). Délai et prix sont fixés au devis, **après l'atelier**.
+- Confirmé le 05/10/2026 : même le document « De l'appel à votre salon » n'affiche aucune durée. Un projet peut prendre 4 semaines comme 16 selon l'objectif fixé à l'atelier.
 - Sur devis : modélisation 3D, plusieurs produits ou toute la gamme, mobilier, flight case, écran de veille 3D, présentation à emporter sur mobile.
 
 ## Le processus de vente
 
 1. **Appel de 30 minutes, gratuit et sans engagement** : le prospect décrit son produit et son prochain salon ; on vérifie que le démonstrateur répond au besoin et on prépare l'atelier. Ce n'est **pas** l'atelier.
-2. **L'atelier** (première étape du parcours client) : analyse des données d'entrée du client (fichiers 3D, photos, vidéos) et de tous les aspects du projet. **Pas de facturation à part** : son coût est intégré au devis, et payé seulement si le projet est lancé (décidé le 30/09/2026). À dire ainsi : « l'atelier est compris dans le projet ».
-3. **Le devis et le délai**, issus de l'atelier.
+2. **L'atelier** (2 h, en visio par défaut, sur site si le client le juge nécessaire) : qualifie le besoin et réunit tout ce qu'il faut pour le devis. Le client présente ses fichiers 3D, photos et vidéos en partage d'écran, avec les personnes qui peuvent les fournir ; il nous en donne l'accès une fois le devis validé. **Pas de facturation à part** : son coût est intégré au devis, et payé seulement si le projet est lancé (décidé le 30/09/2026). À dire ainsi : « l'atelier est compris dans le projet ».
+3. **Le devis et le délai**, issus de l'atelier, **remis sous 24 h**. Un imprévu sur la date de l'atelier se règle par message direct, pas par un lien de réservation.
 4. Production à partir des fichiers du client, puis livraison du kit avant le salon.
 
 ## Objections courantes
@@ -101,6 +104,7 @@ Un premier acteur industriel, sous NDA : « nous ne pouvons pas le citer, nous p
 - Landing https://www.fractal-innov.fr/stand/ : accroche et prise de contact. Lue comme une présentation produit (hero, six points forts, puis le détail) ; elle parle de salon, showroom, rendez-vous et visio, pas seulement de salon. Calendrier https://calendar.app.google/SDuiKb9ZBQ6BcbED6, carte de visite https://s.blinq.me/wEhJoOeZIrvGvSIe46Yy?bs=icl.
 - Démonstrateur : montrer le produit.
 - Brochure PDF : closing, détails de tout le produit. Pas encore produite.
+- « De l'appel à votre salon » (PDF, 2 pages en double page) : remis après l'appel de 30 minutes, et affiché comme média dans la démo (parfois avant l'appel). Six étapes sans durée (Échanger, Cadrer, Lancer, Partager vos fichiers, Produire et valider, Installer), points de décision signalés (Ensemble, Vous décidez, Vous validez), puis la liste « Pour préparer l'Atelier ». Générateur et versions : dépôt privé Fractal-Innov/marketing (`brochures/`).
 
 ## Journal
 
@@ -114,3 +118,4 @@ Un premier acteur industriel, sous NDA : « nous ne pouvons pas le citer, nous p
 - 2026-10-01, retour d'un directeur commercial sur la landing : soignée, on a envie d'y rester, mais exhaustive au point de neutraliser la curiosité ; l'aborder comme une présentation de produit. Restructuration du haut de page sur le modèle des pages produit Apple : hero épuré, six points forts en slider (interface épurée, tous les écrans, télécommande, fluidité de la 3D, produit présenté sans le transporter avec la gamme en option, statistiques sans cookie ni donnée personnelle), barre qui apparaît aux Points forts. « Le défi » et « Ce que vous gagnez » gardés, à revoir après. Le démonstrateur se vend aussi pour le showroom, les présentations sur site et la visio.
 - 2026-10-02 : le slider des points forts devient une grille « bento » statique. Un carrousel à défilement automatique n'est vu qu'à sa première slide et cache les cinq autres ; la grille montre les six points forts d'un regard, sans mouvement imposé.
 - 2026-09-30, étape 3 (preuve) : pas de référence citable, la démo sert de preuve (passage vers l'appel sous la démo). Clause de référence ajoutée, proposée comme une opportunité au devis ; contrepartie à confirmer, sans remise.
+- 2026-10-07 : préparation du premier appel découverte avec un prospect de Rééduca. Positionnement précisé : solution logicielle, pas standiste ; PC et routeur en complément, mobilier et flight case via nos partenaires (leurs délais) ; écran loué à chaque salon, pilotage sur le téléphone ou la tablette du client (principe : un maximum d'appareils, le moins d'équipement spécifique). Atelier de 2 h en visio par défaut, devis sous 24 h. PDF « De l'appel à votre salon » refait en six étapes ; brochure « Démonstrateur 3D » alignée.
