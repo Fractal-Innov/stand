@@ -4300,16 +4300,6 @@
       height: 18px;
     }
 
-    .demo-action-btn--mobile-remote {
-      display: none;
-    }
-
-    @media (max-width: 767px) {
-      .demo-action-btn--mobile-remote {
-        display: inline-flex;
-      }
-    }
-
     .qr-wrap {
       position: relative;
     }
@@ -8813,6 +8803,15 @@
       margin-top: .5rem;
       font-size: .92em;
     }
+
+    /* Démo (08/10/2026) : les actions passent juste sous l'écran, les gestes en dessous */
+    .demo-screen .demo-actions {
+      margin-top: 1.2rem;
+    }
+
+    .demo-screen .demo-actions + .demo-hints {
+      margin-top: 1rem;
+    }
   </style>
 
 </head>
@@ -9018,6 +9017,27 @@
             </div>
           </div>
           <div class="demo-screen__stand" aria-hidden="true"></div>
+          <!-- Les actions juste sous l'écran, les gestes après (08/10/2026) -->
+          <div class="demo-actions">
+            <button type="button" class="demo-action-btn" data-scene-cmd="plein-ecran">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3">
+                </path>
+              </svg>
+              Ouvrir en plein écran
+            </button>
+            <a class="demo-action-btn" id="demoNewTab" href="https://stand-demonstrateur.osc-fr1.scalingo.io/"
+              target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              Ouvrir dans un nouvel onglet
+            </a>
+          </div>
           <ul class="demo-hints" aria-label="Comment manipuler la démo">
             <li>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -9086,36 +9106,6 @@
         </div>
       </div>
 
-      <div class="demo-actions reveal delay-300">
-        <button type="button" class="demo-action-btn" data-scene-cmd="plein-ecran">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round" aria-hidden="true">
-            <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3">
-            </path>
-          </svg>
-          Ouvrir en plein écran
-        </button>
-        <button type="button" class="demo-action-btn" id="demoShare">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="3" width="7" height="7" rx="1"></rect>
-            <rect x="14" y="3" width="7" height="7" rx="1"></rect>
-            <rect x="3" y="14" width="7" height="7" rx="1"></rect>
-            <path d="M14 14h3v3h-3zM20 14h1v1h-1zM14 20h1v1h-1zM18 18h3v3h-3z"></path>
-          </svg>
-          Sur votre téléphone
-        </button>
-        <a class="demo-action-btn demo-action-btn--mobile-remote" id="mobileRemote"
-          href="https://stand-demonstrateur.osc-fr1.scalingo.io/remote/public" target="_blank"
-          rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round" aria-hidden="true">
-            <rect x="5" y="2" width="14" height="20" rx="2"></rect>
-            <line x1="12" y1="18" x2="12.01" y2="18"></line>
-          </svg>
-          Ouvrir la télécommande
-        </a>
-      </div>
 
       <!-- Étape 3 (30/09/2026) : pas encore de référence citable (client sous NDA),
            la démo sert de preuve. Ce passage raccroche le visiteur qui vient de
@@ -10701,14 +10691,15 @@
         });
       }
 
-      /* « Sur votre téléphone » : ouvre le farfadet sur cet endroit (la démo, relancée au même POI) */
-      const demoShare = document.getElementById('demoShare');
-      if (demoShare) demoShare.addEventListener('click', (e) => {
-        e.stopPropagation(); /* sinon le « clic dehors » du farfadet le referme aussitôt */
-        document.dispatchEvent(new CustomEvent('stand:share', { detail: 'place' }));
+      /* « Ouvrir dans un nouvel onglet » : la démo seule, au même endroit que la vue en cours.
+         Le href est recalculé au clic (avant la navigation), sur le POI courant. */
+      const demoNewTab = document.getElementById('demoNewTab');
+      if (demoNewTab) demoNewTab.addEventListener('click', () => {
+        const poi = document.body.dataset.poi;
+        /* « votre-stand » ouvrirait sa vidéo par-dessus : c'est la vue de départ */
+        demoNewTab.href = demoHref(DEMO_URL, { poi: poi === 'votre-stand' ? '' : poi, demarrer: 'auto' });
+        logScene('nouvel onglet →', demoNewTab.href);
       });
-      const mobileRemote = document.getElementById('mobileRemote');
-      if (mobileRemote) mobileRemote.href = demoHref(REMOTE_URL);
 
       /* 6. LECTURE GUIDÉE (jumeau 3D) : onglets + « Voir dans la démo » */
       const tourTabs = Array.from(document.querySelectorAll('.tour__tab'));
