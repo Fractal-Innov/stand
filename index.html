@@ -3048,6 +3048,13 @@
       line-height: 1.45;
     }
 
+    /* Retour à la ligne de la relance : seulement quand sa première ligne tient en entier */
+    @media (max-width: 719px) {
+      .br-relance {
+        display: none;
+      }
+    }
+
     @media (max-width: 560px) {
       .demo-suite__appel {
         flex-direction: column;
@@ -3789,6 +3796,9 @@
     /* ── Hero : CTA. Primaire plein (dégradé de marque), secondaire en contour. ── */
     .hero-cta__btn--primary {
       position: relative;
+      /* Contexte d'empilement propre : le dégradé du survol (::before, z-index -1) passe devant
+         le fond du bouton mais derrière son libellé, même quand c'est du texte nu */
+      isolation: isolate;
       color: #fff;
       border-color: transparent;
       background: linear-gradient(135deg, var(--accent-blue-deep) 0%, var(--accent-purple-deep) 100%);
@@ -3805,7 +3815,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      z-index: 0;
+      z-index: -1;
       background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 55%, var(--accent-pink) 100%);
       opacity: 0;
       transition: opacity 0.35s ease;
@@ -9306,8 +9316,8 @@
            la manipuler à l'étape suivante : l'appel. -->
       <!-- Trois étages (15/10/2026) : la relance, le décor qui suit le produit, l'appel et sa phrase d'aide -->
       <div class="demo-suite reveal delay-300">
-        <p class="demo-suite__fort">Ce que vous venez de manipuler, vos visiteurs le manipuleront, <b>sur votre
-            stand comme sur votre site</b></p>
+        <p class="demo-suite__fort">Ce que vous venez de manipuler, vos visiteurs le manipuleront,<br
+            class="br-relance"> <b>sur votre stand comme sur votre site</b></p>
         <p class="demo-suite__decor">Ici, un stand de salon. L'environnement 3D s'adapte au contexte de votre
           produit, là où il sera installé&nbsp;:</p>
         <ul class="demo-lieux" aria-label="Exemples de lieux">
@@ -9319,7 +9329,7 @@
         </ul>
         <div class="demo-suite__appel">
           <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30&nbsp;min</a>
-          <p>Votre produit à la place de ce stand&nbsp;: c'est ce que nous regardons ensemble</p>
+          <p>Votre produit à la place de ce stand&nbsp;:<br> c'est ce que nous regardons ensemble</p>
         </div>
       </div>
     </section>
