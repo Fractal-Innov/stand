@@ -8,29 +8,29 @@
        produit affiché. Le titre tient en 57 caractères, entier sur mobile ;
        le nom de la marque vient du WebSite des données structurées, que
        Google affiche au-dessus du titre. -->
-  <title>Démonstrateur 3D de salon, sans transporter votre machine</title>
+  <title>Démonstrateur 3D de votre produit, pour salon et site web</title>
   <meta name="description"
-    content="Le jumeau 3D de votre produit sur l'écran tactile de votre stand, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
+    content="Le jumeau 3D de votre produit, sur votre stand (même sans réseau), sur votre site et en rendez-vous, piloté depuis un téléphone. Un contenu 3D que vous gardez.">
   <link rel="canonical" href="https://www.fractal-innov.fr/stand/">
   <meta name="theme-color" content="#090b13">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:url" content="https://www.fractal-innov.fr/stand/">
   <meta property="og:site_name" content="Fractal Innov">
-  <meta property="og:title" content="Votre produit reste chez vous, votre démo part en salon">
+  <meta property="og:title" content="Votre produit ne voyage pas, son jumeau 3D le présente">
   <meta property="og:description"
-    content="Le jumeau 3D de votre produit sur l'écran tactile de votre stand, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
+    content="Le jumeau 3D de votre produit, sur votre stand (même sans réseau), sur votre site et en rendez-vous, piloté depuis un téléphone. Un contenu 3D que vous gardez.">
   <meta property="og:image" content="https://www.fractal-innov.fr/stand/assets/share/og-image-v3.jpg">
   <meta property="og:image:secure_url" content="https://www.fractal-innov.fr/stand/assets/share/og-image-v3.jpg">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt"
-    content="Le démonstrateur 3D de salon de Fractal Innov : la scène 3D d'un stand avec sa borne tactile">
+    content="Le démonstrateur 3D de Fractal Innov : la scène 3D d'un stand avec sa borne tactile">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Votre produit reste chez vous, votre démo part en salon">
+  <meta name="twitter:title" content="Votre produit ne voyage pas, son jumeau 3D le présente">
   <meta name="twitter:description"
-    content="Le jumeau 3D de votre produit sur l'écran tactile de votre stand, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
+    content="Le jumeau 3D de votre produit, sur votre stand (même sans réseau), sur votre site et en rendez-vous, piloté depuis un téléphone. Un contenu 3D que vous gardez.">
   <meta name="twitter:image" content="https://www.fractal-innov.fr/stand/assets/share/og-image-v3.jpg">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png">
@@ -54,7 +54,7 @@
       "email": "corentin.duboc@fractal-innov.fr",
       "logo": "https://www.fractal-innov.fr/media/marque/fi-logo-252.webp",
       "image": "https://www.fractal-innov.fr/stand/assets/share/og-image-v3.jpg",
-      "description": "Fractal Innov conçoit le démonstrateur 3D de votre stand : le jumeau 3D de votre produit sur l'écran tactile, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.",
+      "description": "Fractal Innov conçoit le démonstrateur 3D de votre produit : son jumeau 3D, sur votre stand (même sans réseau), sur votre site et en rendez-vous, piloté depuis un téléphone. Un contenu 3D que vous gardez.",
       "foundingDate": "2024-11-01",
       "founder": {
         "@id": "https://www.fractal-innov.fr/#fondateur"
@@ -106,9 +106,9 @@
     {
       "@type": "Service",
       "@id": "https://www.fractal-innov.fr/stand/#service",
-      "name": "Démonstrateur 3D pour stand de salon",
-      "serviceType": "Démonstrateur 3D interactif pour salon professionnel",
-      "description": "Le jumeau 3D de votre produit sur l'écran tactile de votre stand, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.",
+      "name": "Démonstrateur 3D de votre produit, pour salon et site web",
+      "serviceType": "Démonstrateur 3D interactif pour salon professionnel et site web",
+      "description": "Le jumeau 3D de votre produit, sur votre stand (même sans réseau), sur votre site et en rendez-vous, piloté depuis un téléphone. Un contenu 3D que vous gardez.",
       "provider": {
         "@id": "https://www.fractal-innov.fr/#organisation"
       },
@@ -2975,31 +2975,123 @@
       border-color: rgba(255, 255, 255, 0.3);
     }
 
-    /* ── Démo : passage vers l'appel (étape 3, 30/09/2026) ── */
+    /* ── Démo : passage vers l'appel (étape 3, 30/09/2026 ; en trois étages le 15/10/2026) ──
+       La relance (le stand et le site en dégradé, comme le titre du hero), le décor qui suit
+       le produit avec ses lieux en pastilles, puis l'appel et sa phrase d'aide. */
     .demo-suite {
+      max-width: 760px;
+      margin: 2.75rem auto 0;
+      text-align: center;
+    }
+
+    .section .demo-suite__fort {
+      max-width: none;
+      margin: 0 0 1.5rem;
+      font-size: clamp(1.12rem, 2vw, 1.32rem);
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--text-main);
+      text-wrap: balance;
+    }
+
+    .demo-suite__fort b {
+      font-weight: inherit;
+      background: var(--brand-gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section .demo-suite__decor {
+      max-width: none;
+      margin: 0 0 .75rem;
+      font-size: .95rem;
+      text-wrap: balance;
+    }
+
+    .demo-lieux {
+      list-style: none;
+      margin: 0 0 1.9rem;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .45rem;
+    }
+
+    .demo-lieux li {
+      padding: .32rem .8rem;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: .85rem;
+      color: rgba(255, 255, 255, 0.86);
+      white-space: nowrap;
+    }
+
+    .demo-suite__appel {
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem 1.75rem;
-      max-width: 860px;
-      margin: 2.5rem auto 0;
-      text-align: left;
+      gap: .75rem 1.25rem;
     }
 
-    .demo-suite p {
+    .demo-suite__appel .hero-cta__btn {
+      flex: none;
+    }
+
+    .section .demo-suite__appel p {
       margin: 0;
-      flex: 1 1 380px;
+      max-width: 21rem;
+      text-align: left;
+      font-size: .92rem;
+      line-height: 1.45;
+    }
+
+    /* Retour à la ligne de la relance : seulement quand sa première ligne tient en entier */
+    @media (max-width: 719px) {
+      .br-relance {
+        display: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .demo-suite__appel {
+        flex-direction: column;
+      }
+
+      .section .demo-suite__appel p {
+        text-align: center;
+      }
+    }
+
+    /* Intro de la démo : les deux rôles, avec les pastilles 1 et 2 des étiquettes d'appareils */
+    .demo-roles {
+      list-style: none;
+      margin: .35rem 0 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem 1.75rem;
+    }
+
+    .demo-roles li {
+      display: flex;
+      align-items: flex-start;
+      gap: .55rem;
+      font-size: 1.02rem;
       color: var(--text-muted);
     }
 
-    .demo-suite b {
-      color: var(--text-main, #fff);
+    .demo-roles b {
+      color: var(--text-main);
       font-weight: 600;
     }
 
-    .demo-suite .hero-cta__btn {
+    /* Calée sur la première ligne quand le rôle passe sur deux */
+    .demo-roles .demo-step {
       flex: none;
+      margin: .15em 0 0;
     }
 
     /* RESPONSIVE & MOBILE MENU
@@ -3704,6 +3796,9 @@
     /* ── Hero : CTA. Primaire plein (dégradé de marque), secondaire en contour. ── */
     .hero-cta__btn--primary {
       position: relative;
+      /* Contexte d'empilement propre : le dégradé du survol (::before, z-index -1) passe devant
+         le fond du bouton mais derrière son libellé, même quand c'est du texte nu */
+      isolation: isolate;
       color: #fff;
       border-color: transparent;
       background: linear-gradient(135deg, var(--accent-blue-deep) 0%, var(--accent-purple-deep) 100%);
@@ -3720,7 +3815,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      z-index: 0;
+      z-index: -1;
       background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 55%, var(--accent-pink) 100%);
       opacity: 0;
       transition: opacity 0.35s ease;
@@ -6169,9 +6264,17 @@
     .hero-lead,
     .hero-cta,
     .hero-visual,
+    .hero-canaux,
+    .hero-scroll {
+      animation: heroIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
 
     .hero h1 {
       animation-delay: 0.08s;
+    }
+
+    .hero-canaux {
+      animation-delay: 0.12s;
     }
 
     .hero-lead {
@@ -6422,7 +6525,17 @@
       .hero-lead,
       .hero-cta,
       .hero-visual,
+      .hero-canaux,
+      .hero-scroll,
+      .hero-visual::before,
+      .hero-visual__play::after,
+      .hero-scroll__line i {
+        animation: none;
+      }
 
+      .hero-visual__frame {
+        transition: none;
+      }
     }
 
     /* ── Démo : une scène en deux temps (1 l'écran, 2 la télécommande), un fil entre les deux,
@@ -8804,6 +8917,88 @@
       font-size: .92em;
     }
 
+    /* ========== Plaquette v7 (15/10/2026) : stand, site, rendez-vous ==========
+       Pastilles du hero (même langage que .contact__facts), ligne d'usage en dessous ;
+       note de contexte sous la démo ; la question « site » de la FAQ en pleine largeur. */
+    .hero--epure .hero-canaux {
+      list-style: none;
+      margin: 1.1rem 0 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .5rem;
+    }
+
+    .hero--epure .hero-canaux li {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .45rem .9rem;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.05);
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    .hero--epure .hero-canaux svg {
+      width: 18px;
+      height: 18px;
+      color: var(--accent-blue-light);
+      flex-shrink: 0;
+    }
+
+    .hero--epure .hero-canaux + .hero-lead {
+      margin-top: .9rem;
+    }
+
+    .hero--epure .hero-canaux + .hero-lead .hero-lead__usage {
+      margin-top: 0;
+      font-size: 1em;
+    }
+
+    @media (max-width: 480px) {
+      .hero--epure .hero-canaux li {
+        padding: .38rem .7rem;
+        font-size: .85rem;
+      }
+
+      .hero--epure .hero-canaux svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    /* Retour à la ligne choisi, seulement quand la phrase a la place de tenir en deux lignes */
+    @media (max-width: 559px) {
+      .br-large {
+        display: none;
+      }
+    }
+
+    /* « Réserver l'appel de 30 min » sur une ligne jusqu'à 360 px : marges et chasse resserrées */
+    @media (max-width: 400px) {
+      .contact__primary {
+        gap: .5rem;
+        padding: 0 1.1rem 0 1rem;
+        font-size: 1rem;
+        letter-spacing: 0;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .faq-item--large {
+        grid-column: 1 / -1;
+      }
+
+      .faq-item--large > p {
+        max-width: 70ch;
+      }
+    }
+
     /* Démo (08/10/2026) : les actions passent juste sous l'écran, les gestes en dessous */
     .demo-screen .demo-actions {
       margin-top: 1.2rem;
@@ -8833,7 +9028,7 @@
             démo</span>
         </a>
         <a href="#contact" class="barre-btn barre-btn--plein" aria-label="Réserver 30 min">
-          <span class="barre-btn__long">Réserver 30 min</span><span class="barre-btn__court" aria-hidden="true">30
+          <span class="barre-btn__long">Réserver 30&nbsp;min</span><span class="barre-btn__court" aria-hidden="true">30
             min</span>
         </a>
       </div>
@@ -8860,13 +9055,16 @@
             Démonstrateur interactif
           </div>
           <h1>
-            <span class="hero-title-main">Votre produit reste chez vous<br><em>Votre démo part en salon</em></span>
+            <span class="hero-title-main">Votre produit ne voyage pas,<br><em>son jumeau 3D le&nbsp;présente</em></span>
           </h1>
-          <p class="hero-lead"><span class="hero-lead__quoi">Le jumeau 3D de votre produit, sur votre stand, en showroom
-              ou en visio.</span>
-            <span class="hero-lead__usage">Le visiteur l'explore du doigt, votre commercial le pilote depuis son
-              téléphone.</span>
-          </p>
+          <!-- Trois canaux, comme la page 1 de la plaquette (15/10/2026) -->
+          <ul class="hero-canaux" aria-label="Où votre jumeau 3D présente votre produit">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"></path><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"></path><path d="M2 7h20"></path><path d="M22 7v3a2 2 0 0 1-2 2 2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7"></path></svg>Sur votre stand</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>Sur votre site</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 13 5.22 3.48a.5.5 0 0 0 .78-.42V7.87a.5.5 0 0 0-.75-.43L16 10.5"></path><rect x="2" y="6" width="14" height="12" rx="2"></rect></svg>En rendez-vous</li>
+          </ul>
+          <p class="hero-lead"><span class="hero-lead__usage">Le visiteur l'explore du doigt, votre commercial le
+              pilote depuis son téléphone.</span></p>
         </div>
         <!-- Scène du hero : le visuel, et (≥ 768 px) la barre d'actions posée sur son bas -->
         <div class="hero-scene">
@@ -8896,7 +9094,7 @@
 
           <div class="hero-cta">
             <!-- Réserver = action principale (même rôle que dans la barre), la démo en secondaire -->
-            <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30 min</a>
+            <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30&nbsp;min</a>
             <a href="#demo" class="hero-cta__btn hero-cta__btn--ghost" data-launch-demo>
               <span>Tester la démo</span>
               <svg class="hero-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
@@ -8980,9 +9178,15 @@
     <section id="demo" class="section">
       <div class="section-number reveal">La démo</div>
       <h2 class="reveal delay-100">Testez-la, c'est ce que vos visiteurs verront</h2>
-      <p class="reveal delay-200">Une version publique, sans marque, avec un produit fictif&nbsp;: un stand de salon.
-        À gauche, l'écran tactile du stand, vous êtes le visiteur. À droite, la télécommande, vous êtes le
-        commercial.</p>
+      <p class="reveal delay-200">Une version publique, sans marque, avec un produit fictif&nbsp;: un stand de salon.</p>
+      <!-- Deux rôles, numérotés comme les étiquettes des appareils (plus de « à gauche / à droite » :
+           sur téléphone, l'écran et la télécommande s'empilent) -->
+      <ul class="demo-roles reveal delay-200" aria-label="Vos deux rôles dans la démo">
+        <li><span class="demo-step" aria-hidden="true">1</span><span><b>L'écran tactile</b>&nbsp;: vous êtes le
+            visiteur</span></li>
+        <li><span class="demo-step" aria-hidden="true">2</span><span><b>La télécommande</b>&nbsp;: vous êtes le
+            commercial</span></li>
+      </ul>
 
       <div class="demo-stage reveal delay-300">
         <div class="demo-screen">
@@ -9110,11 +9314,23 @@
       <!-- Étape 3 (30/09/2026) : pas encore de référence citable (client sous NDA),
            la démo sert de preuve. Ce passage raccroche le visiteur qui vient de
            la manipuler à l'étape suivante : l'appel. -->
+      <!-- Trois étages (15/10/2026) : la relance, le décor qui suit le produit, l'appel et sa phrase d'aide -->
       <div class="demo-suite reveal delay-300">
-        <p>Ce que vous venez de manipuler, vos visiteurs le manipuleront.
-          <b>Avec votre produit à la place de ce stand</b> : c'est ce que nous regardons ensemble en 30 minutes.
-        </p>
-        <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30 min</a>
+        <p class="demo-suite__fort">Ce que vous venez de manipuler, vos visiteurs le manipuleront,<br
+            class="br-relance"> <b>sur votre stand comme sur votre site</b></p>
+        <p class="demo-suite__decor">Ici, un stand de salon. L'environnement 3D s'adapte au contexte de votre
+          produit, là où il sera installé&nbsp;:</p>
+        <ul class="demo-lieux" aria-label="Exemples de lieux">
+          <li>Usine</li>
+          <li>Chantier</li>
+          <li>Voirie</li>
+          <li>Plateau technique</li>
+          <li>Showroom</li>
+        </ul>
+        <div class="demo-suite__appel">
+          <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30&nbsp;min</a>
+          <p>Votre produit à la place de ce stand&nbsp;:<br> c'est ce que nous regardons ensemble</p>
+        </div>
       </div>
     </section>
 
@@ -9770,6 +9986,20 @@
       <h2 class="reveal delay-100">Ce qu'on nous demande le plus souvent</h2>
 
       <div class="faq-grid reveal delay-200">
+        <div class="faq-item faq-item--large">
+          <div class="faq-head">
+            <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span>
+            <h3>Peut-on l'avoir sur notre site&nbsp;?</h3>
+            <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg></span>
+          </div>
+          <p>Oui, avec le même contenu 3D.<br>
+            Vos prospects découvrent votre produit seuls, à toute heure, et les boutons d'action vous amènent ceux
+            qui sont prêts à aller plus loin.</p>
+        </div>
+
         <div class="faq-item">
           <div class="faq-head">
             <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -9878,7 +10108,7 @@
       </div>
 
       <p class="faq-more reveal delay-300">Une autre question&nbsp;? <a href="#contact">Elle a sa place dans l'appel de
-          30 min</a></p>
+          30&nbsp;min</a></p>
     </section>
 
     <section id="contact" class="contact reveal">
@@ -9890,9 +10120,9 @@
           <figcaption><strong>Corentin Duboc</strong><span>Fondateur de Fractal Innov</span></figcaption>
         </figure>
 
-        <h2 class="reveal delay-100">Parlons de votre prochain salon</h2>
-        <p class="contact__lead reveal delay-100">Décrivez votre produit et votre prochain salon&nbsp;: nous vous
-          disons comment le démonstrateur s'adapte à votre cas, et comment se passe la suite.</p>
+        <h2 class="reveal delay-100">Parlons de votre produit</h2>
+        <p class="contact__lead reveal delay-100">Un appel pour découvrir comment ce démonstrateur s'adapte<br
+            class="br-large"> à votre produit, et comment se passe la suite.</p>
 
         <ul class="contact__facts reveal delay-200" aria-label="Comment se passe l'appel">
           <li>
@@ -9935,7 +10165,7 @@
               <line x1="8" y1="2" x2="8" y2="6"></line>
               <line x1="3" y1="10" x2="21" y2="10"></line>
             </svg>
-            <span>Réserver l'appel de 30 min</span>
+            <span>Réserver l'appel de 30&nbsp;min</span>
             <svg class="contact__primary-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6"></path>
@@ -9998,7 +10228,7 @@
               stroke-linejoin="round" />
           </svg></span></a>
       <nav class="footer__liens" aria-label="Liens du pied de page">
-        <a href="#contact">Réserver 30 min</a>
+        <a href="#contact">Réserver 30&nbsp;min</a>
         <a href="mailto:corentin.duboc@fractal-innov.fr">E-mail</a>
         <a href="https://www.linkedin.com/in/corentin-duboc/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a href="https://www.fractal-innov.fr/mentions-legales/">Mentions légales</a>
@@ -10307,7 +10537,7 @@
       });
 
       /* 3. ACCORDÉON FAQ */
-      /* Accordéon sur téléphone seulement : sur grand écran les six réponses sont
+      /* Accordéon sur téléphone seulement : sur grand écran les sept réponses sont
          courtes et se lisent d'un coup, en deux colonnes. */
       const faqItems = document.querySelectorAll('.faq-item');
       const faqAccordion = window.matchMedia('(max-width: 767px)');
@@ -10796,7 +11026,7 @@
           /* Fin du parcours : le prospect a tout vu, on lui propose l'appel */
           cta = document.createElement('a');
           cta.href = '#contact';
-          cta.innerHTML = '<span>Réserver 30 min</span>' + ARROW;
+          cta.innerHTML = '<span>Réserver 30&nbsp;min</span>' + ARROW;
         }
         cta.className = 'tour__next';
         nav.appendChild(cta);
