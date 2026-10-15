@@ -26,7 +26,7 @@ Tous les messages de commit suivent https://www.conventionalcommits.org/en/v1.0.
 - Jamais de tiret cadratin « — » : utiliser « : », « . », « , » ou des parenthèses.
 - Pas de point final dans les titres (H2, H3, H4, questions de la FAQ).
 - La page doit rester fidèle à l'offre vendue :
-  - l'écran tactile et le téléphone de pilotage ne sont pas fournis, le client les loue sur place ;
+  - l'écran tactile n'est pas fourni, le client le loue sur place à chaque salon ; la télécommande tourne sur le téléphone ou la tablette du client (rien à louer pour le pilotage, depuis le 07/10/2026) ;
   - le flight case, le mobilier, la modélisation 3D, l'écran de veille 3D et la présentation à emporter sur mobile sont des options sur devis ;
   - les vidéos et fiches sont produites par le client, STAND les affiche ;
   - le support couvre l'installation avant le salon, pas le salon lui-même ;
