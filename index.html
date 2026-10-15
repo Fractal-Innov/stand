@@ -2975,31 +2975,116 @@
       border-color: rgba(255, 255, 255, 0.3);
     }
 
-    /* ── Démo : passage vers l'appel (étape 3, 30/09/2026) ── */
+    /* ── Démo : passage vers l'appel (étape 3, 30/09/2026 ; en trois étages le 15/10/2026) ──
+       La relance (le stand et le site en dégradé, comme le titre du hero), le décor qui suit
+       le produit avec ses lieux en pastilles, puis l'appel et sa phrase d'aide. */
     .demo-suite {
+      max-width: 760px;
+      margin: 2.75rem auto 0;
+      text-align: center;
+    }
+
+    .section .demo-suite__fort {
+      max-width: none;
+      margin: 0 0 1.5rem;
+      font-size: clamp(1.12rem, 2vw, 1.32rem);
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--text-main);
+      text-wrap: balance;
+    }
+
+    .demo-suite__fort b {
+      font-weight: inherit;
+      background: var(--brand-gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section .demo-suite__decor {
+      max-width: none;
+      margin: 0 0 .75rem;
+      font-size: .95rem;
+      text-wrap: balance;
+    }
+
+    .demo-lieux {
+      list-style: none;
+      margin: 0 0 1.9rem;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .45rem;
+    }
+
+    .demo-lieux li {
+      padding: .32rem .8rem;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: .85rem;
+      color: rgba(255, 255, 255, 0.86);
+      white-space: nowrap;
+    }
+
+    .demo-suite__appel {
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem 1.75rem;
-      max-width: 860px;
-      margin: 2.5rem auto 0;
-      text-align: left;
+      gap: .75rem 1.25rem;
     }
 
-    .demo-suite p {
+    .demo-suite__appel .hero-cta__btn {
+      flex: none;
+    }
+
+    .section .demo-suite__appel p {
       margin: 0;
-      flex: 1 1 380px;
+      max-width: 21rem;
+      text-align: left;
+      font-size: .92rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 560px) {
+      .demo-suite__appel {
+        flex-direction: column;
+      }
+
+      .section .demo-suite__appel p {
+        text-align: center;
+      }
+    }
+
+    /* Intro de la démo : les deux rôles, avec les pastilles 1 et 2 des étiquettes d'appareils */
+    .demo-roles {
+      list-style: none;
+      margin: .35rem 0 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem 1.75rem;
+    }
+
+    .demo-roles li {
+      display: flex;
+      align-items: flex-start;
+      gap: .55rem;
+      font-size: 1.02rem;
       color: var(--text-muted);
     }
 
-    .demo-suite b {
-      color: var(--text-main, #fff);
+    .demo-roles b {
+      color: var(--text-main);
       font-weight: 600;
     }
 
-    .demo-suite .hero-cta__btn {
+    /* Calée sur la première ligne quand le rôle passe sur deux */
+    .demo-roles .demo-step {
       flex: none;
+      margin: .15em 0 0;
     }
 
     /* RESPONSIVE & MOBILE MENU
@@ -8877,18 +8962,11 @@
       }
     }
 
-    /* Même colonne et même alignement que la relance qu'elle précède
-       (.section en préfixe pour passer devant .section p et ses 680 px) */
-    .section .demo-contexte {
-      max-width: 860px;
-      margin: 2rem auto 0;
-      text-align: left;
-      font-size: .92rem;
-      color: var(--text-muted);
-    }
-
-    .demo-contexte + .demo-suite {
-      margin-top: 1.25rem;
+    /* Retour à la ligne choisi, seulement quand la phrase a la place de tenir en deux lignes */
+    @media (max-width: 559px) {
+      .br-large {
+        display: none;
+      }
     }
 
     /* « Réserver l'appel de 30 min » sur une ligne jusqu'à 360 px : marges et chasse resserrées */
@@ -9090,9 +9168,15 @@
     <section id="demo" class="section">
       <div class="section-number reveal">La démo</div>
       <h2 class="reveal delay-100">Testez-la, c'est ce que vos visiteurs verront</h2>
-      <p class="reveal delay-200">Une version publique, sans marque, avec un produit fictif&nbsp;: un stand de salon.
-        À gauche, l'écran tactile du stand, vous êtes le visiteur. À droite, la télécommande, vous êtes le
-        commercial.</p>
+      <p class="reveal delay-200">Une version publique, sans marque, avec un produit fictif&nbsp;: un stand de salon.</p>
+      <!-- Deux rôles, numérotés comme les étiquettes des appareils (plus de « à gauche / à droite » :
+           sur téléphone, l'écran et la télécommande s'empilent) -->
+      <ul class="demo-roles reveal delay-200" aria-label="Vos deux rôles dans la démo">
+        <li><span class="demo-step" aria-hidden="true">1</span><span><b>L'écran tactile</b>&nbsp;: vous êtes le
+            visiteur</span></li>
+        <li><span class="demo-step" aria-hidden="true">2</span><span><b>La télécommande</b>&nbsp;: vous êtes le
+            commercial</span></li>
+      </ul>
 
       <div class="demo-stage reveal delay-300">
         <div class="demo-screen">
@@ -9220,13 +9304,23 @@
       <!-- Étape 3 (30/09/2026) : pas encore de référence citable (client sous NDA),
            la démo sert de preuve. Ce passage raccroche le visiteur qui vient de
            la manipuler à l'étape suivante : l'appel. -->
-      <p class="demo-contexte reveal delay-300">Ici, un stand de salon. L'environnement 3D s'adapte au contexte
-        de votre produit&nbsp;: là où il sera installé (usine, chantier, voirie, plateau technique, showroom).</p>
+      <!-- Trois étages (15/10/2026) : la relance, le décor qui suit le produit, l'appel et sa phrase d'aide -->
       <div class="demo-suite reveal delay-300">
-        <p>Ce que vous venez de manipuler, vos visiteurs le manipuleront, sur votre stand comme sur votre site.
-          <b>Avec votre produit à la place de ce stand</b> : c'est ce que nous regardons ensemble en 30&nbsp;minutes.
-        </p>
-        <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30&nbsp;min</a>
+        <p class="demo-suite__fort">Ce que vous venez de manipuler, vos visiteurs le manipuleront, <b>sur votre
+            stand comme sur votre site</b></p>
+        <p class="demo-suite__decor">Ici, un stand de salon. L'environnement 3D s'adapte au contexte de votre
+          produit, là où il sera installé&nbsp;:</p>
+        <ul class="demo-lieux" aria-label="Exemples de lieux">
+          <li>Usine</li>
+          <li>Chantier</li>
+          <li>Voirie</li>
+          <li>Plateau technique</li>
+          <li>Showroom</li>
+        </ul>
+        <div class="demo-suite__appel">
+          <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30&nbsp;min</a>
+          <p>Votre produit à la place de ce stand&nbsp;: c'est ce que nous regardons ensemble</p>
+        </div>
       </div>
     </section>
 
@@ -9891,9 +9985,9 @@
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg></span>
           </div>
-          <p>Oui&nbsp;: c'est la version en ligne, avec le même contenu 3D. Elle se livre à part du kit de salon, et
-            chaque mise à jour apparaît aussitôt sur tous les appareils qui l'ouvrent (ordinateur, tablette,
-            téléphone). Vos prospects l'explorent seuls, à toute heure, et les boutons d'action vous les amènent.</p>
+          <p>Oui, avec le même contenu 3D.<br>
+            Vos prospects découvrent votre produit seuls, à toute heure, et les boutons d'action vous amènent ceux
+            qui sont prêts à aller plus loin.</p>
         </div>
 
         <div class="faq-item">
@@ -10017,8 +10111,8 @@
         </figure>
 
         <h2 class="reveal delay-100">Parlons de votre produit</h2>
-        <p class="contact__lead reveal delay-100">Un appel pour découvrir comment ce démonstrateur s'adapte à votre
-          produit, et comment se passe la suite.</p>
+        <p class="contact__lead reveal delay-100">Un appel pour découvrir comment ce démonstrateur s'adapte<br
+            class="br-large"> à votre produit, et comment se passe la suite.</p>
 
         <ul class="contact__facts reveal delay-200" aria-label="Comment se passe l'appel">
           <li>
