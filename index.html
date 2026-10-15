@@ -6169,9 +6169,17 @@
     .hero-lead,
     .hero-cta,
     .hero-visual,
+    .hero-canaux,
+    .hero-scroll {
+      animation: heroIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
 
     .hero h1 {
       animation-delay: 0.08s;
+    }
+
+    .hero-canaux {
+      animation-delay: 0.12s;
     }
 
     .hero-lead {
@@ -6422,7 +6430,17 @@
       .hero-lead,
       .hero-cta,
       .hero-visual,
+      .hero-canaux,
+      .hero-scroll,
+      .hero-visual::before,
+      .hero-visual__play::after,
+      .hero-scroll__line i {
+        animation: none;
+      }
 
+      .hero-visual__frame {
+        transition: none;
+      }
     }
 
     /* ── Démo : une scène en deux temps (1 l'écran, 2 la télécommande), un fil entre les deux,
@@ -8842,17 +8860,6 @@
       margin-top: .9rem;
     }
 
-    /* Entrée avec le titre et l'accroche (même courbe), entre les deux */
-    .hero--epure .hero-canaux {
-      animation: fadeUpInit .8s cubic-bezier(0.16, 1, 0.3, 1) .12s both;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .hero--epure .hero-canaux {
-        animation: none;
-      }
-    }
-
     .hero--epure .hero-canaux + .hero-lead .hero-lead__usage {
       margin-top: 0;
       font-size: 1em;
@@ -8870,16 +8877,28 @@
       }
     }
 
-    .demo-contexte {
+    /* Même colonne et même alignement que la relance qu'elle précède
+       (.section en préfixe pour passer devant .section p et ses 680 px) */
+    .section .demo-contexte {
       max-width: 860px;
       margin: 2rem auto 0;
-      text-align: center;
+      text-align: left;
       font-size: .92rem;
       color: var(--text-muted);
     }
 
     .demo-contexte + .demo-suite {
       margin-top: 1.25rem;
+    }
+
+    /* « Réserver l'appel de 30 min » sur une ligne jusqu'à 360 px : marges et chasse resserrées */
+    @media (max-width: 400px) {
+      .contact__primary {
+        gap: .5rem;
+        padding: 0 1.1rem 0 1rem;
+        font-size: 1rem;
+        letter-spacing: 0;
+      }
     }
 
     @media (min-width: 768px) {
@@ -8921,7 +8940,7 @@
             démo</span>
         </a>
         <a href="#contact" class="barre-btn barre-btn--plein" aria-label="Réserver 30 min">
-          <span class="barre-btn__long">Réserver 30 min</span><span class="barre-btn__court" aria-hidden="true">30
+          <span class="barre-btn__long">Réserver 30&nbsp;min</span><span class="barre-btn__court" aria-hidden="true">30
             min</span>
         </a>
       </div>
@@ -8987,7 +9006,7 @@
 
           <div class="hero-cta">
             <!-- Réserver = action principale (même rôle que dans la barre), la démo en secondaire -->
-            <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30 min</a>
+            <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30&nbsp;min</a>
             <a href="#demo" class="hero-cta__btn hero-cta__btn--ghost" data-launch-demo>
               <span>Tester la démo</span>
               <svg class="hero-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
@@ -9205,9 +9224,9 @@
         de votre produit&nbsp;: là où il sera installé (usine, chantier, voirie, plateau technique, showroom).</p>
       <div class="demo-suite reveal delay-300">
         <p>Ce que vous venez de manipuler, vos visiteurs le manipuleront, sur votre stand comme sur votre site.
-          <b>Avec votre produit à la place de ce stand</b> : c'est ce que nous regardons ensemble en 30 minutes.
+          <b>Avec votre produit à la place de ce stand</b> : c'est ce que nous regardons ensemble en 30&nbsp;minutes.
         </p>
-        <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30 min</a>
+        <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30&nbsp;min</a>
       </div>
     </section>
 
@@ -9985,7 +10004,7 @@
       </div>
 
       <p class="faq-more reveal delay-300">Une autre question&nbsp;? <a href="#contact">Elle a sa place dans l'appel de
-          30 min</a></p>
+          30&nbsp;min</a></p>
     </section>
 
     <section id="contact" class="contact reveal">
@@ -10042,7 +10061,7 @@
               <line x1="8" y1="2" x2="8" y2="6"></line>
               <line x1="3" y1="10" x2="21" y2="10"></line>
             </svg>
-            <span>Réserver l'appel de 30 min</span>
+            <span>Réserver l'appel de 30&nbsp;min</span>
             <svg class="contact__primary-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6"></path>
@@ -10105,7 +10124,7 @@
               stroke-linejoin="round" />
           </svg></span></a>
       <nav class="footer__liens" aria-label="Liens du pied de page">
-        <a href="#contact">Réserver 30 min</a>
+        <a href="#contact">Réserver 30&nbsp;min</a>
         <a href="mailto:corentin.duboc@fractal-innov.fr">E-mail</a>
         <a href="https://www.linkedin.com/in/corentin-duboc/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a href="https://www.fractal-innov.fr/mentions-legales/">Mentions légales</a>
@@ -10903,7 +10922,7 @@
           /* Fin du parcours : le prospect a tout vu, on lui propose l'appel */
           cta = document.createElement('a');
           cta.href = '#contact';
-          cta.innerHTML = '<span>Réserver 30 min</span>' + ARROW;
+          cta.innerHTML = '<span>Réserver 30&nbsp;min</span>' + ARROW;
         }
         cta.className = 'tour__next';
         nav.appendChild(cta);
