@@ -8,29 +8,29 @@
        produit affiché. Le titre tient en 57 caractères, entier sur mobile ;
        le nom de la marque vient du WebSite des données structurées, que
        Google affiche au-dessus du titre. -->
-  <title>Démonstrateur 3D de salon, sans transporter votre machine</title>
+  <title>Démonstrateur 3D de votre produit, pour salon et site web</title>
   <meta name="description"
-    content="Le jumeau 3D de votre produit sur l'écran tactile de votre stand, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
+    content="Le jumeau 3D de votre produit, sur votre stand (même sans réseau), sur votre site et en rendez-vous, piloté depuis un téléphone. Un contenu 3D que vous gardez.">
   <link rel="canonical" href="https://www.fractal-innov.fr/stand/">
   <meta name="theme-color" content="#090b13">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:url" content="https://www.fractal-innov.fr/stand/">
   <meta property="og:site_name" content="Fractal Innov">
-  <meta property="og:title" content="Votre produit reste chez vous, votre démo part en salon">
+  <meta property="og:title" content="Votre produit ne voyage pas, son jumeau 3D le présente">
   <meta property="og:description"
-    content="Le jumeau 3D de votre produit sur l'écran tactile de votre stand, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
+    content="Le jumeau 3D de votre produit, sur votre stand (même sans réseau), sur votre site et en rendez-vous, piloté depuis un téléphone. Un contenu 3D que vous gardez.">
   <meta property="og:image" content="https://www.fractal-innov.fr/stand/assets/share/og-image-v3.jpg">
   <meta property="og:image:secure_url" content="https://www.fractal-innov.fr/stand/assets/share/og-image-v3.jpg">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt"
-    content="Le démonstrateur 3D de salon de Fractal Innov : la scène 3D d'un stand avec sa borne tactile">
+    content="Le démonstrateur 3D de Fractal Innov : la scène 3D d'un stand avec sa borne tactile">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Votre produit reste chez vous, votre démo part en salon">
+  <meta name="twitter:title" content="Votre produit ne voyage pas, son jumeau 3D le présente">
   <meta name="twitter:description"
-    content="Le jumeau 3D de votre produit sur l'écran tactile de votre stand, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.">
+    content="Le jumeau 3D de votre produit, sur votre stand (même sans réseau), sur votre site et en rendez-vous, piloté depuis un téléphone. Un contenu 3D que vous gardez.">
   <meta name="twitter:image" content="https://www.fractal-innov.fr/stand/assets/share/og-image-v3.jpg">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png">
@@ -54,7 +54,7 @@
       "email": "corentin.duboc@fractal-innov.fr",
       "logo": "https://www.fractal-innov.fr/media/marque/fi-logo-252.webp",
       "image": "https://www.fractal-innov.fr/stand/assets/share/og-image-v3.jpg",
-      "description": "Fractal Innov conçoit le démonstrateur 3D de votre stand : le jumeau 3D de votre produit sur l'écran tactile, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.",
+      "description": "Fractal Innov conçoit le démonstrateur 3D de votre produit : son jumeau 3D, sur votre stand (même sans réseau), sur votre site et en rendez-vous, piloté depuis un téléphone. Un contenu 3D que vous gardez.",
       "foundingDate": "2024-11-01",
       "founder": {
         "@id": "https://www.fractal-innov.fr/#fondateur"
@@ -106,9 +106,9 @@
     {
       "@type": "Service",
       "@id": "https://www.fractal-innov.fr/stand/#service",
-      "name": "Démonstrateur 3D pour stand de salon",
-      "serviceType": "Démonstrateur 3D interactif pour salon professionnel",
-      "description": "Le jumeau 3D de votre produit sur l'écran tactile de votre stand, piloté depuis un téléphone, sans réseau. Vous gardez l'outil après le salon.",
+      "name": "Démonstrateur 3D de votre produit, pour salon et site web",
+      "serviceType": "Démonstrateur 3D interactif pour salon professionnel et site web",
+      "description": "Le jumeau 3D de votre produit, sur votre stand (même sans réseau), sur votre site et en rendez-vous, piloté depuis un téléphone. Un contenu 3D que vous gardez.",
       "provider": {
         "@id": "https://www.fractal-innov.fr/#organisation"
       },
@@ -8804,6 +8804,94 @@
       font-size: .92em;
     }
 
+    /* ========== Plaquette v7 (15/10/2026) : stand, site, rendez-vous ==========
+       Pastilles du hero (même langage que .contact__facts), ligne d'usage en dessous ;
+       note de contexte sous la démo ; la question « site » de la FAQ en pleine largeur. */
+    .hero--epure .hero-canaux {
+      list-style: none;
+      margin: 1.1rem 0 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .5rem;
+    }
+
+    .hero--epure .hero-canaux li {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .45rem .9rem;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.05);
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    .hero--epure .hero-canaux svg {
+      width: 18px;
+      height: 18px;
+      color: var(--accent-blue-light);
+      flex-shrink: 0;
+    }
+
+    .hero--epure .hero-canaux + .hero-lead {
+      margin-top: .9rem;
+    }
+
+    /* Entrée avec le titre et l'accroche (même courbe), entre les deux */
+    .hero--epure .hero-canaux {
+      animation: fadeUpInit .8s cubic-bezier(0.16, 1, 0.3, 1) .12s both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero--epure .hero-canaux {
+        animation: none;
+      }
+    }
+
+    .hero--epure .hero-canaux + .hero-lead .hero-lead__usage {
+      margin-top: 0;
+      font-size: 1em;
+    }
+
+    @media (max-width: 480px) {
+      .hero--epure .hero-canaux li {
+        padding: .38rem .7rem;
+        font-size: .85rem;
+      }
+
+      .hero--epure .hero-canaux svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .demo-contexte {
+      max-width: 860px;
+      margin: 2rem auto 0;
+      text-align: center;
+      font-size: .92rem;
+      color: var(--text-muted);
+    }
+
+    .demo-contexte + .demo-suite {
+      margin-top: 1.25rem;
+    }
+
+    @media (min-width: 768px) {
+      .faq-item--large {
+        grid-column: 1 / -1;
+      }
+
+      .faq-item--large > p {
+        max-width: 70ch;
+      }
+    }
+
     /* Démo (08/10/2026) : les actions passent juste sous l'écran, les gestes en dessous */
     .demo-screen .demo-actions {
       margin-top: 1.2rem;
@@ -8860,13 +8948,16 @@
             Démonstrateur interactif
           </div>
           <h1>
-            <span class="hero-title-main">Votre produit reste chez vous<br><em>Votre démo part en salon</em></span>
+            <span class="hero-title-main">Votre produit ne voyage pas,<br><em>son jumeau 3D le&nbsp;présente</em></span>
           </h1>
-          <p class="hero-lead"><span class="hero-lead__quoi">Le jumeau 3D de votre produit, sur votre stand, en showroom
-              ou en visio.</span>
-            <span class="hero-lead__usage">Le visiteur l'explore du doigt, votre commercial le pilote depuis son
-              téléphone.</span>
-          </p>
+          <!-- Trois canaux, comme la page 1 de la plaquette (15/10/2026) -->
+          <ul class="hero-canaux" aria-label="Où votre jumeau 3D présente votre produit">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"></path><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"></path><path d="M2 7h20"></path><path d="M22 7v3a2 2 0 0 1-2 2 2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7"></path></svg>Sur votre stand</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>Sur votre site</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 13 5.22 3.48a.5.5 0 0 0 .78-.42V7.87a.5.5 0 0 0-.75-.43L16 10.5"></path><rect x="2" y="6" width="14" height="12" rx="2"></rect></svg>En rendez-vous</li>
+          </ul>
+          <p class="hero-lead"><span class="hero-lead__usage">Le visiteur l'explore du doigt, votre commercial le
+              pilote depuis son téléphone.</span></p>
         </div>
         <!-- Scène du hero : le visuel, et (≥ 768 px) la barre d'actions posée sur son bas -->
         <div class="hero-scene">
@@ -9110,8 +9201,10 @@
       <!-- Étape 3 (30/09/2026) : pas encore de référence citable (client sous NDA),
            la démo sert de preuve. Ce passage raccroche le visiteur qui vient de
            la manipuler à l'étape suivante : l'appel. -->
+      <p class="demo-contexte reveal delay-300">Ici, un stand de salon. L'environnement 3D s'adapte au contexte
+        de votre produit&nbsp;: là où il sera installé (usine, chantier, voirie, plateau technique, showroom).</p>
       <div class="demo-suite reveal delay-300">
-        <p>Ce que vous venez de manipuler, vos visiteurs le manipuleront.
+        <p>Ce que vous venez de manipuler, vos visiteurs le manipuleront, sur votre stand comme sur votre site.
           <b>Avec votre produit à la place de ce stand</b> : c'est ce que nous regardons ensemble en 30 minutes.
         </p>
         <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30 min</a>
@@ -9770,6 +9863,20 @@
       <h2 class="reveal delay-100">Ce qu'on nous demande le plus souvent</h2>
 
       <div class="faq-grid reveal delay-200">
+        <div class="faq-item faq-item--large">
+          <div class="faq-head">
+            <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span>
+            <h3>Peut-on l'avoir sur notre site&nbsp;?</h3>
+            <span class="faq-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg></span>
+          </div>
+          <p>Oui&nbsp;: c'est la version en ligne, avec le même contenu 3D. Elle se livre à part du kit de salon, et
+            chaque mise à jour apparaît aussitôt sur tous les appareils qui l'ouvrent (ordinateur, tablette,
+            téléphone). Vos prospects l'explorent seuls, à toute heure, et les boutons d'action vous les amènent.</p>
+        </div>
+
         <div class="faq-item">
           <div class="faq-head">
             <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -9890,9 +9997,9 @@
           <figcaption><strong>Corentin Duboc</strong><span>Fondateur de Fractal Innov</span></figcaption>
         </figure>
 
-        <h2 class="reveal delay-100">Parlons de votre prochain salon</h2>
-        <p class="contact__lead reveal delay-100">Décrivez votre produit et votre prochain salon&nbsp;: nous vous
-          disons comment le démonstrateur s'adapte à votre cas, et comment se passe la suite.</p>
+        <h2 class="reveal delay-100">Parlons de votre produit</h2>
+        <p class="contact__lead reveal delay-100">Un appel pour découvrir comment ce démonstrateur s'adapte à votre
+          produit, et comment se passe la suite.</p>
 
         <ul class="contact__facts reveal delay-200" aria-label="Comment se passe l'appel">
           <li>
@@ -10307,7 +10414,7 @@
       });
 
       /* 3. ACCORDÉON FAQ */
-      /* Accordéon sur téléphone seulement : sur grand écran les six réponses sont
+      /* Accordéon sur téléphone seulement : sur grand écran les sept réponses sont
          courtes et se lisent d'un coup, en deux colonnes. */
       const faqItems = document.querySelectorAll('.faq-item');
       const faqAccordion = window.matchMedia('(max-width: 767px)');

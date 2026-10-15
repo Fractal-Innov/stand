@@ -27,12 +27,13 @@ Tous les messages de commit suivent https://www.conventionalcommits.org/en/v1.0.
 - Pas de point final dans les titres (H2, H3, H4, questions de la FAQ).
 - La page doit rester fidèle à l'offre vendue :
   - l'écran tactile n'est pas fourni, le client le loue sur place à chaque salon ; la télécommande tourne sur le téléphone ou la tablette du client (rien à louer pour le pilotage, depuis le 07/10/2026) ;
-  - le flight case, le mobilier, la modélisation 3D, l'écran de veille 3D et la présentation à emporter sur mobile sont des options sur devis ;
+  - le flight case, le mobilier, la modélisation 3D, l'écran de veille 3D, la présentation à emporter sur mobile, la version en ligne et la réalité augmentée sont des options sur devis ;
   - les vidéos et fiches sont produites par le client, STAND les affiche ;
   - le support couvre l'installation avant le salon, pas le salon lui-même ;
-  - pas de mode en ligne, pas de redémarrage ni de lancement automatique en standard (seule exception : la présentation à emporter sur mobile, option sur devis) ;
+  - en ligne (sur le site du client, en rendez-vous) et hors ligne (le kit de salon) sont deux diffusions du même contenu 3D, livrées et mises à jour séparément : ne jamais promettre de synchronisation automatique entre les deux ;
+  - pas de redémarrage ni de lancement automatique en standard (seule exception : la présentation à emporter sur mobile, option sur devis) ;
   - aucun prix ni délai affiché : le devis et le délai suivent l'atelier, qui suit l'appel de 30 minutes (l'appel n'est pas l'atelier) ;
-  - une seule marque, Fractal Innov : aucun nom produit affiché (« STAND » n'est que le nom du dépôt et de la démo) ; l'offre se dit « le démonstrateur 3D de votre stand ».
+  - une seule marque, Fractal Innov : aucun nom produit affiché (« STAND » n'est que le nom du dépôt et de la démo) ; l'offre se dit « le démonstrateur 3D de votre produit » (depuis le 15/10/2026, voir `VENTE.md`), promesse « un contenu 3D, produit une fois, qui travaille partout où vous vendez », exemples salon d'abord. La page suit la plaquette de synthèse (`Fractal-Innov_Marketing/brochures/contenus/contenu-synthese.mjs`).
 
 ## Démonstrateur et médias
 
@@ -45,7 +46,7 @@ Tous les messages de commit suivent https://www.conventionalcommits.org/en/v1.0.
 
 ## Haut de page : présentation produit (01/10/2026)
 
-- **Hero épuré** (`.hero--epure`) : logo dans le flux, titre, accroche, visuel en 16:9 dans `.hero-scene`, actions posées en verre sur son bas (≥ 768 px). Le bloc JS 2e mesure la hauteur du texte (`--hero-haut-texte`) pour que le visuel tienne dans le premier écran. L'animation 3D prévue remplacera `hero-loop` au même emplacement (vidéo pré-calculée, 16:9 et 9:16, < 1,5 Mo chacune).
+- **Hero épuré** (`.hero--epure`) : logo dans le flux, titre (celui de la plaquette depuis le 15/10/2026), trois canaux en pastilles (`.hero-canaux` : stand, site, rendez-vous) et une ligne d'usage, visuel en 16:9 dans `.hero-scene`, actions posées en verre sur son bas (≥ 768 px). Le bloc JS 2e mesure la hauteur du texte (`--hero-haut-texte`) pour que le visuel tienne dans le premier écran. L'animation 3D prévue remplacera `hero-loop` au même emplacement (vidéo pré-calculée, 16:9 et 9:16, < 1,5 Mo chacune).
 - **Points forts** (`#points-forts`, classes `.pf__*`, 02/10/2026) : grille « bento » statique, les six cartes visibles d'un coup, sans défilement automatique ni JS (l'ancien slider, bloc 2c, est retiré : un carrousel cache cinq points forts sur six). Deux grandes cartes (`.pf__carte--fort`, « sans le transporter » et « fluidité de la 3D ») en zigzag : ≥ 1024 px, colonnes `1fr 2fr 1fr`, chaque grande carte haute de deux petites, `.pf__carte--droite` pour celle de droite, placement dense ; 768-1023 px : grandes cartes en pleine largeur ; mobile : une colonne. Visuels `assets/points-forts/1-interface` … `6-stats` (1200 × 900, marge transparente variable) : chaque `<img>` déclare sa zone utile (`--bx --by --bw --bh`, mesurée sur le canal alpha, seuil 150 et 60 pour `4-fluidite`) et le CSS l'agrandit pour qu'elle remplisse son cadre (à remesurer si on change une image). `.pf__visuel--rogne` (carte produit) remplit le cadre en rognant (cover), aligné sur le texte.
 - **Barre d'apparition** (bloc JS 2d) : `.masthead` fixe, cachée sur le hero, visible quand le haut des Points forts atteint le bas de la barre ; état sur `body[data-barre]`. Contenu : logo, « Tester la démo » (`data-launch-demo`) et « Réserver 30 min », libellés courts « La démo » et « 30 min » sous 560 px. Plus de burger ni de liens de section (ils restent dans le pied de page) ; le scroll-spy pose toujours `body[data-section]` pour le farfadet. Les ancres (`allerSection`) mesurent la barre par `offsetTop + offsetHeight`, juste même quand elle est cachée.
 - Le reste du CSS de l'ancien menu (`.main-nav`, `.burger`) est mort ; à nettoyer à l'occasion.
