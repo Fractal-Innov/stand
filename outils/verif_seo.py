@@ -22,6 +22,10 @@ QUESTIONS_ATTENDUES = [
     'Faut-il des fichiers 3D de notre produit ?',
     'Qui est sur place pendant le salon ?',
 ]
+UMAMI_SRC = 'https://cloud.umami.is/script.js'
+UMAMI_DOMAINE = 'www.fractal-innov.fr'
+UUID = re.compile(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$')
+CALENDRIER = 'calendar.app.google'
 
 
 def normaliser(texte):
@@ -137,8 +141,35 @@ def controle_faq(page):
     ]
 
 
+def controle_mesure(page):
+    umami = [s for s in page.scripts if s.get('src') == UMAMI_SRC]
+    script = umami[0] if len(umami) == 1 else {}
+    calendrier = [l for l in page.liens if CALENDRIER in (l.get('href') or '')]
+    nouvel_onglet = [l for l in page.liens if l.get('id') == 'demoNewTab']
+    texte = normaliser(' '.join(page.visible))
+    return [
+        ('Script de mesure présent une seule fois', len(umami) == 1, len(umami)),
+        ('Script de mesure en defer', 'defer' in script, script),
+        ('Identifiant du site au bon format',
+         bool(UUID.match(script.get('data-website-id') or '')), script.get('data-website-id')),
+        ('Mesure limitée au domaine de production',
+         script.get('data-domains') == UMAMI_DOMAINE, script.get('data-domains')),
+        ('Clics sur le calendrier mesurés',
+         bool(calendrier) and all(l.get('data-umami-event') == 'reserver-appel' for l in calendrier),
+         calendrier),
+        ('Lancements de la démo mesurés',
+         bool(page.lanceurs) and all(l.get('data-umami-event') == 'tester-demo' for l in page.lanceurs),
+         page.lanceurs),
+        ('Ouverture de la démo dans un onglet mesurée',
+         len(nouvel_onglet) == 1 and nouvel_onglet[0].get('data-umami-event') == 'ouvrir-demo-onglet',
+         nouvel_onglet),
+        ("Aucun nom d'outil de statistiques visible", 'Umami' not in texte, 'Umami'),
+        ('Aucun « STAND » visible comme nom de produit', not re.search(r'\bSTAND\b', texte), 'STAND'),
+    ]
+
+
 def controles(page):
-    return controle_faq(page)
+    return controle_faq(page) + controle_mesure(page)
 
 
 def main(argv):

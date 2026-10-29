@@ -9075,6 +9075,13 @@
     }
   </style>
 
+  <!-- Mesure d'audience sans cookie (Umami Cloud), seulement sur le domaine
+       de production : en local et en aperçu, rien n'est compté. Les clics
+       sont nommés par les attributs data-umami-event des liens
+       (reserver-appel, tester-demo, ouvrir-demo-onglet). Bloqué par un
+       bloqueur, le script manque et la page marche pareil. -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="1e5ed56b-5ccd-4c8d-bac9-abf278a2bfba"
+    data-domains="www.fractal-innov.fr"></script>
 </head>
 
 <body id="top">
@@ -9089,7 +9096,7 @@
       <!-- Barre d'apparition (01/10/2026) : masquée sur le hero, elle descend à l'arrivée
            sur les Points forts (bloc JS 2d). Deux actions, libellés courts sur mobile. -->
       <div class="barre-actions">
-        <a href="#demo" class="barre-btn barre-btn--ghost" data-launch-demo aria-label="Tester la démo">
+        <a href="#demo" class="barre-btn barre-btn--ghost" data-launch-demo data-umami-event="tester-demo" aria-label="Tester la démo">
           <span class="barre-btn__long">Tester la démo</span><span class="barre-btn__court" aria-hidden="true">La
             démo</span>
         </a>
@@ -9135,7 +9142,7 @@
         <!-- Scène du hero : le visuel, et (≥ 768 px) la barre d'actions posée sur son bas -->
         <div class="hero-scene">
           <!-- Visuel hero : poster de la démo aujourd'hui, boucle vidéo ou scène Needle demain (même emplacement) -->
-          <a href="#demo" class="hero-visual" aria-label="Lancer la démo" data-launch-demo>
+          <a href="#demo" class="hero-visual" aria-label="Lancer la démo" data-launch-demo data-umami-event="tester-demo">
             <figure class="hero-visual__frame">
               <video class="hero-visual__img" id="heroVideo" muted loop playsinline autoplay preload="metadata"
                 poster="assets/demo/hero-poster.webp" width="1280" height="720" disablepictureinpicture
@@ -9161,7 +9168,7 @@
           <div class="hero-cta">
             <!-- Réserver = action principale (même rôle que dans la barre), la démo en secondaire -->
             <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30&nbsp;min</a>
-            <a href="#demo" class="hero-cta__btn hero-cta__btn--ghost" data-launch-demo>
+            <a href="#demo" class="hero-cta__btn hero-cta__btn--ghost" data-launch-demo data-umami-event="tester-demo">
               <span>Tester la démo</span>
               <svg class="hero-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -9297,7 +9304,7 @@
               </svg>
               Ouvrir en plein écran
             </button>
-            <a class="demo-action-btn" id="demoNewTab" href="https://stand-demonstrateur.osc-fr1.scalingo.io/"
+            <a class="demo-action-btn" id="demoNewTab" data-umami-event="ouvrir-demo-onglet" href="https://stand-demonstrateur.osc-fr1.scalingo.io/"
               target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                 stroke-linejoin="round" aria-hidden="true">
@@ -10222,7 +10229,7 @@
         </ul>
 
         <div class="contact__actions reveal delay-200">
-          <a class="contact__primary" id="contactPrimary" href="https://calendar.app.google/SDuiKb9ZBQ6BcbED6"
+          <a class="contact__primary" id="contactPrimary" data-umami-event="reserver-appel" href="https://calendar.app.google/SDuiKb9ZBQ6BcbED6"
             target="_blank" rel="noopener noreferrer">
             <svg class="contact__primary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
