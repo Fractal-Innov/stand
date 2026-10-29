@@ -48,6 +48,7 @@ class Page(HTMLParser):
         self._fin = None       # balise qui termine la capture
         self._texte = []
         self._dans_faq = False
+        self._profondeur = 0   # sections ouvertes dans #questions
         self._cache = 0        # profondeur dans <script> / <style>
 
     def handle_starttag(self, tag, attrs):
@@ -58,8 +59,10 @@ class Page(HTMLParser):
             self.liens.append(a)
         if 'data-launch-demo' in a:
             self.lanceurs.append(a)
-        if tag == 'section' and a.get('id') == 'questions':
-            self._dans_faq = True
+        if tag == 'section' and self._dans_faq:
+            self._profondeur += 1
+        elif tag == 'section' and a.get('id') == 'questions':
+            self._dans_faq, self._profondeur = True, 1
         if self._capture:
             return
         if self._dans_faq and tag == 'h3':
@@ -84,8 +87,9 @@ class Page(HTMLParser):
     def handle_endtag(self, tag):
         if tag in ('script', 'style'):
             self._cache -= 1
-        if tag == 'section':
-            self._dans_faq = False
+        if tag == 'section' and self._dans_faq:
+            self._profondeur -= 1
+            self._dans_faq = self._profondeur > 0
         if self._capture and tag == self._fin:
             texte = ''.join(self._texte)
             if self._capture == 'ld':
@@ -101,6 +105,7 @@ def lire_page(html):
     page = Page()
     page.feed(html)
     page.close()
+    page.html = html
     return page
 
 
@@ -157,9 +162,18 @@ def controle_mesure(page):
         ('Clics sur le calendrier mesurés',
          bool(calendrier) and all(l.get('data-umami-event') == 'reserver-appel' for l in calendrier),
          calendrier),
-        ('Lancements de la démo mesurés',
-         bool(page.lanceurs) and all(l.get('data-umami-event') == 'tester-demo' for l in page.lanceurs),
-         page.lanceurs),
+        # Umami annule le clic d'un <a data-umami-event> sans target=_blank et
+        # navigue après l'envoi : sur un lien interne, le défilement de la page
+        # (allerSection) ne part plus. Ces clics se mesurent en JS.
+        ('Aucun lien interne avec data-umami-event',
+         not [l for l in page.liens
+              if (l.get('href') or '').startswith('#') and 'data-umami-event' in l],
+         [l for l in page.liens
+          if (l.get('href') or '').startswith('#') and 'data-umami-event' in l]),
+        ('Lancements de la démo mesurés en JS',
+         bool(page.lanceurs) and "umami.track('tester-demo')" in page.html, len(page.lanceurs)),
+        ('Ancres exclues des pages vues', script.get('data-exclude-hash') == 'true',
+         script.get('data-exclude-hash')),
         ('Ouverture de la démo dans un onglet mesurée',
          len(nouvel_onglet) == 1 and nouvel_onglet[0].get('data-umami-event') == 'ouvrir-demo-onglet',
          nouvel_onglet),

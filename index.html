@@ -9077,11 +9077,13 @@
 
   <!-- Mesure d'audience sans cookie (Umami Cloud), seulement sur le domaine
        de production : en local et en aperçu, rien n'est compté. Les clics
-       sont nommés par les attributs data-umami-event des liens
-       (reserver-appel, tester-demo, ouvrir-demo-onglet). Bloqué par un
+       sortants sont nommés par data-umami-event (reserver-appel,
+       ouvrir-demo-onglet) ; tester-demo part du script de lancement, car
+       sur un lien interne Umami annulerait le défilement. Les ancres ne
+       comptent pas comme pages vues (data-exclude-hash). Bloqué par un
        bloqueur, le script manque et la page marche pareil. -->
   <script defer src="https://cloud.umami.is/script.js" data-website-id="1e5ed56b-5ccd-4c8d-bac9-abf278a2bfba"
-    data-domains="www.fractal-innov.fr"></script>
+    data-domains="www.fractal-innov.fr" data-exclude-hash="true"></script>
 </head>
 
 <body id="top">
@@ -9096,7 +9098,7 @@
       <!-- Barre d'apparition (01/10/2026) : masquée sur le hero, elle descend à l'arrivée
            sur les Points forts (bloc JS 2d). Deux actions, libellés courts sur mobile. -->
       <div class="barre-actions">
-        <a href="#demo" class="barre-btn barre-btn--ghost" data-launch-demo data-umami-event="tester-demo" aria-label="Tester la démo">
+        <a href="#demo" class="barre-btn barre-btn--ghost" data-launch-demo aria-label="Tester la démo">
           <span class="barre-btn__long">Tester la démo</span><span class="barre-btn__court" aria-hidden="true">La
             démo</span>
         </a>
@@ -9142,7 +9144,7 @@
         <!-- Scène du hero : le visuel, et (≥ 768 px) la barre d'actions posée sur son bas -->
         <div class="hero-scene">
           <!-- Visuel hero : poster de la démo aujourd'hui, boucle vidéo ou scène Needle demain (même emplacement) -->
-          <a href="#demo" class="hero-visual" aria-label="Lancer la démo" data-launch-demo data-umami-event="tester-demo">
+          <a href="#demo" class="hero-visual" aria-label="Lancer la démo" data-launch-demo>
             <figure class="hero-visual__frame">
               <video class="hero-visual__img" id="heroVideo" muted loop playsinline autoplay preload="metadata"
                 poster="assets/demo/hero-poster.webp" width="1280" height="720" disablepictureinpicture
@@ -9168,7 +9170,7 @@
           <div class="hero-cta">
             <!-- Réserver = action principale (même rôle que dans la barre), la démo en secondaire -->
             <a href="#contact" class="hero-cta__btn hero-cta__btn--primary">Réserver 30&nbsp;min</a>
-            <a href="#demo" class="hero-cta__btn hero-cta__btn--ghost" data-launch-demo data-umami-event="tester-demo">
+            <a href="#demo" class="hero-cta__btn hero-cta__btn--ghost" data-launch-demo>
               <span>Tester la démo</span>
               <svg class="hero-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -10969,7 +10971,12 @@
       if (demoLaunch) demoLaunch.addEventListener('click', () => scene.charger('demo', null));
       /* Un seul clic depuis le hero : l'ancre défile, la borne se charge pendant ce temps */
       document.querySelectorAll('[data-launch-demo]').forEach((el) => {
-        el.addEventListener('click', () => scene.charger('demo', null));
+        el.addEventListener('click', () => {
+          scene.charger('demo', null);
+          // Mesuré ici, pas par data-umami-event : sur un lien interne, Umami
+          // annulerait le clic et le défilement vers la démo ne partirait plus.
+          if (window.umami) window.umami.track('tester-demo');
+        });
       });
 
       const remoteViewport = document.getElementById('remoteViewport');

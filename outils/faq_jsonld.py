@@ -36,6 +36,8 @@ def main(argv):
     places = [i for i, n in enumerate(graphe) if n.get('@type') == 'FAQPage']
     assert len(places) == 1, f'{len(places)} nœuds FAQPage, 1 attendu'
     page = lire_page(s)
+    if not page.faq or not all(r for _, r in page.faq):
+        sys.exit('FAQ introuvable ou réponse vide dans #questions : rien n\'est écrit')
     # Seules les questions changent : le reste du nœud (url, inLanguage…) reste.
     graphe[places[0]]['mainEntity'] = questions_faq(page.faq)
     contenu = json.dumps(donnees, ensure_ascii=False, indent=2)
