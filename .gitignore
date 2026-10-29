@@ -4,3 +4,4 @@ assets/demo/HeroVideo.web.mp4
 
 # Journal des prospects (données nominatives, dépôt public)
 /prospection/
+__pycache__/
