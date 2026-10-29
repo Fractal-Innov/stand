@@ -26,6 +26,13 @@ UMAMI_SRC = 'https://cloud.umami.is/script.js'
 UMAMI_DOMAINE = 'www.fractal-innov.fr'
 UUID = re.compile(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$')
 CALENDRIER = 'calendar.app.google'
+# Début d'adresse des liens de contact → événement attendu sur chacun.
+LIENS_CONTACT = {
+    'https://s.blinq.me/': 'ouvrir-carte-visite',
+    'mailto:': 'ecrire-email',
+    'https://www.linkedin.com/': 'ouvrir-linkedin',
+    'https://www.instagram.com/': 'ouvrir-instagram',
+}
 
 
 def normaliser(texte):
@@ -146,6 +153,16 @@ def controle_faq(page):
     ]
 
 
+def controle_liens_contact(page):
+    resultats = []
+    for debut, evenement in LIENS_CONTACT.items():
+        liens = [l for l in page.liens if (l.get('href') or '').startswith(debut)]
+        resultats.append((f'Clics mesurés : {evenement} ({len(liens)} liens)',
+                          bool(liens) and all(l.get('data-umami-event') == evenement for l in liens),
+                          [l.get('data-umami-event') for l in liens]))
+    return resultats
+
+
 def controle_mesure(page):
     umami = [s for s in page.scripts if s.get('src') == UMAMI_SRC]
     script = umami[0] if len(umami) == 1 else {}
@@ -177,6 +194,7 @@ def controle_mesure(page):
         ('Ouverture de la démo dans un onglet mesurée',
          len(nouvel_onglet) == 1 and nouvel_onglet[0].get('data-umami-event') == 'ouvrir-demo-onglet',
          nouvel_onglet),
+        *controle_liens_contact(page),
         ("Aucun nom d'outil de statistiques visible", 'Umami' not in texte, 'Umami'),
         ('Aucun « STAND » visible comme nom de produit', not re.search(r'\bSTAND\b', texte), 'STAND'),
     ]
